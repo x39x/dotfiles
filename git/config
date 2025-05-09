@@ -1,0 +1,24 @@
+[user] 
+name = Matsu
+email = matsu3x9@icloud.com 
+[core]
+excludesfile = ~/.config/git/gitignore
+editor = nvim
+
+[merge]
+tool = nvimdiff
+conflictstyle = diff3
+[mergetool]
+keepBackup = false 
+[mergetool "nvimdiff"]
+cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[diff]
+external = difft
+colorMoved = default 
+# git log -p --ext-diff
+# git show --ext-diff
+
+#WARN: storing authentication information (recommended to use cache,no store)
+[credential]
+helper = cache

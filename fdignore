@@ -1,0 +1,15 @@
+/Applications
+/Pictures
+/Library
+/Music
+/Movies
+/dotbot
+.git
+.idea
+.next
+.vscode
+.sass-cache
+node_modules
+build
+.DS_Store
+*.pdf

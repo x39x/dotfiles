@@ -1,0 +1,2 @@
+[ -f "$HOME/.profile" ] && . "$HOME/.profile" 
+[ "$XDG_SESSION_TYPE" = "x11" -a -f "$HOME/.xinitrc" ] && . "$HOME/.xinitrc"
