@@ -58,7 +58,7 @@ local function resolve_git_dir(git_root)
                 local content = vim.fn.readfile(git_path)[1]
                 local real_git_dir = content:match("gitdir: (.+)")
                 if real_git_dir then
-                        return vim.fn.fnamemodify(real_git_dir, ":p")
+                        return vim.fn.fnamemodify(git_root .. "/" .. real_git_dir, ":p")
                 end
         end
         return git_path
