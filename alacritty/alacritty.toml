@@ -1,4 +1,4 @@
-general.import = ["~/.config/alacritty/themes/39light.toml"]
+general.import = ["~/.config/alacritty/themes/darkpro.toml"]
 
 [env]
 TERM_PROGRAM = "alacritty"
