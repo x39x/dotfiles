@@ -6,4 +6,4 @@ set -o emacs
 set bell-style none
 shopt -s autocd
 export CLICOLOR=1
-export PS1='\u@\h:\[\e[32m\]\w\[\e[0m\]\$ '
+export PS1='\u@\h:\[\e[34m\]\w\[\e[0m\]\n\$ '
