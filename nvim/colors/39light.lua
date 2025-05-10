@@ -45,6 +45,7 @@ local colors = {
         blue0 = "#152F44",
         blue1 = "#0137A6",
         blue2 = "#0133B3",
+        blueC = "#174ad4",
         blue3 = "#264eff",
         blue9 = "#0E54D6",
         blue7 = "#174be6",
@@ -102,7 +103,7 @@ local function m39k()
         hl("PmenuMatch", { bold = true })
         hl("PmenuMatchSel", { bold = true })
         hl("TabLine", { bg = colors.bg2 })
-        hl("TabLineSel", { fg = colors.red1, bg = colors.bg0 })
+        hl("TabLineSel", { fg = colors.blueC, bg = colors.bg0 })
         hl("CursorLine", { bg = colors.bg1 })
         hl("ColorColumn", { link = "CursorLine" })
         hl("StatusLine", { fg = colors.blue3 })
@@ -262,6 +263,9 @@ local function m39k()
         hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
         hl("NvimTreeGitFileNewHL", { fg = colors.green0 })
         hl("AlphaHeader", { fg = colors.miku })
+
+        hl("HeirlineA", { fg = colors.blue2 })
+        hl("HeirlineB", { fg = colors.purple0 })
 
         vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg0

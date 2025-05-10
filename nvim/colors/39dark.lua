@@ -290,6 +290,9 @@ local function m39k()
         hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
         hl("NvimTreeGitFileNewHL", { fg = colors.green1 })
         hl("AlphaHeader", { fg = colors.miku })
+
+        hl("HeirlineA", { fg = colors.blue2 })
+        hl("HeirlineB", { fg = colors.purple0 })
 end
 
 m39k()
