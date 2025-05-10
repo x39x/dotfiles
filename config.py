@@ -78,13 +78,14 @@ def update_rime_repo():
     print()
 
 
+# NOTE:
 if utils.env_exists("BASE"):
     utils.ln(base)
     exit()
 
 utils.ln(base)
 utils.ln(default)
-if utils.get_os_name == "Darwin":
+if utils.get_os_name() == "Darwin":
     utils.ln(macos)
 
 if utils.env_exists("RIME"):
