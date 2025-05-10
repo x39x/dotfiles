@@ -67,22 +67,6 @@ end
 local Space = { provider = "  " }
 local Align = { provider = "%=" }
 
-local FileIcon = {
-        init = function(self)
-                local filename = self.filename
-                -- local extension = vim.fn.fnamemodify(filename, ":e")
-                local extension = vim.bo.filetype
-                self.icon, self.icon_color =
-                        require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
-        end,
-        provider = function(self)
-                return self.icon and (self.icon .. " ")
-        end,
-        hl = function(self)
-                return { fg = self.icon_color }
-        end,
-}
-
 local FileName = {
         provider = function(self)
                 -- trim the pattern relative to the current directory
@@ -100,7 +84,7 @@ local FileName = {
                 return filename
         end,
         hl = function()
-                return { fg = "heirline_filename", bold = true, force = true }
+                return { fg = "heirline_A", bold = true, force = true }
         end,
 }
 
@@ -125,7 +109,6 @@ local FileNameBlock = {
                 self.filename = vim.api.nvim_buf_get_name(0)
         end,
 
-        -- FileIcon,
         FileName,
         FileFlags,
         { provider = "%<" }, -- this means that the statusline is cut here when there's not enough space
@@ -144,7 +127,7 @@ local WorkDir = {
                 return icon .. cwd .. trail
         end,
         hl = function()
-                return { fg = "heirline_workdir", bold = true, force = true }
+                return { fg = "heirline_A", bold = true, force = true }
         end,
 }
 
@@ -153,12 +136,12 @@ local BufType = {
                 return vim.bo.filetype
         end,
         hl = function()
-                return { fg = "heirline_buftype", bold = true, force = true }
+                return { fg = "heirline_A", bold = true, force = true }
         end,
 }
 
 local Ruler = {
-        provider = "%2P",
+        provider = "%2c:%2P",
 }
 
 local Diagnostics = {

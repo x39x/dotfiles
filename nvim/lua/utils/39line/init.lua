@@ -19,6 +19,8 @@ return function()
                         heirline_filename = utils.get_highlight("Keyword").fg or "",
                         heirline_workdir = utils.get_highlight("Keyword").fg or "",
                         heirline_buftype = utils.get_highlight("Keyword").fg or "",
+                        heirline_A = utils.get_highlight("HeirlineA").fg or utils.get_highlight("Keyword").fg or "",
+                        heirline_B = utils.get_highlight("HeirlineB").fg or utils.get_highlight("Keyword").fg or "",
                 }
         end
         require("heirline").load_colors(setup_colors)

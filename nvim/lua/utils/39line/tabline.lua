@@ -15,15 +15,13 @@ local FileIcon = {
                 return { fg = self.icon_color }
         end,
 }
+local Space = { provider = "  " }
 
 local TablineFileName = {
         provider = function(self)
                 local filename = self.filename
                 filename = filename == "" and "[No Name]" or vim.fn.fnamemodify(filename, ":t")
                 return filename
-        end,
-        hl = function(self)
-                return { bold = self.is_active or self.is_visible }
         end,
 }
 
@@ -74,7 +72,8 @@ local BufferFileNameBlock = {
                 end,
                 name = "heirline_tabline_buffer_callback",
         },
-        FileIcon,
+        Space,
+        -- FileIcon,
         TablineFileName,
         TablineFileFlags,
 }
