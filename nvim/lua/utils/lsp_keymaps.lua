@@ -26,7 +26,7 @@ return function(bufnr)
                         border = "single",
                 })
         end, opts)
-        keymap("n", "ge", function()
+        keymap("n", "<leader>ge", function()
                 vim.lsp.buf.signature_help({
                         border = border,
                 })
@@ -37,13 +37,13 @@ return function(bufnr)
         keymap("n", "gr", require("telescope.builtin").lsp_references, opts)
         keymap("n", "gn", lsp_rename, opts)
 
-        keymap("n", "<leader>;j", function()
+        keymap("n", "<leader>gp", function()
                 vim.diagnostic.jump({ count = -1, float = true })
         end, opts)
-        keymap("n", "<leader>;k", function()
+        keymap("n", "<leader>gn", function()
                 vim.diagnostic.jump({ count = 1, float = true })
         end, opts)
-        keymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+        keymap("n", "<leader>ga", vim.lsp.buf.code_action, opts)
 
         vim.api.nvim_buf_create_user_command(bufnr, "F", function()
                 vim.lsp.buf.format({ async = true })
