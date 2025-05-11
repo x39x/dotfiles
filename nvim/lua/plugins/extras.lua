@@ -86,11 +86,33 @@ M[#M + 1] = {
 M[#M + 1] = {
         "NeogitOrg/neogit",
         dependencies = {
-                "nvim-lua/plenary.nvim", -- required
-
-                -- Only one of these is needed.
-                "nvim-telescope/telescope.nvim", -- optional
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope.nvim",
         },
         config = true,
 }
+M[#M + 1] = {
+        "kawre/leetcode.nvim",
+        build = ":TSUpdate html",
+        dependencies = {
+                "nvim-telescope/telescope.nvim",
+                "nvim-lua/plenary.nvim",
+                "MunifTanjim/nui.nvim",
+        },
+        opts = {
+                cn = {
+                        enabled = true,
+                },
+                injector = {
+                        ["python3"] = {
+                                before = true,
+                        },
+                        ["cpp"] = {
+                                before = { "#include <bits/stdc++.h>" },
+                        },
+                },
+                picker = { provider = "telescope" },
+        },
+}
+
 return M
