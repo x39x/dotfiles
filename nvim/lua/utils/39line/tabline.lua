@@ -1,20 +1,6 @@
 local utils = require("heirline.utils")
 
 -- PLUG: buffers
-local FileIcon = {
-        init = function(self)
-                local filename = self.filename
-                local extension = vim.fn.fnamemodify(filename, ":e")
-                self.icon, self.icon_color =
-                        require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
-        end,
-        provider = function(self)
-                return self.icon and ("   " .. self.icon .. " ")
-        end,
-        hl = function(self)
-                return { fg = self.icon_color }
-        end,
-}
 local Space = { provider = "  " }
 
 local TablineFileName = {
@@ -59,7 +45,7 @@ local BufferFileNameBlock = {
         end,
         on_click = {
                 callback = function(_, minwid, _, button)
-                        if button == "m" then -- close on mouse middle click
+                        if button == "r" then -- close on mouse middle click: l, m ,r
                                 vim.schedule(function()
                                         vim.api.nvim_buf_delete(minwid, { force = false })
                                 end)
@@ -73,7 +59,6 @@ local BufferFileNameBlock = {
                 name = "heirline_tabline_buffer_callback",
         },
         Space,
-        -- FileIcon,
         TablineFileName,
         TablineFileFlags,
 }
