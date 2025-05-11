@@ -55,6 +55,8 @@ cask "iina"
 cask "karabiner-elements"
 # Open-source keystroke visualiser
 cask "keycastr"
+# File archiver
+cask "keka"
 # Utility to open, create and modify archive files
 cask "maczip"
 # Instant messaging tool
@@ -71,7 +73,7 @@ cask "the-unarchiver"
 cask "visual-studio-code"
 # Free messaging and calling application
 cask "wechat"
-vscode "hyzeta.vscode-theme-github-light"
-vscode "mhutchie.git-graph"
+vscode "ms-vscode-remote.remote-ssh"
 vscode "vscodevim.vim"
 vscode "wayou.vscode-todo-highlight"
+
