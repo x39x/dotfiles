@@ -23,9 +23,4 @@ if status is-interactive
 
         set -gx FZF_CTRL_T_COMMAND
         fzf --fish | source
-
-        function fish_user_key_bindings
-                # bind -M default \en '__fzf_f'# meta: \eKEY,ctrl \cKEY
-        end
-
 end
