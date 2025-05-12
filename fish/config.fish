@@ -21,9 +21,11 @@ if status is-interactive
         zoxide init fish | source
         set -x fish_greeting ""
 
+        set -gx FZF_CTRL_T_COMMAND
+        fzf --fish | source
+
         function fish_user_key_bindings
-                # bind -M default \ef '__fzf_search_directory'
-                bind -M default \cr '__fzf_search_history; and commandline -f repaint'
+                # bind -M default \en '__fzf_f'# meta: \eKEY,ctrl \cKEY
         end
 
 end
