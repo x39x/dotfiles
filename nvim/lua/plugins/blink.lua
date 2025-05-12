@@ -62,11 +62,10 @@ M.opts = {
         },
         keymap = {
                 ["<C-space>"] = {},
-                ["<C-y>"] = { "show", "show_documentation", "hide_documentation" },
-                -- ["<C-l>"] = { "accept", "fallback" },
-                ["<C-l>"] = { "select_and_accept" },
+                ["<C-l>"] = { "select_and_accept", "fallback" },
                 ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
                 ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+                ["<C-y>"] = { "show", "show_documentation", "hide_documentation", "fallback" },
         },
 }
 
