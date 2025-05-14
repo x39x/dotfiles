@@ -13,7 +13,7 @@ local colors = {
         info = "#316bcd",
         link_blue = "#1976D2",
 
-        fg = "#888888",
+        fg0 = "#888888",
         white0 = "#FFFFFF",
 
         bg0 = "#000000",
@@ -42,7 +42,6 @@ local colors = {
         red0 = "#f50000",
         red = "#cd3131",
         error = "#cd3131",
-        red3 = "#F92572",
         red1 = "#FF7B72",
         keyword = "#f97583",
         pink = "#FF7A84",
@@ -74,12 +73,12 @@ local function m39k()
         vim.g.colors_name = "39dark"
 
         -- UI
-        hl("Normal", { fg = colors.fg, bg = colors.bg1 })
-        hl("NormalFloat", { fg = colors.fg, bg = colors.bg2 })
+        hl("Normal", { fg = colors.fg0, bg = colors.bg1 })
+        hl("NormalFloat", { fg = colors.fg0, bg = colors.bg2 })
         hl("FloatBorder", { fg = colors.border, bg = colors.bg2 })
         hl("CursorLine", { bg = colors.line_highlight })
         hl("CursorColumn", { bg = colors.line_highlight })
-        hl("Cursor", { fg = colors.bg1, bg = colors.fg })
+        hl("Cursor", { fg = colors.bg1, bg = colors.fg0 })
         hl("LineNr", { fg = colors.gray })
         hl("CursorLineNr", { fg = colors.white })
         hl("SignColumn", { fg = colors.gray, bg = colors.bg1 })
@@ -87,7 +86,7 @@ local function m39k()
         hl("StatusLine", { fg = colors.gray, bg = colors.bg2 })
         hl("StatusLineNC", { fg = colors.gray, bg = colors.bg2 })
         hl("VertSplit", { fg = colors.border, bg = colors.border })
-        hl("Pmenu", { fg = colors.fg, bg = colors.bg2 })
+        hl("Pmenu", { fg = colors.fg0, bg = colors.bg2 })
         hl("PmenuSel", { fg = colors.light_gray, bg = colors.bg4 })
         hl("PmenuSbar", { bg = colors.bg2 })
         hl("PmenuThumb", { bg = colors.gray })
@@ -109,7 +108,7 @@ local function m39k()
         hl("Title", { fg = colors.blue1, bold = true })
         hl("Question", { fg = colors.purple0 })
         hl("MoreMsg", { fg = colors.purple0 })
-        hl("ModeMsg", { fg = colors.fg })
+        hl("ModeMsg", { fg = colors.fg0 })
         hl("ErrorMsg", { fg = colors.error })
         hl("WarningMsg", { fg = colors.orange })
         hl("WildMenu", { fg = colors.light_gray, bg = colors.bg3 })
@@ -202,7 +201,7 @@ local function m39k()
         hl("@constant.macro", { fg = colors.purple0 })
         hl("@namespace", { fg = colors.blue1 })
         hl("@symbol", { fg = colors.purple0 })
-        hl("@text", { fg = colors.fg })
+        hl("@text", { fg = colors.fg0 })
         hl("@text.strong", { fg = colors.pink, bold = true })
         hl("@text.emphasis", { italic = true })
         hl("@text.underline", { underline = true })
