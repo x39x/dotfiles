@@ -56,7 +56,7 @@ M[#M + 1] = {
                                 -- To increase speed, try prettierd.
                                 formatting.prettier.with({
                                         extra_args = { "--tab-width", "4" },
-                                        extra_filetypes = { "json5", "toml" },
+                                        extra_filetypes = { "jsonc", "json5", "toml" },
                                 }),
                                 formatting.stylua.with({
                                         extra_args = {
