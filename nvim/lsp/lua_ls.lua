@@ -16,7 +16,7 @@ return {
                 Lua = {
                         diagnostics = {
                                 globals = { "vim" },
-                                disable = { "missing-fields", "undefined-field" },
+                                disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
                         },
                         workspace = {
                                 library = {

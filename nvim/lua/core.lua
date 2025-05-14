@@ -99,6 +99,14 @@ vim.diagnostic.config({
                 prefix = "",
         },
 })
+-- set lsp float window border
+-- - "solid": Adds padding by a single whitespace cell.
+local orig = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or "solid"
+        return orig(contents, syntax, opts, ...)
+end
 
 --NOTE: lazy
 vim.g.mapleader = " "
@@ -188,7 +196,7 @@ keymap("i", "jk", "<esc>", key_opts)
 keymap({ "n", "o" }, "L", "$", key_opts)
 keymap({ "x" }, "L", "$h", key_opts)
 keymap("", "H", "^", key_opts)
-keymap("", "K", "2k", key_opts)
+-- keymap("", "K", "2k", key_opts)
 keymap("", "J", "2j", key_opts)
 keymap("", "|", "J", key_opts)
 keymap("", "q", "%", key_opts)
@@ -216,6 +224,7 @@ keymap({ "x" }, ">", ">gv", key_opts)
 --Plugin
 keymap({ "n", "x" }, "f", require("flash").jump, key_opts)
 keymap("n", "<leader>n", require("nvim-tree.api").tree.open, key_opts)
+keymap("n", "<Leader>fr", require("telescope.builtin").builtin, key_opts)
 keymap("n", "<Leader>fm", require("telescope.builtin").marks, key_opts)
 keymap("n", "<leader>fh", require("telescope.builtin").oldfiles, key_opts)
 keymap("n", "<leader>fl", require("telescope").extensions.live_grep_args.live_grep_args, key_opts)
