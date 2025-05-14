@@ -96,9 +96,9 @@ M.config = function()
                                 mappings = map(),
                         }),
 
-                        find_files = theme.simple_ivy({
+                        fd = theme.simple_ivy({
                                 previewer = false,
-                                find_command = { "fd", "-H" },
+                                hidden = true,
                                 mappings = map(),
                         }),
 
