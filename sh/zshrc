@@ -1,6 +1,5 @@
 [ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
-[ -n "$SSH_TTY" ] && command -v fish >/dev/null 2>&1  && exec fish
-[ -n "$DISPLAY" -o -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && fish
+[ -n "$DISPLAY" -o -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && exec fish
 
 setopt emacs
 setopt AUTO_CD

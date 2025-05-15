@@ -16,8 +16,6 @@ cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [diff]
 external = difft
 colorMoved = default 
-# git log -p --ext-diff
-# git show --ext-diff
 
 #WARN: storing authentication information (recommended to use cache,no store)
 [credential]

@@ -1,50 +1,47 @@
 --NOTE: options
-local opt = vim.o
+local o = vim.o
 local keymap = vim.keymap.set
 local cmd = vim.api.nvim_create_user_command
 local autocmd = vim.api.nvim_create_autocmd
 local key_opts = { noremap = true, silent = true }
 
-opt.backup = false
-opt.swapfile = false
-opt.errorbells = false
-opt.autochdir = false
-opt.termguicolors = true
-opt.splitright = true
-opt.splitbelow = true
-opt.number = true
-opt.relativenumber = false
-opt.numberwidth = 3
-opt.smartindent = true
-opt.copyindent = true -- 自动缩进时，复制已有的行的缩进结构
-opt.hlsearch = true -- 高亮显示搜索的匹配结果，输入结束时才显示
-opt.incsearch = true -- 高亮显示搜索的匹配过程，每输入一个字符，就自动跳到第一个匹配的结果：
-opt.ignorecase = true -- 搜索时忽略大小写
-opt.smartcase = true -- smart search
+o.backup = false
+o.swapfile = false
+o.errorbells = false
+o.autochdir = false
+o.termguicolors = true
+o.splitright = true
+o.splitbelow = true
+o.number = true
+o.relativenumber = false
+o.numberwidth = 3
+o.smartindent = true
+o.copyindent = true -- 自动缩进时，复制已有的行的缩进结构
+o.hlsearch = true
+o.incsearch = true
+o.ignorecase = true
+o.smartcase = true
 --
-opt.wrap = false --no wrap
-opt.linebreak = true -- wrap don't break words
-opt.scrolloff = 5
-opt.showtabline = 2 -- tabline,0:no
-opt.laststatus = 3 --  one statusline
-opt.signcolumn = "yes" -- sign colume
-opt.list = true
---opt.listchars = { tab = "  ", extends = "⟩", precedes = "⟨", trail = "·" } --("eol:↴,tab:»·,trail:·")
---opt.fillchars = { eob = " " } -- hide  "~"
-opt.listchars = "tab:  ,extends:⟩,precedes:⟨,trail:·" --("eol:↴,tab:»·,trail:·")
-opt.fillchars = "eob: " -- hide  "~"
--- opt.completeopt = { "menu", "menuone", "noselect", "popup" } --for cmp
+o.wrap = false --no wrap
+o.linebreak = true -- wrap don't break words
+o.scrolloff = 5
+o.showtabline = 2 -- tabline,0:no
+o.laststatus = 3 --  global statusline
+o.signcolumn = "yes" -- sign colume
+o.list = true
+o.listchars = "tab:  ,extends:⟩,precedes:⟨,trail:·" --("eol:↴,tab:»·,trail:·")
+o.fillchars = "eob: " -- hide  "~"
 --set fold
-opt.foldcolumn = "0" --show fold in line number
-opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-opt.foldlevelstart = 99
-opt.foldenable = true
+o.foldcolumn = "0" --show fold in line number
+o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevelstart = 99
+o.foldenable = true
 --
-opt.expandtab = true -- tab->spaces
-opt.shiftwidth = 8 -- the number of spaces inserted for each indentation
-opt.tabstop = 8 -- 一个tab键所占的列数
-opt.cursorline = false
-opt.conceallevel = 0 -- Hide * ... 0: no ,1: leave space, 2:hide space
+o.expandtab = true -- tab->spaces
+o.shiftwidth = 8
+o.tabstop = 8
+o.cursorline = false
+o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
 --NOTE: //
 vim.g.rust_recommended_style = 0
@@ -291,10 +288,10 @@ autocmd("FileType", {
         pattern = { "markdown", "typst" },
         group = vim.api.nvim_create_augroup("WRITING", { clear = true }),
         callback = function()
-                vim.opt_local.tabstop = 4
-                vim.opt_local.shiftwidth = 4
-                vim.opt_local.softtabstop = 4
-                vim.opt_local.wrap = true
+                vim.bo.tabstop = 4
+                vim.bo.shiftwidth = 4
+                vim.bo.softtabstop = 4
+                vim.bo.wrap = true
                 keymap({ "x", "n" }, "j", "gj", { silent = true, buffer = true })
                 keymap({ "x", "n" }, "k", "gk", { silent = true, buffer = true })
                 keymap("", "H", "g^", { silent = true, buffer = true })

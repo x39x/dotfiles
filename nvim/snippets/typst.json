@@ -1,12 +1,7 @@
 {
     "pagebreak": {
-        "prefix": [
-            ";pa",
-            "\uff1bpa"
-        ],
-        "body": [
-            "#pagebreak()"
-        ],
+        "prefix": [";pa", "\uff1bpa"],
+        "body": ["#pagebreak()"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -14,12 +9,8 @@
         }
     },
     "new_line": {
-        "prefix": [
-            "\u3001\u3001"
-        ],
-        "body": [
-            "\\"
-        ],
+        "prefix": ["\u3001\u3001"],
+        "body": ["\\"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -27,13 +18,8 @@
         }
     },
     "indent": {
-        "prefix": [
-            ";in",
-            "\uff1bin"
-        ],
-        "body": [
-            "#indent()"
-        ],
+        "prefix": [";in", "\uff1bin"],
+        "body": ["#indent()"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -41,13 +27,8 @@
         }
     },
     "figure": {
-        "prefix": [
-            ";8",
-            "\uff1b8"
-        ],
-        "body": [
-            "#figure(image(\"figures/${path}\",height:20%))"
-        ],
+        "prefix": [";8", "\uff1b8"],
+        "body": ["#figure(image(\"figures/${path}\",height:20%))"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -55,10 +36,7 @@
         }
     },
     "page": {
-        "prefix": [
-            ";=",
-            "\uff1b="
-        ],
+        "prefix": [";=", "\uff1b="],
         "body": [
             "#import \"@local/templates:1.0.0\": *",
             "#show: note.with(",
@@ -74,15 +52,8 @@
         }
     },
     "red_rect": {
-        "prefix": [
-            ";3",
-            "\uff1b3"
-        ],
-        "body": [
-            "#red_rect(name: \"${name}\")[",
-            "${body}",
-            "]"
-        ],
+        "prefix": [";3", "\uff1b3"],
+        "body": ["#red_rect(name: \"${name}\")[", "${body}", "]"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -90,15 +61,8 @@
         }
     },
     "blue_rect": {
-        "prefix": [
-            ";4",
-            "\uff1b4"
-        ],
-        "body": [
-            "#blue_rect(name: ${none})[",
-            "${body}",
-            "]"
-        ],
+        "prefix": [";4", "\uff1b4"],
+        "body": ["#blue_rect(name: ${none})[", "${body}", "]"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -106,15 +70,8 @@
         }
     },
     "red_note": {
-        "prefix": [
-            ";1",
-            "\uff1b1"
-        ],
-        "body": [
-            "#red_note[",
-            "${body}",
-            "]"
-        ],
+        "prefix": [";1", "\uff1b1"],
+        "body": ["#red_note[", "${body}", "]"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -122,14 +79,8 @@
         }
     },
     "blue_note": {
-        "prefix": [
-            ";2",
-            "\uff1b2"
-        ],
-        "body": [
-            "#blue_note[",
-            "${body}]"
-        ],
+        "prefix": [";2", "\uff1b2"],
+        "body": ["#blue_note[", "${body}]"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -137,13 +88,8 @@
         }
     },
     "red": {
-        "prefix": [
-            ";5",
-            "\uff1b5"
-        ],
-        "body": [
-            "#red[${body}]"
-        ],
+        "prefix": [";5", "\uff1b5"],
+        "body": ["#red[${body}]"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
@@ -151,13 +97,8 @@
         }
     },
     "blue": {
-        "prefix": [
-            ";6",
-            "\uff1b6"
-        ],
-        "body": [
-            "#blue[${body}]"
-        ],
+        "prefix": [";6", "\uff1b6"],
+        "body": ["#blue[${body}]"],
         "luasnip": {
             "priority": 2000,
             "autotrigger": true,
