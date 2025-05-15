@@ -19,9 +19,6 @@ blue       = "#79c0ff"
 magenta    = "#bc8cff"
 cyan       = "#a5d6ff"
 white      = "#b1bac4"
-[colors.cursor]
-text       = "#FFFFFF"
-cursor     = "#0000FF"
 [colors.selection]
 background = "#17335a"
 text       = "CellForeground"

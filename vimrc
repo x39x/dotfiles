@@ -1,4 +1,6 @@
-imap jk <ESC>
+noremap J j
+noremap \| J
+inoremap jk <ESC>
 syntax on
 colorscheme koehler
 filetype indent plugin on
