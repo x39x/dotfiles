@@ -59,7 +59,7 @@ local colors = {
         --NOTE: none
         -- seaaa = "#515C6A",
         -- ruler = "#2A2A2A",
-        -- diff_change = "#2b6bab",
+        -- change0 = "#2b6bab",
         --  min dakr diff remove bg #691B24 difffff = "#611B27",
         --  #cd9731
 }
@@ -98,7 +98,7 @@ local function m39k()
         hl("Search", { bg = colors.search1, fg = colors.bg0 })
         hl("CurSearch", { bg = colors.green1, fg = colors.bg0 })
         hl("IncSearch", { bg = colors.red0, fg = colors.bg0 })
-        hl("MatchParen", { bg = colors.search1, fg = colors.bg0 })
+        hl("MatchParen", { bg = colors.green1, fg = colors.bg0 })
         hl("Directory", { fg = colors.purple0 })
         hl("Folded", { fg = colors.gray, bg = colors.bg3 })
         hl("FoldColumn", { fg = colors.gray, bg = colors.bg1 })
@@ -116,8 +116,8 @@ local function m39k()
         hl("Whitespace", { fg = colors.border })
 
         -- Syntax
-        -- hl("Comment", { fg = colors.comment, italic = true })
         hl("Comment", { fg = colors.comment })
+        hl("SpecialComment", { fg = colors.comment, italic = true })
         hl("String", { fg = colors.yellow })
         hl("Character", { fg = colors.yellow })
         hl("Number", { fg = colors.blue2 })
@@ -150,10 +150,7 @@ local function m39k()
         hl("Structure", { fg = colors.blue1 })
         hl("Typedef", { fg = colors.blue1 })
 
-        hl("SpecialComment", { fg = colors.comment, italic = true })
-
         -- Treesitter
-        -- hl("@comment", { fg = colors.comment, italic = true })
         hl("@comment", { fg = colors.comment })
         hl("@string", { fg = colors.yellow })
         hl("@string.regex", { fg = colors.blue1 })

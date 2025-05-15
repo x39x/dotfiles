@@ -287,11 +287,12 @@ autocmd({ "BufReadPost" }, {
 autocmd("FileType", {
         pattern = { "markdown", "typst" },
         group = vim.api.nvim_create_augroup("WRITING", { clear = true }),
-        callback = function()
-                vim.bo.tabstop = 4
-                vim.bo.shiftwidth = 4
-                vim.bo.softtabstop = 4
-                vim.bo.wrap = true
+
+        callback = function(args)
+                local winid = vim.api.nvim_get_current_win()
+                local bufnr = args.buf
+                vim.bo[bufnr].textwidth = 120
+                vim.wo[winid][bufnr].wrap = true
                 keymap({ "x", "n" }, "j", "gj", { silent = true, buffer = true })
                 keymap({ "x", "n" }, "k", "gk", { silent = true, buffer = true })
                 keymap("", "H", "g^", { silent = true, buffer = true })
@@ -308,10 +309,12 @@ autocmd({ "FileType" }, {
 })
 
 autocmd("FileType", {
-        pattern = { "json", "jsonc" },
-        callback = function()
-                vim.bo.shiftwidth = 4
-                vim.bo.tabstop = 4
-                vim.bo.expandtab = true
+        pattern = { "json", "jsonc", "json5", "markdown", "typst", "python" },
+        group = vim.api.nvim_create_augroup("SHIFTWIDTH", { clear = true }),
+        callback = function(args)
+                local bufnr = args.buf
+                vim.bo[bufnr].shiftwidth = 4
+                vim.bo[bufnr].tabstop = 4
+                vim.bo[bufnr].expandtab = true
         end,
 })

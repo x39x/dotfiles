@@ -20,10 +20,8 @@ offset = { x = 0, y = 7 }
 
 [cursor]
 style = { shape="Block", blinking="Always" }
+blink_timeout=0
 
-[colors.cursor]
-text       = "#FFFFFF"
-cursor     = "#0000FF"
 
 [keyboard]
 bindings = [

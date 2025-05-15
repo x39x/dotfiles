@@ -14,7 +14,7 @@ keepBackup = false
 cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [diff]
-external = difft
+external = difft --syntax-highlight off
 colorMoved = default 
 
 #WARN: storing authentication information (recommended to use cache,no store)

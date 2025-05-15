@@ -1,13 +1,10 @@
+font-size              = 13
+adjust-cell-height     = 10
 font-thicken           = true
-font-family            = "SF Mono"
-font-family            = "IosevkaTerm Nerd Font Mono"
-font-size              = 14
-adjust-cell-height     = 11
 window-padding-y       = 0
 window-padding-x       = 0
-window-padding-balance = true
-macos-option-as-alt    = true
 theme                  = light:Terminal Basic,dark:Apple System Colors
 cursor-color           = "#0000FF"
 cursor-text            = "#FFFFFF"
+macos-option-as-alt    = true
 keybind                = super+s=esc:s
