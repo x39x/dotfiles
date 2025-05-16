@@ -21,34 +21,17 @@ M[#M + 1] = {
                 },
         },
 }
-
---PLUG:
 M[#M + 1] = {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
+        "nvimdev/indentmini.nvim",
         opts = {
-                scope = {
-                        enabled = false,
-                },
-                indent = {
-                        char = "│",
-                        tab_char = "│",
-                },
                 exclude = {
-                        filetypes = {
-                                "help",
-                                "Trouble",
-                                "alpha",
-                                "typst",
-                                "markdown",
-                        },
-                        buftypes = {
-                                "terminal",
-                                "nofile",
-                        },
+                        "help",
+                        "Trouble",
+                        "alpha",
+                        "typst",
+                        "markdown",
                 },
         },
-        event = "VeryLazy",
 }
 
 M[#M + 1] = {
@@ -64,24 +47,4 @@ M[#M + 1] = {
         opts = {},
 }
 
---PLUG:
-M[#M + 1] = {
-        "projekt0n/github-nvim-theme",
-        main = "github-theme",
-        opts = {
-                groups = {
-                        all = {
-                                TabLineSel = { fg = "palette.red", bg = "bg" },
-                                BlinkCmpKind = { link = "KeyWord" },
-                                AlphaHeader = { fg = "#39C5BB" },
-                        },
-                },
-        },
-        lazy = true,
-}
-
-M[#M + 1] = {
-        "lunacookies/vim-colors-xcode",
-        lazy = true,
-}
 return M

@@ -1,4 +1,4 @@
-general.import = ["~/.config/alacritty/themes/39light.toml"]
+general.import = ["~/.cache/alacritty.toml"]
 
 [env]
 TERM_PROGRAM = "alacritty"
@@ -11,12 +11,12 @@ padding = { x = 0, y = 0 }
 position = { x = 650, y = 250 }
 
 [font]
-size = 15
+size = 14
 normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
 bold_italic = { style = "Bold Italic" }
 italic = { style = "Italic" }
 bold = { style = "Bold" }
-offset = { x = 0, y = 7 }
+offset = { x = 1, y = 10 }
 
 [cursor]
 style = { shape="Block", blinking="Always" }

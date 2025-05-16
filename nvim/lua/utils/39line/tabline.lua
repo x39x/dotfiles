@@ -46,9 +46,8 @@ local BufferFileNameBlock = {
         on_click = {
                 callback = function(_, minwid, _, button)
                         if button == "r" then -- close on mouse middle click: l, m ,r
-                                vim.schedule(function()
-                                        vim.api.nvim_buf_delete(minwid, { force = false })
-                                end)
+                                vim.api.nvim_buf_delete(minwid, { force = false })
+                                vim.cmd.redrawtabline()
                         else
                                 vim.api.nvim_win_set_buf(0, minwid)
                         end

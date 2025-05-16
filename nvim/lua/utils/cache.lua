@@ -4,7 +4,7 @@ local M = {}
 local cache_path = Path:new(vim.fn.stdpath("data"), "project_cmd_cache.json")
 local cache = {}
 
--- 加载 JSON 缓存
+-- load JSON
 local function load_cache()
         if cache_path:exists() then
                 local content = cache_path:read()
@@ -14,7 +14,7 @@ local function load_cache()
         end
 end
 
--- 保存 JSON 缓存
+-- save JSON
 local function save_cache()
         cache_path:parent():mkdir({ parents = true })
         local f = cache_path:open("w")
@@ -96,7 +96,7 @@ function M.clear_current()
         end)
 end
 
--- 清除所有缓存
+-- clean all
 function M.clear_all()
         cache = {}
         save_cache()

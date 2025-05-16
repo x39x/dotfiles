@@ -24,6 +24,7 @@ local colors = {
 
         line_highlight = "#303030",
         indent_guide_active = "#383838",
+        indent_line = "#2A2A2A",
         border = "#444444",
         gray = "#727272",
         comment = "#6b737c",
@@ -113,7 +114,7 @@ local function m39k()
         hl("WarningMsg", { fg = colors.orange })
         hl("WildMenu", { fg = colors.light_gray, bg = colors.bg3 })
         hl("Conceal", { fg = colors.comment })
-        hl("Whitespace", { fg = colors.border })
+        hl("Whitespace", { fg = colors.indent_line })
 
         -- Syntax
         hl("Comment", { fg = colors.comment })
@@ -289,6 +290,9 @@ local function m39k()
 
         hl("HeirlineA", { fg = colors.blue2 })
         hl("HeirlineB", { fg = colors.purple0 })
+
+        hl("IndentLine", { link = "Whitespace" })
+        hl("IndentLineCurrent", { link = "Whitespace" })
 end
 
 m39k()

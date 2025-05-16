@@ -324,6 +324,9 @@ local function m39k()
         vim.g.terminal_color_13 = colors.red0
         vim.g.terminal_color_14 = colors.yellow2
         vim.g.terminal_color_15 = colors.fg2
+
+        hl("IndentLine", { link = "Whitespace" })
+        hl("IndentLineCurrent", { link = "Whitespace" })
 end
 
 m39k()

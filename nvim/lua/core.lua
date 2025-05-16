@@ -292,7 +292,7 @@ autocmd("FileType", {
                 local winid = vim.api.nvim_get_current_win()
                 local bufnr = args.buf
                 vim.bo[bufnr].textwidth = 120
-                vim.wo[winid][bufnr].wrap = true
+                vim.wo[winid][0].wrap = true
                 keymap({ "x", "n" }, "j", "gj", { silent = true, buffer = true })
                 keymap({ "x", "n" }, "k", "gk", { silent = true, buffer = true })
                 keymap("", "H", "g^", { silent = true, buffer = true })
@@ -312,9 +312,19 @@ autocmd("FileType", {
         pattern = { "json", "jsonc", "json5", "markdown", "typst", "python" },
         group = vim.api.nvim_create_augroup("SHIFTWIDTH", { clear = true }),
         callback = function(args)
-                local bufnr = args.buf
-                vim.bo[bufnr].shiftwidth = 4
-                vim.bo[bufnr].tabstop = 4
-                vim.bo[bufnr].expandtab = true
+                local _ = args.buf
+                vim.bo[0].shiftwidth = 4
+                vim.bo[0].tabstop = 4
+                vim.bo[0].expandtab = true
         end,
 })
+
+-- NOTE: colorscheme
+local colorscheme = require("utils.colorscheme")
+autocmd({ "VimLeavePre" }, {
+        callback = function()
+                colorscheme.cache()
+        end,
+        group = vim.api.nvim_create_augroup("SAVEMODE", { clear = true }),
+})
+colorscheme.set()

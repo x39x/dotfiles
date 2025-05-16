@@ -18,9 +18,9 @@ if status is-interactive
         abbr -a gg    git log --all --oneline --decorate --color --graph
         abbr -a grm   git remote -v
 
-        zoxide init fish | source
         set -x fish_greeting ""
-
         set -gx FZF_CTRL_T_COMMAND
+
+        zoxide init fish | source
         fzf --fish | source
 end
