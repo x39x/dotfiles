@@ -1,5 +1,5 @@
 [ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
-[ -n "$DISPLAY" -o -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && exec fish
+[ ! -n "$NOFISH" -a -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && exec fish
 
 set -o emacs
 set bell-style none

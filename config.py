@@ -30,9 +30,21 @@ default = [
             macos="~/Library/Application Support/lazygit/config.yml",
         ),
     ),
-    File39("clangd", "~/.clangd"),
+    File39(
+        "clangd",
+        utils.path_by_os(
+            linux="~/.config/clangd/config.yaml",
+            macos="~/Library/Preferences/clangd/config.yaml",
+        ),
+    ),
     File39("fmtstyle/clang-format", "~/.clang-format"),
-    File39("fmtstyle/rustfmt.toml", "~/.rustfmt.toml"),
+    File39(
+        "fmtstyle/rustfmt.toml",
+        utils.path_by_os(
+            linux="~/.config/rustfmt/rustfmt.toml",
+            macos="~/Library/Application Support/rustfmt/rustfmt.toml",
+        ),
+    ),
 ]
 macos = [
     File39("sh/zshenv", "~/.zshenv"),

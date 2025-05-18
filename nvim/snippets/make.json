@@ -3,7 +3,7 @@
         "prefix": "make",
         "body": [
             "CC = clang",
-            "CFLAGS = -Wall",
+            "CFLAGS = -Wall -std=c++17",
             "TARGET = main",
             "SRCS := $(wildcard *.c)",
             "",

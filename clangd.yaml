@@ -1,0 +1,11 @@
+CompileFlags:
+  CompilationDatabase: build/       # Search build/ directory for compile_commands.json
+If:
+  PathMatch: [".*\\.cc$", ".*\\.hh$"]
+CompileFlags:
+  add: [-std=c++17, -Wall]
+---
+If:
+  PathMatch: [".*\\.c$"]
+CompileFlags:
+  add: [-std=c11, -Wall]

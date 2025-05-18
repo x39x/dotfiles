@@ -25,7 +25,6 @@ local function get_mac_mode()
         local result = vim.system(cmd):wait()
 
         if result.code ~= 0 then
-                vim.notify("Failed to detect macOS mode: " .. tostring(result.stderr), vim.log.levels.ERROR)
                 return is_dark_mode
         end
 
@@ -39,7 +38,6 @@ end
 local function save_cache(is_dark)
         local f = io.open(isdark_cache_file, "w")
         if not f then
-                vim.notify("Failed to write macOS appearance cache", vim.log.levels.ERROR)
                 return
         end
         local mode = is_dark and "true" or "false"

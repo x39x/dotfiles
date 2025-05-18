@@ -1,9 +1,6 @@
 --NOTE: https://github.com/neovim/nvim-lspconfig/blob/master/lsp/clangd.lua
 return {
-        cmd = {
-                "clangd",
-                "--background-index",
-        },
+        cmd = { "clangd" },
         filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
         root_markers = {
                 ".clangd",
@@ -11,7 +8,7 @@ return {
                 ".clang-format",
                 "compile_commands.json",
                 "compile_flags.txt",
-                "configure.ac", -- AutoTools
+                "configure.ac",
                 ".git",
         },
         capabilities = {

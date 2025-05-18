@@ -1,7 +1,4 @@
 local lsp_keymaps = require("utils.lsp_keymaps")
-local function escape_wildcards(path)
-        return path:gsub("([%[%]%?%*])", "\\%1")
-end
 
 local function reload_workspace(bufnr)
         local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
@@ -13,21 +10,6 @@ local function reload_workspace(bufnr)
                         end
                         vim.notify("Cargo workspace reloaded")
                 end, 0)
-        end
-end
-local function root_pattern(...)
-        local patterns = vim.iter({ ... }):flatten(math.huge):totable()
-
-        return function(startpath)
-                for _, pattern in ipairs(patterns) do
-                        local match = vim.fs.find(function(_, path)
-                                return vim.fn.glob(escape_wildcards(path .. "/" .. pattern)) ~= ""
-                        end, { upward = true, path = startpath })
-
-                        if match[1] then
-                                return vim.fs.dirname(match[1])
-                        end
-                end
         end
 end
 
@@ -59,12 +41,12 @@ return {
                         return
                 end
 
-                local cargo_crate_dir = root_pattern("Cargo.toml")(fname)
+                local cargo_crate_dir = vim.fs.root(fname, { "Cargo.toml" })
                 local cargo_workspace_root
 
                 if cargo_crate_dir == nil then
                         on_dir(
-                                root_pattern("rust-project.json")(fname)
+                                vim.fs.root(fname, { "rust-project.json" })
                                         or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
                         )
                         return

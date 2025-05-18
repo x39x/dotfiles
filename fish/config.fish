@@ -19,8 +19,9 @@ if status is-interactive
         abbr -a grm   git remote -v
 
         set -x fish_greeting ""
-        set -gx FZF_CTRL_T_COMMAND
 
         zoxide init fish | source
         fzf --fish | source
+        bind \ec fzf-file-widget
+
 end

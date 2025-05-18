@@ -7,18 +7,13 @@ local key_opts = { noremap = true, silent = true }
 
 o.backup = false
 o.swapfile = false
-o.errorbells = false
 o.autochdir = false
-o.termguicolors = true
 o.splitright = true
 o.splitbelow = true
 o.number = true
-o.relativenumber = false
 o.numberwidth = 3
 o.smartindent = true
 o.copyindent = true -- 自动缩进时，复制已有的行的缩进结构
-o.hlsearch = true
-o.incsearch = true
 o.ignorecase = true
 o.smartcase = true
 --
@@ -32,10 +27,10 @@ o.list = true
 o.listchars = "tab:  ,extends:⟩,precedes:⟨,trail:·" --("eol:↴,tab:»·,trail:·")
 o.fillchars = "eob: " -- hide  "~"
 --set fold
+o.foldenable = true
 o.foldcolumn = "0" --show fold in line number
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
-o.foldenable = true
 --
 o.expandtab = true -- tab->spaces
 o.shiftwidth = 8
@@ -77,7 +72,7 @@ vim.diagnostic.config({
         virtual_text = false,
         signs = {
                 text = {
-                        --   󰌕   ✎   ▎ ▏ │             
+                        -- ▎  󰌕  ✎           
                         [vim.diagnostic.severity.ERROR] = "▎",
                         [vim.diagnostic.severity.WARN] = "▎",
                         [vim.diagnostic.severity.HINT] = "",

@@ -1,4 +1,4 @@
-function term_theme
+function alat
         if test $TERM_PROGRAM = "alacritty"
                 function theme
                         ln -sf $HOME/.config/alacritty/themes/{$argv[1]}.toml $HOME/.cache/alacritty.toml

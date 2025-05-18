@@ -115,6 +115,7 @@ proxy-groups:
       proxies: [DIRECT, PROXY-1, PROXY-2, PROXY-3]
 
 rules:
+    - GEOSITE,category-ads-all,REJECT
     # CN Media
     - GEOSITE,bilibili,MEDIA-CN
       # AI

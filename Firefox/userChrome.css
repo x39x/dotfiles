@@ -3,8 +3,6 @@
         display: none !important;
 }
 
-
-
 /* === Remove the border and background of the address bar === */
 #urlbar-background {
         border: none !important;
@@ -36,20 +34,15 @@
 
 
 
-/* === Change the "New Tab" button icon to a plus sign (+) === */
-#new-tab-button {
-        list-style-image: url(chrome://global/skin/icons/plus.svg) !important;
-}
-/* === Remove the Firefox menu button (hamburger menu) in the top right corner === */
-#PanelUI-button {
-        display: none !important;
-}
-/* === Remove the extensions management button === */
-#unified-extensions-button {
-        display: none !important;
-}
-
-
+/* /* === Removethe Firefox menu button (hamburger menu) in the top right corner === */ */
+/* #PanelUI-button { */
+/*         display: none !important; */
+/* } */
+/* /* === Remove the extensions management button === */ */
+/* #unified-extensions-button { */
+/*         display: none !important; */
+/* } */
+/**/
 
 /* === Hide the identity label in extension pages === */
 /*#identity-box.extensionPage #identity-icon-label {*/

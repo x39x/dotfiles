@@ -22,7 +22,6 @@ offset = { x = 1, y = 10 }
 style = { shape="Block", blinking="Always" }
 blink_timeout=0
 
-
 [keyboard]
 bindings = [
 { key = "【", mods = "Control", chars = "\u001B" }, # chars: Unicode
