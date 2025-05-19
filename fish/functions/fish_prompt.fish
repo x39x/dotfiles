@@ -1,6 +1,7 @@
 function fish_prompt --description 'Write out the prompt'
         set -g __fish_git_prompt_showuntrackedfiles true # take a lot of time
         set -g __fish_git_prompt_showdirtystate true
+        set -g __fish_git_prompt_showstashstate true
 
         set -l last_status $status
         set -l normal_color (set_color normal)

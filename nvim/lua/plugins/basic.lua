@@ -157,6 +157,8 @@ M[#M + 1] = {
                                 "typst",
                                 "fish",
                                 "bash",
+                                "make",
+                                "cmake",
                         },
                         sync_install = false,
                         highlight = {
