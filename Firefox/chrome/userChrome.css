@@ -1,0 +1,32 @@
+/* === Remove the fullscreen mode warning border === */
+#fullscreen-warning {
+        display: none !important;
+}
+
+/* === Remove the "Search with..." suggestion in the address bar === */
+#urlbar-input::placeholder {
+        color: transparent !important;
+}
+
+/* === Hide certain icons in the address bar === */
+#urlbar-searchmode-switcher,
+#searchmode-switcher-chicklet,
+#identity-permission-box,
+#star-button-box,
+#alltabs-button,
+#identity-icon-box,
+#picture-in-picture-button,
+#tracking-protection-icon-container,
+#reader-mode-button,
+#translations-button {
+        display: none !important;
+}
+
+/* === Address bar: remove border, shadow, and outline === */
+#urlbar-background {
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        background: var(--toolbar-bgcolor) !important;
+}
+

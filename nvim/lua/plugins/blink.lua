@@ -21,7 +21,6 @@ M.dependencies = {
                 })
                 require("luasnip/loaders/from_vscode").lazy_load({
                         include = {
-
                                 "c",
                                 "go",
                                 "zig",
@@ -32,6 +31,7 @@ M.dependencies = {
 
                                 "css",
                                 "html",
+                                "vue",
                                 "javascript",
                                 "javascriptreact",
                                 "typescript",

@@ -31,7 +31,7 @@ default = [
         ),
     ),
     File39(
-        "clangd",
+        "clangd.yaml",
         utils.path_by_os(
             linux="~/.config/clangd/config.yaml",
             macos="~/Library/Preferences/clangd/config.yaml",
@@ -43,6 +43,20 @@ default = [
         utils.path_by_os(
             linux="~/.config/rustfmt/rustfmt.toml",
             macos="~/Library/Application Support/rustfmt/rustfmt.toml",
+        ),
+    ),
+    File39(
+        "vscode/settings.json",
+        utils.path_by_os(
+            macos="~/Library/Application Support/Code/User/settings.json",
+            linux="~/.config/Code/User/settings.json",
+        ),
+    ),
+    File39(
+        "vscode/keybindings.json",
+        utils.path_by_os(
+            macos="~/Library/Application Support/Code/User/keybindings.json",
+            linux="~/.config/Code/User/keybindings.json",
         ),
     ),
 ]

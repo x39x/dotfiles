@@ -1,7 +1,4 @@
-escape ^Jj
-vbell off
-bell_msg ""
-term screen-256color
-hardstatus alwayslastline "%Lw"
+escape ``
 bind x kill
 bind l prev
+hardstatus alwayslastline "%Lw"

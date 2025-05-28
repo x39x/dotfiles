@@ -259,6 +259,7 @@ autocmd("BufWritePre", {
                 "*.ts",
                 "*.tsx",
                 "*.mjs",
+                "*.vue",
 
                 "*.md",
                 "*.mdx",
@@ -304,7 +305,7 @@ autocmd({ "FileType" }, {
 })
 
 autocmd("FileType", {
-        pattern = { "json", "jsonc", "json5", "markdown", "typst", "python" },
+        pattern = { "json", "jsonc", "json5", "markdown", "typst", "python", "vue", "javascript" },
         group = vim.api.nvim_create_augroup("SHIFTWIDTH", { clear = true }),
         callback = function(args)
                 local _ = args.buf

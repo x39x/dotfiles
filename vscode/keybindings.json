@@ -1,0 +1,61 @@
+[
+    {
+        "key": "alt+=",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+-",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+o",
+        "command": "workbench.action.openRecent"
+    },
+    {
+        "key": "alt+m",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "alt+w",
+        "command": "workbench.action.showErrorsWarnings"
+    },
+    {
+        "key": "alt+f",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "acceptSelectedSuggestion",
+        "when": "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
+    },
+    //file explorer
+    {
+        "key": "q",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.focusActiveEditorGroup",
+                "workbench.action.toggleSidebarVisibility"
+            ]
+        },
+        "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
+    },
+    {
+        "key": "a",
+        "command": "explorer.newFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+    },
+    {
+        "key": "o",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "filesExplorer.openFilePreserveFocus",
+                "workbench.action.focusActiveEditorGroup"
+            ]
+        },
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus"
+    }
+]

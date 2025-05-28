@@ -3,16 +3,19 @@ local lsp_keymaps = require("utils.lsp_keymaps")
 local servers = {
         "lua_ls",
         "gopls",
+        "rust_analyzer",
+
         "cmake",
         "clangd",
-        "rust_analyzer",
 
         "ruff",
         "pyright",
 
-        "ts_ls",
+        "vtsls",
+        "vue_ls",
         "tailwindcss",
 
+        -- "ts_ls",
         -- "racket_langserver",
         -- "jsonls",
 }

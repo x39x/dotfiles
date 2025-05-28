@@ -1,0 +1,331 @@
+{
+    "chat.commandCenter.enabled": false,
+    "security.workspace.trust.enabled": false,
+    "window.commandCenter": false,
+    "window.autoDetectColorScheme": true,
+    "workbench.activityBar.location": "top",
+    "workbench.colorCustomizations": {
+        "[Default Light Modern]": {
+            "editorIndentGuide.activeBackground1": "#EBECF0",
+            "editorIndentGuide.background1": "#EBECF0"
+        }
+    },
+    "workbench.editor.showTabs": "none",
+    "workbench.editor.enablePreview": false,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.minimap.enabled": false,
+    "editor.fontFamily": "SF Mono",
+    "editor.fontSize": 13,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.smoothScrolling": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 8,
+    "editor.linkedEditing": true, //修改 HTML 标签名时，同步编辑开始/结束标签
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "terminal.integrated.fontFamily": "IosevkaTerm Nerd Font Mono",
+    "terminal.integrated.fontSize": 14,
+    "files.autoSave": "onFocusChange",
+    "files.insertFinalNewline": true, // 自动在文件末尾插入一个空行
+    "files.trimFinalNewlines": true, // 自动删除文件末尾多余的空行（保持只有一个空行）
+    // EXTENSION
+    "extensions.ignoreRecommendations": true,
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+    "todohighlight.keywords": [
+        {
+            "text": "NOTE:",
+            "color": "#000000",
+            "backgroundColor": "#10B981",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "TODO:",
+            "color": "#FFFFFF",
+            "backgroundColor": "#DC2626",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "DONE:",
+            "color": "#FFFFFF",
+            "backgroundColor": "#0000FF",
+            "overviewRulerColor": "grey"
+        }
+    ],
+    "vim.easymotion": false,
+    "vim.incsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "q"
+            ],
+            "after": [
+                "%"
+            ]
+        },
+        {
+            "before": [
+                "%"
+            ],
+            "after": [
+                "q"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "j"
+            ]
+        },
+        {
+            "before": [
+                "|"
+            ],
+            "after": [
+                "J"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "after": [
+                "<",
+                "<"
+            ]
+        },
+        {
+            "before": [
+                ">"
+            ],
+            "after": [
+                ">",
+                ">"
+            ]
+        },
+        {
+            "before": [
+                ";",
+                "k"
+            ],
+            "commands": [
+                ":nohl"
+            ]
+        },
+        {
+            "before": [
+                ";",
+                "j"
+            ],
+            "after": [
+                "*",
+                "N"
+            ]
+        },
+        //lsp
+        {
+            "before": [
+                "g",
+                "d"
+            ],
+            "commands": [
+                "editor.action.revealDefinition"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "D"
+            ],
+            "commands": [
+                "editor.action.revealDeclaration"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "r"
+            ],
+            "commands": [
+                "editor.action.goToReferences"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "l"
+            ],
+            "commands": [
+                "editor.action.showHover"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "a"
+            ],
+            "commands": [
+                "editor.action.showHover"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "o"
+            ],
+            "commands": [
+                "editor.action.goToImplementation"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "n"
+            ],
+            "commands": [
+                "editor.action.rename"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$",
+                "h"
+            ]
+        },
+        {
+            "before": [
+                "q"
+            ],
+            "after": [
+                "%"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "j"
+            ]
+        },
+        {
+            "before": [
+                "|"
+            ],
+            "after": [
+                "J"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "after": [
+                "<",
+                "g",
+                "v"
+            ]
+        },
+        {
+            "before": [
+                ">"
+            ],
+            "after": [
+                ">",
+                "g",
+                "v"
+            ]
+        }
+    ],
+    "vim.operatorPendingModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "q"
+            ],
+            "after": [
+                "%"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "j"
+            ]
+        },
+        {
+            "before": [
+                "|"
+            ],
+            "after": [
+                "J"
+            ]
+        }
+    ],
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ]
+}
