@@ -1,0 +1,7 @@
+default partial modifier_keys 
+xkb_symbols "basic" {
+    include "us(basic)"
+    name[Group1]="39xkb";
+    modifier_map Mod3 {Super_R};
+    modifier_map Mod4 {Super_L};
+};

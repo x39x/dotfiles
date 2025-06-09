@@ -1,0 +1,39 @@
+#!/bin/sh
+
+net_info=$(cat ~/.cache/swaybar_net)
+
+# bright
+bright=L:$(brightnessctl info | grep -oP '\d+(?=%)' | head -n 1)%
+
+
+# volume
+vol=V:$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tail -n 1 | awk -F: '{split($2,a,"."); print a[2]}')%
+
+
+# battery
+BATTERY_PATH=$(find /sys/class/power_supply/ -maxdepth 1 -name "BAT*" | head -n 1)
+battery=$(cat ${BATTERY_PATH}/capacity)%
+bstatus=$(cat ${BATTERY_PATH}/status)
+if [ "$bstatus" = "Charging" ]; then
+        bchar="C"
+else 
+        bchar="B"
+fi
+
+
+# date
+time=$(date "+%a %b %d %H:%M")
+
+
+echo "${net_info}  ${bright}  ${vol}  ${bchar}:${battery}  ${time}"
+
+
+# Net
+if nmcli -t -f TYPE,STATE device | grep -q 'wifi:connected'; then 
+        wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d: -f2-)
+        echo "HWiFi:$wifi_info" > "$HOME/.cache/swaybar_net"
+elif nmcli -t -f TYPE,STATE device | grep -q '^ethernet:connected'; then 
+        echo "Wired" > "$HOME/.cache/swaybar_net"
+else 
+        echo "NoNet" >"$HOME/.cache/swaybar_net"
+fi
