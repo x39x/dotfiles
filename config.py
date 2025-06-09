@@ -60,6 +60,13 @@ default = [
         ),
     ),
 ]
+
+linux=[
+    File39("xkb", "~/.config/xkb"),
+    File39("sway", "~/.config/sway"),
+    File39("swaylock", "~/.config/swaylock"),
+]
+
 macos = [
     File39("sh/zshenv", "~/.zshenv"),
     File39("sh/zshrc", "~/.zshrc"),
@@ -113,6 +120,8 @@ utils.ln(base)
 utils.ln(default)
 if utils.get_os_name() == "Darwin":
     utils.ln(macos)
+if utils.get_os_name() == "Linux":
+    utils.ln(linux)
 
 if utils.env_exists("RIME"):
     update_rime_repo()
