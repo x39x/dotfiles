@@ -21,13 +21,18 @@ exec swayidle -w \
 input "2:7:SynPS/2_Synaptics_TouchPad" {
     dwt enabled
     tap enabled
+    accel_profile "flat"
     natural_scroll enabled
     middle_emulation enabled
 }
+input "1133:50504:Logitech_USB_Receiver_Mouse" {
+    accel_profile "flat"
+    pointer_accel -0.3 # mouse speed (between -1 and 1)
+}
 input "type:keyboard" {
-	repeat_delay 239
-	repeat_rate 39
-        xkb_layout "39xkb"
+    repeat_delay 239
+    repeat_rate 39
+    xkb_layout "39xkb"
 }
 input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_options "ctrl:swapcaps"
