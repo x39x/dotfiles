@@ -11,12 +11,12 @@ padding = { x = 0, y = 0 }
 position = { x = 650, y = 250 }
 
 [font]
-size = 14
+size = 14 
 normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
 bold_italic = { style = "Bold Italic" }
 italic = { style = "Italic" }
 bold = { style = "Bold" }
-offset = { x = 1, y = 10 }
+offset = { x = 1, y = 11 }
 
 [cursor]
 style = { shape="Block", blinking="Always" }
@@ -30,3 +30,12 @@ bindings = [
 { key = "v", mods = "Super", action = "Paste" },
 { key = "q", mods = "Super", action = "Quit" },
 ]
+
+
+
+
+
+
+
+
+

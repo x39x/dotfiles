@@ -1,9 +1,9 @@
 {
-    "root_dir_cmake": {
-        "prefix": "make",
+    "make_c": {
+        "prefix": "mkc",
         "body": [
             "CC = clang",
-            "CFLAGS = -Wall -std=c++17",
+            "CFLAGS = -std=c11 -Wall",
             "TARGET = main",
             "SRCS := $(wildcard *.c)",
             "",
@@ -21,6 +21,41 @@
             "priority": 2000,
             "autotrigger": true,
             "wordTrig": false
+        }
+    },
+    "make_cc": {
+        "prefix": "mkx",
+        "body": [
+            "CXX = clang++",
+            "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",
+            "SRCS := $(wildcard *.cc)",
+            "",
+            "main: $(SRCS)",
+            "\t@$(CXX) $(CXXFLAGS) $^ -o $@",
+            "\t@./$@",
+            "\t@rm $@"
+        ],
+        "description": "oi Makefile",
+        "luasnip": {
+            "priority": 2000,
+            "wordTrig": false
+        }
+    },
+    "cc": {
+        "prefix": "cc",
+        "body": [
+            "CXX = clang++",
+            "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",
+            "%:",
+            "\t@$(CXX) $(CXXFLAGS) $@.cc -o main",
+            "\t@./main",
+            "\t@rm main"
+        ],
+        "description": "Makefile by name",
+        "luasnip": {
+            "priority": 2000,
+            "wordTrig": false,
+            "autotrigger": true
         }
     }
 }

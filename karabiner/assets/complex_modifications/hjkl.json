@@ -1,20 +1,16 @@
 {
-    "title": "Map Left Option plus h/j/k/l to Arrows,plus ESC to hyper",
+    "title": "39 Maps",
     "rules": [
         {
-            "description": "Map Left Option plus h/j/k/l to Arrows",
+            "description": "Arrows",
             "manipulators": [
                 {
                     "type": "basic",
                     "from": {
                         "key_code": "h",
                         "modifiers": {
-                            "mandatory": [
-                                "left_option"
-                            ],
-                            "optional": [
-                                "any"
-                            ]
+                            "mandatory": ["left_option"],
+                            "optional": ["any"]
                         }
                     },
                     "to": [
@@ -28,12 +24,8 @@
                     "from": {
                         "key_code": "j",
                         "modifiers": {
-                            "mandatory": [
-                                "left_option"
-                            ],
-                            "optional": [
-                                "any"
-                            ]
+                            "mandatory": ["left_option"],
+                            "optional": ["any"]
                         }
                     },
                     "to": [
@@ -47,12 +39,8 @@
                     "from": {
                         "key_code": "k",
                         "modifiers": {
-                            "mandatory": [
-                                "left_option"
-                            ],
-                            "optional": [
-                                "any"
-                            ]
+                            "mandatory": ["left_option"],
+                            "optional": ["any"]
                         }
                     },
                     "to": [
@@ -66,12 +54,8 @@
                     "from": {
                         "key_code": "l",
                         "modifiers": {
-                            "mandatory": [
-                                "left_option"
-                            ],
-                            "optional": [
-                                "any"
-                            ]
+                            "mandatory": ["left_option"],
+                            "optional": ["any"]
                         }
                     },
                     "to": [
@@ -83,65 +67,7 @@
             ]
         },
         {
-            "description": "Map '`'  plus 'left_control' to ESC",
-            "manipulators": [
-                {
-                    "type": "basic",
-                    "from": {
-                        "key_code": "grave_accent_and_tilde",
-                        "modifiers": {
-                            "mandatory": [
-                                "left_control"
-                            ],
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "escape"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "description": "Map 'right_shit'  plus 'Enter' to ESC",
-            "manipulators": [
-                {
-                    "type": "basic",
-                    "from": {
-                        "key_code": "return_or_enter",
-                        "modifiers": {
-                            "mandatory": [
-                                "right_shift"
-                            ],
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "escape"
-                        }
-                    ],
-                    "conditions": [
-                        {
-                            "type": "device_unless",
-                            "identifiers": [
-                                {
-                                    "vendor_id": 9306
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "description": "Right CMD to Hyper",
+            "description": "Hyper",
             "manipulators": [
                 {
                     "type": "basic",
@@ -156,6 +82,41 @@
                                 "left_control",
                                 "left_option"
                             ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "description": "ESC",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "spacebar",
+                        "modifiers": {
+                            "mandatory": ["left_shift"],
+                            "optional": ["any"]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "escape"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "return_or_enter",
+                        "modifiers": {
+                            "mandatory": ["right_shift"],
+                            "optional": ["any"]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "escape"
                         }
                     ]
                 }

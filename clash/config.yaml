@@ -23,6 +23,13 @@ tun:
     auto-route: true
     auto-detect-interface: true
 
+#  # NOTE: ???? Clash DNS 请求逻辑：
+#  # (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
+#  # (2) clash 将选取 nameserver 列表内，解析最快的结果。
+#  # (3) 若解析结果中，IP 地址属于 国外，那么 Clash 将选择 fallback 列表内，解析最快的结果。
+#  # 注意：
+#  # (1) 如果您为了确保 DNS 解析结果无污染，请仅保留列表内以 tls:// 开头的 DNS 服务器，但是通常对于国内没有太大必要。
+#  # (2) 如果您不在乎可能解析到污染的结果，更加追求速度。请将 nameserver 列表的服务器插入至 fallback 列表内，并移除重复项。
 dns:
     enable: true
     ipv6: false
@@ -38,16 +45,14 @@ dns:
         - "*"
         - "+.lan"
         - "+.local"
-    # ???? must ip, 国内 干净
+    # 默认DNS, 用于解析DNS服务器的域名, 必须为IP (?确保国内可访问)
     default-nameserver:
         - 119.29.29.29 #tencent
         - 223.5.5.5 #ali
-    nameserver:
-        - "tls://8.8.4.4#dns"
-        - "tls://1.0.0.1#dns"
-    # 解析代理域名的DNS
+    # 代理节点域名解析服务器，仅用于解析代理节点的域名
     proxy-server-nameserver:
         - https://doh.pub/dns-query
+    # 优先于 nameserver/fallback 查询 可使用 geosite
     nameserver-policy:
         "geosite:cn,private,apple@cn": # apple@cn
             - https://doh.pub/dns-query
@@ -55,6 +60,14 @@ dns:
         "geosite:!cn,!private":
             - "tls://dns.google"
             - "tls://cloudflare-dns.com"
+    nameserver:
+        - "tls://8.8.4.4#dns"
+        - "tls://1.0.0.1#dns"
+    # 用于 direct 出口域名解析的 DNS 服务器，如果不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
+    direct-nameserver:
+        - https://doh.pub/dns-query
+        - https://dns.alidns.com/dns-query
+    # fake ip 不需要配置fallback, redir-host遗留产物
 
 proxy-providers:
     provider1:

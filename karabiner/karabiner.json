@@ -8,31 +8,20 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Map '`'  plus 'left_control' to ESC",
+                        "description": "ESC",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "grave_accent_and_tilde",
+                                    "key_code": "spacebar",
                                     "modifiers": {
-                                        "mandatory": ["left_control"],
+                                        "mandatory": ["left_shift"],
                                         "optional": ["any"]
                                     }
                                 },
                                 "to": [{ "key_code": "escape" }],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Map 'Right_arrow'  plus 'Enter' to ESC",
-                        "manipulators": [
+                            },
                             {
-                                "conditions": [
-                                    {
-                                        "identifiers": [{ "vendor_id": 9306 }],
-                                        "type": "device_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "return_or_enter",
                                     "modifiers": {
@@ -46,7 +35,7 @@
                         ]
                     },
                     {
-                        "description": "Right CMD to Hyper",
+                        "description": "Hyper",
                         "manipulators": [
                             {
                                 "from": { "key_code": "right_command" },
@@ -61,7 +50,7 @@
                         ]
                     },
                     {
-                        "description": "Map Left Option plus h/j/k/l to Arrows",
+                        "description": "Arrows",
                         "manipulators": [
                             {
                                 "from": {
@@ -313,6 +302,22 @@
                         {
                             "from": { "key_code": "caps_lock" },
                             "to": [{ "key_code": "left_control" }]
+                        },
+                        {
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
+                        },
+                        {
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
+                        },
+                        {
+                            "from": { "key_code": "right_command" },
+                            "to": [{ "key_code": "right_option" }]
+                        },
+                        {
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "right_command" }]
                         }
                     ]
                 }
