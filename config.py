@@ -65,8 +65,6 @@ linux=[
     File39("xkb", "~/.config/xkb"),
     File39("sway", "~/.config/sway"),
     File39("swaylock", "~/.config/swaylock"),
-    File39("bin/barinfo", "~/.local/bin/barinfo"),
-    File39("systemd/", "~/.config/systemd"),
 ]
 
 macos = [
