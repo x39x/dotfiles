@@ -13,5 +13,4 @@ conflictstyle = diff3
 external = difft --syntax-highlight off
 
 [credential]
-helper = osxkeychain
 helper = cache
