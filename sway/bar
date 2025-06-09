@@ -31,7 +31,7 @@ echo "${net_info}  ${bright}  ${vol}  ${bchar}:${battery}  ${time}"
 # Net
 if nmcli -t -f TYPE,STATE device | grep -q 'wifi:connected'; then 
         wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d: -f2-)
-        echo "HWiFi:$wifi_info" > "$HOME/.cache/swaybar_net"
+        echo "WiFi:$wifi_info" > "$HOME/.cache/swaybar_net"
 elif nmcli -t -f TYPE,STATE device | grep -q '^ethernet:connected'; then 
         echo "Wired" > "$HOME/.cache/swaybar_net"
 else 
