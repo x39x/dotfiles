@@ -1,13 +1,9 @@
 [ -f "$HOME/.profile" ] && . "$HOME/.profile" 
 [ "$XDG_SESSION_TYPE" = "x11" -a -f "$HOME/.xinitrc" ] && . "$HOME/.xinitrc"
-
-[[ $- != *i* ]] && return
-
-[ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
-[ ! -n "$NOFISH" -a -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && exec fish
-
-set -o emacs
-set bell-style none
-shopt -s autocd
-export CLICOLOR=1
-export PS1='\u@\h:\[\e[34m\]\w\[\e[0m\]\n\$ '
+if [[ "$0" == -* ]]; then 
+    set -o emacs
+    set bell-style none
+    shopt -s autocd
+    export CLICOLOR=1
+    export PS1='\u@\h:\[\e[34m\]\w\[\e[0m\]\n\$ '
+fi
