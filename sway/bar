@@ -1,39 +1,13 @@
 #!/bin/sh
+#NOTE:  ❄️20%  💿30% 
 
-net_info=$(cat ~/.cache/swaybar_net)
+CACHEDIR="$HOME/.cache/swaybar"
 
-# bright
-bright=L:$(brightnessctl info | grep -oP '\d+(?=%)' | head -n 1)%
-
-
-# volume
-vol=V:$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tail -n 1 | awk -F: '{split($2,a,"."); print a[2]}')%
-
-
-# battery
-BATTERY_PATH=$(find /sys/class/power_supply/ -maxdepth 1 -name "BAT*" | head -n 1)
-battery=$(cat ${BATTERY_PATH}/capacity)%
-bstatus=$(cat ${BATTERY_PATH}/status)
-if [ "$bstatus" = "Charging" ]; then
-        bchar="C"
-else 
-        bchar="B"
-fi
-
-
-# date
 time=$(date "+%a %b %d %H:%M")
+battery=$(cat "$CACHEDIR/battery" 2>/dev/null || echo "Battery:Null")
+bright=$(cat "$CACHEDIR/bright" 2>/dev/null || echo "Bright:Null")
+microphone=$(cat "$CACHEDIR/microphone" 2>/dev/null || echo "Micr:Null")
+volume=$(cat "$CACHEDIR/volume" 2>/dev/null || echo "Vol:Null")
+network=$(cat "$CACHEDIR/network" 2>/dev/null || echo "Net:Null")
 
-
-echo "${net_info}  ${bright}  ${vol}  ${bchar}:${battery}  ${time}"
-
-
-# Net
-if nmcli -t -f TYPE,STATE device | grep -q 'wifi:connected'; then 
-        wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d: -f2-)
-        echo "WiFi:$wifi_info" > "$HOME/.cache/swaybar_net"
-elif nmcli -t -f TYPE,STATE device | grep -q '^ethernet:connected'; then 
-        echo "Wired" > "$HOME/.cache/swaybar_net"
-else 
-        echo "NoNet" >"$HOME/.cache/swaybar_net"
-fi
+echo "${network}  ${volume}  ${microphone}  ${bright}  ${battery}  ${time}"
