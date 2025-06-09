@@ -4,6 +4,7 @@ set $left h
 set $down j
 set $up k
 set $right l
+workspace_layout  tabbed
 
 
 ### Output configuration
@@ -53,8 +54,6 @@ bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
-bindsym Control+Shift+l focus next
-bindsym Control+Shift+h focus prev
 bindsym $cmd+Tab focus next
 bindsym $cmd+grave focus prev
 
@@ -75,6 +74,8 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 0
+bindsym Control+Shift+l workspace next
+bindsym Control+Shift+h workspace prev
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
