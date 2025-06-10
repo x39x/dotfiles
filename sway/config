@@ -6,7 +6,6 @@ set $up k
 set $right l
 workspace_layout  tabbed
 
-
 ### Output configuration
 output * bg "$HOME/.config/sway/bg.jpg" fill
 
@@ -135,3 +134,6 @@ bar {
         focused_workspace #00000000 #195788FF #FFFFFFFF 
     }
 }
+
+
+exec --no-startup-id fcitx5 -d

@@ -75,12 +75,31 @@ macos = [
     File39("karabiner", "~/.config/karabiner"),
 ]
 
-# TODO: linux path
 rime = [
-    File39("Rime/default.custom.yaml", "~/Library/Rime/default.custom.yaml"),
-    File39("Rime/squirrel.custom.yaml", "~/Library/Rime/squirrel.custom.yaml"),
+    File39("IM/Rime/default.custom.yaml", 
+           utils.path_by_os(
+           macos="~/Library/Rime/default.custom.yaml",
+           linux="~/.local/share/fcitx5/rime/default.custom.yaml",),
+           ),
+    File39( "IM/Rime/double_pinyin.custom.yaml", 
+           utils.path_by_os(
+           macos="~/Library/Rime/double_pinyin.custom.yaml",
+           linux="~/.local/share/fcitx5/rime/double_pinyin.custom.yaml")
+           ),
     File39(
-        "Rime/double_pinyin.custom.yaml", "~/Library/Rime/double_pinyin.custom.yaml"
+        "IM/Rime/squirrel.custom.yaml",
+        "~/Library/Rime/squirrel.custom.yaml",
+        enabled=utils.get_os_name() == "Darwin"
+    ),
+    File39(
+        "IM/fcitx5",
+        "~/.config/fcitx5",
+        enabled=utils.get_os_name() == "Linux"
+    ),
+    File39(
+        "IM/fcitx5_themes",
+        "~/.local/share/fcitx5/themes",
+        enabled=utils.get_os_name() == "Linux"
     ),
 ]
 
@@ -88,7 +107,7 @@ rime = [
 def update_rime_repo():
     rime_url = "https://github.com/iDvel/rime-ice"
     rime_path = utils.path_by_os(
-        macos="~/Library/Rime", linux="~/.local/share/fcitx/rime"
+        macos="~/Library/Rime", linux="~/.local/share/fcitx5/rime"
     )
 
     rime_path = Path(os.path.expanduser(rime_path))

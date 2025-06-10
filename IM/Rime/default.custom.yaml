@@ -3,12 +3,13 @@ patch:
     # 方案列表
     schema_list:
         - schema: double_pinyin
+          name: "ZH"
 
     # 菜单
     menu:
         page_size: 6 # 候选词个数
 
-    # 方案选单相关
+    # 方案选单(方案列表中指定等方案以及每个方案自带的选项)
     switcher:
         caption: 「方案选单」
         hotkeys:
@@ -40,3 +41,5 @@ patch:
             - { when: has_menu, accept: equal, send: Page_Down }
             - { when: paging, accept: bracketleft, send: Page_Up }
             - { when: has_menu, accept: bracketright, send: Page_Down }
+            - { when: has_menu, accept: bracketright, send: Page_Down }
+            - { when: composing, accept: Control+c, send: Escape }

@@ -1,4 +1,7 @@
 patch:
+    schema:
+      name: "🀄"
+
     # 双拼不展开
     translator/preedit_format: []
     # 切换
