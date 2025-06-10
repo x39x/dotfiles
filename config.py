@@ -64,6 +64,7 @@ default = [
 linux=[
     File39("xkb", "~/.config/xkb"),
     File39("sway", "~/.config/sway"),
+    File39("i3blocks", "~/.config/i3blocks"),
     File39("swaylock", "~/.config/swaylock"),
 ]
 
