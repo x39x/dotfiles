@@ -6,22 +6,22 @@ command= ~/.config/i3blocks/network
 interval=10
 
 [brightness]
-command=~/.config/i3blocks/bright
-interval=once
+command= ~/.config/i3blocks/bright
+interval=-1
 signal=3
 
 [microphone]
-command=~/.config/i3blocks/microphone
-interval=once
+command= ~/.config/i3blocks/microphone
+interval=-1
 signal=2
 
 [volume]
-command=~/.config/i3blocks/volume
-interval=once
+command= ~/.config/i3blocks/volume
+interval=-1
 signal=1
 
 [battery]
-command=~/.config/i3blocks/battery
+command= ~/.config/i3blocks/battery
 interval=10
 
 [time]

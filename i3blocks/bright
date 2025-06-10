@@ -1,2 +1,13 @@
 #!/bin/sh
-echo "💡$(brightnessctl info | grep -oP '\d+(?=%)' | head -n 1)%"
+
+brightinfo=""
+count=0
+while [ "$count" -lt 10 ] && [ -z "$brightinfo" ] ;do
+    count=$((count +1))
+    brightinfo=$(brightnessctl info 2>/dev/null)
+    if [ -z "$brightinfo" ] ; then 
+        sleep 1
+    fi
+done
+
+echo "💡$(echo "$brightinfo" | grep -oP '\d+(?=%)' | head -n 1)%"

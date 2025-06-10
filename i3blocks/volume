@@ -1,10 +1,21 @@
 #!/bin/sh
-vol="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | tail -n 1)"
+
+vol=""
+count=0
+while [ "$count" -lt 10 ] && [ -z "$vol" ] ;do
+        count=$((count +1))
+        vol="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | tail -n 1)"
+        if [ -z "$vol" ] ; then
+                sleep 1
+        fi
+done
+
 if echo $vol | grep -q "[MUTED]";then
     vol_icon="🔇"
 else
     vol_icon="🔉"
 fi
+
 vol_percent=$(echo "$vol" | grep -o '[0-9]\+\.[0-9]\+' | awk '{printf "%.0f",$1 * 100}')
 
 echo "${vol_icon}${vol_percent}%"

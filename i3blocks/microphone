@@ -1,10 +1,21 @@
 #!/bin/sh
 
-micr="$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | tail -n 1)"
+micr=""
+count=0
+while [ "$count" -lt 10 ] && [ -z "$micr" ] ;do
+    count=$((count +1))
+    micr="$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | tail -n 1)"
+    if [ -z "$micr" ] ; then 
+        sleep 1
+    fi
+done
+
 if echo $micr | grep -q "[MUTED]";then
     micr_icon="🙊"
 else
     micr_icon="🎤"
 fi
+
 micr_percent=$(echo "$micr" | grep -o '[0-9]\+\.[0-9]\+' | awk '{printf "%.0f",$1 * 100}')
+
 echo "${micr_icon}${micr_percent}%"
