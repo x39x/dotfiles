@@ -22,9 +22,6 @@ local function get_mac_mode()
         if M.system == "OrbStack" then
                 cmd = vim.list_extend({ "mac" }, cmd)
         end
-        if M.system == "Linux" then
-                cmd = { "echo", "dark" }
-        end
         local result = vim.system(cmd):wait()
 
         if result.code ~= 0 then
@@ -54,7 +51,7 @@ M.cache = function()
         if M.system == "Darwin" or M.system == "OrbStack" then
                 is_dark = get_mac_mode()
         elseif M.system == "Linux" then
-                is_dark = false
+                is_dark = true
         elseif M.system == "Windows_NT" or M.system == "WSL" then
                 is_dark = true
         end
