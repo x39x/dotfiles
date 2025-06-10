@@ -61,7 +61,7 @@ default = [
     ),
 ]
 
-linux=[
+linux = [
     File39("xkb", "~/.config/xkb"),
     File39("sway", "~/.config/sway"),
     File39("i3blocks", "~/.config/i3blocks"),
@@ -76,30 +76,30 @@ macos = [
 ]
 
 rime = [
-    File39("IM/Rime/default.custom.yaml", 
-           utils.path_by_os(
-           macos="~/Library/Rime/default.custom.yaml",
-           linux="~/.local/share/fcitx5/rime/default.custom.yaml",),
-           ),
-    File39( "IM/Rime/double_pinyin.custom.yaml", 
-           utils.path_by_os(
-           macos="~/Library/Rime/double_pinyin.custom.yaml",
-           linux="~/.local/share/fcitx5/rime/double_pinyin.custom.yaml")
-           ),
+    File39(
+        "IM/Rime/default.custom.yaml",
+        utils.path_by_os(
+            macos="~/Library/Rime/default.custom.yaml",
+            linux="~/.local/share/fcitx5/rime/default.custom.yaml",
+        ),
+    ),
+    File39(
+        "IM/Rime/double_pinyin.custom.yaml",
+        utils.path_by_os(
+            macos="~/Library/Rime/double_pinyin.custom.yaml",
+            linux="~/.local/share/fcitx5/rime/double_pinyin.custom.yaml",
+        ),
+    ),
     File39(
         "IM/Rime/squirrel.custom.yaml",
         "~/Library/Rime/squirrel.custom.yaml",
-        enabled=utils.get_os_name() == "Darwin"
+        enabled=utils.get_os_name() == "Darwin",
     ),
-    File39(
-        "IM/fcitx5",
-        "~/.config/fcitx5",
-        enabled=utils.get_os_name() == "Linux"
-    ),
+    File39("IM/fcitx5", "~/.config/fcitx5", enabled=utils.get_os_name() == "Linux"),
     File39(
         "IM/fcitx5_themes",
         "~/.local/share/fcitx5/themes",
-        enabled=utils.get_os_name() == "Linux"
+        enabled=utils.get_os_name() == "Linux",
     ),
 ]
 
