@@ -39,6 +39,15 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_options "ctrl:swapcaps"
     xkb_layout "thinkpad"
 }
+input "6127:24814:Lenovo_TrackPoint_Keyboard_II" {
+    pointer_accel 0
+    scroll_factor 0.1
+    accel_profile "flat"
+    repeat_rate 39
+    repeat_delay 239
+    xkb_layout "thinkpad"
+    xkb_options "ctrl:swapcaps"
+}
 
 
 # base Key bindings
