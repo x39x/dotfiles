@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "💡$(brightnessctl info | grep -oP '\d+(?=%)' | head -n 1)%"

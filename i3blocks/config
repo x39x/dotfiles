@@ -1,0 +1,29 @@
+separator=false
+separator_block_width=18
+
+[network]
+command= ~/.config/i3blocks/network
+interval=10
+
+[brightness]
+command=~/.config/i3blocks/bright
+interval=once
+signal=3
+
+[microphone]
+command=~/.config/i3blocks/microphone
+interval=once
+signal=2
+
+[volume]
+command=~/.config/i3blocks/volume
+interval=once
+signal=1
+
+[battery]
+command=~/.config/i3blocks/battery
+interval=10
+
+[time]
+command=date "+%a %b %d %H:%M "
+interval=5

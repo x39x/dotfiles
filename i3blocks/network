@@ -1,0 +1,9 @@
+#!/bin/sh
+if nmcli -t -f TYPE,STATE device | grep -q '^wifi:connected'; then 
+    wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d: -f2-)
+    echo "🌐 $wifi_info%"
+elif nmcli -t -f TYPE,STATE device | grep -q '^ethernet:connected'; then 
+    echo "🌐 Ethernet"
+else 
+    echo "🚫 NoNet"
+fi
