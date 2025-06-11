@@ -1,0 +1,12 @@
+font = "IosevkaTerm Nerd Font Mono"
+font-size = 17
+width = 50%
+height = 60%
+prompt-text = " > "
+result-spacing = 18
+text-cursor = true
+outline-width = 0
+border-width = 2
+border-color = #1A3666 
+background-color = #1B1D1EE9
+fuzzy-match=true

@@ -1,0 +1,29 @@
+#!/usr/bin/env fish
+
+set tofi_cmd_dir "$HOME/.config/tofi"
+set apps firefox alacritty
+set tofi_list
+
+for f in $tofi_cmd_dir/*
+    if [ -f $f -o -L $f ]
+        if [ -x $f -a (basename $f) != "spotlight" ]
+            set tofi_list $tofi_list (basename $f)
+        end
+    end
+end
+
+set merged (printf "%s\n" $tofi_list $apps | sort -u)
+set selection (printf "%s\n" $merged | tofi)
+
+if [ -n $selection ]
+    for app in $apps 
+        if [ "$selection" = "$app" ]
+            swaymsg exec $selection
+            exit 0
+        end
+    end
+    if [ -f "$tofi_cmd_dir/$selection" -a -x "$tofi_cmd_dir/$selection" ]
+        exec "$tofi_cmd_dir/$selection" 
+        exit 0
+    end
+end

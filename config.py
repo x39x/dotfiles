@@ -59,6 +59,10 @@ default = [
             linux="~/.config/Code/User/keybindings.json",
         ),
     ),
+    File39(
+        "mpv",
+        "~/.config/mpv",
+    ),
 ]
 
 linux = [
@@ -66,6 +70,9 @@ linux = [
     File39("sway", "~/.config/sway"),
     File39("i3blocks", "~/.config/i3blocks"),
     File39("swaylock", "~/.config/swaylock"),
+    File39("tofi", "~/.config/tofi"),
+    File39("imv", "~/.config/imv"),
+    File39("swappy", "~/.config/swappy"),
 ]
 
 macos = [
