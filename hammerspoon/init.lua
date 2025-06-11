@@ -9,9 +9,9 @@ hk.bind({ "ctrl", "alt", "cmd", "shift" }, "d", lanuchOrFocusApp("Alacritty"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "t", FocusDesktop())
 
 -- window manager
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "q", windowManager("fullScreen"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", windowManager("fullScreen"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "s", windowManager("max"))
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "c", windowManager("center"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "z", windowManager("center"))
 hk.bind({ "ctrl", "cmd", "shift" }, "right", windowManager("right"))
 hk.bind({ "ctrl", "cmd", "shift" }, "left", windowManager("left"))
 hk.bind({ "ctrl", "cmd", "shift" }, "down", windowManager("bottom"))
