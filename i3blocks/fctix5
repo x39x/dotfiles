@@ -4,17 +4,23 @@ im=""
 count=0
 while [ "$count" -lt 10 ] && [ -z "$im" ] ;do
     count=$((count +1))
-    im=$(fcitx5-remote -n 2>/dev/null)
+    im=$(fcitx5-remote -n)
     if [ -z "$im" ] ; then 
-        sleep 1
+        sleep 5
     fi
 done
 
-im_icon="[NO]"
-if [ "$im" = "rime" ]; then
-    im_icon="🇨🇳"
-elif [ "$im" = "keyboard-us" ];then
-    im_icon="🇺🇲"
-fi
+im_icon="IM:"
+case "$im" in
+    *rime*)
+        im_icon="🇨🇳"
+        ;;
+    *keyboard-us*)
+        im_icon="🇺🇸"
+        ;;
+    *)
+        im_icon="$im_icon[$im]"
+        ;;
+esac
 
 echo "$im_icon"

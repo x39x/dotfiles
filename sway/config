@@ -42,27 +42,22 @@ bindsym Mod4+q kill
 bindsym Mod3+d exec alacritty
 bindsym Mod3+f exec firefox
 
-bindsym Control+space exec fcitx5-remote -t && pkill -RTMIN+4 i3blocks
 bindsym Mod4+space exec ~/.config/tofi/spotlight
 bindsym Mod3+c exec ~/.config/tofi/clipboard
+bindsym Control+space exec fcitx5-remote -t && pkill -RTMIN+4 i3blocks
+
+# screenshot via grim,slurp and swappy
 bindsym Mod1+Shift+z exec grim -g "$(slurp)" - | swappy -f -
 bindsym Mod1+Shift+x exec grim -g "$(slurp)" - | wl-copy
 bindsym Print exec grim - | swappy -f -
-
-# Move your focus around
-bindsym Mod3+h focus left
-bindsym Mod3+j focus down
-bindsym Mod3+k focus up
-bindsym Mod3+l focus right
-bindsym Mod4+Tab focus next
-bindsym Mod4+Shift+Tab focus prev
-bindsym Mod4+grave focus prev
-
-# Move the focused window
-bindsym Mod3+Shift+h move left
-bindsym Mod3+Shift+j move down
-bindsym Mod3+Shift+k move up
-bindsym Mod3+Shift+l move right
+# volume via PipeWire
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.3 \@DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume \@DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 i3blocks
+bindsym --locked XF86AudioMute exec wpctl set-mute \@DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks
+bindsym --locked XF86AudioMicMute exec wpctl set-mute \@DEFAULT_AUDIO_SOURCE@ toggle && pkill -RTMIN+2 i3blocks
+# brightness via brightnessctl
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ && pkill -RTMIN+3 i3blocks
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- && pkill -RTMIN+3 i3blocks
 
 # workspace
 bindsym Mod3+1 workspace number 1
@@ -94,8 +89,26 @@ bindsym Mod3+v splitv
 bindsym Mod3+a fullscreen
 bindsym Mod3+s layout tabbed
 bindsym Mod3+x layout toggle split
+
+# float
 bindsym Mod3+z floating toggle
 floating_modifier Mod3 normal
+bindsym Mod3+Shift+z floating toggle
+
+# Move your focus around
+bindsym Mod3+h focus left
+bindsym Mod3+j focus down
+bindsym Mod3+k focus up
+bindsym Mod3+l focus right
+bindsym Mod4+Tab focus next
+bindsym Mod4+Shift+Tab focus prev
+bindsym Mod4+grave focus prev
+
+# Move the focused window
+bindsym Mod3+Shift+h move left
+bindsym Mod3+Shift+j move down
+bindsym Mod3+Shift+k move up
+bindsym Mod3+Shift+l move right
 
 # Resizing
 mode "resize" {
@@ -106,16 +119,6 @@ mode "resize" {
     bindsym q mode "default"
 }
 bindsym Mod3+r mode "resize"
-
-# volume via PipeWire
-bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.3 \@DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks
-bindsym --locked XF86AudioLowerVolume exec wpctl set-volume \@DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 i3blocks
-bindsym --locked XF86AudioMute exec wpctl set-mute \@DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks
-bindsym --locked XF86AudioMicMute exec wpctl set-mute \@DEFAULT_AUDIO_SOURCE@ toggle && pkill -RTMIN+2 i3blocks
-# brightness via brightnessctl
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ && pkill -RTMIN+3 i3blocks
-bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- && pkill -RTMIN+3 i3blocks
-
 
 bar {
     position top
@@ -136,10 +139,8 @@ exec swayidle -w \
     resume 'swaymsg "output * power on"' \
     before-sleep 'swaylock -f'
 
-
-exec --no-startup-id fcitx5 -d
+exec sh -c 'sleep 5; fcitx5 -dr > ~/fcitx5.log 2>&1'
 exec wl-paste --watch cliphist store
-
 
 #TODO:
 bindsym Shift+space exec wtype -k escape
