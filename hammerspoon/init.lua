@@ -4,12 +4,12 @@ local windowManager = require("window").windowManager
 local FocusDesktop = require("app").FocusDesktop
 
 -- launch or focue app
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", lanuchOrFocusApp("Safari"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", lanuchOrFocusApp("Google Chrome"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "d", lanuchOrFocusApp("Alacritty"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "t", FocusDesktop())
 
 -- window manager
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", windowManager("fullScreen"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "e", windowManager("fullScreen"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "s", windowManager("max"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "z", windowManager("center"))
 hk.bind({ "ctrl", "cmd", "shift" }, "right", windowManager("right"))
