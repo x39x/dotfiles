@@ -316,11 +316,4 @@ autocmd("FileType", {
 })
 
 -- NOTE: colorscheme
-local colorscheme = require("utils.colorscheme")
-autocmd({ "VimLeavePre" }, {
-        callback = function()
-                colorscheme.cache()
-        end,
-        group = vim.api.nvim_create_augroup("SAVEMODE", { clear = true }),
-})
-colorscheme.set()
+require("utils.colorscheme").set()
