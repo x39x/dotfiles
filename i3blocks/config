@@ -1,14 +1,14 @@
 separator=false
 separator_block_width=18
 
+[network]
+command= ~/.config/i3blocks/network
+interval=10
+
 [fcitx5]
 command= ~/.config/i3blocks/fctix5
 interval=-1
 signal=4
-
-[network]
-command= ~/.config/i3blocks/network
-interval=10
 
 [brightness]
 command= ~/.config/i3blocks/bright
