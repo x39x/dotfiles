@@ -139,8 +139,9 @@ exec swayidle -w \
     resume 'swaymsg "output * power on"' \
     before-sleep 'swaylock -f'
 
-exec sh -c 'sleep 5; fcitx5 -dr > ~/fcitx5.log 2>&1'
 exec wl-paste --watch cliphist store
+exec mako
+exec fcitx5 -dr
 
 #TODO:
 bindsym Shift+space exec wtype -k escape

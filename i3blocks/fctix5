@@ -4,7 +4,7 @@ im=""
 count=0
 while [ "$count" -lt 10 ] && [ -z "$im" ] ;do
     count=$((count +1))
-    im=$(fcitx5-remote -n)
+    im=$(fcitx5-remote -n 2>/dev/null)
     if [ -z "$im" ] ; then 
         sleep 5
     fi
