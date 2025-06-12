@@ -6,21 +6,23 @@ export GO111MODULE=on
 export PNPM_HOME="$HOME/.local/share/pnpm"
 
 ADD_TO_PATH() {
-        case ":$PATH:" in
-                *":$1:"*) ;;
-                *) export PATH="$1:$PATH" ;;
-        esac
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) export PATH="$1:$PATH" ;;
+    esac
 }
 ADD_TO_PATH "$PNPM_HOME"
 ADD_TO_PATH "$GOPATH/bin"
 ADD_TO_PATH "$HOME/.cargo/bin"
 
-
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
-
 # bg+: bottom bar, fg+: selected item,gutter: sidebar
 FZF_DEFAULT_OPTS="--color=bg+:-1,fg+:#BE002F,gutter:-1,border:#C0C0C0,hl+:#BE002F,hl:#1A56FD" 
-FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo -n {1..} | pbcopy)+abort'"
+if [ "$(uname)" = "Darwin" ]; then
+    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo -n {1..} | pbcopy)+abort'"
+elif command -v wl-copy >/dev/null 2>&1; then
+    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo -n {1..} | wl-copy)+abort'"
+fi
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-r:toggle-sort'"
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --multi --no-separator --no-scrollbar --reverse --height 23% --min-height=13+"
 export FZF_DEFAULT_OPTS
