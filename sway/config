@@ -70,8 +70,8 @@ bindsym Mod3+7 workspace number 7
 bindsym Mod3+8 workspace number 8
 bindsym Mod3+9 workspace number 9
 bindsym Mod3+0 workspace number 0
-bindsym Control+Shift+l workspace next
-bindsym Control+Shift+h workspace prev
+bindsym Control+Mod4+l workspace next
+bindsym Control+Mod4+h workspace prev
 bindsym Mod3+Shift+1 move container to workspace number 1
 bindsym Mod3+Shift+2 move container to workspace number 2
 bindsym Mod3+Shift+3 move container to workspace number 3
@@ -86,7 +86,7 @@ bindsym Mod3+Shift+0 move container to workspace number 0
 # Layout
 bindsym Mod3+b splith
 bindsym Mod3+v splitv
-bindsym Mod3+a fullscreen
+bindsym Mod3+e fullscreen
 bindsym Mod3+s layout tabbed
 bindsym Mod3+x layout toggle split
 
