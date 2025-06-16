@@ -12,12 +12,8 @@ local function load_cache()
         return content:lower():gsub("%s+", "")
 end
 
-local is_dark_mode = function()
-        return load_cache() == "true"
-end
-
 M.set = function()
-        if is_dark_mode() then
+        if load_cache() == "true" then
                 vim.cmd.colorscheme("39dark")
         else
                 vim.cmd.colorscheme("39light")
