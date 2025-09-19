@@ -73,6 +73,7 @@ linux = [
     File39("tofi", "~/.config/tofi"),
     File39("imv", "~/.config/imv"),
     File39("swappy", "~/.config/swappy"),
+    File39("fontconfig", "~/.config/fontconfig"),
 ]
 
 macos = [
