@@ -1,9 +1,10 @@
 #!/bin/sh
-if nmcli -t -f TYPE,STATE device | grep -q '^wifi:connected'; then 
-    wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d: -f2-)
-    echo "🌐 $wifi_info%"
-elif nmcli -t -f TYPE,STATE device | grep -q '^ethernet:connected'; then 
+
+if ip route | grep -q 'metric 100' 2>/dev/null ; then
     echo "🌐 Ethernet"
-else 
+elif iwctl station wlan0 show | grep -q 'Connected'; then  
+    wifi_info=$(iwctl station wlan0 show | grep 'Connected network' | awk '{print $3}')
+    echo "🌐 $wifi_info"
+else
     echo "🚫 NoNet"
 fi
