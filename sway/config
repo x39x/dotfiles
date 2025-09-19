@@ -84,8 +84,8 @@ bindsym Mod3+Shift+9 move container to workspace number 9
 bindsym Mod3+Shift+0 move container to workspace number 0
 
 # Layout
-bindsym Mod3+b splith
-bindsym Mod3+v splitv
+# bindsym Mod3+b splith
+# bindsym Mod3+v splitv
 bindsym Mod3+e fullscreen
 bindsym Mod3+s layout tabbed
 bindsym Mod3+x layout toggle split
