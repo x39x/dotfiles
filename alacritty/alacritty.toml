@@ -11,7 +11,7 @@ padding = { x = 0, y = 0 }
 position = { x = 650, y = 250 }
 
 [font]
-size = 15 
+size = 14 
 normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
 bold_italic = { style = "Bold Italic" }
 italic = { style = "Italic" }

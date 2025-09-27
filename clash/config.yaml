@@ -2,13 +2,18 @@ mixed-port: 53939 # HTTP(S) 和 SOCKS 代理混合端口
 redir-port: 63939 # 透明代理端口，用于 Linux 和 MacOS
 mode: rule
 log-level: info
-ipv6: false
+ipv6: true
 allow-lan: false # 局域网连接
+unified-delay: true # 开启统一延迟时，会计算 RTT，以消除连接握手等带来的不同类型节点的延迟差异
 external-controller-unix: mihomo.sock
 external-controller: 127.0.0.1:59393 # WebUI 控制端口
 secret: "xx11"
 external-ui: ./ui
 geo-auto-update: true
+
+profile:
+    store-selected: true # 储存 API 对策略组的选择，以供下次启动时使用
+    store-fake-ip: true # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
 
 tun:
     enable: true
@@ -33,6 +38,7 @@ tun:
 dns:
     enable: true
     ipv6: false
+    use-system-hosts: false # 是否查询系统 hosts
     prefer-h3: false # true 会导致国内 DNS 解析慢
     # 启用 DNS 服务并让其在 53 端口（这是绝大多数操作系统将 DNS 解析报文发送到的端口）监听来自任意网络界面的 DNS 请求。
     # 如果你的设备并不需要向其他设备提供解析服务 将0.0.0.0:53 改为 127.0.0.1:53 仅监听本机的 DNS 解析报文。
@@ -72,7 +78,7 @@ dns:
 proxy-providers:
     provider1:
         type: file
-        path: ./proxy_providers/proxy_dg.yaml
+        path: ./proxy_providers/proxy_1.yaml
         health-check:
             enable: true
             url: https://www.gstatic.com/generate_204
@@ -81,7 +87,7 @@ proxy-providers:
             lazy: true
     provider2:
         type: file
-        path: ./proxy_providers/proxy_ik.yaml
+        path: ./proxy_providers/proxy_2.yaml
         health-check:
             enable: true
             url: https://www.gstatic.com/generate_204
