@@ -3,7 +3,6 @@
     "security.workspace.trust.enabled": false,
     "window.commandCenter": false,
     "window.autoDetectColorScheme": true,
-    "workbench.editor.showTabs": "none",
     "workbench.sideBar.location": "right",
     "workbench.activityBar.location": "top",
     "workbench.colorCustomizations": {
@@ -16,8 +15,8 @@
     "editor.scrollbar.horizontal": "hidden",
     "editor.scrollbar.vertical": "hidden",
     "editor.minimap.enabled": false,
-    "editor.fontFamily": "SF Mono",
-    "editor.fontSize": 13,
+    "editor.fontFamily": "IosevkaTerm Nerd Font",
+    "editor.fontSize": 14,
     "editor.cursorBlinking": "smooth",
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
@@ -58,11 +57,29 @@
         }
     ],
     "vim.easymotion": false,
-    "vim.incsearch": true,
     "vim.useCtrlKeys": true,
+    "vim.incsearch": true,
     "vim.hlsearch": true,
     "vim.leader": "<space>",
     "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<leader>",
+                "h"
+            ],
+            "commands": [
+                "workbench.action.previousEditor"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "l"
+            ],
+            "commands": [
+                "workbench.action.nextEditor"
+            ]
+        },
         {
             "before": [
                 "L"
@@ -328,5 +345,5 @@
                 "<Esc>"
             ]
         }
-    ]
+    ],
 }
