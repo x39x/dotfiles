@@ -1,38 +1,29 @@
 --- https://github.com/yioneko/vtsls
-local lsp_keymaps = require("utils.lsp_keymaps")
-local vue_language_server_path = vim.fn.expand("$MASON/packages")
-        .. "/vue-language-server"
-        .. "/node_modules/@vue/language-server"
+ return {
+  cmd = { 'vtsls', '--stdio' },
+  init_options = {
+    hostInfo = 'neovim',
+  },
+  filetypes = {
+    'javascript',
+    'javascriptreact',
+    'javascript.jsx',
+    'typescript',
+    'typescriptreact',
+    'typescript.tsx',
+  },
+  root_dir = function(bufnr, on_dir)
+    -- The project root is where the LSP can be started from
+    -- As stated in the documentation above, this LSP supports monorepos and simple projects.
+    -- We select then from the project root, which is identified by the presence of a package
+    -- manager lock file.
+    local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }
+    -- Give the root markers equal priority by wrapping them in a table
+    root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers, { '.git' } }
+      or vim.list_extend(root_markers, { '.git' })
+    -- We fallback to the current working directory if no project root is found
+    local project_root = vim.fs.root(bufnr, root_markers) or vim.fn.getcwd()
 
-return {
-        cmd = { "vtsls", "--stdio" },
-        filetypes = {
-                "vue",
-                "javascript",
-                "typescript",
-                "javascriptreact",
-                "javascript.jsx",
-                "typescriptreact",
-                "typescript.tsx",
-        },
-        root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
-        settings = {
-                vtsls = { tsserver = { globalPlugins = {} } },
-        },
-        before_init = function(_, config)
-                local vuePluginConfig = {
-                        name = "@vue/typescript-plugin",
-                        location = vue_language_server_path,
-                        languages = { "vue" },
-                        configNamespace = "typescript",
-                        enableForWorkspaceTypeScriptVersions = true,
-                }
-                table.insert(config.settings.vtsls.tsserver.globalPlugins, vuePluginConfig)
-        end,
-
-        on_attach = function(client, bufnr)
-                client.server_capabilities.documentFormattingProvider = false
-                client.server_capabilities.documentRangeFormattingProvider = false
-                lsp_keymaps(bufnr)
-        end,
+    on_dir(project_root)
+  end,
 }

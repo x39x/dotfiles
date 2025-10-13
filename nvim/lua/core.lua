@@ -33,7 +33,7 @@ o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease
 o.foldlevelstart = 99
 --
 o.expandtab = true -- tab->spaces
-o.shiftwidth = 8
+o.shiftwidth = 4
 o.tabstop = 8
 o.cursorline = false
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
@@ -193,8 +193,8 @@ keymap("", "J", "2j", key_opts)
 keymap("", "|", "J", key_opts)
 keymap("", "q", "%", key_opts)
 keymap("", "%", "q", key_opts)
-keymap("n", ";k", "<cmd>nohl<CR>", key_opts)
-keymap("n", ";j", require("utils.M").highlightCword, key_opts)
+keymap("n", "<BackSpace>", "<cmd>nohl<CR>", key_opts)
+keymap("n", "<leader>,", require("utils.M").highlightCword, key_opts)
 --buffers
 keymap({ "n" }, "<leader>l", "<cmd>bn<cr>", key_opts)
 keymap({ "n" }, "<leader>h", "<cmd>bp<cr>", key_opts)
@@ -279,6 +279,20 @@ autocmd({ "BufReadPost" }, {
         end,
         group = vim.api.nvim_create_augroup("LASTPLACE", { clear = true }),
 })
+autocmd("InsertLeave", {
+        callback = function()
+                if vim.fn.executable("iswitch") == 0 then
+                        return
+                end
+                vim.system({ "iswitch", "-s", "com.apple.keylayout.ABC" }, nil, function(proc)
+                        if proc.code ~= 0 then
+                                vim.notify("Failed to switch input source: " .. proc.stderr, vim.log.levels.Warn)
+                        end
+                end)
+        end,
+        group = vim.api.nvim_create_augroup("ISWITCH", { clear = true }),
+        desc = "auto switch to abc input",
+})
 
 autocmd("FileType", {
         pattern = { "markdown", "typst" },
@@ -305,13 +319,19 @@ autocmd({ "FileType" }, {
 })
 
 autocmd("FileType", {
-        pattern = { "json", "jsonc", "json5", "markdown", "typst", "python", "vue", "javascript", "fish", "sh", "bash" },
-        group = vim.api.nvim_create_augroup("SHIFTWIDTH", { clear = true }),
+        pattern = { "lua" },
+        group = vim.api.nvim_create_augroup("SHIFTWIDTHLUA", { clear = true }),
         callback = function(args)
                 local _ = args.buf
-                vim.bo[0].shiftwidth = 4
-                vim.bo[0].tabstop = 4
-                vim.bo[0].expandtab = true
+                vim.bo[0].shiftwidth = 8
+        end,
+})
+autocmd("FileType", {
+        pattern = { "go" },
+        group = vim.api.nvim_create_augroup("SHIFTWIDTHGO", { clear = true }),
+        callback = function(args)
+                local _ = args.buf
+                vim.bo[0].expandtab = false
         end,
 })
 

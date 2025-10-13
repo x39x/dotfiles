@@ -122,9 +122,11 @@ M[#M + 1] = {
 --PLUG: treesitter
 M[#M + 1] = {
         "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false,
         build = ":TSUpdate",
         config = function()
-                require("nvim-treesitter.configs").setup({
+                require("nvim-treesitter").setup({
                         ensure_installed = {
                                 "regex",
                                 "diff",
@@ -182,49 +184,49 @@ M[#M + 1] = {
         event = "VeryLazy",
 }
 
-M[#M + 1] = {
-        "RRethy/nvim-treesitter-textsubjects",
-        dependencies = {
-                "nvim-treesitter/nvim-treesitter",
-        },
-
-        config = function()
-                require("nvim-treesitter-textsubjects").configure({
-                        prev_selection = ".",
-                        keymaps = {
-                                [","] = "textsubjects-smart",
-                                -- [";"] = "textsubjects-container-outer",
-                                -- ["i;"] = "textsubjects-container-inner",
-                        },
-                })
-        end,
-}
-M[#M + 1] = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        dependencies = {
-                "nvim-treesitter/nvim-treesitter",
-        },
-
-        config = function()
-                require("nvim-treesitter.configs").setup({
-                        textobjects = {
-                                enable = true,
-                                select = {
-                                        enable = true,
-                                        -- Automatically jump forward to textobj, similar to targets.vim
-                                        lookahead = true,
-
-                                        keymaps = {
-                                                ["af"] = "@function.outer",
-                                                ["if"] = "@function.inner",
-                                                ["ac"] = "@class.outer",
-                                                ["ic"] = "@class.inner",
-                                        },
-                                },
-                        },
-                })
-        end,
-}
+-- M[#M + 1] = {
+--         "RRethy/nvim-treesitter-textsubjects",
+--         dependencies = {
+--                 "nvim-treesitter/nvim-treesitter",
+--         },
+--
+--         config = function()
+--                 require("nvim-treesitter-textsubjects").configure({
+--                         prev_selection = ".",
+--                         keymaps = {
+--                                 [","] = "textsubjects-smart",
+--                                 -- [";"] = "textsubjects-container-outer",
+--                                 -- ["i;"] = "textsubjects-container-inner",
+--                         },
+--                 })
+--         end,
+-- }
+-- M[#M + 1] = {
+--         "nvim-treesitter/nvim-treesitter-textobjects",
+--         dependencies = {
+--                 "nvim-treesitter/nvim-treesitter",
+--         },
+--
+--         config = function()
+--                 require("nvim-treesitter").setup({
+--                         textobjects = {
+--                                 enable = true,
+--                                 select = {
+--                                         enable = true,
+--                                         -- Automatically jump forward to textobj, similar to targets.vim
+--                                         lookahead = true,
+--
+--                                         keymaps = {
+--                                                 ["af"] = "@function.outer",
+--                                                 ["if"] = "@function.inner",
+--                                                 ["ac"] = "@class.outer",
+--                                                 ["ic"] = "@class.inner",
+--                                         },
+--                                 },
+--                         },
+--                 })
+--         end,
+-- }
 --PLUG: align
 M[#M + 1] = {
         "junegunn/vim-easy-align",
