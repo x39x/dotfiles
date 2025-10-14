@@ -1,5 +1,7 @@
-font-size              = 13
-adjust-cell-height     = 10
+font-family            = IosevkaTerm Nerd Font
+font-family            = STFangsong
+font-size              = 14
+adjust-cell-height     = 12
 font-thicken           = true
 window-padding-y       = 0
 window-padding-x       = 0
@@ -8,3 +10,4 @@ cursor-color           = "#0000FF"
 cursor-text            = "#FFFFFF"
 macos-option-as-alt    = true
 keybind                = super+s=esc:s
+keybind                = ctrl+【=text:\x1b[

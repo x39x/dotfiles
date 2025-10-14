@@ -31,6 +31,7 @@ return {
                         format = {
                                 enable = false,
                         },
+                        -- highlight
                         semantic = {
                                 variable = false,
                         },

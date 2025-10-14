@@ -46,10 +46,8 @@ return {
                                 virt_text_pos = "eol",
                                 all_frames = true,
                         },
-                        lazy = true,
                 },
         },
         config = config,
         keys = keys,
-        lazy = true,
 }

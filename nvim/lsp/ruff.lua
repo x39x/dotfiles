@@ -18,11 +18,5 @@ return {
                 vim.api.nvim_buf_create_user_command(bufnr, "F", function()
                         vim.lsp.buf.format({ async = true })
                 end, {})
-
-                vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
-                        noremap = true,
-                        silent = true,
-                        buffer = bufnr,
-                })
         end,
 }
