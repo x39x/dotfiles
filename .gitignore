@@ -3,3 +3,4 @@ hammerspoon/Spoons
 nvim/lazy-lock.json
 __pycache__/
 IM/fcitx5/conf/cached_layouts
+nvim-pack-lock.json

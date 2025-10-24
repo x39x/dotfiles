@@ -21,7 +21,8 @@ if status is-interactive
 
         set -x fish_greeting ""
 
-        zoxide init fish | source
+        zoxide init fish  --cmd c | source
+
         fzf --fish | source
         bind \ec fzf-file-widget
 
