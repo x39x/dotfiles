@@ -1,7 +1,7 @@
 local Path = require("plenary.path")
 
 local M = {}
-local cache_path = Path:new(vim.fn.stdpath("data"), "project_cmd_cache.json")
+local cache_path = Path:new(vim.fn.stdpath("data"), "run_cmd.json")
 local cache = {}
 
 -- load JSON
