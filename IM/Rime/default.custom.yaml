@@ -4,12 +4,10 @@ patch:
     schema_list:
         - schema: double_pinyin
           name: "ZH"
-
-    # 菜单
     menu:
         page_size: 6 # 候选词个数
 
-    # 方案选单(方案列表中指定等方案以及每个方案自带的选项)
+    # 方案选单(方案列表中指定的方案以及每个方案自带的选项)
     switcher:
         caption: 「方案选单」
         hotkeys:
@@ -17,8 +15,6 @@ patch:
         fold_options: false
         save_options: # 开关记忆（方案中的 switches），从方案选单（而非快捷键）切换时会记住的选项，需要记忆的开关不能设定 reset
             - traditionalization
-            - emoji
-            - full_shape
 
     # 中英切换
     ascii_composer:
@@ -32,14 +28,16 @@ patch:
 
     # 快捷键
     key_binder:
+        #  以词定字（上屏当前词句的第一个或最后一个字）
+        select_first_character: "comma"
+        select_last_character: "period"
         bindings:
-            # Tab / Shift+Tab 切换光标至下/上一个拼音
+            - { when: composing, accept: Control+c, send: Escape }
+              # Tab / Shift+Tab 切换光标至下/上一个拼音
             - { when: composing, accept: Shift+Tab, send: Shift+Left }
             - { when: composing, accept: Tab, send: Shift+Right }
-            # 翻页
+              # - + ] [ 翻页
             - { when: has_menu, accept: minus, send: Page_Up }
             - { when: has_menu, accept: equal, send: Page_Down }
             - { when: paging, accept: bracketleft, send: Page_Up }
             - { when: has_menu, accept: bracketright, send: Page_Down }
-            - { when: has_menu, accept: bracketright, send: Page_Down }
-            - { when: composing, accept: Control+c, send: Escape }

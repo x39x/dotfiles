@@ -1,13 +1,14 @@
 # 参考 squirrel.yaml
 patch:
     style:
-        color_scheme: macos_light
-        color_scheme_dark: macos_dark
-        # color_scheme: wechat_light
-        # color_scheme_dark: wechat_dark
+        # color_scheme: macos_light
+        # color_scheme_dark: macos_dark
+        color_scheme: catppuccin_latte
+        color_scheme_dark: catppuccin_macchiato
 
         # 预设选项：（可被皮肤覆盖；如果皮肤没写，则默认使用这些属性。）
         text_orientation: horizontal # horizontal | vertical
+        candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear | tabled
         inline_preedit: true # 拼音位于： 候选框内 false | 行内 true
         corner_radius: 10
         hilited_corner_radius: 0
@@ -27,12 +28,100 @@ patch:
 
     # 皮肤列表
     preset_color_schemes:
+        catppuccin_latte:
+            name: Catppuccin Latte
+            font_point: 16
+            label_font_point: 12
+            comment_font_point: 16
+            translucency: true # 磨砂： false | true
+            corner_radius: 5 # 外边框 圆角半径
+            hilited_corner_radius: 5 # 选中框 圆角半径
+
+            surrounding_extra_expansion: 0 # 候选项背景相对大小？
+            shadow_size: 0 # 阴影大小
+            base_offset: 0 # 字基高
+            alpha: 0.93 # 透明度，0~1
+
+            back_color: 0xE8E0DC # 候选条背景色 Crust
+            border_color: 0xEFE9E6 # 边框色 Mantle
+            text_color: 0x775F5C # 拼音行文字颜色 Subtext1
+            label_color: 0x856F6C # 预选栏编号颜色 Subtext0
+            candidate_text_color: 0x694F4C # 预选项文字颜色 Text
+            hilited_back_color: 0xef3988 # 第一候选项背景背景色 Mauve
+            hilited_candidate_text_color: 0xF5F1EF # 第一候选项文字颜色 Base
+            hilited_candidate_label_color: 0xDAD0CC # 第一候选项编号颜色 Surface0
+            hilited_text_color: 0xBEB0AC # 高亮拼音 (需要开启内嵌编码) Surface2
+            hilited_comment_text_color: 0xDAD0CC # 注解文字高亮 Surface0
+            comment_text_color: 0xBEB0AC # 拼音等提示文字颜色 Surface2
+
+        catppuccin_mocha:
+            name: Catppuccin Mocha
+            font_point: 16
+            label_font_point: 12
+            comment_font_point: 16
+            translucency: true # 磨砂： false | true
+            corner_radius: 5 # 外边框 圆角半径
+            hilited_corner_radius: 5 # 选中框 圆角半径
+
+            back_color: 0x1B1111 # 候选条背景色 Crust
+            border_color: 0x251818 # 边框色 Mantle
+            text_color: 0xDEC2BA # 拼音行文字颜色 Subtext1
+            label_color: 0xC8ADA6 # 预选栏编号颜色 Subtext0
+            candidate_text_color: 0xF4D6CD # 预选项文字颜色 Text
+            hilited_back_color: 0xF7A6CB # 第一候选项背景背景色 Mauve
+            hilited_candidate_text_color: 0x2E1E1E # 第一候选项文字颜色 Base
+            hilited_candidate_label_color: 0x443231 # 第一候选项编号颜色 Surface0
+            hilited_text_color: 0x705B58 # 高亮拼音 (需要开启内嵌编码) Surface2
+            hilited_comment_text_color: 0x443231 # 注解文字高亮 Surface0
+            comment_text_color: 0x705B58 # 拼音等提示文字颜色 Surface2
+
+        catppuccin_frappe:
+            name: Catppuccin Frappe
+            font_point: 16
+            label_font_point: 12
+            comment_font_point: 16
+            translucency: true # 磨砂： false | true
+            corner_radius: 5 # 外边框 圆角半径
+            hilited_corner_radius: 5 # 选中框 圆角半径
+
+            back_color: 0x342623 # 候选条背景色 Crust
+            border_color: 0x3C2C29 # 边框色 Mantle
+            text_color: 0xE2BFB5 # 拼音行文字颜色 Subtext1
+            label_color: 0xCEADA5 # 预选栏编号颜色 Subtext0
+            candidate_text_color: 0xF5D0C6 # 预选项文字颜色 Text
+            hilited_back_color: 0xE69ECA # 第一候选项背景背景色 Mauve
+            hilited_candidate_text_color: 0x463430 # 第一候选项文字颜色 Base
+            hilited_candidate_label_color: 0x594541 # 第一候选项编号颜色 Surface0
+            hilited_text_color: 0x806862 # 高亮拼音 (需要开启内嵌编码) Surface2
+            hilited_comment_text_color: 0x594541 # 注解文字高亮 Surface0
+            comment_text_color: 0x806862 # 拼音等提示文字颜色 Surface2
+
+        catppuccin_macchiato:
+            name: Catppuccin Macchiato
+            font_point: 16
+            label_font_point: 12
+            comment_font_point: 16
+            translucency: true # 磨砂： false | true
+            corner_radius: 5 # 外边框 圆角半径
+            hilited_corner_radius: 5 # 选中框 圆角半径
+
+            back_color: 0x261918 # 候选条背景色 Crust
+            border_color: 0x30201E # 边框色 Mantle
+            text_color: 0xE0C0B8 # 拼音行文字颜色 Subtext1
+            label_color: 0xCBADA5 # 预选栏编号颜色 Subtext0
+            candidate_text_color: 0xF5D3CA # 预选项文字颜色 Text
+            hilited_back_color: 0xF6A0C6 # 第一候选项背景背景色 Mauve
+            hilited_candidate_text_color: 0x3A2724 # 第一候选项文字颜色 Base
+            hilited_candidate_label_color: 0x4F3A36 # 第一候选项编号颜色 Surface0
+            hilited_text_color: 0x70B558 # 高亮拼音 (需要开启内嵌编码) Surface2
+            hilited_comment_text_color: 0x4F3A36 # 注解文字高亮 Surface2
+            comment_text_color: 0x70B558 # 拼音等提示文字颜色 Surface0
+
         macos_light:
             name: "MacOS Light"
             font_point: 16
             label_font_point: 12
             comment_font_point: 16
-            candidate_list_layout: stacked # 候选排布：层叠 stacked | 行 linear | tabled
             translucency: false # 磨砂： false | true
             mutual_exclusive: false # 色不叠加： false | true
             corner_radius: 5 # 外边框 圆角半径
@@ -57,7 +146,6 @@ patch:
             font_point: 16
             label_font_point: 12
             comment_font_point: 16
-            candidate_list_layout: stacked # 候选排布：层叠 stacked | 行 linear | tabled
             candidate_format: "%c\u2005%@\u2005" # 编号 %c 和候选词 %@ 前后的空间
             translucency: false # 磨砂： false | true
             mutual_exclusive: false # 色不叠加： false | true
