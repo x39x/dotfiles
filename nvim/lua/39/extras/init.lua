@@ -6,6 +6,8 @@ vim.pack.add({
         "https://github.com/MunifTanjim/nui.nvim",
         "https://github.com/kawre/leetcode.nvim",
 })
+
+-- --PLUG: deffview
 local cmd = vim.api.nvim_create_user_command
 local del_cmd = vim.api.nvim_del_user_command
 

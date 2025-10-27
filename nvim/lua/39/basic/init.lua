@@ -8,6 +8,7 @@ vim.pack.add({
 
         "https://github.com/folke/flash.nvim",
         "https://github.com/folke/trouble.nvim",
+        "https://github.com/sindrets/diffview.nvim",
 })
 require("39.basic.filetree")
 require("39.basic.treesitter")
@@ -41,10 +42,6 @@ require("flash").setup({
         prompt = {
                 enabled = false,
         },
-        -- jump = {
-        --         forward = true,
-        --         wrap = true,
-        -- },
 })
 
 local keymap = vim.keymap.set
@@ -91,10 +88,3 @@ keymap({ "n" }, "<leader>tk", function()
                 require("trouble").prev({ jump = true })
         end
 end, key_opts)
-
--- --PLUG: deffview
--- M[#M + 1] = {
---         "sindrets/diffview.nvim",
---         dependencies = { "nvim-tree/nvim-web-devicons" },
---         cmd = "DiffviewOpen",
--- }

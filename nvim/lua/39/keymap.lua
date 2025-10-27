@@ -1,7 +1,3 @@
-local keymap = vim.keymap.set
-local cmd = vim.api.nvim_create_user_command
-local key_opts = { noremap = true, silent = true }
-
 --NOTE: mode
 -- insert_mode       = "i",
 -- normal_mode       = "n",
@@ -12,8 +8,12 @@ local key_opts = { noremap = true, silent = true }
 -- operator_mode     = "o",
 -- select_mode       = "s"
 
-keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
+local keymap = vim.keymap.set
+local key_opts = { noremap = true, silent = true }
+
+keymap("", "<Space>", "<Nop>", key_opts)
 keymap("i", "jk", "<esc>", key_opts)
+keymap({ "n" }, "<leader>m", ":", { noremap = true })
 keymap({ "n", "o" }, "L", "$", key_opts)
 keymap({ "x" }, "L", "$h", key_opts)
 keymap("", "H", "^", key_opts)
@@ -24,9 +24,9 @@ keymap("", "q", "%", key_opts)
 keymap("", "%", "q", key_opts)
 
 --buffers
-keymap({ "n" }, "<leader>l", "<cmd>bn<cr>", key_opts)
-keymap({ "n" }, "<leader>h", "<cmd>bp<cr>", key_opts)
-keymap({ "n" }, "<leader>w", "<cmd>bd<cr>", key_opts)
+keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", key_opts)
+keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", key_opts)
+keymap({ "n" }, "<leader>w", "<cmd>bd<CR>", key_opts)
 -- Resize pane
 keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", key_opts)
 keymap({ "n", "x" }, "<M-Down>", "<cmd>resize -2<CR>", key_opts)
@@ -35,8 +35,8 @@ keymap({ "n", "x" }, "<M-Right>", "<cmd>vertical resize +2<CR>", key_opts)
 -- Move  line / code block
 keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>==", key_opts)
 keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>==", key_opts)
-keymap({ "x" }, "<M-->", ":m '>+1<cr>gv=gv", key_opts)
-keymap({ "x" }, "<M-=>", ":m '<-2<cr>gv=gv", key_opts)
+keymap({ "x" }, "<M-->", ":m '>+1<CR>gv=gv", key_opts)
+keymap({ "x" }, "<M-=>", ":m '<-2<CR>gv=gv", key_opts)
 keymap({ "x" }, "<", "<gv", key_opts)
 keymap({ "x" }, ">", ">gv", key_opts)
 
@@ -56,18 +56,27 @@ keymap("n", "<leader>s", function()
         vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
 end, key_opts)
 
-keymap("n", "<BackSpace>", "<cmd>nohl<CR>", key_opts)
 keymap("n", "<leader>,", function()
         --":let @/ = expand('<cword>') | set hlsearch<cr>"
         vim.fn.setreg("/", vim.fn.expand("<cword>"))
         vim.opt.hlsearch = true
 end, key_opts)
+keymap("n", "<BackSpace>", "<cmd>nohl<CR>", key_opts)
 
-keymap("n", "<leader>rt", require("utils.tmux_run").window, { desc = "Send cmd to tmux window" })
-keymap("n", "<leader>-", require("utils.tmux_run").pane, { desc = "Send cmd to tmux pane" })
+-- run code
+local runner = require("utils.runner")
+keymap("n", "<leader>rt", runner.run_in_tmux_window, { desc = "Send cmd to tmux window", noremap = true })
+keymap("n", "<leader>-", runner.run_in_tmux_pane, { desc = "Send cmd to tmux pane", noremap = true, silent = true })
+keymap("n", "<leader>ra", runner.add_and_run, { desc = "add cmd and run", noremap = true, silent = true })
+keymap("n", "<leader>rs", runner.select_and_run, { desc = "select cmd and run", noremap = true, silent = true })
+keymap("n", "<leader>rc", runner.clear_project_cmds, { desc = "clear current cmd", noremap = true, silent = true })
+keymap("n", "<leader>rA", runner.clear_all_cmds, { desc = "clear all cmd", noremap = true, silent = true })
 
 --NOTE: user command
+local cmd = vim.api.nvim_create_user_command
+
 cmd("FormatJSON", "%!python3 -m json.tool", {})
+
 cmd("Bpwd", function()
         print(vim.fn.expand("%:p"))
 end, {})

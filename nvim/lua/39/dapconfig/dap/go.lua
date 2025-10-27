@@ -26,6 +26,7 @@ local go = {}
 --         request = "launch",
 --         program = "${file}",
 -- },
+
 go[#go + 1] = {
         type = "delve",
         name = "Debug",

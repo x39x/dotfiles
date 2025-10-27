@@ -9,8 +9,8 @@ vim.pack.add({
 --PLUG: alpha
 require("alpha").setup({
         layout = {
-                --val c:2 a:7
-                { type = "padding", val = 7 },
+                --val c:2 a:6
+                { type = "padding", val = 6 },
                 {
                         type = "text",
                         val = require("39.ui.header").a,
@@ -35,10 +35,6 @@ require("indentmini").setup({
         },
 })
 
-require("heirline").setup({
-        require("39.ui.39line"),
-})
-
 --PLUG: todo
 require("todo-comments").setup({
         keywords = {
@@ -54,4 +50,5 @@ require("todo-comments").setup({
 
 require("nvim-highlight-colors").setup()
 
+require("39.ui.39line")
 require("39.ui.colorscheme").set()

@@ -4,10 +4,8 @@ local function notify_err(msg)
         vim.notify(msg, vim.log.levels.ERROR)
 end
 
--- get tmux session
-
 --PLUG: send cmd to window
-M.window = function()
+M.window = function(root, cmd)
         local session_result = vim.system({ "tmux", "display-message", "-p", "#S" }, { text = true }):wait()
         if session_result.code ~= 0 then
                 notify_err("ERROR in tmux_run.lua: Failed to get tmux session")
@@ -39,13 +37,28 @@ M.window = function()
                 end
         end
 
+        -- check if in root dir
+        local win_pwd_result = vim.system({
+                "tmux",
+                "display-message",
+                "-p",
+                "-F",
+                "#{pane_current_path}",
+                "-t",
+                session .. ":runner",
+        }):wait()
+        local win_pwd = vim.trim(win_pwd_result.stdout)
+        local cd_cmd = "cd " .. root .. " && "
+        if win_pwd == root then
+                cd_cmd = ""
+        end
         -- send run cmd
-        vim.system({ "tmux", "send-keys", "-t", session .. ":runner", "make", "C-j" }):wait()
+        vim.system({ "tmux", "send-keys", "-t", session .. ":runner", "C-w", cd_cmd .. cmd, "C-j" }):wait()
         vim.system({ "tmux", "select-window", "-t", session .. ":runner" }):wait()
 end
 
 --PLUG: send cmd to pane
-M.pane = function()
+M.pane = function(root, run_cmd)
         local session_result = vim.system({ "tmux", "display-message", "-p", "#S" }, { text = true }):wait()
         if session_result.code ~= 0 then
                 notify_err("ERROR in tmux_run.lua: Failed to get tmux session")
@@ -106,8 +119,26 @@ M.pane = function()
                 vim.system({ "tmux", "select-pane", "-t", current_pane_index }):wait()
         end
 
+        -- check if in root dir
+        local pane_pwd_result = vim.system({
+                "tmux",
+                "display-message",
+                "-p",
+                "-F",
+                "#{pane_current_path}",
+                "-t",
+                target_win .. ".1",
+        }):wait()
+        local pane_pwd = vim.trim(pane_pwd_result.stdout)
+
+        local cd_cmd = "cd " .. root .. " && "
+        if pane_pwd == root then
+                cd_cmd = ""
+        end
+
         -- send cmd to pane_1
-        local send_result = vim.system({ "tmux", "send-keys", "-t", target_win .. ".1", "C-w", "make", "C-j" }):wait()
+        local send_result =
+                vim.system({ "tmux", "send-keys", "-t", target_win .. ".1", "C-w", cd_cmd .. run_cmd, "C-j" }):wait()
         if send_result.code ~= 0 then
                 notify_err("Failed to send command to pane 1")
         end

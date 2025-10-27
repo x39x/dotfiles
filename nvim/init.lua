@@ -10,19 +10,6 @@ vim.g.maplocalleader = "\\"
 -- rust fmt
 vim.g.rust_recommended_style = 0
 
--- ssh clipboard
-vim.g.clipboard = {
-        name = "OSC 52",
-        copy = {
-                ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-                ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-        },
-        paste = {
-                ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-                ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-        },
-}
-
 vim.filetype.add({
         pattern = {
                 [".*.typ"] = "typst",
