@@ -47,6 +47,7 @@ local colors = {
         keyword = "#f97583",
         pink = "#FF7A84",
 
+        brown0 = "#cd9731",
         --DONE: diff
         diff_rm_bg = "#4E201E",
         diff_text = "#a12237",
@@ -62,7 +63,6 @@ local colors = {
         -- ruler = "#2A2A2A",
         -- change0 = "#2b6bab",
         --  min dakr diff remove bg #691B24 difffff = "#611B27",
-        --  #cd9731
 }
 
 local function m39k()
@@ -267,6 +267,9 @@ local function m39k()
         hl("DiagnosticVirtualTextWarn", { fg = colors.orange, italic = true })
         hl("DiagnosticVirtualTextInfo", { fg = colors.info, italic = true })
         hl("DiagnosticVirtualTextHint", { fg = colors.purple0, italic = true })
+
+        -- NOTE:
+        hl("@lsp.typemod.keyword.documentation", { fg = colors.brown0 })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.greenaaa })
