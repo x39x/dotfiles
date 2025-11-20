@@ -4,7 +4,6 @@ vim.pack.add({
         "https://github.com/nvim-telescope/telescope-ui-select.nvim",
         "https://github.com/nvim-telescope/telescope-live-grep-args.nvim",
         "https://github.com/nvim-telescope/telescope.nvim",
-        -- "nvim-telescope/telescope-fzf-native.nvim", build = "make",
 
         "https://github.com/ibhagwan/fzf-lua",
 })
@@ -116,11 +115,6 @@ telescope.setup({
         },
 
         extensions = {
-                -- fzf = {
-                --         fuzzy = true,
-                --         override_generic_sorter = true,
-                --         override_file_sorter = true,
-                -- },
                 ["ui-select"] = {
                         require("telescope.themes").get_dropdown(theme.single_dropdown()),
                 },

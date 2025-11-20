@@ -23,7 +23,8 @@ keymap("", "|", "J", key_opts)
 --buffers
 keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", key_opts)
 keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", key_opts)
-keymap({ "n" }, "<leader>w", "<cmd>bd<CR>", key_opts)
+keymap({ "n" }, "<leader>w", require("mini.bufremove").delete, key_opts)
+
 -- Resize pane
 keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", key_opts)
 keymap({ "n", "x" }, "<M-Down>", "<cmd>resize -2<CR>", key_opts)

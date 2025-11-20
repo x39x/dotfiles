@@ -9,10 +9,15 @@ vim.pack.add({
         "https://github.com/folke/flash.nvim",
         "https://github.com/folke/trouble.nvim",
         "https://github.com/sindrets/diffview.nvim",
+
+        "https://github.com/nvim-mini/mini.bufremove",
 })
 require("39.basic.filetree")
 require("39.basic.treesitter")
 require("39.basic.cmp")
+
+-- PLUG: mini.bufremove
+require("mini.bufremove").setup()
 
 -- PLUG: nvim-surround
 require("nvim-surround").setup()
