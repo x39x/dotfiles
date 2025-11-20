@@ -12,6 +12,11 @@ return {
                 "typescriptreact",
                 "typescript.tsx",
         },
+
+        on_init = function(client, _)
+                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+        end,
+
         root_dir = function(bufnr, on_dir)
                 local root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }
                 -- Give the root markers equal priority by wrapping them in a table

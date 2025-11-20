@@ -37,7 +37,7 @@ local BufferLinePicker = {
                 return self._show_picker
         end,
         init = function(self)
-                local chars = { "h", "j", "k", "g", "f", "d", "w", "e", "r", "u", "i", "o" }
+                local chars = { "h", "j", "k", "l", "g", "f", "d", "w", "e", "r", "u", "i", "o" }
 
                 for _, c in ipairs(chars) do
                         if not self._picker_labels[c] then

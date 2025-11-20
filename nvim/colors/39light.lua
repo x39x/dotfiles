@@ -4,6 +4,7 @@ end
 
 local colors = {
         miku = "#1F30C8",
+
         cyan2 = "#248f8f",
         cyan0 = "#00627A",
         cyan3 = "#3377aa",
@@ -11,6 +12,7 @@ local colors = {
         cyan5 = "#286d73",
         cyan1 = "#88aa99",
 
+        purple4 = "#6B2FBA",
         purple0 = "#871094",
         purple2 = "#74118c",
         purple3 = "#662277",
@@ -39,6 +41,7 @@ local colors = {
         red3 = "#D3353F",
         red2 = "#CE0606",
         red4 = "#de0202",
+        red8 = "#D3302F",
         red1 = "#DC2626",
         red5 = "#FFEEEB",
 
@@ -55,12 +58,14 @@ local colors = {
         blue6 = "#A6D2FF",
         blue8 = "#B4D7FF",
         blueA = "#C2D8F3",
+        blueD = "#0042B6",
 
         orange = "#b86114",
 
-        brown2 = "#805900", --___package
+        brown2 = "#805900",
         brown0 = "#9E880D",
         brown1 = "#B28B00",
+        brown3 = "#8c6c41",
 
         yellow0 = "#e6bc05",
         yellow1 = "#F2BF56",
@@ -72,7 +77,6 @@ local colors = {
         --  '#0093a1',
         --
         --  "#3333bb",
-        --  '#0042B6',
         --  "#174ad4",
         --  '#0f54d6',
         --  "#336ecc",
@@ -93,7 +97,6 @@ local colors = {
         --  '#862F95',
         --  '#7A3E9D',
         --  '#6B2FBA',
-        --  '#6b2fba',
         --  "#830091",
         --  "#851691",
         --
@@ -106,7 +109,6 @@ local colors = {
         --  '#777777',
         --
         --  '#7D7840',
-        --  '#8c6c41',
         --
         --  '#AB6526',
         --  '#CD9731',
@@ -160,44 +162,10 @@ local function m39k()
         hl("WarningMsg", { fg = colors.orange })
         hl("ErrorMsg", { fg = colors.red1 })
         hl("ModeMsg", { bg = colors.bg0, fg = colors.bg0 })
-
-        -- Syntax
-        hl("Title", { link = "Number" })
-        hl("Todo", { fg = colors.red0 })
+        hl("Title", { fg = colors.blueD, bold = true })
         hl("Underlined", { underline = true })
-        hl("Operator", { fg = colors.fg0 })
-        hl("Comment", { fg = colors.fg2, italic = false })
-        hl("Function", { fg = colors.cyan0 })
-        hl("Keyword", { fg = colors.blue2 })
-        hl("String", { fg = colors.green2 })
-        hl("Number", { fg = colors.blue4 })
-        hl("Float", { fg = colors.blue4 })
-        hl("PreProc", { fg = colors.blue3 })
-        hl("Type", { fg = colors.blue0 })
-        hl("Statement", { fg = colors.blue7 })
-        hl("Identifier", { fg = colors.fg0 })
-        hl("Special", { fg = colors.fg0 })
-        hl("Constant", { fg = colors.blue2 })
-        hl("Error", { fg = colors.red0 })
-        --TODO:
-        -- hl("Character",      { fg = colors.yellow })
-        -- hl("Boolean",        { fg = colors.blue })
-        -- hl("Conditional",    { fg = colors.keyword })
-        -- hl("Repeat",         { fg = colors.keyword })
-        -- hl("Label",          { fg = colors.keyword })
-        -- hl("Exception",      { fg = colors.keyword })
-        -- hl("Include",        { fg = colors.keyword })
-        -- hl("Define",         { fg = colors.keyword })
-        -- hl("SpecialChar",    { fg = colors.yellow })
-        -- hl("Delimiter",      { fg = colors.medium_gray })
-        -- hl("Tag",            { fg = colors.blue })
-        -- hl("Debug",          { fg = colors.error })
-        -- hl("Macro",          { fg = colors.medium_gray })
-        -- hl("StorageClass",   { fg = colors.keyword })
-        -- hl("Structure",      { fg = colors.accent })
-        -- hl("Typedef",        { fg = colors.accent })
-        -- hl("SpecialComment", { fg = colors.comment, italic = true })
 
+        --NOTE: LSP DIFF
         hl("DiagnosticError", { fg = colors.red1 })
         hl("DiagnosticWarn", { fg = colors.orange })
         hl("DiagnosticInfo", { fg = colors.blue5 })
@@ -206,6 +174,7 @@ local function m39k()
         hl("DiagnosticUnderlineWarn", { undercurl = true, sp = colors.yellow1 })
         hl("DiagnosticUnderlineInfo", { undercurl = true, sp = colors.blue5 })
         hl("DiagnosticUnderlineHint", { undercurl = true, sp = colors.green0 })
+        --diff
         hl("DiffChange", { bg = colors.blueA })
         hl("DiffAdd", { bg = colors.green3, fg = colors.green1 })
         hl("DiffText", { bg = colors.blueB, fg = colors.red4 })
@@ -213,98 +182,110 @@ local function m39k()
         hl("diffAdded", { fg = colors.green2 })
         hl("diffRemoved", { fg = colors.red2 })
         hl("diffChanged", { fg = colors.brown1 })
+        hl("@diff.plus", { link = "diffAdded" })
+        hl("@diff.minus", { link = "diffRemoved" })
+        hl("@diff.delta", { link = "diffChanged" })
 
-        --PLUG: Treesitter highlights
-        hl("@markup.heading.1.markdown", { fg = colors.purple0, bold = true })
-        hl("@markup.heading.2.markdown", { fg = colors.blue3, bold = true })
-        hl("@markup.heading.3.markdown", { fg = colors.blue3, bold = true })
-        hl("@markup.heading.4.markdown", { fg = colors.blue3, bold = true })
-        hl("@markup.heading.5.markdown", { fg = colors.blue3, bold = true })
-        hl("@markup.heading.6.markdown", { fg = colors.blue3, bold = true })
-        hl("@markup.strong.markdown_inline", { fg = colors.blue2, bold = true })
+        -- NOTE: Syntax
+        hl("Function", { fg = colors.fg0 })
+        hl("Identifier", { fg = colors.fg0 })
+        hl("Structure", { fg = colors.fg0 })
+        hl("StorageClass", { fg = colors.fg0 })
+        hl("Special", { fg = colors.fg0 })
+        hl("SpecialChar", { link = "Special" })
+        hl("Repeat", { fg = colors.fg0 })
+        hl("Exception", { fg = colors.fg0 })
+        hl("Conditional", { fg = colors.fg0 })
+        hl("Include", { fg = colors.fg0 })
+        hl("Tag", { fg = colors.fg })
+        hl("Comment", { fg = colors.fg2 })
+        -- 1blue
+        hl("Keyword", { fg = colors.blue2 })
+        hl("Statement", { fg = colors.blue7 })
+        hl("Number", { fg = colors.blue4 })
+        hl("Float", { fg = colors.blue4 })
+        -- 2green
+        hl("Character", { fg = colors.green1 })
+        hl("String", { fg = colors.green2 })
+        -- 3purple
+        hl("Operator", { fg = colors.purple0 })
+        hl("Define", { fg = colors.purple2 })
+        hl("PreProc", { fg = colors.purple2 })
+        hl("PreCondit", { link = "PreProc" })
+        --4cyan0
+        hl("Type", { fg = colors.purple0 })
+        hl("Typedef", { link = "Type" })
+        hl("Delimiter", { fg = colors.cyan0 })
+        hl("SpecialComment", { fg = colors.cyan0 })
+        --5brown
+        hl("Boolean", { fg = colors.brown0 })
+        hl("Macro", { fg = colors.brown0 })
+        -- 6red
+        hl("Constant", { fg = colors.red8 })
+        hl("Label", { fg = colors.red8 })
 
-        hl("@comment", { link = "Comment" })
+        --NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
+        hl("@variable", { link = "Normal" })
+        hl("@constant", { link = "Constant" })
+        hl("@label", { link = "Label" })
+        hl("@boolean", { link = "Boolean" })
         hl("@number", { link = "Number" })
-        hl("@operator", { link = "Operator" })
-
         hl("@type", { link = "Type" })
-        hl("@type.builtin", { fg = colors.blue2 })
-
-        hl("@keyword", { link = "Keyword" })
-        hl("@keyword.import", { fg = colors.purple0 })
-
         hl("@function", { link = "Function" })
-        hl("@function.builtin", { link = "Function" })
-
-        hl("@variable", { fg = colors.blue0 })
-        hl("@variable.builtin", { fg = colors.fg0 })
-
+        hl("@constructor", { link = "Function" })
+        hl("@operator", { link = "Operator" })
+        hl("@keyword", { link = "Keyword" })
+        hl("@punctuation.delimiter", { link = "Delimiter" })
+        hl("@punctuation.bracket", { link = "Operator" })
+        hl("@punctuation.special", { link = "Constant" })
+        hl("@tag", { link = "Tag" })
+        hl("@comment", { link = "Comment" })
+        hl("@module", { link = "Include" })
         hl("@string", { link = "String" })
+        hl("@string.documentation", { link = "String" })
+        -- md
+        hl("@markup.heading.1", { fg = colors.purple0, bold = true })
+        hl("@markup.heading.2", { fg = colors.green2, bold = true })
+        hl("@markup.heading.3", { fg = colors.blue3, bold = true })
+        hl("@markup.strong", { fg = colors.blue1, bold = true })
+        hl("@markup.italic", { fg = colors.blue1, italic = true })
+        hl("@markup.link", { fg = colors.blueD })
+        -- custom
         hl("@string.escape", { fg = colors.brown0 })
         hl("@string.regexp", { fg = colors.brown2 })
-
-        hl("@boolean", { fg = colors.brown1 })
-        hl("@constant", { link = "Constant" })
-        hl("@constant.builtin", { link = "Constant" })
-        hl("@constant.macro", { link = "Constant" })
-
-        -- shl("@class", { fg = colors.fg0 })
-        -- shl("@method", { link = "Function" })
-        -- shl("@field", { link = "Keyword" })
-        -- shl("@interface", { fg = colors.fg0 })
-        -- shl("@namespace", { fg = colors.red1 })
-
-        -- shl("@tag", { fg = colors.green0 })
-        -- shl("@tag.attribute", { link = "@tag" })
-        -- shl("@tag.delimiter", { link = "@tag" })
-
-        -- shl("@property", { link = "@variable" })
-        -- shl("@constructor", { link = "Function" })
-        -- shl("@punctuation", { fg = colors.fg0 })
-        -- shl("@parameter", { fg = colors.fg0 })
-        -- shl("@attribute", { fg = colors.orange })
-
-        -- shl("LspReferenceText", { bg = colors.fg2 })
-        -- shl("LspReferenceRead", { bg = colors.fg2 })
-        -- shl("LspReferenceWrite", { bg = colors.fg2 })
-
-        --DONE: lsp
-        hl("@lsp.typemod.variable.functionScope", { fg = colors.blue0 })
-        hl("@keyword.directive", { fg = colors.brown0 })
-        hl("@lsp.type.property", { fg = colors.blue1 })
-        hl("@lsp.typemod.keyword.documentation", { fg = colors.brown0 })
-        hl("@function.macro", { fg = colors.cyan3 }) -- rust
-        hl("@lsp.typemod.builtinAttribute.attribute", { fg = colors.brown2 }) -- rust
-        hl("@lsp.type.parameter", { fg = colors.purple2 }) -- lua
-
-        --DONE: treesitter
-        hl("@tag.attribute", { fg = colors.blue1 })
-        hl("@variable.member", { fg = colors.blue2 }) -- lua table
-        hl("@_jsx_attribute.tsx", { fg = colors.brown2 })
-        hl("@variable.parameter", { fg = colors.blue9 }) --go
-        hl("@constant.builtin", { fg = colors.brown0 }) --go
-        hl("@module", { fg = colors.purple3 }) --go
+        hl("@attribute", { fg = colors.red8 })
+        hl("@tag.attribute", { fg = colors.purple0 })
+        hl("@comment.documentation", { fg = colors.brown3 })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.green0 })
         hl("GitSignsChange", { fg = colors.orange })
         hl("GitSignsDelete", { fg = colors.red1 })
+
         hl("FlashMatch", { link = "Normal" })
         hl("FlashCurrent", { bg = colors.red1 })
         hl("FlashLabel", { fg = colors.red4, bold = true })
+
         hl("BlinkCmpKind", { fg = colors.purple0 })
+
         hl("TelescopeSelection", { bg = colors.bg5 })
         hl("TelescopeSelectionCaret", { link = "TelescopeSelection" })
         hl("TelescopeMatching", { bg = colors.yellow3 })
         hl("TelescopeBorder", { bg = colors.bg, fg = colors.bg4 })
+        hl("FzfLuaBorder", { link = "TelescopeBorder" })
+
         hl("NvimTreeIndentMarker", { link = "Comment" })
         hl("NvimTreeGitFolderDirtyHL", { link = "diffRemoved" })
         hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
         hl("NvimTreeGitFileNewHL", { fg = colors.green0 })
+
         hl("AlphaHeader", { fg = colors.miku })
 
         hl("HeirlineA", { fg = colors.blue2 })
         hl("HeirlineB", { fg = colors.purple0 })
+
+        hl("IndentLine", { link = "Whitespace" })
+        hl("IndentLineCurrent", { link = "Whitespace" })
 
         vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg0
@@ -324,9 +305,6 @@ local function m39k()
         vim.g.terminal_color_13 = colors.red0
         vim.g.terminal_color_14 = colors.yellow2
         vim.g.terminal_color_15 = colors.fg2
-
-        hl("IndentLine", { link = "Whitespace" })
-        hl("IndentLineCurrent", { link = "Whitespace" })
 end
 
 m39k()
