@@ -35,14 +35,13 @@ require("nvim-treesitter").install({
         "python",
 
         "css",
-        "html",
         "tsx",
+        "html",
         "jsdoc",
         "svelte",
         "javascript",
         "typescript",
 
-        "typst",
         "fish",
         "bash",
         "make",

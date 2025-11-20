@@ -20,9 +20,6 @@ keymap("", "H", "^", key_opts)
 keymap("", "J", "2j", key_opts)
 keymap("", "K", "2k", key_opts)
 keymap("", "|", "J", key_opts)
-keymap("", "q", "%", key_opts)
-keymap("", "%", "q", key_opts)
-
 --buffers
 keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", key_opts)
 keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", key_opts)
