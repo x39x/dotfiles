@@ -2,19 +2,23 @@ vim.pack.add({
         "https://github.com/ibhagwan/fzf-lua",
 })
 
-local nopreview = {
-        winopts = {
-                preview = {
-                        border = "none",
-                        horizontal = "right:0%",
+local nopreview = function(opts)
+        opts = opts or {}
+        local config = {
+                winopts = {
+                        preview = {
+                                border = "none",
+                                horizontal = "right:0%",
+                        },
                 },
-        },
-}
+        }
+        return vim.tbl_deep_extend("force", config, opts)
+end
 
-require("fzf-lua").setup({
-        builtin = { winopts = { width = 1, height = 0.39 } },
-        colorscheme = { winopts = { width = 1, height = 0.39 } },
-        winopts = {
+local ivy = function(opts)
+        opts = opts or {}
+        local winopts = {
+                title_flags = false,
                 height = 0.39,
                 width = 1,
                 row = 1,
@@ -30,6 +34,36 @@ require("fzf-lua").setup({
                                 number = false,
                         },
                 },
+        }
+        return vim.tbl_deep_extend("force", winopts, opts)
+end
+local dropdown = function(opts)
+        opts = opts or {}
+        local winopts = {
+                title_flags = false,
+                height = 0.39,
+                width = 0.5,
+                row = 0.4,
+                col = 0.5,
+                backdrop = 100,
+                border = { "─", "─", "─", " ", "─", "─", "─", " " },
+        }
+        return vim.tbl_deep_extend("force", winopts, opts)
+end
+
+require("fzf-lua").setup({
+        winopts = ivy(),
+        zoxide = nopreview,
+        files = {
+                previewer = false,
+                cwd_prompt = false,
+        },
+        oldfiles = { previewer = false },
+        tmux_buffers = { previewer = false },
+        builtin = { winopts = { width = 1, height = 0.39 } },
+        colorschemes = {
+                live_preview = false,
+                winopts = dropdown(),
         },
         grep = {
                 rg_glob = true,
@@ -41,10 +75,6 @@ require("fzf-lua").setup({
                         title = "",
                 },
         },
-        files = { previewer = false },
-        oldfiles = { previewer = false },
-        tmux_buffers = { previewer = false },
-        zoxide = nopreview,
 })
 
 local keymap = vim.keymap.set
@@ -58,13 +88,5 @@ keymap("n", "<Leader>fs", require("fzf-lua").colorschemes, key_opts)
 keymap("n", "<Leader>fm", require("fzf-lua").marks, key_opts)
 
 require("fzf-lua").register_ui_select({
-
-        winopts = {
-                height = 0.39,
-                width = 0.5,
-                row = 0.4,
-                col = 0.5,
-                backdrop = 100,
-                border = { "─", "─", "─", " ", "─", "─", "─", " " },
-        },
+        winopts = dropdown(),
 })
