@@ -31,7 +31,7 @@ cmd("Leet", function()
                                 before = { "#include <bits/stdc++.h>" },
                         },
                 },
-                picker = { provider = "telescope" },
+                picker = { provider = "fzf-lua" },
         })
         vim.cmd("Leet")
 end, {})

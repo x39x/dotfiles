@@ -5,7 +5,7 @@ local cmd = vim.cmd
 local M = {}
 
 local config = {
-        ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", "NvimTree" },
+        ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", "NvimTree", "fzf" },
         ignore_buftype = { "quickfix", "nofile", "help", "prompt", "terminal" },
 }
 

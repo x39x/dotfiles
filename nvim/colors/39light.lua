@@ -62,10 +62,10 @@ local colors = {
 
         orange = "#b86114",
 
-        brown2 = "#805900",
+        -- brown2 = "#805900",
+        -- brown3 = "#8c6c41",
         brown0 = "#9E880D",
         brown1 = "#B28B00",
-        brown3 = "#8c6c41",
 
         yellow0 = "#e6bc05",
         yellow1 = "#F2BF56",
@@ -251,11 +251,11 @@ local function m39k()
         hl("@markup.italic", { fg = colors.blue1, italic = true })
         hl("@markup.link", { fg = colors.blueD })
         -- custom
-        hl("@string.escape", { fg = colors.brown0 })
-        hl("@string.regexp", { fg = colors.brown2 })
+        hl("@string.escape", { fg = colors.purple4 })
+        hl("@string.regexp", { fg = colors.brown0 })
         hl("@attribute", { fg = colors.red8 })
         hl("@tag.attribute", { fg = colors.purple0 })
-        hl("@comment.documentation", { fg = colors.brown3 })
+        hl("@comment.documentation", { fg = colors.brown0 })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.green0 })
@@ -268,11 +268,8 @@ local function m39k()
 
         hl("BlinkCmpKind", { fg = colors.purple0 })
 
-        hl("TelescopeSelection", { bg = colors.bg5 })
-        hl("TelescopeSelectionCaret", { link = "TelescopeSelection" })
-        hl("TelescopeMatching", { bg = colors.yellow3 })
-        hl("TelescopeBorder", { bg = colors.bg, fg = colors.bg4 })
-        hl("FzfLuaBorder", { link = "TelescopeBorder" })
+        hl("FzfLuaBorder", { bg = colors.bg, fg = colors.bg4 })
+        hl("FzfLuaTitle", { fg = colors.fg2 })
 
         hl("NvimTreeIndentMarker", { link = "Comment" })
         hl("NvimTreeGitFolderDirtyHL", { link = "diffRemoved" })

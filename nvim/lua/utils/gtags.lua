@@ -47,5 +47,5 @@ M.goto_references = function()
                 end
         end)
         --TODO:
-        -- send to telescope
+        -- send to fzf
 end

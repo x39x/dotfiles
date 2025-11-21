@@ -1,6 +1,7 @@
 karabiner/automatic_backups
 hammerspoon/Spoons
 nvim/lazy-lock.json
+nvim/nvim-pack-lock.json
 __pycache__/
 IM/fcitx5/conf/cached_layouts
 nvim-pack-lock.json

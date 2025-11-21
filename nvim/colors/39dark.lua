@@ -18,8 +18,8 @@ local colors = {
         fg1 = "#FFFFFF",
         fg2 = "#f8f8f8",
 
-        bg0 = "#000000",
-        bg1 = "#1F1F1F",
+        bg0 = "#1F1F1F",
+        bg1 = "#000000",
         bg2 = "#1A1A1A",
         bg3 = "#292929",
         bg4 = "#212121",
@@ -78,15 +78,15 @@ local function m39k()
         vim.g.colors_name = "39dark"
 
         --NOTE: UI
-        hl("Normal", { fg = colors.fg0, bg = colors.bg1 })
+        hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
         hl("NormalFloat", { fg = colors.fg0, bg = colors.bg2 })
         hl("FloatBorder", { fg = colors.gray3, bg = colors.bg2 })
         hl("CursorLine", { bg = colors.gray0 })
         hl("CursorColumn", { bg = colors.gray0 })
-        hl("Cursor", { fg = colors.bg1, bg = colors.fg0 })
+        hl("Cursor", { fg = colors.bg0, bg = colors.fg0 })
         hl("LineNr", { fg = colors.gray4 })
         hl("CursorLineNr", { fg = colors.fg2 })
-        hl("SignColumn", { fg = colors.gray4, bg = colors.bg1 })
+        hl("SignColumn", { fg = colors.gray4, bg = colors.bg0 })
         hl("ColorColumn", { bg = colors.gray0 })
         hl("StatusLine", { fg = colors.gray4, bg = colors.bg2 })
         hl("StatusLineNC", { fg = colors.gray4, bg = colors.bg2 })
@@ -98,16 +98,16 @@ local function m39k()
         hl("PmenuThumb", { bg = colors.gray4 })
         hl("TabLine", { fg = colors.gray4, bg = colors.bg2 })
         hl("TabLineFill", { bg = colors.bg2 })
-        hl("TabLineSel", { fg = colors.gray7, bg = colors.bg1 })
+        hl("TabLineSel", { fg = colors.gray7, bg = colors.bg0 })
         hl("Visual", { bg = colors.blue5 })
         hl("VisualNOS", { bg = colors.red2 })
-        hl("Search", { bg = colors.yellow2, fg = colors.bg0 })
-        hl("CurSearch", { bg = colors.green1, fg = colors.bg0 })
-        hl("IncSearch", { bg = colors.red0, fg = colors.bg0 })
-        hl("MatchParen", { bg = colors.green1, fg = colors.bg0 })
+        hl("Search", { bg = colors.yellow2, fg = colors.bg1 })
+        hl("CurSearch", { bg = colors.green1, fg = colors.bg1 })
+        hl("IncSearch", { bg = colors.red0, fg = colors.bg1 })
+        hl("MatchParen", { bg = colors.green1, fg = colors.bg1 })
         hl("Directory", { fg = colors.purple0 })
         hl("Folded", { fg = colors.gray4, bg = colors.bg3 })
-        hl("FoldColumn", { fg = colors.gray4, bg = colors.bg1 })
+        hl("FoldColumn", { fg = colors.gray4, bg = colors.bg0 })
         hl("NonText", { fg = colors.gray4 })
         hl("EndOfBuffer", { fg = colors.gray4 })
         hl("SpecialKey", { fg = colors.gray4 })
@@ -247,11 +247,8 @@ local function m39k()
 
         hl("BlinkCmpKind", { fg = colors.purple0 })
 
-        hl("TelescopeSelection", { bg = colors.gray1 })
-        hl("TelescopeSelectionCaret", { link = "TelescopeSelection" })
-        hl("TelescopeMatching", { fg = colors.fg2 })
-        hl("TelescopeBorder", { bg = colors.bg1, fg = colors.gray3 })
-        hl("FzfLuaBorder", { link = "TelescopeBorder" })
+        hl("FzfLuaBorder", { bg = colors.bg0, fg = colors.gray3 })
+        hl("FzfLuaTitle", { fg = colors.fg0 })
 
         hl("NvimTreeIndentMarker", { link = "Comment" })
         hl("NvimTreeGitFolderDirtyHL", { fg = colors.red4 })
@@ -265,9 +262,9 @@ local function m39k()
         hl("IndentLine", { link = "Whitespace" })
         hl("IndentLineCurrent", { link = "Whitespace" })
 
-        vim.g.terminal_color_background = colors.bg1
+        vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg2
-        vim.g.terminal_color_0 = colors.bg1
+        vim.g.terminal_color_0 = colors.bg0
         vim.g.terminal_color_1 = colors.red4
         vim.g.terminal_color_2 = colors.blue2
         vim.g.terminal_color_3 = colors.yellow1
