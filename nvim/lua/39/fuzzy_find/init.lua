@@ -53,7 +53,7 @@ end
 
 require("fzf-lua").setup({
         winopts = ivy(),
-        zoxide = nopreview,
+        zoxide = nopreview(),
         files = {
                 previewer = false,
                 cwd_prompt = false,
@@ -79,13 +79,13 @@ require("fzf-lua").setup({
 
 local keymap = vim.keymap.set
 local key_opts = { noremap = true, silent = true }
-keymap("n", "<leader>ff", require("fzf-lua").files, key_opts)
-keymap("n", "<leader>fh", require("fzf-lua").oldfiles, key_opts)
-keymap("n", "<leader>fp", require("fzf-lua").zoxide, key_opts)
-keymap("n", "<Leader>fr", require("fzf-lua").builtin, key_opts)
-keymap("n", "<leader>fl", require("fzf-lua").live_grep, key_opts)
-keymap("n", "<Leader>fs", require("fzf-lua").colorschemes, key_opts)
-keymap("n", "<Leader>fm", require("fzf-lua").marks, key_opts)
+keymap("n", "<leader>ff", FzfLua.files, key_opts)
+keymap("n", "<leader>fh", FzfLua.oldfiles, key_opts)
+keymap("n", "<leader>fp", FzfLua.zoxide, key_opts)
+keymap("n", "<Leader>fr", FzfLua.builtin, key_opts)
+keymap("n", "<leader>fl", FzfLua.live_grep, key_opts)
+keymap("n", "<Leader>fs", FzfLua.colorschemes, key_opts)
+keymap("n", "<Leader>fm", FzfLua.marks, key_opts)
 
 require("fzf-lua").register_ui_select({
         winopts = dropdown(),

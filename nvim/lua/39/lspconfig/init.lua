@@ -34,11 +34,11 @@ vim.diagnostic.config({
 })
 -- set lsp float window border
 -- - "solid": Adds padding by a single whitespace cell.
-local orig = vim.lsp.util.open_floating_preview
+local vim_float_win = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
         opts = opts or {}
         opts.border = opts.border or "solid"
-        return orig(contents, syntax, opts, ...)
+        return vim_float_win(contents, syntax, opts, ...)
 end
 
 local servers = {
