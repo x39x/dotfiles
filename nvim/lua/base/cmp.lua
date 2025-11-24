@@ -1,14 +1,3 @@
-vim.pack.add({
-        "https://github.com/rafamadriz/friendly-snippets",
-        "https://github.com/L3MON4D3/LuaSnip",
-        -- build = "make install_jsregexp",
-
-        {
-                src = "https://github.com/Saghen/blink.cmp",
-                version = vim.version.range("1.*"),
-        },
-})
-
 local cmp_border = { " ", " ", " ", " ", " ", " ", " ", " " }
 
 local luasnip = require("luasnip")

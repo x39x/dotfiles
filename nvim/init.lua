@@ -51,11 +51,9 @@ o.tabstop = 8
 o.cursorline = false
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
-require("39.basic")
-require("39.fuzzy_find")
-require("39.lspconfig")
-require("39.dapconfig")
-require("39.ui")
-require("39.extras")
-require("39.keymap")
-require("39.autocmd")
+require("base")
+require("lspconfig")
+require("dapconfig")
+require("ui")
+require("keymap")
+require("autocmd")

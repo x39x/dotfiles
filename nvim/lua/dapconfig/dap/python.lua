@@ -64,6 +64,7 @@ python[#python + 1] = {
         type = "debugpy",
         name = "Launch File",
         request = "launch",
+        console = "integratedTerminal",
         program = debug_file,
         pythonPath = python_path,
 }

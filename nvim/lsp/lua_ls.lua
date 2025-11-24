@@ -15,14 +15,14 @@ return {
         settings = {
                 Lua = {
                         diagnostics = {
-                                -- globals = { "vim" },
+                                globals = { "vim", "FzfLua" },
                                 disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
                         },
                         workspace = {
                                 library = {
                                         vim.fn.expand("$VIMRUNTIME/lua"),
                                         vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-                                        vim.fn.stdpath("data") .. "/site/pack/core/opt",
+                                        -- vim.fn.stdpath("data") .. "/site/pack/core/opt",
                                         "${3rd}/luv/library",
                                 },
                                 maxPreload = 100000,

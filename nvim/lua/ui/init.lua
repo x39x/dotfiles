@@ -10,10 +10,10 @@ vim.pack.add({
 require("alpha").setup({
         layout = {
                 --val c:2 a:6
-                { type = "padding", val = 6 },
+                { type = "padding", val = 0 },
                 {
                         type = "text",
-                        val = require("39.ui.header").a,
+                        val = require("ui.header").a,
                         opts = {
                                 position = "center",
                                 hl = "AlphaHeader",
@@ -50,5 +50,5 @@ require("todo-comments").setup({
 
 require("nvim-highlight-colors").setup()
 
-require("39.ui.39line")
-require("39.ui.colorscheme").set()
+require("ui.39line")
+require("ui.colorscheme").set()

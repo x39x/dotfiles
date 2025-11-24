@@ -1,6 +1,6 @@
 local utils = require("heirline.utils")
-local tabline = require("39.ui.39line.tabline")
-local statusline = require("39.ui.39line.statusline")
+local tabline = require("ui.39line.tabline")
+local statusline = require("ui.39line.statusline")
 
 local function setup_colors()
         return {

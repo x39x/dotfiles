@@ -40,7 +40,7 @@ local colors = {
         yellow3 = "#cd9731",
         yellow4 = "#63341D",
 
-        green1 = "#0FBC7A",
+        green1 = "#0FBC79",
         green2 = "#51FA7A",
 
         red0 = "#f50000",
@@ -261,6 +261,9 @@ local function m39k()
 
         hl("IndentLine", { link = "Whitespace" })
         hl("IndentLineCurrent", { link = "Whitespace" })
+
+        hl("DapBreakpointHighlight", { fg = colors.red5 })
+        hl("DapStoppedHiglight", { fg = colors.green1 })
 
         vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg2

@@ -1,7 +1,3 @@
-vim.pack.add({
-        "https://github.com/ibhagwan/fzf-lua",
-})
-
 local nopreview = function(opts)
         opts = opts or {}
         local config = {
@@ -86,6 +82,7 @@ keymap("n", "<Leader>fr", FzfLua.builtin, key_opts)
 keymap("n", "<leader>fl", FzfLua.live_grep, key_opts)
 keymap("n", "<Leader>fs", FzfLua.colorschemes, key_opts)
 keymap("n", "<Leader>fm", FzfLua.marks, key_opts)
+keymap("n", "<Leader>fe", FzfLua.resume, key_opts)
 
 require("fzf-lua").register_ui_select({
         winopts = dropdown(),

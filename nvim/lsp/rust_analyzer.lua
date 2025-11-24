@@ -1,4 +1,4 @@
-local lsp_keymaps = require("39.lspconfig.keymap")
+local lsp_keymaps = require("lspconfig.keymap")
 
 local function reload_workspace(bufnr)
         local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })

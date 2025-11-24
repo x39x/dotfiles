@@ -1,4 +1,4 @@
-local lsp_keymaps = require("39.lspconfig.keymap")
+local lsp_keymaps = require("lspconfig.keymap")
 
 --NOTE: https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-876700701
 local function get_python_path()

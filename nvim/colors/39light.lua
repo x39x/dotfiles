@@ -284,6 +284,9 @@ local function m39k()
         hl("IndentLine", { link = "Whitespace" })
         hl("IndentLineCurrent", { link = "Whitespace" })
 
+        hl("DapBreakpointHighlight", { fg = colors.red2 })
+        hl("DapStoppedHiglight", { fg = colors.green0 })
+
         vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg0
         vim.g.terminal_color_0 = colors.bg

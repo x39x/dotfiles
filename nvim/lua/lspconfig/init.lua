@@ -1,8 +1,9 @@
 vim.pack.add({
         "https://github.com/williamboman/mason.nvim",
         "https://github.com/nvimtools/none-ls.nvim",
+        "https://github.com/antosha417/nvim-lsp-file-operations", -- optional LSP integration
 })
-local lsp_keymaps = require("39.lspconfig.keymap")
+local lsp_keymaps = require("lspconfig.keymap")
 
 -- LSP config
 vim.keymap.del("", "grn")
@@ -105,10 +106,13 @@ null_ls.setup({
         end,
 })
 
+-- must after nvimtree
+require("lsp-file-operations").setup()
 vim.lsp.config("*", {
         on_attach = function(_, bufnr)
                 lsp_keymaps(bufnr)
         end,
+        capabilities = require("lsp-file-operations").default_capabilities(),
 })
 
 vim.lsp.enable(servers)

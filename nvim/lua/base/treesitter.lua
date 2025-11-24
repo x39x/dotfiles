@@ -1,17 +1,3 @@
-vim.pack.add({
-        {
-                src = "https://github.com/nvim-treesitter/nvim-treesitter",
-                version = "main",
-        },
-        {
-                src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-                version = "main",
-        },
-
-        "https://github.com/kevinhwang91/promise-async",
-        "https://github.com/kevinhwang91/nvim-ufo",
-})
-
 require("nvim-treesitter").install({
         "regex",
         "diff",
@@ -115,21 +101,3 @@ end)
 vim.keymap.set({ "x", "o" }, "ic", function()
         require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
 end)
-
--- ts-comments
--- M[#M + 1] = {
---         "folke/ts-comments.nvim",
---         config = true,
---         event = "VeryLazy",
--- }
---
-
--- "https://github.com/RRethy/nvim-treesitter-textsubjects",
--- require("nvim-treesitter-textsubjects").configure({
---         prev_selection = ".",
---         keymaps = {
---                 [","] = "textsubjects-smart",
---                 -- [";"] = "textsubjects-container-outer",
---                 -- ["i;"] = "textsubjects-container-inner",
---         },
--- })
