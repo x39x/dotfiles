@@ -15,7 +15,7 @@ return {
         settings = {
                 Lua = {
                         diagnostics = {
-                                globals = { "vim", "FzfLua" },
+                                globals = { "vim", "FzfLua", "MiniBufremove" },
                                 disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
                         },
                         workspace = {

@@ -16,7 +16,7 @@ normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
 bold_italic = { style = "Bold Italic" }
 italic = { style = "Italic" }
 bold = { style = "Bold" }
-offset = { x = 2, y = 9 }
+offset = { x = 1, y = 9 }
 
 [cursor]
 style = { shape="Block", blinking="Always" }

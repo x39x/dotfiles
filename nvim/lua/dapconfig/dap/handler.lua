@@ -7,7 +7,7 @@ M.launch = function()
 
         vim.notify("Launch DAP for " .. ft, vim.log.levels.INFO)
 
-        local ok, dap_config = pcall(require, "39.dapconfig.dap." .. ft)
+        local ok, dap_config = pcall(require, "dapconfig.dap." .. ft)
         if ok then
                 dap_config()
                 keymap.set(buf)

@@ -12,6 +12,14 @@ local keymap = vim.keymap.set
 local key_opts = { noremap = true, silent = true }
 
 keymap("", "<Space>", "<Nop>", key_opts)
+vim.api.nvim_create_autocmd("FileType", {
+        pattern = "*",
+        callback = function()
+                keymap("", "%", "q", { noremap = true })
+        end,
+})
+keymap("", "q", "%", key_opts)
+
 keymap("i", "jk", "<esc>", key_opts)
 keymap({ "n" }, "<leader>m", ":", { noremap = true })
 keymap({ "n", "o" }, "L", "$", key_opts)
