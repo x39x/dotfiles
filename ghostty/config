@@ -1,7 +1,8 @@
 font-family            = IosevkaTerm Nerd Font Mono
 font-family            = Kaiti SC
-font-size              = 14
-adjust-cell-height     = 12
+font-size              = 13
+adjust-cell-height     = 9
+adjust-cell-width      = 1
 font-thicken           = true
 window-padding-y       = 0
 window-padding-x       = 0

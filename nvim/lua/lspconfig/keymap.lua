@@ -7,7 +7,7 @@ local lsp_rename = function()
                 end
         end)
 end
-local border = { " ", " ", " ", " ", " ", " ", " ", " " }
+-- see :h lsp-defaults
 return function(bufnr)
         local opts = {
                 noremap = true,
@@ -18,19 +18,19 @@ return function(bufnr)
 
         keymap("n", "gl", function()
                 vim.lsp.buf.hover({
-                        border = border,
+                        border = "solid",
                 })
         end, opts)
         keymap("n", "ga", function()
                 vim.diagnostic.open_float({
-                        border = "single",
+                        border = "solid",
                 })
         end, opts)
-        keymap("n", "<leader>ge", function()
-                vim.lsp.buf.signature_help({
-                        border = border,
-                })
-        end, opts)
+        -- keymap("n", "<c-e>", function()
+        --         vim.lsp.buf.signature_help({
+        --                 border = "solid",
+        --         })
+        -- end, opts)
         keymap("n", "gD", vim.lsp.buf.declaration, opts)
         keymap("n", "gd", require("fzf-lua").lsp_definitions, opts)
         keymap("n", "go", require("fzf-lua").lsp_implementations, opts)

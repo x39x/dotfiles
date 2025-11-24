@@ -9,8 +9,8 @@ vim.pack.add({
 --PLUG: alpha
 require("alpha").setup({
         layout = {
-                --val c:2 a:6
-                { type = "padding", val = 0 },
+                --val c:2 a:8
+                { type = "padding", val = 8 },
                 {
                         type = "text",
                         val = require("ui.header").a,

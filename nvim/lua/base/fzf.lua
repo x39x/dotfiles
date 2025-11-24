@@ -22,7 +22,13 @@ local ivy = function(opts)
                 backdrop = 100,
                 border = { "─", "─", "─", " ", " ", " ", " ", " " },
                 preview = {
-                        border = { "─", "─", "─", " ", " ", " ", " ", " " },
+                        border = function(_, m)
+                                if m.type == "fzf" then
+                                        return "none"
+                                else
+                                        return { "─", "─", "─", " ", " ", " ", " ", " " }
+                                end
+                        end,
                         horizontal = "right:50%",
                         title = false,
                         scrollbar = false,
@@ -46,17 +52,27 @@ local dropdown = function(opts)
         }
         return vim.tbl_deep_extend("force", winopts, opts)
 end
+local trouble = require("trouble.sources.fzf").actions
 
 require("fzf-lua").setup({
+        actions = {
+                files = {
+                        true,
+                        ["ctrl-e"] = trouble.open,
+                },
+        },
         winopts = ivy(),
-        zoxide = nopreview(),
         files = {
                 previewer = false,
                 cwd_prompt = false,
         },
+
+        -- picker option
+        zoxide = nopreview(),
         oldfiles = { previewer = false },
         tmux_buffers = { previewer = false },
         builtin = { winopts = { width = 1, height = 0.39 } },
+
         colorschemes = {
                 live_preview = false,
                 winopts = dropdown(),
