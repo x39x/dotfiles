@@ -122,6 +122,13 @@ local function m39k()
         hl("Whitespace", { fg = colors.gray2 })
         hl("Underlined", { underline = true })
         hl("Todo", { fg = colors.gray7, bg = colors.bg3, bold = true })
+        hl("QuickFixLine", { fg = colors.blue2 })
+        hl("QuickFixError", { fg = colors.red2 })
+        hl("qfSeparator", { fg = colors.gray3 })
+        hl("qfSeparator1", { link = "qfSeparator" })
+        hl("qfSeparator2", { link = "qfSeparator" })
+        hl("qfLineNr", { link = "Normal" })
+        hl("qfFileName", { link = "Normal" })
 
         --NOTE:  LSP Diagnostics Diff
         hl("LspReferenceText", { bg = colors.bg3 })

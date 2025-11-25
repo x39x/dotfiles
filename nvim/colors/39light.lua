@@ -164,6 +164,13 @@ local function m39k()
         hl("ModeMsg", { bg = colors.bg0, fg = colors.bg0 })
         hl("Title", { fg = colors.blueD, bold = true })
         hl("Underlined", { underline = true })
+        hl("QuickFixLine", { fg = colors.blue3 })
+        hl("QuickFixError", { fg = colors.red2 })
+        hl("qfSeparator", { fg = colors.bg4 })
+        hl("qfSeparator1", { link = "qfSeparator" })
+        hl("qfSeparator2", { link = "qfSeparator" })
+        hl("qfLineNr", { link = "Normal" })
+        hl("qfFileName", { link = "Normal" })
 
         --NOTE: LSP DIFF
         hl("DiagnosticError", { fg = colors.red1 })

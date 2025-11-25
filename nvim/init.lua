@@ -51,6 +51,7 @@ o.tabstop = 8
 o.cursorline = false
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 o.exrc = true -- exrc config
+vim.o.qftf = "v:lua.require'utils.qftf'" --  quickfix textfunc
 
 require("base")
 require("lspconfig")

@@ -8,7 +8,8 @@ autocmd("FileType", {
                 -- :h fo-table
                 vim.o.formatoptions = vim.o.formatoptions:gsub("o", "")
         end,
-        group = vim.api.nvim_create_augroup("FORMATOPTIONS", { clear = true }),
+        group = Default,
+        desc = "Formatoptions",
 })
 
 autocmd("BufWritePre", {
@@ -48,6 +49,7 @@ autocmd({ "BufReadPost" }, {
                 require("utils.lastplace").set_cursor_position()
         end,
         group = Default,
+        desc = "Lastplace",
 })
 
 autocmd("InsertLeave", {
@@ -62,7 +64,7 @@ autocmd("InsertLeave", {
                 end)
         end,
         group = Default,
-        desc = "auto switch to abc input",
+        desc = "Auto switch to abc input",
 })
 
 autocmd("FileType", {
@@ -78,6 +80,7 @@ autocmd("FileType", {
                 keymap("", "L", "g$", { silent = true, buffer = true })
         end,
         group = vim.api.nvim_create_augroup("TEXT", { clear = true }),
+        desc = "Text autocmd",
 })
 
 autocmd("FileType", {
@@ -87,4 +90,15 @@ autocmd("FileType", {
                 vim.bo[0].shiftwidth = 8
         end,
         group = vim.api.nvim_create_augroup("LUA", { clear = true }),
+
+        desc = "Lua autocmd",
+})
+
+autocmd("FileType", {
+        pattern = "qf",
+        callback = function()
+                vim.opt_local.buflisted = false
+        end,
+        group = Default,
+        desc = "Do't show qf in bufline",
 })
