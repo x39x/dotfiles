@@ -88,15 +88,15 @@ require("fzf-lua").setup({
 })
 
 local keymap = vim.keymap.set
-local key_opts = { noremap = true, silent = true }
-keymap("n", "<leader>ff", FzfLua.files, key_opts)
-keymap("n", "<leader>fh", FzfLua.oldfiles, key_opts)
-keymap("n", "<leader>fp", FzfLua.zoxide, key_opts)
-keymap("n", "<Leader>fr", FzfLua.builtin, key_opts)
-keymap("n", "<leader>fl", FzfLua.live_grep, key_opts)
-keymap("n", "<Leader>fs", FzfLua.colorschemes, key_opts)
-keymap("n", "<Leader>fm", FzfLua.marks, key_opts)
-keymap("n", "<Leader>fe", FzfLua.resume, key_opts)
+local keymap_opts = require("utils.keymap_opts")
+keymap("n", "<leader>ff", FzfLua.files, keymap_opts({ desc = "Fzflua files" }))
+keymap("n", "<leader>fh", FzfLua.oldfiles, keymap_opts({ desc = "Fzflua oldfiles" }))
+keymap("n", "<leader>fp", FzfLua.zoxide, keymap_opts({ desc = "Fzflua zoxide" }))
+keymap("n", "<Leader>fr", FzfLua.builtin, keymap_opts({ desc = "Fzflua builtin" }))
+keymap("n", "<leader>fl", FzfLua.live_grep, keymap_opts({ desc = "Fzflua live_grep" }))
+keymap("n", "<Leader>fs", FzfLua.colorschemes, keymap_opts({ desc = "Fzflua colorschemes" }))
+keymap("n", "<Leader>fm", FzfLua.marks, keymap_opts({ desc = "Fzflua marks" }))
+keymap("n", "<Leader>fe", FzfLua.resume, keymap_opts({ desc = "Fzflua resume" }))
 
 require("fzf-lua").register_ui_select({
         winopts = dropdown(),

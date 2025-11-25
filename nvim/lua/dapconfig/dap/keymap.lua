@@ -7,7 +7,7 @@ local dap_keymaps = {
                 rhs = function()
                         require("dap").repl.open({ height = 10 })
                 end,
-                desc = "DAP REPL",
+                desc = "Dap REPL",
         },
         {
                 mode = "n",
@@ -15,7 +15,7 @@ local dap_keymaps = {
                 rhs = function()
                         require("dap").continue()
                 end,
-                desc = "DAP Continue",
+                desc = "Dap Continue",
         },
         {
                 mode = "n",
@@ -23,7 +23,7 @@ local dap_keymaps = {
                 rhs = function()
                         require("dap").toggle_breakpoint()
                 end,
-                desc = "DAP Toggle Breakpoint",
+                desc = "Dap Toggle Breakpoint",
         },
 }
 function M.set(buf)

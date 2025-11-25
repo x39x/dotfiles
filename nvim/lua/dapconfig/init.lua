@@ -42,6 +42,6 @@ require("nvim-dap-virtual-text").setup({
 -- keymap
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
-keymap("n", "<leader>dl", require("dapconfig.dap.handler").launch, keymap_opts({ desc = "DAP launch" }))
-keymap("n", "<leader>dt", require("dapconfig.dap.handler").terminate, keymap_opts({ desc = "DAP terminate" }))
-keymap("n", "<leader>dv", require("dap-view").toggle, keymap_opts({ desc = "DAP view toggle" }))
+keymap("n", "<leader>dl", require("dapconfig.dap.handler").launch, keymap_opts({ desc = "Dap launch" }))
+keymap("n", "<leader>dt", require("dapconfig.dap.handler").terminate, keymap_opts({ desc = "Dap terminate" }))
+keymap("n", "<leader>dv", require("dap-view").toggle, keymap_opts({ desc = "Dap view toggle" }))

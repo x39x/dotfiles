@@ -89,15 +89,20 @@ require("nvim-treesitter-textobjects").setup({
                 },
         },
 })
+
+local keymap_opts = require("utils.keymap_opts")
 vim.keymap.set({ "x", "o" }, "af", function()
         require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
-end)
+end, keymap_opts({ desc = "Treesitter function outer" }))
+
 vim.keymap.set({ "x", "o" }, "if", function()
         require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
-end)
+end, keymap_opts({ desc = "Treesitter function inner" }))
+
 vim.keymap.set({ "x", "o" }, "ac", function()
         require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
-end)
+end, keymap_opts({ desc = "Treesitter class outer" }))
+
 vim.keymap.set({ "x", "o" }, "ic", function()
         require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
-end)
+end, keymap_opts({ desc = "Treesitter class inner" }))

@@ -68,10 +68,10 @@ require("flash").setup({
 })
 
 local keymap = vim.keymap.set
-local key_opts = { noremap = true, silent = true }
-keymap({ "n", "v", "o" }, "f", require("flash").jump, key_opts)
-keymap({ "n", "v" }, ";a", "<Plug>(EasyAlign)", { noremap = true, silent = true })
-keymap("n", "<leader>n", require("nvim-tree.api").tree.open, key_opts)
+local keymap_opts = require("utils.keymap_opts")
+keymap({ "n", "v", "o" }, "f", require("flash").jump, keymap_opts({ desc = "Flash jump" }))
+keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
+keymap("n", "<leader>n", require("nvim-tree.api").tree.open, keymap_opts({ desc = "Nvimtree" }))
 
 require("base.filetree")
 require("base.treesitter")

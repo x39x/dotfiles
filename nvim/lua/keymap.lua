@@ -2,44 +2,44 @@
 -- see :h map-table
 
 local keymap = vim.keymap.set
-local key_opts = { noremap = true, silent = true }
+local keymap_opts = require("utils.keymap_opts")
 
-keymap("", "<Space>", "<Nop>", key_opts)
+keymap("", "<Space>", "<Nop>", keymap_opts())
 vim.api.nvim_create_autocmd("FileType", {
         pattern = "*",
         callback = function()
                 keymap("", "%", "q", { noremap = true })
         end,
 })
-keymap("", "q", "%", key_opts)
+keymap("", "q", "%", keymap_opts())
 
-keymap("i", "jk", "<esc>", key_opts)
+keymap("i", "jk", "<esc>", keymap_opts())
 keymap({ "n" }, "<leader>m", ":", { noremap = true })
-keymap({ "n", "o" }, "L", "$", key_opts)
-keymap({ "x" }, "L", "$h", key_opts)
-keymap("", "H", "^", key_opts)
-keymap("", "J", "2j", key_opts)
-keymap("", "K", "2k", key_opts)
-keymap("", "|", "J", key_opts)
+keymap({ "n", "o" }, "L", "$", keymap_opts())
+keymap({ "x" }, "L", "$h", keymap_opts())
+keymap("", "H", "^", keymap_opts())
+keymap("", "J", "2j", keymap_opts())
+keymap("", "K", "2k", keymap_opts())
+keymap("", "|", "J", keymap_opts())
 --buffers
-keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", key_opts)
-keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", key_opts)
-keymap({ "n" }, "<leader>w", MiniBufremove.delete, key_opts)
+keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", keymap_opts())
+keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", keymap_opts())
+keymap({ "n" }, "<leader>w", MiniBufremove.delete, keymap_opts())
 
 -- Resize pane
-keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", key_opts)
-keymap({ "n", "x" }, "<M-Down>", "<cmd>resize -2<CR>", key_opts)
-keymap({ "n", "x" }, "<M-Left>", "<cmd>vertical resize -2<CR>", key_opts)
-keymap({ "n", "x" }, "<M-Right>", "<cmd>vertical resize +2<CR>", key_opts)
+keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", keymap_opts({ desc = "resize window" }))
+keymap({ "n", "x" }, "<M-Down>", "<cmd>resize -2<CR>", keymap_opts({ desc = "resize window" }))
+keymap({ "n", "x" }, "<M-Left>", "<cmd>vertical resize -2<CR>", keymap_opts({ desc = "resize window" }))
+keymap({ "n", "x" }, "<M-Right>", "<cmd>vertical resize +2<CR>", keymap_opts({ desc = "resize window" }))
 -- Move  line / code block
-keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>==", key_opts)
-keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>==", key_opts)
-keymap({ "x" }, "<M-->", ":m '>+1<CR>gv=gv", key_opts)
-keymap({ "x" }, "<M-=>", ":m '<-2<CR>gv=gv", key_opts)
-keymap({ "x" }, "<", "<gv", key_opts)
-keymap({ "x" }, ">", ">gv", key_opts)
+keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>==", keymap_opts({ desc = "move line down" }))
+keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>==", keymap_opts({ desc = "move line up" }))
+keymap({ "x" }, "<M-->", ":m '>+1<CR>gv=gv", keymap_opts({ desc = "move line down" }))
+keymap({ "x" }, "<M-=>", ":m '<-2<CR>gv=gv", keymap_opts({ desc = "move line up" }))
+keymap({ "x" }, "<", "<gv", keymap_opts())
+keymap({ "x" }, ">", ">gv", keymap_opts())
 
-keymap("t", "<C-\\>", "<C-\\><C-N>", key_opts)
+keymap("t", "<C-\\>", "<C-\\><C-N>", keymap_opts({ desc = "back to normal mode in terminal" }))
 keymap("c", "<C-p>", "<Up>")
 keymap("c", "<C-n>", "<Down>")
 keymap("c", "<C-f>", "<Right>")
@@ -49,27 +49,27 @@ keymap("c", "<C-a>", "<Home>")
 keymap({ "i", "n", "x" }, "<M-s>", function()
         vim.cmd("stopinsert")
         vim.cmd("w")
-end, key_opts)
+end, keymap_opts({ desc = "save file" }))
 keymap("n", "<leader>s", function()
         local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
         vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
-end, key_opts)
+end, keymap_opts({ desc = "add new line below" }))
 
 keymap("n", "<leader>,", function()
         --":let @/ = expand('<cword>') | set hlsearch<cr>"
         vim.fn.setreg("/", vim.fn.expand("<cword>"))
         vim.opt.hlsearch = true
-end, key_opts)
-keymap("n", "<BackSpace>", "<cmd>nohl<CR>", key_opts)
+end, keymap_opts({ desc = "highlight cword" }))
+keymap("n", "<BackSpace>", "<cmd>nohl<CR>", keymap_opts({ desc = "nohl" }))
 
 -- run code
 local runner = require("utils.runner")
-keymap("n", "<leader>rt", runner.run_in_tmux_window, { desc = "Send cmd to tmux window", noremap = true })
-keymap("n", "<leader>-", runner.run_in_tmux_pane, { desc = "Send cmd to tmux pane", noremap = true, silent = true })
-keymap("n", "<leader>ra", runner.add_and_run, { desc = "add cmd and run", noremap = true, silent = true })
-keymap("n", "<leader>rs", runner.select_and_run, { desc = "select cmd and run", noremap = true, silent = true })
-keymap("n", "<leader>rc", runner.clear_project_cmds, { desc = "clear current cmd", noremap = true, silent = true })
-keymap("n", "<leader>rA", runner.clear_all_cmds, { desc = "clear all cmd", noremap = true, silent = true })
+keymap("n", "<leader>rt", runner.run_in_tmux_window, keymap_opts({ desc = "Send cmd to tmux window" }))
+keymap("n", "<leader>-", runner.run_in_tmux_pane, keymap_opts({ desc = "Send cmd to tmux pane" }))
+keymap("n", "<leader>ra", runner.add_and_run, keymap_opts({ desc = "add cmd and run" }))
+keymap("n", "<leader>rs", runner.select_and_run, keymap_opts({ desc = "select cmd and run" }))
+keymap("n", "<leader>rc", runner.clear_project_cmds, keymap_opts({ desc = "clear current cmd" }))
+keymap("n", "<leader>rA", runner.clear_all_cmds, keymap_opts({ desc = "clear all cmd" }))
 
 --NOTE: user command
 local cmd = vim.api.nvim_create_user_command
