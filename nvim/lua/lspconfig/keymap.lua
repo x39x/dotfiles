@@ -9,38 +9,36 @@ local lsp_rename = function()
 end
 -- see :h lsp-defaults
 return function(bufnr)
-        vim.keymap.del("", "grn")
-        vim.keymap.del("", "gra")
-        vim.keymap.del("", "grr")
-        vim.keymap.del("", "gri")
-
         local keymap = vim.keymap.set
-        local opts = {
-                noremap = true,
-                silent = true,
-                buffer = bufnr,
-        }
+        local opts = require("utils.keymap_opts")
 
         keymap("n", "gl", function()
-                vim.lsp.buf.hover({
-                        border = "solid",
-                })
-        end, opts)
-        keymap("n", "ga", function()
-                vim.diagnostic.open_float({
-                        border = "solid",
-                })
-        end, opts)
-        keymap("n", "gd", require("fzf-lua").lsp_definitions, opts)
-        keymap("n", "gD", vim.lsp.buf.declaration, opts)
-        keymap("n", "gri", require("fzf-lua").lsp_implementations, opts)
-        keymap("n", "grr", require("fzf-lua").lsp_references, opts)
-        keymap("n", "grn", lsp_rename, opts)
+                vim.lsp.buf.hover({ border = "solid" })
+        end, opts({ buffer = bufnr, desc = "LSP hover" }))
 
-        keymap("n", "gra", vim.lsp.buf.code_action, opts)
-        keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, opts)
+        keymap("n", "ga", function()
+                vim.diagnostic.open_float({ border = "solid" })
+        end, opts({ buffer = bufnr, desc = "LSP diagnostic" }))
+
+        keymap("n", "gd", require("fzf-lua").lsp_definitions, opts({ buffer = bufnr, desc = "LSP fzf definitions" }))
+        keymap(
+                "n",
+                "gri",
+                require("fzf-lua").lsp_implementations,
+                opts({ buffer = bufnr, desc = "LSP fzf implementations" })
+        )
+        keymap("n", "grr", require("fzf-lua").lsp_references, opts({ buffer = bufnr, desc = "LSP fzf references" }))
+        keymap("n", "gD", vim.lsp.buf.declaration, opts({ buffer = bufnr, desc = "LSP declaration" }))
+        keymap("n", "grn", lsp_rename, opts({ buffer = bufnr, desc = "LSP rename" }))
+        keymap("n", "gra", vim.lsp.buf.code_action, opts({ buffer = bufnr, desc = "LSP code action" }))
+        keymap(
+                "n",
+                "<leader>ga",
+                vim.lsp.buf.workspace_diagnostics,
+                opts({ buffer = bufnr, desc = "LSP workspace diagnostics" })
+        )
 
         vim.api.nvim_buf_create_user_command(bufnr, "F", function()
                 vim.lsp.buf.format({ async = true })
-        end, {})
+        end, { desc = "lsp format" })
 end

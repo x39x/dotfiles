@@ -88,12 +88,3 @@ autocmd("FileType", {
         end,
         group = vim.api.nvim_create_augroup("LUA", { clear = true }),
 })
-
--- https://github.com/rebelot/heirline.nvim/blob/fae936abb5e0345b85c3a03ecf38525b0828b992/lua/heirline/utils.lua#L121
-vim.api.nvim_create_autocmd("FileType", {
-        pattern = "qf",
-        callback = function()
-                vim.opt_local.buflisted = false
-        end,
-        group = Default,
-})

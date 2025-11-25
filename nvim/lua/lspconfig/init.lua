@@ -3,6 +3,12 @@ vim.pack.add({
         "https://github.com/nvimtools/none-ls.nvim",
         "https://github.com/antosha417/nvim-lsp-file-operations", -- optional LSP integration
 })
+
+vim.keymap.del("", "grn")
+vim.keymap.del("", "gra")
+vim.keymap.del("", "grr")
+vim.keymap.del("", "gri")
+
 local lsp_keymaps = require("lspconfig.keymap")
 
 -- LSP config
@@ -67,6 +73,7 @@ require("mason").setup({
                         package_pending = "",
                         package_uninstalled = "",
                 },
+                backdrop = 100,
         },
         border = "single",
 })
