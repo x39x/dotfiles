@@ -50,23 +50,7 @@ o.shiftwidth = 4
 o.tabstop = 8
 o.cursorline = false
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
-
--- Text behaviour
---  + 't'    -- auto-wrap text using textwidth
---  + 'c'    -- auto-wrap comments using textwidth
---  + 'r'    -- auto insert comment leader on pressing enter
---  - 'o'    -- don't insert comment leader on pressing o
---  + 'q'    -- format comments with gq
---  - 'a'    -- don't autoformat the paragraphs (use some formatter instead)
---  + 'n'    -- autoformat numbered list
---  - '2'    -- I am a programmer and not a writer
---  + 'j'    -- Join comments smartly
-vim.api.nvim_create_autocmd("FileType", {
-        pattern = "*",
-        callback = function()
-                o.formatoptions = o.formatoptions:gsub("o", "")
-        end,
-})
+o.exrc = true -- exrc config
 
 require("base")
 require("lspconfig")

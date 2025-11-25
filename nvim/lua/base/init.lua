@@ -28,12 +28,9 @@ vim.pack.add({
                 src = "https://github.com/Saghen/blink.cmp",
                 version = vim.version.range("1.*"),
         },
-        --
         -- tools
         "https://github.com/folke/flash.nvim",
-        "https://github.com/folke/trouble.nvim",
         "https://github.com/sindrets/diffview.nvim",
-
         "https://github.com/nvim-mini/mini.bufremove",
 })
 
@@ -72,48 +69,9 @@ require("flash").setup({
 
 local keymap = vim.keymap.set
 local key_opts = { noremap = true, silent = true }
-keymap({ "n", "x", "o" }, "f", require("flash").jump, key_opts)
-keymap({ "n", "x" }, ";a", "<Plug>(EasyAlign)", { noremap = true, silent = true })
+keymap({ "n", "v", "o" }, "f", require("flash").jump, key_opts)
+keymap({ "n", "v" }, ";a", "<Plug>(EasyAlign)", { noremap = true, silent = true })
 keymap("n", "<leader>n", require("nvim-tree.api").tree.open, key_opts)
-
--- --PLUG: trouble
-local trouble = require("trouble")
-trouble.setup({
-        focus = true,
-        auto_preview = false,
-        auto_close = true,
-        win = { position = "right" },
-        preview = {
-                type = "float",
-                relative = "editor",
-                border = "single",
-                position = { 0, -2 },
-                size = { width = 0.3, height = 0.3 },
-                zindex = 200,
-        },
-        modes = {
-                symbols = {
-                        auto_preview = false,
-                        focus = true,
-                },
-        },
-})
-
-keymap({ "n" }, "<leader>tx", function()
-        if trouble.is_open({}) then
-                require("trouble").close()
-        end
-end, key_opts)
-keymap({ "n" }, "<leader>tj", function()
-        if trouble.is_open({}) then
-                require("trouble").next({ jump = true })
-        end
-end, key_opts)
-keymap({ "n" }, "<leader>tk", function()
-        if trouble.is_open({}) then
-                require("trouble").prev({ jump = true })
-        end
-end, key_opts)
 
 require("base.filetree")
 require("base.treesitter")

@@ -6,10 +6,6 @@ vim.pack.add({
 local lsp_keymaps = require("lspconfig.keymap")
 
 -- LSP config
-vim.keymap.del("", "grn")
-vim.keymap.del("", "gra")
-vim.keymap.del("", "grr")
-vim.keymap.del("", "gri")
 vim.diagnostic.config({
         virtual_text = false,
         signs = {

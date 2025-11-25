@@ -52,13 +52,11 @@ local dropdown = function(opts)
         }
         return vim.tbl_deep_extend("force", winopts, opts)
 end
-local trouble = require("trouble.sources.fzf").actions
 
 require("fzf-lua").setup({
         actions = {
                 files = {
                         true,
-                        ["ctrl-e"] = trouble.open,
                 },
         },
         winopts = ivy(),

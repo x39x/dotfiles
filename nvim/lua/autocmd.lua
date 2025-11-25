@@ -1,6 +1,16 @@
 local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.keymap.set
-local cmd = vim.api.nvim_create_user_command
+local Default = vim.api.nvim_create_augroup("Default", { clear = true })
+
+autocmd("FileType", {
+        pattern = "*",
+        callback = function()
+                -- :h fo-table
+                vim.o.formatoptions = vim.o.formatoptions:gsub("o", "")
+        end,
+        group = vim.api.nvim_create_augroup("FORMATOPTIONS", { clear = true }),
+})
+
 autocmd("BufWritePre", {
         pattern = {
                 "*.c",
@@ -30,15 +40,16 @@ autocmd("BufWritePre", {
         callback = function()
                 vim.lsp.buf.format({ sync = true })
         end,
-        group = vim.api.nvim_create_augroup("AUTOFORMAT", { clear = true }),
+        group = Default,
 })
 
 autocmd({ "BufReadPost" }, {
         callback = function()
                 require("utils.lastplace").set_cursor_position()
         end,
-        group = vim.api.nvim_create_augroup("LASTPLACE", { clear = true }),
+        group = Default,
 })
+
 autocmd("InsertLeave", {
         callback = function()
                 if vim.fn.executable("iswitch") == 0 then
@@ -50,14 +61,12 @@ autocmd("InsertLeave", {
                         end
                 end)
         end,
-        group = vim.api.nvim_create_augroup("ISWITCH", { clear = true }),
+        group = Default,
         desc = "auto switch to abc input",
 })
 
 autocmd("FileType", {
         pattern = { "markdown", "typst" },
-        group = vim.api.nvim_create_augroup("WRITING", { clear = true }),
-
         callback = function(args)
                 local winid = vim.api.nvim_get_current_win()
                 local bufnr = args.buf
@@ -68,21 +77,23 @@ autocmd("FileType", {
                 keymap("", "H", "g^", { silent = true, buffer = true })
                 keymap("", "L", "g$", { silent = true, buffer = true })
         end,
-})
-
-autocmd({ "FileType" }, {
-        pattern = { "typst" },
-        group = vim.api.nvim_create_augroup("TYPST", { clear = true }),
-        callback = function()
-                cmd("TypstFigures", "silent !mkdir figures", {})
-        end,
+        group = vim.api.nvim_create_augroup("TEXT", { clear = true }),
 })
 
 autocmd("FileType", {
         pattern = { "lua" },
-        group = vim.api.nvim_create_augroup("SHIFTWIDTHLUA", { clear = true }),
         callback = function(args)
                 local _ = args.buf
                 vim.bo[0].shiftwidth = 8
         end,
+        group = vim.api.nvim_create_augroup("LUA", { clear = true }),
+})
+
+-- https://github.com/rebelot/heirline.nvim/blob/fae936abb5e0345b85c3a03ecf38525b0828b992/lua/heirline/utils.lua#L121
+vim.api.nvim_create_autocmd("FileType", {
+        pattern = "qf",
+        callback = function()
+                vim.opt_local.buflisted = false
+        end,
+        group = Default,
 })

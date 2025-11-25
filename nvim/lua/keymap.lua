@@ -1,12 +1,5 @@
 --NOTE: mode
--- insert_mode       = "i",
--- normal_mode       = "n",
--- term_mode         = "t",
--- visual_mode       = "v",
--- visual_block_mode = "x",
--- command_mode      = "c",
--- operator_mode     = "o",
--- select_mode       = "s"
+-- see :h map-table
 
 local keymap = vim.keymap.set
 local key_opts = { noremap = true, silent = true }

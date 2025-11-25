@@ -9,12 +9,17 @@ local lsp_rename = function()
 end
 -- see :h lsp-defaults
 return function(bufnr)
+        vim.keymap.del("", "grn")
+        vim.keymap.del("", "gra")
+        vim.keymap.del("", "grr")
+        vim.keymap.del("", "gri")
+
+        local keymap = vim.keymap.set
         local opts = {
                 noremap = true,
                 silent = true,
                 buffer = bufnr,
         }
-        local keymap = vim.keymap.set
 
         keymap("n", "gl", function()
                 vim.lsp.buf.hover({
@@ -26,26 +31,16 @@ return function(bufnr)
                         border = "solid",
                 })
         end, opts)
-        -- keymap("n", "<c-e>", function()
-        --         vim.lsp.buf.signature_help({
-        --                 border = "solid",
-        --         })
-        -- end, opts)
-        keymap("n", "gD", vim.lsp.buf.declaration, opts)
         keymap("n", "gd", require("fzf-lua").lsp_definitions, opts)
-        keymap("n", "go", require("fzf-lua").lsp_implementations, opts)
-        keymap("n", "gr", require("fzf-lua").lsp_references, opts)
-        keymap("n", "gn", lsp_rename, opts)
+        keymap("n", "gD", vim.lsp.buf.declaration, opts)
+        keymap("n", "gri", require("fzf-lua").lsp_implementations, opts)
+        keymap("n", "grr", require("fzf-lua").lsp_references, opts)
+        keymap("n", "grn", lsp_rename, opts)
 
-        keymap("n", "<leader>gp", function()
-                vim.diagnostic.jump({ count = -1, float = true })
-        end, opts)
-        keymap("n", "<leader>gn", function()
-                vim.diagnostic.jump({ count = 1, float = true })
-        end, opts)
-        keymap("n", "<leader>ga", vim.lsp.buf.code_action, opts)
+        keymap("n", "gra", vim.lsp.buf.code_action, opts)
+        keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, opts)
 
-        vim.api.nvim_buf_create_user_command(bufnr, "Fm", function()
+        vim.api.nvim_buf_create_user_command(bufnr, "F", function()
                 vim.lsp.buf.format({ async = true })
         end, {})
 end
