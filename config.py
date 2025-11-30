@@ -1,110 +1,110 @@
 import os
 from pathlib import Path
 
-from ln39 import File39, utils
+from ln39 import M, utils
 
 base = [
-    File39("vimrc", "~/.vimrc"),
-    File39("tmux.conf", "~/.tmux.conf"),
-    File39("screenrc", "~/.screenrc"),
-    File39("fish", "~/.config/fish"),
-    File39("sh/profile", "~/.profile"),
-    File39("sh/bash_profile", "~/.bash_profile"),
-    File39("sh/bashrc", "~/.bashrc"),
+    M("vimrc", "~/.vimrc"),
+    M("tmux.conf", "~/.tmux.conf"),
+    M("screenrc", "~/.screenrc"),
+    M("fish", "~/.config/fish"),
+    M("sh/profile", "~/.profile"),
+    M("sh/bash_profile", "~/.bash_profile"),
+    M("sh/bashrc", "~/.bashrc"),
 ]
 
 
 default = [
-    File39("git", "~/.config/git"),
-    File39("nvim", "~/.config/nvim"),
-    File39("alacritty", "~/.config/alacritty"),
-    File39("ghostty", "~/.config/ghostty"),
-    File39("fdignore", "~/.config/fd/ignore"),
-    File39("ripgrep/rgignore", "~/.rgignore"),
-    File39("ripgrep/ripgreprc", "~/.config/ripgreprc"),
-    File39("bat", "~/.config/bat/config"),
-    File39(
+    M("git", "~/.config/git"),
+    M("nvim", "~/.config/nvim"),
+    M("alacritty", "~/.config/alacritty"),
+    M("ghostty", "~/.config/ghostty"),
+    M("fdignore", "~/.config/fd/ignore"),
+    M("ripgrep/rgignore", "~/.rgignore"),
+    M("ripgrep/ripgreprc", "~/.config/ripgreprc"),
+    M("bat", "~/.config/bat/config"),
+    M(
         "lazygit.yml",
         utils.path_by_os(
             linux="~/.config/lazygit/config.yml",
             macos="~/Library/Application Support/lazygit/config.yml",
         ),
     ),
-    File39(
+    M(
         "clangd.yaml",
         utils.path_by_os(
             linux="~/.config/clangd/config.yaml",
             macos="~/Library/Preferences/clangd/config.yaml",
         ),
     ),
-    File39("fmtstyle/clang-format", "~/.clang-format"),
-    File39(
+    M("fmtstyle/clang-format", "~/.clang-format"),
+    M(
         "fmtstyle/rustfmt.toml",
         utils.path_by_os(
             linux="~/.config/rustfmt/rustfmt.toml",
             macos="~/Library/Application Support/rustfmt/rustfmt.toml",
         ),
     ),
-    File39(
+    M(
         "vscode/settings.json",
         utils.path_by_os(
             macos="~/Library/Application Support/Code/User/settings.json",
             linux="~/.config/Code/User/settings.json",
         ),
     ),
-    File39(
+    M(
         "vscode/keybindings.json",
         utils.path_by_os(
             macos="~/Library/Application Support/Code/User/keybindings.json",
             linux="~/.config/Code/User/keybindings.json",
         ),
     ),
-    File39(
+    M(
         "mpv",
         "~/.config/mpv",
     ),
 ]
 
 linux = [
-    File39("xkb", "~/.config/xkb"),
-    File39("sway", "~/.config/sway"),
-    File39("i3blocks", "~/.config/i3blocks"),
-    File39("swaylock", "~/.config/swaylock"),
-    File39("tofi", "~/.config/tofi"),
-    File39("imv", "~/.config/imv"),
-    File39("swappy", "~/.config/swappy"),
-    File39("fontconfig", "~/.config/fontconfig"),
+    M("xkb", "~/.config/xkb"),
+    M("sway", "~/.config/sway"),
+    M("i3blocks", "~/.config/i3blocks"),
+    M("swaylock", "~/.config/swaylock"),
+    M("tofi", "~/.config/tofi"),
+    M("imv", "~/.config/imv"),
+    M("swappy", "~/.config/swappy"),
+    M("fontconfig", "~/.config/fontconfig"),
 ]
 
 macos = [
-    File39("sh/zshenv", "~/.zshenv"),
-    File39("sh/zshrc", "~/.zshrc"),
-    File39("hammerspoon", "~/.hammerspoon"),
-    File39("karabiner", "~/.config/karabiner"),
+    M("sh/zshenv", "~/.zshenv"),
+    M("sh/zshrc", "~/.zshrc"),
+    M("hammerspoon", "~/.hammerspoon"),
+    M("karabiner", "~/.config/karabiner"),
 ]
 
 rime = [
-    File39(
+    M(
         "IM/Rime/default.custom.yaml",
         utils.path_by_os(
             macos="~/Library/Rime/default.custom.yaml",
             linux="~/.local/share/fcitx5/rime/default.custom.yaml",
         ),
     ),
-    File39(
+    M(
         "IM/Rime/double_pinyin.custom.yaml",
         utils.path_by_os(
             macos="~/Library/Rime/double_pinyin.custom.yaml",
             linux="~/.local/share/fcitx5/rime/double_pinyin.custom.yaml",
         ),
     ),
-    File39(
+    M(
         "IM/Rime/squirrel.custom.yaml",
         "~/Library/Rime/squirrel.custom.yaml",
         enabled=utils.get_os_name() == "Darwin",
     ),
-    File39("IM/fcitx5", "~/.config/fcitx5", enabled=utils.get_os_name() == "Linux"),
-    File39(
+    M("IM/fcitx5", "~/.config/fcitx5", enabled=utils.get_os_name() == "Linux"),
+    M(
         "IM/fcitx5_themes",
         "~/.local/share/fcitx5/themes",
         enabled=utils.get_os_name() == "Linux",
