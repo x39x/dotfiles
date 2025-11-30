@@ -7,12 +7,14 @@ return function(info)
         --  计算合适的 max_width
         local lens = {}
         for _, e in ipairs(qfl) do
-                local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o")
+                local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
                 table.insert(lens, vim.fn.strchars(fname, true))
         end
         table.sort(lens)
-        local idx = math.floor(#lens * 0.75)
+        local idx = math.floor((#lens + 1) * 0.75)
         local max_width = lens[idx] + 2
+
+        -- local max_width = 20
 
         -- clamp 为 [10, 39] 之间
         max_width = math.min(math.max(max_width, 10), 39)
@@ -21,18 +23,24 @@ return function(info)
 
         for i = info.start_idx, info.end_idx do
                 local e = qfl[i]
-                local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o")
+                local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
 
-                -- 截断处理
-                if vim.fn.strchars(fname, true) > max_width then
-                        fname = fname:sub(1, max_width - 1) .. "…"
-                else
-                        fname = string.format("%-" .. max_width .. "s", fname)
+                if fname ~= "" then
+                        -- 截断处理
+                        if vim.fn.strchars(fname, true) > max_width then
+                                fname = fname:sub(1, max_width - 1) .. "…"
+                        else
+                                fname = string.format("%-" .. max_width .. "s   ", fname)
+                        end
                 end
 
-                local pos = e.lnum .. ":" .. e.col
+                local pos = ""
+                if e.lnum and e.col then
+                        pos = string.format("%-7s   ", e.lnum .. ":" .. e.col)
+                end
 
-                local line = string.format("%s   %-8s   %s", fname, pos, e.text)
+                local text = e.text or ""
+                local line = fname .. pos .. text
                 table.insert(result, line)
         end
 
