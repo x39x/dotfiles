@@ -25,14 +25,14 @@ default = [
     M("bat", "~/.config/bat/config"),
     M(
         "lazygit.yml",
-        utils.path_by_os(
+        utils.path_for(
             linux="~/.config/lazygit/config.yml",
             macos="~/Library/Application Support/lazygit/config.yml",
         ),
     ),
     M(
         "clangd.yaml",
-        utils.path_by_os(
+        utils.path_for(
             linux="~/.config/clangd/config.yaml",
             macos="~/Library/Preferences/clangd/config.yaml",
         ),
@@ -40,21 +40,21 @@ default = [
     M("fmtstyle/clang-format", "~/.clang-format"),
     M(
         "fmtstyle/rustfmt.toml",
-        utils.path_by_os(
+        utils.path_for(
             linux="~/.config/rustfmt/rustfmt.toml",
             macos="~/Library/Application Support/rustfmt/rustfmt.toml",
         ),
     ),
     M(
         "vscode/settings.json",
-        utils.path_by_os(
+        utils.path_for(
             macos="~/Library/Application Support/Code/User/settings.json",
             linux="~/.config/Code/User/settings.json",
         ),
     ),
     M(
         "vscode/keybindings.json",
-        utils.path_by_os(
+        utils.path_for(
             macos="~/Library/Application Support/Code/User/keybindings.json",
             linux="~/.config/Code/User/keybindings.json",
         ),
@@ -86,14 +86,14 @@ macos = [
 rime = [
     M(
         "IM/Rime/default.custom.yaml",
-        utils.path_by_os(
+        utils.path_for(
             macos="~/Library/Rime/default.custom.yaml",
             linux="~/.local/share/fcitx5/rime/default.custom.yaml",
         ),
     ),
     M(
         "IM/Rime/double_pinyin.custom.yaml",
-        utils.path_by_os(
+        utils.path_for(
             macos="~/Library/Rime/double_pinyin.custom.yaml",
             linux="~/.local/share/fcitx5/rime/double_pinyin.custom.yaml",
         ),
@@ -114,7 +114,7 @@ rime = [
 
 def update_rime_repo():
     rime_url = "https://github.com/iDvel/rime-ice"
-    rime_path = utils.path_by_os(
+    rime_path = utils.path_for(
         macos="~/Library/Rime", linux="~/.local/share/fcitx5/rime"
     )
 
