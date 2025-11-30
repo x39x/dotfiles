@@ -8,6 +8,10 @@ function trash
 
     # clear
     if test (count $argv) -eq 1
+        # macOS don't do this
+        if string match -q "Darwin" (uname -s)
+            return
+        end
         switch $argv[1]
             case "-c" "--clear"
                 echo "Clearing trash: $TRASH_DIR"
