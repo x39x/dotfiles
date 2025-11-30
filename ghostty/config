@@ -6,6 +6,8 @@ adjust-cell-width      = 1
 font-thicken           = true
 window-padding-y       = 0
 window-padding-x       = 0
+window-padding-balance = true
+window-padding-color   = extend
 theme                  = light:Terminal Basic,dark:Apple System Colors
 macos-option-as-alt    = true
 keybind                = super+s=esc:s
