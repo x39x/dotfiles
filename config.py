@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from ln39 import M, utils
@@ -118,7 +117,7 @@ def update_rime_repo():
         macos="~/Library/Rime", linux="~/.local/share/fcitx5/rime"
     )
 
-    rime_path = Path(os.path.expanduser(rime_path))
+    rime_path = Path(rime_path).expanduser()
 
     if rime_path.exists():
         print(f"[INFO] Path '{rime_path}' exists.")
@@ -144,10 +143,9 @@ if utils.env_exists("BASE"):
     utils.ln(base)
     exit()
 
-utils.ln(base)
-utils.ln(default)
 if utils.get_os_name() == "Darwin":
     utils.ln(macos)
+
 if utils.get_os_name() == "Linux":
     utils.ln(linux)
 
@@ -155,4 +153,5 @@ if utils.env_exists("RIME"):
     update_rime_repo()
     utils.ln(rime)
 
+utils.ln(default)
 utils.update_ln39()
