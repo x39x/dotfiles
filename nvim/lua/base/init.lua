@@ -69,7 +69,30 @@ require("flash").setup({
 
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
-keymap({ "n", "v", "o" }, "f", require("flash").jump, keymap_opts({ desc = "Flash jump" }))
+keymap({ "n" }, "f", require("flash").jump, keymap_opts({ desc = "Flash jump" }))
+keymap({ "o", "v" }, "f", function()
+        local prev_row, _ = unpack(vim.api.nvim_win_get_cursor(0))
+        require("flash").jump()
+        local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+
+        -- backward jump, do nothing
+        if prev_row > row then
+                return
+        end
+
+        -- forward
+        local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+        if col > 0 then
+                --move left
+                vim.api.nvim_win_set_cursor(0, { row, col - 1 })
+        elseif row > 1 then
+                -- prev line last
+                local prev_line = lines[row - 1]
+                local last_col = #prev_line
+                vim.api.nvim_win_set_cursor(0, { row - 1, last_col })
+        end
+end, keymap_opts({ desc = "Flash jump" }))
 keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
 keymap("n", "<leader>n", require("nvim-tree.api").tree.open, keymap_opts({ desc = "Nvimtree" }))
 

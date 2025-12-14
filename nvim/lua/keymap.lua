@@ -11,16 +11,18 @@ vim.api.nvim_create_autocmd("FileType", {
                 keymap("", "%", "q", { noremap = true })
         end,
 })
-keymap("", "q", "%", keymap_opts())
 
+keymap("", "q", "%", keymap_opts())
 keymap("i", "jk", "<esc>", keymap_opts())
-keymap({ "n" }, "<leader>m", ":", { noremap = true })
-keymap({ "n", "o" }, "L", "$", keymap_opts())
-keymap({ "x" }, "L", "$h", keymap_opts())
+
+keymap("", "L", "g_", keymap_opts())
 keymap("", "H", "^", keymap_opts())
-keymap("", "J", "2j", keymap_opts())
-keymap("", "K", "2k", keymap_opts())
+keymap("", "J", "}", keymap_opts())
+keymap("", "K", "{", keymap_opts())
 keymap("", "|", "J", keymap_opts())
+keymap("", "s", '"_d', keymap_opts())
+keymap("", "S", '"_D', keymap_opts())
+
 --buffers
 keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", keymap_opts())
 keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", keymap_opts())
@@ -31,6 +33,7 @@ keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", keymap_opts({ desc = "resiz
 keymap({ "n", "x" }, "<M-Down>", "<cmd>resize -2<CR>", keymap_opts({ desc = "resize window" }))
 keymap({ "n", "x" }, "<M-Left>", "<cmd>vertical resize -2<CR>", keymap_opts({ desc = "resize window" }))
 keymap({ "n", "x" }, "<M-Right>", "<cmd>vertical resize +2<CR>", keymap_opts({ desc = "resize window" }))
+
 -- Move  line / code block
 keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>==", keymap_opts({ desc = "move line down" }))
 keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>==", keymap_opts({ desc = "move line up" }))
