@@ -164,6 +164,8 @@ local function m39k()
         hl("ModeMsg", { bg = colors.bg0, fg = colors.bg0 })
         hl("Title", { fg = colors.blueD, bold = true })
         hl("Underlined", { underline = true })
+        hl("Added", { fg = colors.green2 })
+
         hl("QuickFixLine", { fg = colors.blue3 })
         hl("QuickFixError", { fg = colors.red2 })
         hl("qfSeparator", { fg = colors.bg4 })
@@ -264,6 +266,9 @@ local function m39k()
         hl("@tag.attribute", { fg = colors.purple0 })
         hl("@comment.documentation", { fg = colors.brown0 })
 
+        -- lua
+        hl("@constant.builtin", { link = "Constant" })
+
         --PLUG:
         hl("GitSignsAdd", { fg = colors.green0 })
         hl("GitSignsChange", { fg = colors.orange })
@@ -293,6 +298,9 @@ local function m39k()
 
         hl("DapBreakpointHighlight", { fg = colors.red2 })
         hl("DapStoppedHiglight", { fg = colors.green0 })
+
+        hl("NvimDapVirtualText", { link = "Comment" })
+        hl("NvimDapVirtualTextChanged", { fg = colors.red2 })
 
         vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg0

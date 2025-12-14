@@ -9,8 +9,8 @@ excludesfile = ~/.config/git/gitignore
 [merge]
 conflictstyle = diff3
 
-#[diff]
-#external = difft --syntax-highlight off
+[diff]
+external = difft --syntax-highlight off
 
 [credential]
 helper = cache

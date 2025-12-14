@@ -1,9 +1,11 @@
 {
     "chat.commandCenter.enabled": false,
+    "chat.disableAIFeatures": true,
     "security.workspace.trust.enabled": false,
     "window.commandCenter": false,
     "window.autoDetectColorScheme": true,
     "workbench.sideBar.location": "right",
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
     "workbench.activityBar.location": "top",
     "workbench.colorCustomizations": {
         "[Default Light Modern]": {
@@ -142,7 +144,7 @@
         },
         {
             "before": [
-                "<BackSpace>",
+                "<BackSpace>"
             ],
             "commands": [
                 ":nohl"

@@ -1,22 +1,24 @@
 function trash
     set -l TRASH_DIR "$HOME/.Trash"
 
-    # 如果目录不存在就创建
+    # mkdir ~/.Trash dir
     if not test -d $TRASH_DIR
         mkdir -p $TRASH_DIR
     end
 
     # clear
     if test (count $argv) -eq 1
-        # macOS don't do this
-        if string match -q "Darwin" (uname -s)
-            return
-        end
         switch $argv[1]
-            case "-c" "--clear"
+            case "-c"
+                # macOS don't do this
+                if string match -q "Darwin" (uname -s)
+                    return 0
+                end
+
                 echo "Clearing trash: $TRASH_DIR"
                 rm -rf $TRASH_DIR/*
                 echo "Trash cleared."
+
                 return 0
         end
     end
@@ -25,7 +27,7 @@ function trash
     if test (count $argv) -eq 0
         echo "Usage:"
         echo "  trash <file1> <file2> ..."
-        echo "  trash -c | --clear   # clear trash"
+        echo "  trash -c  # clear trash"
         return 1
     end
 
