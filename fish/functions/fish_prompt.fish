@@ -33,6 +33,7 @@ function fish_prompt --description 'Write out the prompt'
         echo -n -s $status_color $suffix $normal_color
 end
 
+# add line after cmd exec
 function __postexec --on-event fish_postexec
-        echo
+        echo 
 end

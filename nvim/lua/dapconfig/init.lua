@@ -17,7 +17,7 @@ vim.fn.sign_define(
 vim.fn.sign_define("DapLogPoint", { text = "󰰎", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "", texthl = "DapStoppedHiglight", linehl = "", numhl = "" })
 
--- config
+-- Controls the behavior when jumping to a breakpoint. See :h switchbuf
 require("dap").defaults.fallback.switchbuf = "usevisible,usetab,uselast"
 
 -- my provider
@@ -44,4 +44,4 @@ local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
 keymap("n", "<leader>dl", require("dapconfig.dap.handler").launch, keymap_opts({ desc = "Dap launch" }))
 keymap("n", "<leader>dt", require("dapconfig.dap.handler").terminate, keymap_opts({ desc = "Dap terminate" }))
-keymap("n", "<leader>dv", require("dap-view").toggle, keymap_opts({ desc = "Dap view toggle" }))
+keymap("n", "<leader>dv", require("dapconfig.dap.handler").view, keymap_opts({ desc = "Dap view toggle" }))

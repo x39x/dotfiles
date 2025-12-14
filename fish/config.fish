@@ -4,7 +4,6 @@ if status is-interactive
         abbr -a g     git
         abbr -a gb    git branch
         abbr -a gk    git checkout
-        abbr -a gt    git status
         abbr -a gs    git status
         abbr -a gd    git diff
         abbr -a ga    git add
