@@ -39,6 +39,18 @@ return function(info)
                         pos = string.format("%-7s   ", e.lnum .. ":" .. e.col)
                 end
 
+                -- multiple lines error
+                if vim.trim(pos) == "0:0" then
+                        pos = string.format("%-7s", "")
+                        fname = string.format("%-" .. max_width .. "s   ", "")
+                end
+
+                -- no filename and position
+                if vim.trim(pos) == "" and vim.trim(fname) == "" then
+                        pos = ""
+                        fname = " "
+                end
+
                 local text = e.text or ""
                 local line = fname .. pos .. text
                 table.insert(result, line)

@@ -9,6 +9,7 @@
                 "rules": [
                     {
                         "description": "ESC",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -51,6 +52,7 @@
                     },
                     {
                         "description": "Arrows",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
