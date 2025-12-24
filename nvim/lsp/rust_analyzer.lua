@@ -100,4 +100,8 @@ return {
                         init_params.initializationOptions = config.settings["rust-analyzer"]
                 end
         end,
+
+        on_init = function(client, _)
+                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+        end,
 }

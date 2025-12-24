@@ -20,7 +20,8 @@ keymap("", "H", "^", keymap_opts())
 keymap("", "J", "}", keymap_opts())
 keymap("", "K", "{", keymap_opts())
 keymap("", "|", "J", keymap_opts())
-keymap("", "s", '"_d', keymap_opts())
+keymap({ "n", "v" }, "s", '"_d', keymap_opts())
+keymap("o", "s", '"d', keymap_opts())
 keymap("", "S", '"_D', keymap_opts())
 
 --buffers

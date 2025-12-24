@@ -3,17 +3,16 @@ from pathlib import Path
 from ln39 import M, utils
 
 base = [
-    M("vimrc", "~/.vimrc"),
-    M("tmux.conf", "~/.tmux.conf"),
-    M("screenrc", "~/.screenrc"),
-    M("fish", "~/.config/fish"),
-    M("sh/profile", "~/.profile"),
-    M("sh/bash_profile", "~/.bash_profile"),
     M("sh/bashrc", "~/.bashrc"),
+    M("sh/bash_profile", "~/.bash_profile"),
+    M("vimrc", "~/.vimrc"),
+    M("screenrc", "~/.screenrc"),
 ]
 
-
 default = [
+    M("sh/bash_profile", "~/.bash_profile"),
+    M("sh/bashrc", "~/.bashrc"),
+    M("sh/fish", "~/.config/fish"),
     M("git", "~/.config/git"),
     M("nvim", "~/.config/nvim"),
     M("alacritty", "~/.config/alacritty"),
@@ -76,8 +75,6 @@ linux = [
 ]
 
 macos = [
-    M("sh/zshenv", "~/.zshenv"),
-    M("sh/zshrc", "~/.zshrc"),
     M("hammerspoon", "~/.hammerspoon"),
     M("karabiner", "~/.config/karabiner"),
 ]
