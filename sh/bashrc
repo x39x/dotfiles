@@ -1,4 +1,4 @@
-#[[ $- != *i* ]] && return
+[[ $- != *i* ]] && return
 [ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
 [ ! -n "$NOFISH" -a -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && exec fish
 
