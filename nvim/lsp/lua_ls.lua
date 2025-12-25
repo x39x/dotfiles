@@ -33,7 +33,7 @@ return {
                         },
                         -- highlight
                         semantic = {
-                                variable = false,
+                                enable = false,
                         },
                         runtime = {
                                 version = "LuaJIT",

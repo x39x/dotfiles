@@ -38,19 +38,9 @@ local function find_debug_file()
         return manual
 end
 
-local function get_python_path()
-        local python_path
-        if vim.env.VIRTUAL_ENV then
-                python_path = vim.env.VIRTUAL_ENV .. "/" .. "bin" .. "/" .. "python"
-        else
-                python_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
-        end
-        return python_path
-end
-
 --NOTE: config
 local python = {}
-local python_path = get_python_path()
+local python_path = require("utils.python_path")
 local debug_file = find_debug_file()
 
 local debugpy = {
