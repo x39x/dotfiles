@@ -5,23 +5,28 @@ local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
 
 keymap("", "<Space>", "<Nop>", keymap_opts())
+keymap("i", "jk", "<esc>", keymap_opts())
+
+-- better  ^ $
+keymap("", "L", "g_", keymap_opts())
+keymap("", "H", "^", keymap_opts())
+
+-- swap some key
+keymap("", "q", "%", keymap_opts())
 vim.api.nvim_create_autocmd("FileType", {
         pattern = "*",
         callback = function()
                 keymap("", "%", "q", { noremap = true })
         end,
 })
-
-keymap("", "q", "%", keymap_opts())
-keymap("i", "jk", "<esc>", keymap_opts())
-
-keymap("", "L", "g_", keymap_opts())
-keymap("", "H", "^", keymap_opts())
 keymap("", "J", "}", keymap_opts())
 keymap("", "K", "{", keymap_opts())
-keymap("", "|", "J", keymap_opts())
+keymap("", "{", "J", keymap_opts())
+keymap("", "}", "K", keymap_opts())
+
+-- useless 's/S'
 keymap({ "n", "v" }, "s", '"_d', keymap_opts())
-keymap("o", "s", '"d', keymap_opts())
+keymap("o", "s", "d", keymap_opts())
 keymap("", "S", '"_D', keymap_opts())
 
 --buffers
@@ -50,15 +55,19 @@ keymap("c", "<C-f>", "<Right>")
 keymap("c", "<C-b>", "<Left>")
 keymap("c", "<C-a>", "<Home>")
 
-keymap({ "i", "n", "x" }, "<M-s>", function()
+-- save file
+keymap("", "<M-s>", function()
         vim.cmd("stopinsert")
         vim.cmd("w")
 end, keymap_opts({ desc = "save file" }))
+
+-- add new line in normal mode
 keymap("n", "<leader>s", function()
         local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
         vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
 end, keymap_opts({ desc = "add new line below" }))
 
+-- highlight current word
 keymap("n", "<leader>,", function()
         --":let @/ = expand('<cword>') | set hlsearch<cr>"
         vim.fn.setreg("/", vim.fn.expand("<cword>"))
@@ -68,7 +77,7 @@ keymap("n", "<BackSpace>", "<cmd>nohl<CR>", keymap_opts({ desc = "nohl" }))
 
 -- run code
 local runner = require("utils.runner")
-keymap("n", "<leader>rt", runner.run_in_tmux_window, keymap_opts({ desc = "Send cmd to tmux window" }))
+keymap("n", "<leader>rw", runner.run_in_tmux_window, keymap_opts({ desc = "Send cmd to tmux window" }))
 keymap("n", "<leader>-", runner.run_in_tmux_pane, keymap_opts({ desc = "Send cmd to tmux pane" }))
 keymap("n", "<leader>ra", runner.add_and_run, keymap_opts({ desc = "add cmd and run" }))
 keymap("n", "<leader>rs", runner.select_and_run, keymap_opts({ desc = "select cmd and run" }))
