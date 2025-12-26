@@ -76,7 +76,7 @@ linux = [
 
 macos = [
     M("hammerspoon", "~/.hammerspoon"),
-    M("karabiner", "~/.config/karabiner"),
+    M("karabiner/karabiner.json", "~/.config/karabiner/karabiner.json"),
 ]
 
 rime = [
