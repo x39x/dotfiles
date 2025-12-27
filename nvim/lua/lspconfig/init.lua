@@ -1,3 +1,33 @@
+-- ===========================================================
+-- go:
+-- go install golang.org/x/tools/gopls@latest
+--------------------------------------------------------------
+-- python:
+-- uv tool install ruff
+-- uv tool install ty
+--------------------------------------------------------------
+-- c/cc:
+-- clangd
+-- mason neocmakelsp
+--------------------------------------------------------------
+-- rust:
+-- rustup component add rust-analyzer
+--------------------------------------------------------------
+-- javascript:
+-- mason vtsls
+-- mason tailwindcss-language-server
+-- mason prettier
+-- TODO  vue-language-server svelte-language-server
+--------------------------------------------------------------
+-- lua:
+-- mason stylua
+-- mason lua-language-server
+--------------------------------------------------------------
+-- spell
+-- mason codespell
+-- ===========================================================
+
+-- go install github.com/go-delve/delve/cmd/dlv@master
 vim.pack.add({
         "https://github.com/williamboman/mason.nvim",
         "https://github.com/nvimtools/none-ls.nvim",
@@ -53,7 +83,8 @@ local servers = {
         "clangd",
 
         "ruff",
-        "pyright",
+        "ty",
+        -- "pyright",
 
         "vtsls",
         "vue_ls",

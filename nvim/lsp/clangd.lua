@@ -11,9 +11,6 @@ return {
                 "configure.ac",
                 ".git",
         },
-        on_init = function(client, _)
-                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
-        end,
         capabilities = {
                 textDocument = {
                         completion = {

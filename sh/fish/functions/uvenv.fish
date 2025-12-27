@@ -1,3 +1,6 @@
+# cd ~/.pyVenv
+# mkdir myvenv
+# uv venv myvenv -p 3.15 / cd myvenv && uv venv -p 3.15
 function uvenv
         if set -q VIRTUAL_ENV
                 deactivate
@@ -26,4 +29,3 @@ function uvenv
                 set_color normal
         end
 end
-

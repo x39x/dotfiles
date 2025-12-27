@@ -60,3 +60,9 @@ require("dapconfig")
 require("ui")
 require("keymap")
 require("autocmd")
+
+-- Disable LSP semantic token highlighting
+-- NOTE: https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+        vim.api.nvim_set_hl(0, group, {})
+end

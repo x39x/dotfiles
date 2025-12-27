@@ -1,6 +1,7 @@
 --NOTE: config: https://docs.astral.sh/ruff/editors/settings/
+local lsp_keymaps = require("lspconfig.keymap")
 return {
-        cmd = { "ruff", "server" },
+        cmd = { "uv", "run", "ruff", "server" },
         filetypes = { "python" },
         root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
         settings = {
@@ -18,5 +19,7 @@ return {
                 vim.api.nvim_buf_create_user_command(bufnr, "F", function()
                         vim.lsp.buf.format({ async = true })
                 end, {})
+
+                lsp_keymaps(bufnr)
         end,
 }

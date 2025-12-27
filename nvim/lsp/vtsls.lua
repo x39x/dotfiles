@@ -1,4 +1,4 @@
---- https://github.com/yioneko/vtsls
+-- https://github.com/yioneko/vtsls
 return {
         cmd = { "vtsls", "--stdio" },
         init_options = {
@@ -13,9 +13,9 @@ return {
                 "typescript.tsx",
         },
 
-        on_init = function(client, _)
-                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
-        end,
+        -- on_init = function(client, _)
+        --         client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+        -- end,
 
         root_dir = function(bufnr, on_dir)
                 local root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }

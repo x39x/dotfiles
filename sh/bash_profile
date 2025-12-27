@@ -14,6 +14,7 @@ ADD_TO_PATH() {
 ADD_TO_PATH "$PNPM_HOME"
 ADD_TO_PATH "$GOPATH/bin"
 ADD_TO_PATH "$HOME/.cargo/bin"
+ADD_TO_PATH "$HOME/.local/bin"
 
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 # bg+: bottom bar, fg+: selected item,gutter: sidebar
