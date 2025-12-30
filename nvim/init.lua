@@ -53,6 +53,7 @@ o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
 o.exrc = true -- exrc config
 vim.o.qftf = "v:lua.require'utils.qftf'" --  quickfix textfunc
+-- vim.o.shell = "/opt/homebrew/bin/fish"
 
 require("base")
 require("lspconfig")

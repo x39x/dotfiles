@@ -26,7 +26,7 @@ local function find_debug_executable()
         local start_path = Path:new(current_file):parent()
         local root = find_project_root(start_path:absolute())
 
-        --- find root/debug/dbg
+        -- find root/debug/dbg
         if root then
                 local dbg_path = Path:new(root, "debug", "dbg")
                 if dbg_path:exists() then
@@ -34,13 +34,13 @@ local function find_debug_executable()
                 end
         end
 
-        --- find ./debug/dbg
+        -- find ./debug/dbg
         local fallback_dbg = Path:new(start_path, "debug", "dbg")
         if fallback_dbg:exists() then
                 return fallback_dbg:absolute(), start_path:absolute()
         end
 
-        --- input
+        -- input
         local manual = vim.fn.input("Path to executable: ", start_path:absolute() .. "/", "file")
         return manual, start_path:absolute()
 end

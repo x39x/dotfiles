@@ -1,3 +1,14 @@
+-- ===========================================================
+-- go:
+-- go install github.com/go-delve/delve/cmd/dlv@master
+--------------------------------------------------------------
+-- python
+-- uv add --dev debugpy / pip3 install debugpy
+--------------------------------------------------------------
+-- c/cc
+-- lldb
+-- ===========================================================
+
 vim.pack.add({
         "https://github.com/mfussenegger/nvim-dap",
         "https://github.com/theHamsta/nvim-dap-virtual-text",
