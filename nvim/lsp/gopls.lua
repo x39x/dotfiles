@@ -81,4 +81,7 @@ return {
                 -- see: https://github.com/neovim/nvim-lspconfig/issues/804
                 on_dir(get_root_dir(fname))
         end,
+        on_init = function(client, _)
+                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+        end,
 }

@@ -3,20 +3,32 @@ local function hl(group, properties)
 end
 
 local colors = {
-        miku = "#1F30C8",
-
+        --TODO: unused
         cyan2 = "#248f8f",
-        cyan0 = "#00627A",
         cyan3 = "#3377aa",
         cyan4 = "#36666b",
         cyan5 = "#286d73",
         cyan1 = "#88aa99",
+        purple3 = "#662277",
+        purple1 = "#45164F",
+        red6 = "#F40A3F",
+        red7 = "#C33720",
+        red3 = "#D3353F",
+        red5 = "#FFEEEB",
+        blue0 = "#152F44",
+        blue9 = "#0E54D6",
+        yellow3 = "#FEE6B1",
+        yellow4 = "#F7E6A0",
+        brown2 = "#805900",
+        brown3 = "#8c6c41",
+
+        miku = "#1F30C8",
+
+        cyan0 = "#00627A",
 
         purple4 = "#6B2FBA",
         purple0 = "#871094",
         purple2 = "#74118c",
-        purple3 = "#662277",
-        purple1 = "#45164F",
 
         bg0 = "#FFFFFF",
         bg1 = "#F6F8FE",
@@ -36,21 +48,15 @@ local colors = {
         green4 = "#E9F5E6",
 
         red0 = "#f50000",
-        red6 = "#F40A3F",
-        red7 = "#C33720",
-        red3 = "#D3353F",
         red2 = "#CE0606",
         red4 = "#de0202",
         red8 = "#D3302F",
         red1 = "#DC2626",
-        red5 = "#FFEEEB",
 
-        blue0 = "#152F44",
         blue1 = "#0137A6",
         blue2 = "#0133B3",
         blueC = "#174ad4",
         blue3 = "#264eff",
-        blue9 = "#0E54D6",
         blue7 = "#174be6",
         blue4 = "#1750EB",
         blue5 = "#0A69DA",
@@ -62,16 +68,12 @@ local colors = {
 
         orange = "#b86114",
 
-        -- brown2 = "#805900",
-        -- brown3 = "#8c6c41",
         brown0 = "#9E880D",
         brown1 = "#B28B00",
 
         yellow0 = "#e6bc05",
         yellow1 = "#F2BF56",
         yellow2 = "#FCD57E",
-        yellow3 = "#FEE6B1",
-        yellow4 = "#F7E6A0",
 
         --  '#008D90',
         --  '#0093a1',
@@ -234,24 +236,28 @@ local function m39k()
         hl("Label", { fg = colors.red8 })
 
         --NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
-        hl("@variable", { link = "Normal" })
-        hl("@constant", { link = "Constant" })
-        hl("@label", { link = "Label" })
-        hl("@boolean", { link = "Boolean" })
-        hl("@number", { link = "Number" })
-        hl("@type", { link = "Type" })
-        hl("@function", { link = "Function" })
-        hl("@constructor", { link = "Function" })
-        hl("@operator", { link = "Operator" })
         hl("@keyword", { link = "Keyword" })
+        hl("@function", { link = "Function" })
+        hl("@number", { link = "Number" })
+        hl("@boolean", { link = "Boolean" })
+        hl("@variable", { link = "Normal" })
+        hl("@constructor", { link = "Function" })
+        hl("@module", { link = "Include" })
+        hl("@label", { link = "Label" })
+        hl("@tag", { link = "Tag" })
+        hl("@comment", { link = "Comment" })
+        hl("@operator", { link = "Operator" })
         hl("@punctuation.delimiter", { link = "Delimiter" })
         hl("@punctuation.bracket", { link = "Operator" })
         hl("@punctuation.special", { link = "Constant" })
-        hl("@tag", { link = "Tag" })
-        hl("@comment", { link = "Comment" })
-        hl("@module", { link = "Include" })
         hl("@string", { link = "String" })
-        hl("@string.documentation", { link = "String" })
+
+        hl("@type", { link = "Type" })
+        hl("@type.builtin", { link = "Type" })
+
+        hl("@constant", { link = "Constant" })
+        hl("@constant.builtin", { link = "Constant" })
+
         -- md
         hl("@markup.heading.1", { fg = colors.purple0, bold = true })
         hl("@markup.heading.2", { fg = colors.green2, bold = true })
@@ -262,12 +268,11 @@ local function m39k()
         -- custom
         hl("@string.escape", { fg = colors.purple4 })
         hl("@string.regexp", { fg = colors.brown0 })
-        hl("@attribute", { fg = colors.red8 })
-        hl("@tag.attribute", { fg = colors.purple0 })
+        hl("@string.documentation", { link = colors.brown0 })
         hl("@comment.documentation", { fg = colors.brown0 })
 
-        -- lua
-        hl("@constant.builtin", { link = "Constant" })
+        hl("@attribute", { fg = colors.red8 })
+        hl("@tag.attribute", { fg = colors.purple0 })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.green0 })

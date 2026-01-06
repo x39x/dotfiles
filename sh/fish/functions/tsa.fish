@@ -1,14 +1,6 @@
 # Toggle System Appearance
 function alat_theme
-    set -l dir ~/.cache/39sys
-    set -l theme_file "$dir/alat_theme"
     set -l theme "$argv[1]"
-
-    if test -f $theme_file
-        set theme_cap (cat $theme_file)
-        set theme "$theme_cap$argv[1]"
-    end
-
     ln -sf $HOME/.config/alacritty/themes/{$theme}.toml $HOME/.cache/alacritty.toml
 end
 
@@ -31,6 +23,6 @@ function tsa
         end
     else
         echo true > $file
-        alat_theme "39dark"
+        alat_theme "dark"
     end
 end

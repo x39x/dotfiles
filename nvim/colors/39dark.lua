@@ -3,16 +3,26 @@ local function hl(group, opts)
 end
 
 local colors = {
+        --UI
         miku = "#ACB5DE",
 
-        purple0 = "#b392f0",
-        purple1 = "#a485de",
+        red0 = "#f50000",
+        red3 = "#cd3131",
+        red4 = "#f97583",
 
-        blue1 = "#79b8ff",
-        blue2 = "#6db0fc",
-        blue3 = "#316bcd",
-        blue4 = "#1976D2",
-        blue5 = "#264F78",
+        yel0 = "#FF9800",
+        yel1 = "#ffab70",
+        yel2 = "#FCE094",
+
+        blu0 = "#79b8ff",
+        blu1 = "#6db0fc",
+        blu2 = "#316bcd",
+        blu3 = "#264F78",
+
+        gre0 = "#0FBC79",
+
+        pur0 = "#b392f0",
+        pur1 = "#a485de",
 
         fg0 = "#888888",
         fg1 = "#FFFFFF",
@@ -25,30 +35,12 @@ local colors = {
         bg4 = "#212121",
 
         gray0 = "#303030",
-        gray1 = "#383838",
         gray2 = "#2A2A2A",
         gray3 = "#444444",
         gray4 = "#727272",
         gray5 = "#6b737c",
         gray8 = "#9db1c5",
-        gray6 = "#bbbbbb",
         gray7 = "#F5F5F5",
-
-        yellow0 = "#FF9800",
-        yellow1 = "#ffab70",
-        yellow2 = "#FCE094",
-        yellow3 = "#cd9731",
-        yellow4 = "#63341D",
-
-        green1 = "#0FBC79",
-        green2 = "#51FA7A",
-
-        red0 = "#f50000",
-        red2 = "#cd3131",
-        red3 = "#cd3131",
-        red1 = "#FF7B72",
-        red4 = "#f97583",
-        red5 = "#FF7A84",
 
         --DONE: diff
         diff_x = "#4E201E",
@@ -59,14 +51,6 @@ local colors = {
         diff_s = "#1B7F37",
         diff_r = "#cd3131",
         diff_o = "#d68349",
-
-        --NOTE:
-        -- "#515C6A"
-        -- "#2A2A2A"
-        -- "#2b6bab"
-        -- "#691B24"
-        -- "#611B27"
-        --
 }
 
 local function m39k()
@@ -99,24 +83,24 @@ local function m39k()
         hl("TabLine", { fg = colors.gray4, bg = colors.bg2 })
         hl("TabLineFill", { bg = colors.bg2 })
         hl("TabLineSel", { fg = colors.gray7, bg = colors.bg0 })
-        hl("Visual", { bg = colors.blue5 })
-        hl("VisualNOS", { bg = colors.red2 })
-        hl("Search", { bg = colors.yellow2, fg = colors.bg1 })
-        hl("CurSearch", { bg = colors.green1, fg = colors.bg1 })
+        hl("Visual", { bg = colors.blu3 })
+        hl("VisualNOS", { bg = colors.red3 })
+        hl("Search", { bg = colors.yel2, fg = colors.bg1 })
+        hl("CurSearch", { bg = colors.gre0, fg = colors.bg1 })
         hl("IncSearch", { bg = colors.red0, fg = colors.bg1 })
-        hl("MatchParen", { bg = colors.green1, fg = colors.bg1 })
-        hl("Directory", { fg = colors.purple0 })
+        hl("MatchParen", { bg = colors.gre0, fg = colors.bg1 })
+        hl("Directory", { fg = colors.pur0 })
         hl("Folded", { fg = colors.gray4, bg = colors.bg3 })
         hl("FoldColumn", { fg = colors.gray4, bg = colors.bg0 })
         hl("NonText", { fg = colors.gray4 })
         hl("EndOfBuffer", { fg = colors.gray4 })
         hl("SpecialKey", { fg = colors.gray4 })
-        hl("Title", { fg = colors.blue1, bold = true })
-        hl("Question", { fg = colors.purple0 })
-        hl("MoreMsg", { fg = colors.purple0 })
+        hl("Title", { fg = colors.blu0, bold = true })
+        hl("Question", { fg = colors.pur0 })
+        hl("MoreMsg", { fg = colors.pur0 })
         hl("ModeMsg", { fg = colors.fg0 })
         hl("ErrorMsg", { fg = colors.red3 })
-        hl("WarningMsg", { fg = colors.yellow0 })
+        hl("WarningMsg", { fg = colors.yel0 })
         hl("WildMenu", { fg = colors.gray7, bg = colors.bg3 })
         hl("Conceal", { fg = colors.gray5 })
         hl("Whitespace", { fg = colors.gray2 })
@@ -124,8 +108,8 @@ local function m39k()
         hl("Todo", { fg = colors.gray7, bg = colors.bg3, bold = true })
         hl("Added", { fg = colors.diff_s })
 
-        hl("QuickFixLine", { fg = colors.blue2 })
-        hl("QuickFixError", { fg = colors.red2 })
+        hl("QuickFixLine", { fg = colors.blu1 })
+        hl("QuickFixError", { fg = colors.red3 })
         hl("qfSeparator", { fg = colors.gray3 })
         hl("qfSeparator1", { link = "qfSeparator" })
         hl("qfSeparator2", { link = "qfSeparator" })
@@ -139,29 +123,29 @@ local function m39k()
         hl("LspCodeLens", { fg = colors.gray5 })
         hl("LspCodeLensText", { fg = colors.gray5 })
         hl("LspCodeLensSign", { fg = colors.gray5 })
-        hl("LspSignatureActiveParameter", { fg = colors.yellow0, bold = true })
+        hl("LspSignatureActiveParameter", { fg = colors.yel0, bold = true })
         hl("LspInlayHint", { fg = colors.gray5, italic = true })
         -- Diagnostics (LSP)
         hl("DiagnosticError", { fg = colors.red3 })
-        hl("DiagnosticWarn", { fg = colors.yellow0 })
-        hl("DiagnosticInfo", { fg = colors.blue3 })
-        hl("DiagnosticHint", { fg = colors.purple0 })
+        hl("DiagnosticWarn", { fg = colors.yel0 })
+        hl("DiagnosticInfo", { fg = colors.blu2 })
+        hl("DiagnosticHint", { fg = colors.pur0 })
         hl("DiagnosticUnderlineError", { sp = colors.red3, undercurl = true })
-        hl("DiagnosticUnderlineWarn", { sp = colors.yellow0, undercurl = true })
-        hl("DiagnosticUnderlineInfo", { sp = colors.blue3, undercurl = true })
-        hl("DiagnosticUnderlineHint", { sp = colors.purple0, undercurl = true })
+        hl("DiagnosticUnderlineWarn", { sp = colors.yel0, undercurl = true })
+        hl("DiagnosticUnderlineInfo", { sp = colors.blu2, undercurl = true })
+        hl("DiagnosticUnderlineHint", { sp = colors.pur0, undercurl = true })
         hl("DiagnosticSignError", { fg = colors.red3 })
-        hl("DiagnosticSignWarn", { fg = colors.yellow0 })
-        hl("DiagnosticSignInfo", { fg = colors.blue3 })
-        hl("DiagnosticSignHint", { fg = colors.purple0 })
+        hl("DiagnosticSignWarn", { fg = colors.yel0 })
+        hl("DiagnosticSignInfo", { fg = colors.blu2 })
+        hl("DiagnosticSignHint", { fg = colors.pur0 })
         hl("DiagnosticFloatingError", { fg = colors.red3 })
-        hl("DiagnosticFloatingWarn", { fg = colors.yellow0 })
-        hl("DiagnosticFloatingInfo", { fg = colors.blue3 })
-        hl("DiagnosticFloatingHint", { fg = colors.purple0 })
+        hl("DiagnosticFloatingWarn", { fg = colors.yel0 })
+        hl("DiagnosticFloatingInfo", { fg = colors.blu2 })
+        hl("DiagnosticFloatingHint", { fg = colors.pur0 })
         hl("DiagnosticVirtualTextError", { fg = colors.red3, italic = true })
-        hl("DiagnosticVirtualTextWarn", { fg = colors.yellow0, italic = true })
-        hl("DiagnosticVirtualTextInfo", { fg = colors.blue3, italic = true })
-        hl("DiagnosticVirtualTextHint", { fg = colors.purple0, italic = true })
+        hl("DiagnosticVirtualTextWarn", { fg = colors.yel0, italic = true })
+        hl("DiagnosticVirtualTextInfo", { fg = colors.blu2, italic = true })
+        hl("DiagnosticVirtualTextHint", { fg = colors.pur0, italic = true })
         -- diff
         hl("DiffChange", { bg = colors.diff_x })
         hl("DiffText", { bg = colors.diff_t, fg = colors.fg1 })
@@ -192,72 +176,77 @@ local function m39k()
         hl("Statement", { fg = colors.red4 })
         hl("Number", { fg = colors.red4 })
         hl("Float", { fg = colors.red4 })
+        hl("Character", { fg = colors.red4 })
         --2yellow
-        hl("Character", { fg = colors.yellow1 })
-        hl("String", { fg = colors.yellow1 })
+        hl("String", { fg = colors.yel1 })
         --3blue
-        hl("Type", { fg = colors.blue1 })
+        hl("Type", { fg = colors.blu0 })
         hl("Typedef", { link = "Type" })
-        hl("Operator", { fg = colors.blue2 })
-        hl("Define", { fg = colors.blue1 })
-        hl("PreProc", { fg = colors.blue1 })
+        hl("Operator", { fg = colors.blu1 })
+        hl("Define", { fg = colors.blu0 })
+        hl("PreProc", { fg = colors.blu0 })
         hl("PreCondit", { link = "PreProc" })
         --4gray
         hl("Comment", { fg = colors.gray5 })
         hl("Delimiter", { fg = colors.gray5 })
         hl("SpecialComment", { fg = colors.gray5, italic = true })
         -- 5 6purple
-        hl("Boolean", { fg = colors.purple0 })
-        hl("Macro", { fg = colors.purple0 })
-        hl("Constant", { fg = colors.purple0 })
+        hl("Boolean", { fg = colors.pur0 })
+        hl("Macro", { fg = colors.pur0 })
+        hl("Constant", { fg = colors.pur0 })
         hl("Label", { fg = colors.red4 })
 
         --NOTE: Treesitter
-        hl("@variable", { link = "Function" })
-        hl("@constant", { link = "Constant" })
-        hl("@label", { link = "Label" })
-        hl("@boolean", { link = "Boolean" })
-        hl("@number", { link = "Number" })
-        hl("@type", { link = "Type" })
-        hl("@function", { link = "Function" })
-        hl("@constructor", { link = "Function" })
-        hl("@operator", { link = "Operator" })
         hl("@keyword", { link = "Keyword" })
+        hl("@function", { link = "Function" })
+        hl("@number", { link = "Number" })
+        hl("@boolean", { link = "Boolean" })
+        hl("@variable", { link = "Function" })
+        hl("@constructor", { link = "Function" })
+        hl("@module", { link = "Include" })
+        hl("@label", { link = "Label" })
+        hl("@tag", { link = "Tag" })
+        hl("@comment", { link = "Comment" })
+        hl("@operator", { link = "Operator" })
         hl("@punctuation.delimiter", { link = "Delimiter" })
         hl("@punctuation.bracket", { link = "Delimiter" })
         hl("@punctuation.special", { link = "Constant" })
-        hl("@tag", { link = "Tag" })
-        hl("@comment", { link = "Comment" })
-        hl("@module", { link = "Include" })
         hl("@string", { link = "String" })
+
+        hl("@type", { link = "Type" })
+        hl("@type.builtin", { link = "Type" })
+
+        hl("@constant", { link = "Constant" })
+        hl("@constant.builtin", { link = "Constant" })
+
         -- md
-        hl("@markup.heading.1", { fg = colors.red1, bold = true })
-        hl("@markup.heading.2", { fg = colors.yellow2, bold = true })
-        hl("@markup.heading.3", { fg = colors.purple0, bold = true })
-        hl("@markup.strong", { fg = colors.blue1, bold = true })
-        hl("@markup.italic", { fg = colors.blue1, italic = true })
-        hl("@markup.link", { fg = colors.blue3 })
+        hl("@markup.heading.1", { fg = colors.red4, bold = true })
+        hl("@markup.heading.2", { fg = colors.yel2, bold = true })
+        hl("@markup.heading.3", { fg = colors.pur0, bold = true })
+        hl("@markup.strong", { fg = colors.blu0, bold = true })
+        hl("@markup.italic", { fg = colors.blu0, italic = true })
+        hl("@markup.link", { fg = colors.blu2 })
         -- custom
-        hl("@string.escape", { fg = colors.blue2 })
-        hl("@string.regexp", { fg = colors.purple1 })
-        hl("@attribute", { fg = colors.green1 })
-        hl("@tag.attribute", { fg = colors.blue1 })
-        hl("@string.documentation", { fg = colors.blue1 })
-        hl("@comment.documentation", { fg = colors.blue1 })
+        hl("@string.escape", { fg = colors.blu1 })
+        hl("@string.regexp", { fg = colors.pur1 })
+        hl("@string.documentation", { fg = colors.blu0 })
+        hl("@comment.documentation", { fg = colors.blu0 })
+
+        hl("@attribute", { fg = colors.gre0 })
+        hl("@tag.attribute", { fg = colors.blu0 })
 
         -- lua
-        hl("@constant.builtin", { link = "Constant" })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.gray8 })
-        hl("GitSignsChange", { fg = colors.yellow0 })
-        hl("GitSignsDelete", { fg = colors.red2 })
+        hl("GitSignsChange", { fg = colors.yel0 })
+        hl("GitSignsDelete", { fg = colors.red3 })
 
         hl("FlashMatch", { link = "Normal" })
-        hl("FlashCurrent", { bg = colors.red2 })
+        hl("FlashCurrent", { bg = colors.red3 })
         hl("FlashLabel", { fg = colors.red3, bold = true })
 
-        hl("BlinkCmpKind", { fg = colors.purple0 })
+        hl("BlinkCmpKind", { fg = colors.pur0 })
 
         hl("FzfLuaBorder", { bg = colors.bg0, fg = colors.gray3 })
         hl("FzfLuaTitle", { fg = colors.fg0 })
@@ -265,17 +254,17 @@ local function m39k()
         hl("NvimTreeIndentMarker", { link = "Comment" })
         hl("NvimTreeGitFolderDirtyHL", { fg = colors.red4 })
         hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
-        hl("NvimTreeGitFileNewHL", { fg = colors.green1 })
+        hl("NvimTreeGitFileNewHL", { fg = colors.gre0 })
         hl("AlphaHeader", { fg = colors.miku })
 
-        hl("HeirlineA", { fg = colors.blue2 })
-        hl("HeirlineB", { fg = colors.purple0 })
+        hl("HeirlineA", { fg = colors.blu1 })
+        hl("HeirlineB", { fg = colors.pur0 })
 
         hl("IndentLine", { link = "Whitespace" })
         hl("IndentLineCurrent", { link = "Whitespace" })
 
-        hl("DapBreakpointHighlight", { fg = colors.red5 })
-        hl("DapStoppedHiglight", { fg = colors.green1 })
+        hl("DapBreakpointHighlight", { fg = colors.red4 })
+        hl("DapStoppedHiglight", { fg = colors.gre0 })
 
         hl("NvimDapVirtualText", { link = "Comment" })
         hl("NvimDapVirtualTextChanged", { fg = colors.red0 })
@@ -284,19 +273,19 @@ local function m39k()
         vim.g.terminal_color_foreground = colors.fg2
         vim.g.terminal_color_0 = colors.bg0
         vim.g.terminal_color_1 = colors.red4
-        vim.g.terminal_color_2 = colors.blue2
-        vim.g.terminal_color_3 = colors.yellow1
-        vim.g.terminal_color_4 = colors.blue1
-        vim.g.terminal_color_5 = colors.purple0
-        vim.g.terminal_color_6 = colors.blue2
+        vim.g.terminal_color_2 = colors.blu1
+        vim.g.terminal_color_3 = colors.yel1
+        vim.g.terminal_color_4 = colors.blu0
+        vim.g.terminal_color_5 = colors.pur0
+        vim.g.terminal_color_6 = colors.blu1
         vim.g.terminal_color_7 = colors.fg2
         vim.g.terminal_color_8 = colors.fg2
         vim.g.terminal_color_9 = colors.red4
-        vim.g.terminal_color_10 = colors.purple0
-        vim.g.terminal_color_11 = colors.yellow0
+        vim.g.terminal_color_10 = colors.pur0
+        vim.g.terminal_color_11 = colors.yel0
         vim.g.terminal_color_12 = colors.fg0
         vim.g.terminal_color_13 = colors.red4
-        vim.g.terminal_color_14 = colors.yellow2
+        vim.g.terminal_color_14 = colors.yel2
         vim.g.terminal_color_15 = colors.fg2
 end
 

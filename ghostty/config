@@ -4,11 +4,16 @@ font-size              = 13
 adjust-cell-height     = 9
 adjust-cell-width      = 1
 font-thicken           = true
+
+maximize               = true
 window-padding-y       = 0
 window-padding-x       = 0
 window-padding-balance = true
 window-padding-color   = extend
-theme                  = light:Terminal Basic,dark:Apple System Colors
+theme                  = light:light,dark:dark
+
 macos-option-as-alt    = true
 keybind                = super+s=esc:s
 keybind                = ctrl+【=text:\x1b[
+
+env                    = TERM_PROGRAM=ghostty

@@ -19,4 +19,7 @@ return {
                 },
                 offsetEncoding = { "utf-8", "utf-16" },
         },
+        on_init = function(client, _)
+                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+        end,
 }

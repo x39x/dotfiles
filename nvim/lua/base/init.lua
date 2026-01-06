@@ -41,12 +41,12 @@ require("mini.bufremove").setup()
 require("nvim-surround").setup()
 
 -- PLUG: autopairs
-require("nvim-autopairs").setup({
-        disable_filetype = { "TelescopePrompt", "fzf" },
-        enable_check_bracket_line = false,
-})
-require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
-require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
+-- require("nvim-autopairs").setup({
+--         disable_filetype = { "TelescopePrompt", "fzf" },
+--         enable_check_bracket_line = false,
+-- })
+-- require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
+-- require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
 
 --PLUG:  motion
 require("flash").setup({

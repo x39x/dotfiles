@@ -14,7 +14,8 @@ end
 
 M.set = function()
         if load_cache() == "true" then
-                vim.cmd.colorscheme("39dark")
+                -- vim.cmd.colorscheme("39dark")
+                vim.cmd.colorscheme("monokai")
         else
                 vim.cmd.colorscheme("39light")
         end

@@ -102,3 +102,14 @@ autocmd("FileType", {
         group = Default,
         desc = "Do't show qf in bufline",
 })
+
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--         callback = function()
+--                 -- NOTE: https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+--                 for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+--                         vim.api.nvim_set_hl(0, group, {})
+--                 end
+--         end,
+--         group = Default,
+--         desc = "Disable LSP semantic token highlighting",
+-- })
