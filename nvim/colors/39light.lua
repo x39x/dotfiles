@@ -46,7 +46,6 @@ local colors = {
         green2 = "#077D18",
         green3 = "#BEE6BE",
         green4 = "#E9F5E6",
-
         red0 = "#f50000",
         red2 = "#CE0606",
         red4 = "#de0202",
@@ -268,7 +267,7 @@ local function m39k()
         -- custom
         hl("@string.escape", { fg = colors.purple4 })
         hl("@string.regexp", { fg = colors.brown0 })
-        hl("@string.documentation", { link = colors.brown0 })
+        hl("@string.documentation", { fg = colors.brown0 })
         hl("@comment.documentation", { fg = colors.brown0 })
 
         hl("@attribute", { fg = colors.red8 })
