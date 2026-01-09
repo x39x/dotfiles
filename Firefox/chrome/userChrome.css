@@ -1,22 +1,30 @@
 /* === Remove the "Search with..." suggestion in the address bar === */
 #urlbar-input::placeholder {
-    color: transparent !important;
+        color: transparent !important;
 }
 
 /* === Address bar: remove border, shadow, and outline === */
 .urlbar-background {
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-    background: var(--toolbar-bgcolor) !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        background: var(--toolbar-bgcolor) !important;
 }
 
-/* === Remove the fullscreen mode warning border === */
-#fullscreen-warning {
-    display: none !important;
+/* dark mode address bar selected item background */
+@media (prefers-color-scheme: dark) {
+
+        /* .urlbarView-row[aria-selected="true"]>.urlbarView-row-inner, */
+        .urlbarView-row[selected]>.urlbarView-row-inner {
+                background-color: #4E4D55 !important;
+                /* border-radius: 6px !important; */
+        }
+
 }
+
 
 /* === Hide certain icons in the address bar === */
+#awesome-bar-result-menu,
 #urlbar-searchmode-switcher,
 #searchmode-switcher-chicklet,
 #identity-permission-box,
@@ -27,5 +35,6 @@
 #tracking-protection-icon-container,
 #reader-mode-button,
 #translations-button {
-    display: none !important;
+        display: none !important;
 }
+
