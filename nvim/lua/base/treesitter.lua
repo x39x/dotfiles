@@ -7,7 +7,6 @@ require("nvim-treesitter").install({
         "yaml",
         "toml",
         "json",
-        "jsonc",
         "json5",
         "vimdoc",
         "markdown",
@@ -40,7 +39,6 @@ vim.api.nvim_create_autocmd("FileType", {
                 "yaml",
                 "toml",
                 "json",
-                "jsonc",
                 "json5",
                 "markdown",
 
@@ -59,7 +57,6 @@ vim.api.nvim_create_autocmd("FileType", {
                 "javascriptreact",
                 "typescriptreact",
 
-                "types",
                 "fish",
                 "bash",
                 "make",
