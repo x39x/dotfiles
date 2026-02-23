@@ -94,7 +94,6 @@ keymap({ "o", "v" }, "f", function()
         end
 end, keymap_opts({ desc = "Flash jump" }))
 keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
-keymap("n", "<leader>n", require("nvim-tree.api").tree.open, keymap_opts({ desc = "Nvimtree" }))
 
 require("base.filetree")
 require("base.treesitter")
