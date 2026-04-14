@@ -103,6 +103,18 @@ autocmd("FileType", {
         desc = "Do't show qf in bufline",
 })
 
+autocmd("PackChanged", {
+        callback = function(ev)
+                local name, kind = ev.data.spec.name, ev.data.kind
+
+                if name == "luasnip" and (kind == "install" or kind == "update") then
+                        vim.system({ "make install_jsregexp" }, { cwd = ev.data.path }):wait()
+                end
+        end,
+        group = vim.api.nvim_create_augroup("PACK", { clear = true }),
+        desc = "pack make",
+})
+
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --         callback = function()
 --                 -- NOTE: https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button

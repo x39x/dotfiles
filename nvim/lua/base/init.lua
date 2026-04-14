@@ -11,14 +11,18 @@ vim.pack.add({
         -- filetree
         "https://github.com/nvim-tree/nvim-tree.lua",
         -- treesitter
-        {
-                src = "https://github.com/nvim-treesitter/nvim-treesitter",
-                version = "main",
-        },
+        -- TODO: remove 
+        -- {
+        --         src = "https://github.com/nvim-treesitter/nvim-treesitter",
+        --         version = "main",
+        -- },
+
+        "https://github.com/romus204/tree-sitter-manager.nvim",-- tree-sitter CLI must be installed system-wide
         {
                 src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
                 version = "main",
         },
+
         "https://github.com/kevinhwang91/promise-async",
         "https://github.com/kevinhwang91/nvim-ufo",
         -- blink.cmp
@@ -33,6 +37,9 @@ vim.pack.add({
         "https://github.com/sindrets/diffview.nvim",
         "https://github.com/nvim-mini/mini.bufremove",
 })
+
+
+
 
 -- PLUG: mini.bufremove
 require("mini.bufremove").setup()

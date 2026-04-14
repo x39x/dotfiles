@@ -1,4 +1,4 @@
-require("nvim-treesitter").install({
+local parsers = {
         "regex",
         "diff",
         "printf",
@@ -31,37 +31,24 @@ require("nvim-treesitter").install({
         "bash",
         "make",
         "cmake",
+}
+require("tree-sitter-manager").setup({
+        ensure_installed = parsers,
+        border = "single",
+        auto_install = false, -- if enabled, install missing parsers when editing a new file
+        highlight = true, -- treesitter highlighting is enabled by default
 })
+
+-- Not every tree-sitter parser is the same as the file type detected
+-- So the patterns need to be registered more cleverly
+local patterns = {}
+for _, parser in ipairs(parsers) do
+        local parser_patterns = vim.treesitter.language.get_filetypes(parser)
+        vim.list_extend(patterns, parser_patterns)
+end
+
 vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-                "help",
-                "xml",
-                "yaml",
-                "toml",
-                "json",
-                "json5",
-                "markdown",
-
-                "c",
-                "go",
-                "cpp",
-                "lua",
-                "rust",
-                "python",
-
-                "css",
-                "html",
-                "svelte",
-                "javascript",
-                "typescript",
-                "javascriptreact",
-                "typescriptreact",
-
-                "fish",
-                "bash",
-                "make",
-                "cmake",
-        },
+        patterns = parsers,
         group = vim.api.nvim_create_augroup("TREESITTER_HIGHLIGHT", { clear = true }),
         callback = function()
                 vim.treesitter.start()
