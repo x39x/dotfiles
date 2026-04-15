@@ -48,11 +48,11 @@ for _, parser in ipairs(parsers) do
 end
 
 vim.api.nvim_create_autocmd("FileType", {
-        patterns = parsers,
-        group = vim.api.nvim_create_augroup("TREESITTER_HIGHLIGHT", { clear = true }),
+        pattern = patterns,
         callback = function()
                 vim.treesitter.start()
         end,
+        group = vim.api.nvim_create_augroup("TREESITTER_HIGHLIGHT", { clear = true }),
 })
 
 --PLUG: fold
