@@ -1,16 +1,3 @@
-local nopreview = function(opts)
-        opts = opts or {}
-        local config = {
-                winopts = {
-                        preview = {
-                                border = "none",
-                                horizontal = "right:0%",
-                        },
-                },
-        }
-        return vim.tbl_deep_extend("force", config, opts)
-end
-
 local ivy = function(opts)
         opts = opts or {}
         local winopts = {
@@ -66,10 +53,18 @@ require("fzf-lua").setup({
         },
 
         -- picker option
-        zoxide = nopreview(),
+        zoxide = {
+                winopts = dropdown({
+                        preview = {
+                                border = "none",
+                                horizontal = "right:0%",
+                                vertical = "down:0%",
+                        },
+                }),
+        },
         oldfiles = { previewer = false },
         tmux_buffers = { previewer = false },
-        builtin = { winopts = { width = 1, height = 0.39 } },
+        builtin = { winopts = dropdown() },
 
         colorschemes = {
                 live_preview = false,

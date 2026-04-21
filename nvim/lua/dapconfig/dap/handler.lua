@@ -30,6 +30,7 @@ M.terminate = function()
         dap.terminate()
         dap.clear_breakpoints()
         keymap.clear(buf)
+        -- true: https://github.com/igorlfs/nvim-dap-view/blob/main/lua/dap-view.lua#L31
         require("dap-view").close(true)
         _G.nvim_dap_enabled = nil
         vim.notify("Terminate DAP ", vim.log.levels.INFO)

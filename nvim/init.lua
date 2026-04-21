@@ -1,6 +1,5 @@
---NOTE: options
-local o = vim.o
-
+-- Enables the experimental Lua module loader
+vim.loader.enable()
 -- NVIMTREE: disable netrw at the very start of your config
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -17,6 +16,9 @@ vim.filetype.add({
                 [".*profile"] = "bash",
         },
 })
+
+--NOTE: options
+local o = vim.o
 
 o.backup = false
 o.swapfile = false
@@ -35,7 +37,7 @@ o.linebreak = true -- wrap don't break words
 o.scrolloff = 5
 o.showtabline = 2 -- tabline,0:no
 o.laststatus = 3 --  global statusline
-o.signcolumn = "yes" -- sign colume
+o.signcolumn = "yes" -- sign column
 o.list = true
 o.listchars = "tab:  ,extends:⟩,precedes:⟨,trail:·" --("eol:↴,tab:»·,trail:·")
 o.fillchars = "eob: " -- hide  "~"

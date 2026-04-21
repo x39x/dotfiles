@@ -12,13 +12,13 @@ keymap("", "L", "g_", keymap_opts())
 keymap("", "H", "^", keymap_opts())
 
 -- swap some key
-keymap("", "q", "%", keymap_opts())
-vim.api.nvim_create_autocmd("FileType", {
-        pattern = "*",
-        callback = function()
-                keymap("", "%", "q", { noremap = true })
-        end,
-})
+-- keymap("", "q", "%", keymap_opts())
+-- vim.api.nvim_create_autocmd("FileType", {
+--         pattern = "*",
+--         callback = function()
+--                 keymap("", "%", "q", { noremap = true })
+--         end,
+-- })
 keymap("", "J", "}", keymap_opts())
 keymap("", "K", "{", keymap_opts())
 keymap("", "{", "J", keymap_opts())
