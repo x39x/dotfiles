@@ -19,9 +19,11 @@
 --------------------------------------------------------------
 --- javascript:
 --  mason vtsls
+--  mason oxfmt
+--  mason vue-language-server
+--  mason svelte-language-server
+--  mason css-lsp
 --  mason tailwindcss-language-server
---  mason prettier
---  TODO  vue-language-server svelte-language-server
 --------------------------------------------------------------
 --- lua:
 --  mason stylua
@@ -87,14 +89,13 @@ local servers = {
 
         "ruff",
         "ty",
-        -- "pyright",
 
         "vtsls",
-        "vue_ls",
+        "css",
         "tailwindcss",
+        "vue_ls",
+        "svelte",
 
-        -- "ts_ls",
-        -- "racket_langserver",
         -- "jsonls",
 }
 
@@ -115,17 +116,51 @@ require("mason").setup({
 local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+
+local h = require("null-ls.helpers")
+local methods = require("null-ls.methods")
+local u = require("null-ls.utils")
+
+local FORMATTING = methods.internal.FORMATTING
+
+local oxfmt = h.make_builtin({
+        name = "oxfmt",
+        method = FORMATTING,
+        filetypes = {
+                "javascript",
+                "javascriptreact",
+                "typescript",
+                "typescriptreact",
+                "markdown",
+                "vue",
+                "svelte",
+                "astro",
+                "html",
+                "yaml",
+                "toml",
+                "css",
+                "scss",
+                "less",
+        },
+        factory = h.formatter_factory,
+        generator_opts = {
+                command = "oxfmt",
+                args = { "$FILENAME" },
+                to_temp_file = true,
+                from_temp_file = true,
+                timeout = 10000,
+                cwd = h.cache.by_bufnr(function(params)
+                        return u.root_pattern(".oxfmtrc.json")(params.bufname)
+                end),
+        },
+})
+
 null_ls.setup({
         debug = false,
         sources = {
 
                 diagnostics.codespell.with({
                         extra_args = { "-L", "RIME,Rime,rime" },
-                }),
-                -- To increase speed, try prettierd.
-                formatting.prettier.with({
-                        extra_args = { "--tab-width", "4" },
-                        extra_filetypes = { "jsonc", "json5", "toml" },
                 }),
                 formatting.stylua.with({
                         extra_args = {
@@ -135,6 +170,7 @@ null_ls.setup({
                                 "Spaces",
                         },
                 }),
+                oxfmt,
         },
         on_attach = function(_, bufnr)
                 vim.api.nvim_buf_create_user_command(bufnr, "F", function()
