@@ -1,4 +1,5 @@
 -- ===========================================================
+
 -- go:
 -- go install github.com/go-delve/delve/cmd/dlv@master
 --------------------------------------------------------------
@@ -7,12 +8,15 @@
 --------------------------------------------------------------
 -- c/cc
 -- lldb
+--------------------------------------------------------------
+-- js vue react
+-- mason js-debug-adapter
+
 -- ===========================================================
 
 vim.pack.add({
         "https://github.com/mfussenegger/nvim-dap",
-        "https://github.com/theHamsta/nvim-dap-virtual-text",
-        "https://github.com/igorlfs/nvim-dap-view",
+        { src = "https://github.com/igorlfs/nvim-dap-view", version = "main" },
 })
 
 -- sign
@@ -45,10 +49,24 @@ dap.providers.configs["dap39"] = function()
         return configs
 end
 
---  UI
-require("nvim-dap-virtual-text").setup({
-        virt_text_pos = "eol",
-        all_frames = true,
+require("dap-view").setup({
+        virtual_text = {
+                enabled = true,
+                position = "eol",
+
+                prefix = function(position, node, bufnr)
+                        if position == "eol" or position == "eol_right_align" then
+                                local name = vim.treesitter.get_node_text(node, bufnr)
+
+                                return "[[" .. name .. " ="
+                        end
+                end,
+                suffix = function(position, _, _, _, _)
+                        if position == "eol" or position == "eol_right_align" then
+                                return "]]"
+                        end
+                end,
+        },
 })
 
 -- keymap
