@@ -1,7 +1,8 @@
 --NOTE: config: https://docs.astral.sh/ruff/editors/settings/
 local lsp_keymaps = require("lspconfig.keymap")
 return {
-        cmd = { "uv", "run", "ruff", "server" },
+        -- cmd = { "uv", "run", "ruff", "server" },
+        cmd = { "ruff", "server" },
         filetypes = { "python" },
         root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
         settings = {

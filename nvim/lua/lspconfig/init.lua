@@ -5,6 +5,7 @@
 --- python:
 --  uv tool install ruff
 --  uv tool install ty
+-- mason ty ruff
 --------------------------------------------------------------
 --- c/cc:
 --  clangd
@@ -131,16 +132,22 @@ local oxfmt = h.make_builtin({
                 "javascriptreact",
                 "typescript",
                 "typescriptreact",
-                "markdown",
+
                 "vue",
                 "svelte",
                 "astro",
+
                 "html",
-                "yaml",
-                "toml",
                 "css",
                 "scss",
                 "less",
+
+                "markdown",
+                "yaml",
+                "toml",
+                "json",
+                "jsonc",
+                "json5",
         },
         factory = h.formatter_factory,
         generator_opts = {
