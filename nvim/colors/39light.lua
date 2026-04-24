@@ -269,6 +269,7 @@ local function m39k()
         hl("@string.regexp", { fg = colors.brown0 })
         hl("@string.documentation", { fg = colors.brown0 })
         hl("@comment.documentation", { fg = colors.brown0 })
+        hl("@character.printf", { fg = colors.brown0 })
 
         hl("@attribute", { fg = colors.red8 })
         hl("@tag.attribute", { fg = colors.purple0 })

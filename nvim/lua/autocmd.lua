@@ -84,7 +84,7 @@ autocmd("FileType", {
 })
 
 autocmd("FileType", {
-        pattern = { "lua" },
+        pattern = { "lua", "c", "cpp" },
         callback = function(args)
                 local _ = args.buf
                 vim.bo[0].shiftwidth = 8

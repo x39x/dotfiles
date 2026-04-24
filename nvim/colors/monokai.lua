@@ -224,6 +224,7 @@ local function m39k()
         hl("@string.regexp", { fg = colors.ora })
         hl("@string.documentation", { fg = colors.blu })
         hl("@comment.documentation", { fg = colors.blu })
+        hl("@character.printf", { fg = colors.ora })
 
         hl("@attribute", { fg = colors.green })
         hl("@tag.attribute", { fg = colors.blu })

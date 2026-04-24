@@ -11,13 +11,13 @@ vim.pack.add({
         -- filetree
         "https://github.com/nvim-tree/nvim-tree.lua",
         -- treesitter
-        -- TODO: remove 
+        -- TODO: remove
         -- {
         --         src = "https://github.com/nvim-treesitter/nvim-treesitter",
         --         version = "main",
         -- },
 
-        "https://github.com/romus204/tree-sitter-manager.nvim",-- tree-sitter CLI must be installed system-wide
+        "https://github.com/romus204/tree-sitter-manager.nvim", -- tree-sitter CLI must be installed system-wide
         {
                 src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
                 version = "main",
@@ -38,9 +38,6 @@ vim.pack.add({
         "https://github.com/nvim-mini/mini.bufremove",
 })
 
-
-
-
 -- PLUG: mini.bufremove
 require("mini.bufremove").setup()
 
@@ -48,12 +45,12 @@ require("mini.bufremove").setup()
 require("nvim-surround").setup()
 
 -- PLUG: autopairs
--- require("nvim-autopairs").setup({
---         disable_filetype = { "TelescopePrompt", "fzf" },
---         enable_check_bracket_line = false,
--- })
--- require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
--- require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
+require("nvim-autopairs").setup({
+        disable_filetype = { "TelescopePrompt", "fzf" },
+        enable_check_bracket_line = false,
+})
+require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
+require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
 
 --PLUG:  motion
 require("flash").setup({
