@@ -41,7 +41,7 @@ return {
         },
 
         on_init = function(client, _)
-                -- client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+                client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
                 client.server_capabilities.documentFormattingProvider = false
         end,
 

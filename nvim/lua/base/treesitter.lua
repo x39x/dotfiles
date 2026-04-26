@@ -39,12 +39,18 @@ require("tree-sitter-manager").setup({
         highlight = true, -- treesitter highlighting is enabled by default
 })
 
--- Not every tree-sitter parser is the same as the file type detected
--- So the patterns need to be registered more cleverly
-local patterns = {}
+--BUG: treesitter.get_filetypes can't get all when startup
+local patterns = { "typescriptreact" }
+local seen = {}
 for _, parser in ipairs(parsers) do
-        local parser_patterns = vim.treesitter.language.get_filetypes(parser)
-        vim.list_extend(patterns, parser_patterns)
+        local parser_patterns = vim.treesitter.language.get_filetypes(parser) or {}
+
+        for _, ft in ipairs(parser_patterns) do
+                if not seen[ft] then
+                        seen[ft] = true
+                        table.insert(patterns, ft)
+                end
+        end
 end
 
 vim.api.nvim_create_autocmd("FileType", {

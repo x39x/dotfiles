@@ -11,6 +11,7 @@ end
 
 local colors = {
         miku = "#ACB5DE",
+        high = "#32fa6d",
 
         -- DONE:
         red = "#F92672",
@@ -235,8 +236,8 @@ local function m39k()
         hl("GitSignsDelete", { fg = colors.red })
 
         hl("FlashMatch", { link = "Normal" })
-        hl("FlashCurrent", { bg = colors.red })
-        hl("FlashLabel", { fg = colors.red, bold = true })
+        hl("FlashCurrent", { bg = colors.high })
+        hl("FlashLabel", { fg = colors.high, bold = true })
 
         hl("BlinkCmpKind", { fg = colors.pur })
 
