@@ -7,6 +7,9 @@
 --  uv tool install ty
 -- mason ty ruff
 --------------------------------------------------------------
+--- sh
+--  mason shfmt
+--------------------------------------------------------------
 --- c/cc:
 --  clangd
 --  mason neocmakelsp
@@ -110,8 +113,8 @@ require("mason").setup({
                         package_uninstalled = "",
                 },
                 backdrop = 100,
+                border = "double",
         },
-        border = "single",
 })
 
 local null_ls = require("null-ls")
@@ -175,6 +178,13 @@ null_ls.setup({
                                 "8",
                                 "--indent-type",
                                 "Spaces",
+                        },
+                }),
+                formatting.shfmt.with({
+                        extra_filetypes = { "bash", "zsh" },
+                        extra_args = {
+                                "--indent",
+                                "4",
                         },
                 }),
                 oxfmt,

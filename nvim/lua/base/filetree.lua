@@ -35,8 +35,8 @@ end
 
 require("nvim-tree").setup({
         on_attach = on_attach,
-        disable_netrw = true,
-        hijack_netrw = true,
+        -- disable_netrw = true,
+        hijack_netrw = false,
         hijack_cursor = true,
         hijack_unnamed_buffer_when_opening = false,
         sync_root_with_cwd = true,
@@ -71,6 +71,22 @@ require("nvim-tree").setup({
         },
 })
 
--- local keymap = vim.keymap.set
--- local keymap_opts = require("utils.keymap_opts")
+require("yazi").setup({
+        open_for_directories = true,
+        yazi_floating_window_border = "double",
+        keymaps = {
+                open_file_in_horizontal_split = "<c-s>",
+                grep_in_directory = "<c-x>",
+                replace_in_directory = false,
+                change_working_directory = "<c-g>",
+        },
+        integrations = {
+                grep_in_directory = "fzf-lua",
+                grep_in_selected_files = "fzf-lua",
+        },
+})
+
+local keymap = vim.keymap.set
+local keymap_opts = require("utils.keymap_opts")
+keymap("n", "<leader>n", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
 -- keymap("n", "<leader>n", require("nvim-tree.api").tree.open, keymap_opts({desc="NvimTree"}))
