@@ -5,6 +5,7 @@ vim.pack.add({
 
         "https://github.com/MunifTanjim/nui.nvim",
         "https://github.com/kawre/leetcode.nvim",
+        "https://github.com/mikavilpas/yazi.nvim",
 })
 
 -- --PLUG: deffview
@@ -35,3 +36,12 @@ cmd("Leet", function()
         })
         vim.cmd("Leet")
 end, {})
+
+require("yazi").setup({
+        -- open_for_directories = true,
+        yazi_floating_window_border = "double", --solid
+})
+
+local keymap = vim.keymap.set
+local keymap_opts = require("utils.keymap_opts")
+keymap("n", "<leader>n", require("yazi").yazi, keymap_opts({ desc = "NvimTree" }))

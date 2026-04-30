@@ -64,7 +64,7 @@ local function m39k()
         --NOTE: UI
         hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
         hl("NormalFloat", { fg = colors.fg0, bg = colors.bg2 })
-        hl("FloatBorder", { fg = colors.gray3, bg = colors.bg2 })
+        hl("FloatBorder", { fg = colors.gray3, bg = colors.bg0 })
         hl("CursorLine", { bg = colors.gray0 })
         hl("CursorColumn", { bg = colors.gray0 })
         hl("Cursor", { fg = colors.bg0, bg = colors.fg0 })

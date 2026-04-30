@@ -71,6 +71,6 @@ require("nvim-tree").setup({
         },
 })
 
-local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
-keymap("n", "<leader>n", require("nvim-tree.api").tree.open, keymap_opts({desc="NvimTree"}))
+-- local keymap = vim.keymap.set
+-- local keymap_opts = require("utils.keymap_opts")
+-- keymap("n", "<leader>n", require("nvim-tree.api").tree.open, keymap_opts({desc="NvimTree"}))

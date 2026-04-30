@@ -73,7 +73,7 @@ require("fzf-lua").setup({
         grep = {
                 rg_glob = true,
                 rg_glob_fn = function(query, _)
-                        local regex, flags = query:match("^(.-)%s%-%-(.*)$")
+                        local regex, flags = query:match("^(.-)%s%-%-%s(.*)$")
                         return (regex or query), flags
                 end,
                 winopts = {

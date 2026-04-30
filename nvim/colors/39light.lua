@@ -134,7 +134,7 @@ local function m39k()
         -- UI
         hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
         hl("NormalFloat", { bg = colors.bg2 })
-        hl("FloatBorder", { bg = colors.bg2, fg = colors.bg3 })
+        hl("FloatBorder", { bg = colors.bg0, fg = colors.bg4 })
         hl("LineNr", { fg = colors.fg1 })
         hl("EndOfBuffer", { link = "Whitespace" })
         hl("WildMenu", { bg = colors.bg2 })
