@@ -2,15 +2,15 @@
 
 vol=""
 count=0
-while [ "$count" -lt 10 ] && [ -z "$vol" ] ;do
-        count=$((count +1))
-        vol="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | tail -n 1)"
-        if [ -z "$vol" ] ; then
-                sleep 1
-        fi
+while [ "$count" -lt 10 ] && [ -z "$vol" ]; do
+    count=$((count + 1))
+    vol="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | tail -n 1)"
+    if [ -z "$vol" ]; then
+        sleep 1
+    fi
 done
 
-if echo $vol | grep -q "[MUTED]";then
+if echo $vol | grep -q "[MUTED]"; then
     vol_icon="🔇"
 else
     vol_icon="🔉"

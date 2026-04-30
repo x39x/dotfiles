@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if ip route | grep -q 'metric 100' 2>/dev/null ; then
+if ip route | grep -q 'metric 100' 2>/dev/null; then
     echo "🌐 Ethernet"
-elif iwctl station wlan0 show | grep -q 'Connected'; then  
+elif iwctl station wlan0 show | grep -q 'Connected'; then
     wifi_info=$(iwctl station wlan0 show | grep 'Connected network' | awk '{print $3}')
     echo "🌐 $wifi_info"
 else

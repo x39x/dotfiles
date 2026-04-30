@@ -2,25 +2,25 @@
 
 im=""
 count=0
-while [ "$count" -lt 10 ] && [ -z "$im" ] ;do
-    count=$((count +1))
+while [ "$count" -lt 10 ] && [ -z "$im" ]; do
+    count=$((count + 1))
     im=$(fcitx5-remote -n 2>/dev/null)
-    if [ -z "$im" ] ; then 
+    if [ -z "$im" ]; then
         sleep 5
     fi
 done
 
 im_icon="IM:"
 case "$im" in
-    *rime*)
-        im_icon="🇨🇳"
-        ;;
-    *keyboard-us*)
-        im_icon="🇺🇸"
-        ;;
-    *)
-        im_icon="$im_icon[$im]"
-        ;;
+*rime*)
+    im_icon="🇨🇳"
+    ;;
+*keyboard-us*)
+    im_icon="🇺🇸"
+    ;;
+*)
+    im_icon="$im_icon[$im]"
+    ;;
 esac
 
 echo "$im_icon"

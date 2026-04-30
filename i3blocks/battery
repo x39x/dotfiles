@@ -4,8 +4,8 @@ BATTERY_PATH=$(find /sys/class/power_supply/ -maxdepth 1 -name "BAT*" | head -n 
 battery="$(cat ${BATTERY_PATH}/capacity)%"
 bstatus=$(cat ${BATTERY_PATH}/status)
 if [ "$bstatus" = "Charging" ]; then
-        bchar="⚡"
-else 
-        bchar="🔋"
+    bchar="⚡"
+else
+    bchar="🔋"
 fi
 echo ${bchar}${battery}
