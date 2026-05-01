@@ -1,8 +1,10 @@
 -- Enables the experimental Lua module loader
 vim.loader.enable()
+
 -- NVIMTREE: disable netrw at the very start of your config
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
 -- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"

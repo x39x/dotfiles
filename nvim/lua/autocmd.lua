@@ -115,6 +115,17 @@ autocmd("PackChanged", {
         desc = "pack make",
 })
 
+-- Disable cursorline in diff windows
+autocmd("User", {
+        pattern = "CodeDiffOpen",
+        callback = function()
+                for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                        vim.wo[win].cursorline = false
+                end
+        end,
+        desc = "Disable cursorline in diff windows",
+})
+
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --         callback = function()
 --                 -- NOTE: https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button

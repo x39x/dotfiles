@@ -9,6 +9,7 @@ local colors = {
         red0 = "#f50000",
         red3 = "#cd3131",
         red4 = "#f97583",
+        red5 = "#6D3136",
 
         yel0 = "#FF9800",
         yel1 = "#ffab70",
@@ -20,6 +21,7 @@ local colors = {
         blu3 = "#264F78",
 
         gre0 = "#0FBC79",
+        gre1 = "#274B34",
 
         pur0 = "#b392f0",
         pur1 = "#a485de",
@@ -43,11 +45,11 @@ local colors = {
         gray7 = "#F5F5F5",
 
         --DONE: diff
-        diff_x = "#4E201E",
-        diff_t = "#a12237",
-        diff_a = "#39482B",
-        diff_d = "#303030",
-        diff_l = "#494949",
+        diff_a = "#192C20",
+        diff_d = "#3F1E21",
+        diff_t = "#385570",
+        diff_c = "#25323E",
+
         diff_s = "#1B7F37",
         diff_r = "#cd3131",
         diff_o = "#d68349",
@@ -64,7 +66,7 @@ local function m39k()
         --NOTE: UI
         hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
         hl("NormalFloat", { fg = colors.fg0, bg = colors.bg2 })
-        hl("FloatBorder", { fg = colors.gray3, bg = colors.bg0 })
+        hl("FloatBorder", { fg = colors.gray3, bg = colors.bg2 })
         hl("CursorLine", { bg = colors.gray0 })
         hl("CursorColumn", { bg = colors.gray0 })
         hl("Cursor", { fg = colors.bg0, bg = colors.fg0 })
@@ -105,16 +107,6 @@ local function m39k()
         hl("Conceal", { fg = colors.gray5 })
         hl("Whitespace", { fg = colors.gray2 })
         hl("Underlined", { underline = true })
-        hl("Todo", { fg = colors.gray7, bg = colors.bg3, bold = true })
-        hl("Added", { fg = colors.diff_s })
-
-        hl("QuickFixLine", { fg = colors.blu1 })
-        hl("QuickFixError", { fg = colors.red3 })
-        hl("qfSeparator", { fg = colors.gray3 })
-        hl("qfSeparator1", { link = "qfSeparator" })
-        hl("qfSeparator2", { link = "qfSeparator" })
-        hl("qfLineNr", { link = "Normal" })
-        hl("qfFileName", { link = "Normal" })
 
         --NOTE:  LSP Diagnostics Diff
         hl("LspReferenceText", { bg = colors.bg3 })
@@ -147,16 +139,13 @@ local function m39k()
         hl("DiagnosticVirtualTextInfo", { fg = colors.blu2, italic = true })
         hl("DiagnosticVirtualTextHint", { fg = colors.pur0, italic = true })
         -- diff
-        hl("DiffChange", { bg = colors.diff_x })
-        hl("DiffText", { bg = colors.diff_t, fg = colors.fg1 })
         hl("DiffAdd", { bg = colors.diff_a })
-        hl("DiffDelete", { bg = colors.diff_d, fg = colors.diff_l })
-        hl("diffAdded", { fg = colors.diff_s })
-        hl("diffRemoved", { fg = colors.diff_r })
-        hl("diffChanged", { fg = colors.diff_o })
-        hl("@diff.plus", { link = "diffAdded" })
-        hl("@diff.minus", { link = "diffRemoved" })
-        hl("@diff.delta", { link = "diffChanged" })
+        hl("DiffDelete", { bg = colors.diff_d, fg = colors.gray3 })
+        hl("DiffChange", { bg = colors.diff_c })
+        hl("DiffText", { bg = colors.diff_t, fg = colors.red0 })
+        hl("@diff.plus", { link = "DiffAdd" })
+        hl("@diff.minus", { link = "DiffDelete" })
+        hl("@diff.delta", { link = "DiffChange" })
 
         --NOTE: Syntax
         hl("Function", { fg = colors.fg2 })
@@ -236,14 +225,27 @@ local function m39k()
         hl("@attribute", { fg = colors.gre0 })
         hl("@tag.attribute", { fg = colors.blu0 })
 
-        -- lua
+        --NOTE: quickfix
+        hl("QuickFixLine", { fg = colors.blu1 })
+        hl("QuickFixError", { fg = colors.red3 })
+        hl("qfSeparator", { fg = colors.gray3 })
+        hl("qfSeparator1", { link = "qfSeparator" })
+        hl("qfSeparator2", { link = "qfSeparator" })
+        hl("qfLineNr", { link = "Function" })
+        hl("qfFileName", { link = "Function" })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.gray8 })
         hl("GitSignsChange", { fg = colors.yel0 })
         hl("GitSignsDelete", { fg = colors.red3 })
+        hl("CodeDiffCharInsert", { bg = colors.gre1 })
+        hl("CodeDiffCharDelete", { bg = colors.red5 })
+        hl("CodeDiffFiller", { fg = colors.gray3 })
+        hl("diffAdded", { fg = colors.diff_s })
+        hl("diffRemoved", { fg = colors.diff_r })
+        hl("diffChanged", { fg = colors.diff_o })
 
-        hl("FlashMatch", { link = "Normal" })
+        hl("FlashMatch", { link = "Function" })
         hl("FlashCurrent", { bg = colors.red3 })
         hl("FlashLabel", { fg = colors.red3, bold = true })
 

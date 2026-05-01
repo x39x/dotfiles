@@ -43,6 +43,15 @@ vim.pack.add({
         "https://github.com/antosha417/nvim-lsp-file-operations", -- optional LSP integration
 })
 
+-- set lsp float window border
+-- - "solid": Adds padding by a single whitespace cell. see h winborder
+local vim_float_win = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or "single"
+        return vim_float_win(contents, syntax, opts, ...)
+end
+
 vim.keymap.del("", "grn")
 vim.keymap.del("", "gra")
 vim.keymap.del("", "grr")
@@ -68,20 +77,12 @@ vim.diagnostic.config({
         float = {
                 focusable = false,
                 style = "minimal",
-                border = "single",
+                border = "bold",
                 source = "if_many",
                 header = "",
                 prefix = "",
         },
 })
--- set lsp float window border
--- - "solid": Adds padding by a single whitespace cell. see h winborder
-local vim_float_win = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-        opts = opts or {}
-        opts.border = opts.border or "solid"
-        return vim_float_win(contents, syntax, opts, ...)
-end
 
 local servers = {
         "lua_ls",

@@ -11,13 +11,6 @@ local colors = {
         cyan1 = "#88aa99",
         purple3 = "#662277",
         purple1 = "#45164F",
-        red6 = "#F40A3F",
-        red7 = "#C33720",
-        red3 = "#D3353F",
-        red5 = "#FFEEEB",
-        blue0 = "#152F44",
-        blue9 = "#0E54D6",
-        yellow3 = "#FEE6B1",
         yellow4 = "#F7E6A0",
         brown2 = "#805900",
         brown3 = "#8c6c41",
@@ -37,23 +30,31 @@ local colors = {
         bg4 = "#D6D6D6",
         bg5 = "#D5E1FF",
 
-        fg1 = "#AEB3C2",
-        fg2 = "#8C8C8C",
         fg0 = "#080808",
+        fg2 = "#8C8C8C",
+        fg1 = "#AEB3C2",
+        fg3 = "#D3D3D3",
+        fg4 = "#B5B7BD",
 
         green0 = "#10B981",
         green1 = "#1B7F37",
+        green5 = "#397d2c",
         green2 = "#077D18",
+        green6 = "#8EC39D",
         green3 = "#BEE6BE",
         green4 = "#E9F5E6",
+
         red0 = "#f50000",
         red2 = "#CE0606",
         red4 = "#de0202",
         red8 = "#D3302F",
         red1 = "#DC2626",
+        red6 = "#FFC4C5",
+        red5 = "#FFE5E5",
 
         blue1 = "#0137A6",
         blue2 = "#0133B3",
+        blueD = "#0042B6",
         blueC = "#174ad4",
         blue3 = "#264eff",
         blue7 = "#174be6",
@@ -62,8 +63,9 @@ local colors = {
         blueB = "#8cb1de",
         blue6 = "#A6D2FF",
         blue8 = "#B4D7FF",
-        blueA = "#C2D8F3",
-        blueD = "#0042B6",
+        blueA = "#E7EFFA",
+        blueE = "#E3EBFE",
+        blueF = "#A7C5FF",
 
         orange = "#b86114",
 
@@ -73,54 +75,6 @@ local colors = {
         yellow0 = "#e6bc05",
         yellow1 = "#F2BF56",
         yellow2 = "#FCD57E",
-
-        --  '#008D90',
-        --  '#0093a1',
-        --
-        --  "#3333bb",
-        --  "#174ad4",
-        --  '#0f54d6',
-        --  "#336ecc",
-        --  '#316BCD',
-        --  '#4B83CD',
-        --  "#297bde",
-        --
-        --  '#248700',
-        --  '#00855f',
-        --  '#448C27',
-        --
-        --  "#800000",
-        --  "#7f0000",
-        --  '#660000',
-        --
-        --  '#800080',
-        --  "#662277",
-        --  '#862F95',
-        --  '#7A3E9D',
-        --  '#6B2FBA',
-        --  "#830091",
-        --  "#851691",
-        --
-        --  '#202020',
-        --  "#3d3d3d",
-        --  '#383838',
-        --  '#434343',
-        --  "#414d41",
-        --  '#AAAAAA',
-        --  '#777777',
-        --
-        --  '#7D7840',
-        --
-        --  '#AB6526',
-        --  '#CD9731',
-        --  '#AA3731',
-        --  '#960000',
-        --  '#CD3131',
-        --
-        --  '#DDDDFF',
-        --  '#DDFFDD',
-        --  '#FFDDDD',
-        --  '#FFFFDD']
 }
 
 local function m39k()
@@ -131,10 +85,10 @@ local function m39k()
         vim.o.background = "light"
         vim.g.colors_name = "39light"
 
-        -- UI
+        -- NOTE:  UI  https://neovim.io/doc/user/syntax/#highlight-groups
         hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
         hl("NormalFloat", { bg = colors.bg2 })
-        hl("FloatBorder", { bg = colors.bg0, fg = colors.bg4 })
+        hl("FloatBorder", { bg = colors.bg2, fg = colors.bg4 })
         hl("LineNr", { fg = colors.fg1 })
         hl("EndOfBuffer", { link = "Whitespace" })
         hl("WildMenu", { bg = colors.bg2 })
@@ -165,15 +119,6 @@ local function m39k()
         hl("ModeMsg", { bg = colors.bg0, fg = colors.bg0 })
         hl("Title", { fg = colors.blueD, bold = true })
         hl("Underlined", { underline = true })
-        hl("Added", { fg = colors.green2 })
-
-        hl("QuickFixLine", { fg = colors.blue3 })
-        hl("QuickFixError", { fg = colors.red2 })
-        hl("qfSeparator", { fg = colors.bg4 })
-        hl("qfSeparator1", { link = "qfSeparator" })
-        hl("qfSeparator2", { link = "qfSeparator" })
-        hl("qfLineNr", { link = "Normal" })
-        hl("qfFileName", { link = "Normal" })
 
         --NOTE: LSP DIFF
         hl("DiagnosticError", { fg = colors.red1 })
@@ -185,18 +130,15 @@ local function m39k()
         hl("DiagnosticUnderlineInfo", { undercurl = true, sp = colors.blue5 })
         hl("DiagnosticUnderlineHint", { undercurl = true, sp = colors.green0 })
         --diff
-        hl("DiffChange", { bg = colors.blueA })
-        hl("DiffAdd", { bg = colors.green3, fg = colors.green1 })
-        hl("DiffText", { bg = colors.blueB, fg = colors.red4 })
-        hl("DiffDelete", { bg = colors.bg4, fg = colors.fg2 })
-        hl("diffAdded", { fg = colors.green2 })
-        hl("diffRemoved", { fg = colors.red2 })
-        hl("diffChanged", { fg = colors.brown1 })
-        hl("@diff.plus", { link = "diffAdded" })
-        hl("@diff.minus", { link = "diffRemoved" })
-        hl("@diff.delta", { link = "diffChanged" })
+        hl("DiffAdd", { bg = colors.green3 })
+        hl("DiffDelete", { bg = colors.red5, fg = colors.fg4 })
+        hl("DiffChange", { bg = colors.blueE })
+        hl("DiffText", { bg = colors.blueF, fg = colors.red4 })
+        hl("@diff.plus", { link = "DiffAdd" })
+        hl("@diff.minus", { link = "DiffDelete" })
+        hl("@diff.delta", { link = "DiffChange" })
 
-        -- NOTE: Syntax
+        -- NOTE: Syntax  https://neovim.io/doc/user/syntax/#group-name
         hl("Function", { fg = colors.fg0 })
         hl("Identifier", { fg = colors.fg0 })
         hl("Structure", { fg = colors.fg0 })
@@ -239,7 +181,7 @@ local function m39k()
         hl("@function", { link = "Function" })
         hl("@number", { link = "Number" })
         hl("@boolean", { link = "Boolean" })
-        hl("@variable", { link = "Normal" })
+        hl("@variable", { link = "Function" })
         hl("@constructor", { link = "Function" })
         hl("@module", { link = "Include" })
         hl("@label", { link = "Label" })
@@ -274,12 +216,27 @@ local function m39k()
         hl("@attribute", { fg = colors.red8 })
         hl("@tag.attribute", { fg = colors.purple0 })
 
+        -- NOTE: quickfix
+        hl("QuickFixLine", { fg = colors.blue3 })
+        hl("QuickFixError", { fg = colors.red2 })
+        hl("qfSeparator", { fg = colors.bg4 })
+        hl("qfSeparator1", { link = "qfSeparator" })
+        hl("qfSeparator2", { link = "qfSeparator" })
+        hl("qfLineNr", { link = "Function" })
+        hl("qfFileName", { link = "Function" })
+
         --PLUG:
         hl("GitSignsAdd", { fg = colors.green0 })
         hl("GitSignsChange", { fg = colors.orange })
         hl("GitSignsDelete", { fg = colors.red1 })
+        hl("CodeDiffCharInsert", { bg = colors.green6 })
+        hl("CodeDiffCharDelete", { bg = colors.red6 })
+        hl("CodeDiffFiller", { fg = colors.bg4 })
+        hl("diffAdded", { fg = colors.green2 })
+        hl("diffRemoved", { fg = colors.red2 })
+        hl("diffChanged", { fg = colors.brown1 })
 
-        hl("FlashMatch", { link = "Normal" })
+        hl("FlashMatch", { link = "Function" })
         hl("FlashCurrent", { bg = colors.red1 })
         hl("FlashLabel", { fg = colors.red4, bold = true })
 

@@ -29,8 +29,10 @@ vim.pack.add({
         },
         -- tools
         "https://github.com/folke/flash.nvim",
-        "https://github.com/sindrets/diffview.nvim",
+        "https://github.com/esmuellert/codediff.nvim",
         "https://github.com/nvim-mini/mini.bufremove",
+
+        -- "https://github.com/sindrets/diffview.nvim",
 })
 
 -- PLUG: mini.bufremove

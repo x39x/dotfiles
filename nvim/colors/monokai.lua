@@ -32,18 +32,23 @@ local colors = {
         bg1 = "#000000",
 
         --TODO:
+        gray3 = "#444444",
         gray4 = "#727272",
+        red0 = "#f50000",
+        red1 = "#a1384a",
 
-        green = "#0FBC79",
+        green0 = "#0FBC79",
+        green1 = "#3e872f",
+
         gray8 = "#9DB1C5", -- GIT
         blue5 = "#264F78", -- visual
 
         -- diff
-        diff_x = "#4E201E",
-        diff_t = "#a12237",
-        diff_a = "#39482B",
-        diff_d = "#303030",
-        diff_l = "#494949",
+        diff_add = "#3D452D",
+        diff_del = "#532821",
+        diff_changed = "#25323E",
+        diff_text = "#385570",
+        diff_ = "",
 }
 
 local function m39k()
@@ -57,7 +62,7 @@ local function m39k()
         --NOTE: UI
         hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
         hl("NormalFloat", { fg = colors.fg0, bg = colors.bg2 })
-        hl("FloatBorder", { fg = colors.fg3, bg = colors.bg0 })
+        hl("FloatBorder", { fg = colors.fg3, bg = colors.bg2 })
         hl("CursorLine", { bg = colors.bg2 })
         hl("CursorColumn", { bg = colors.bg2 })
         hl("Cursor", { fg = colors.bg0, bg = colors.fg0 })
@@ -79,9 +84,9 @@ local function m39k()
         hl("Visual", { bg = colors.blue5 })
         hl("VisualNOS", { bg = colors.red })
         hl("Search", { bg = colors.yel, fg = colors.bg1 })
-        hl("CurSearch", { bg = colors.green, fg = colors.bg1 })
+        hl("CurSearch", { bg = colors.green0, fg = colors.bg1 })
         hl("IncSearch", { bg = colors.red, fg = colors.bg1 })
-        hl("MatchParen", { bg = colors.green, fg = colors.bg1 })
+        hl("MatchParen", { bg = colors.green0, fg = colors.bg1 })
         hl("Directory", { fg = colors.pur })
         hl("Folded", { fg = colors.gray4, bg = colors.bg3 })
         hl("FoldColumn", { fg = colors.gray4, bg = colors.bg0 })
@@ -100,14 +105,6 @@ local function m39k()
         hl("Underlined", { underline = true })
         hl("Todo", { fg = colors.fg2, bg = colors.bg3, bold = true })
         hl("Added", { fg = colors.gre })
-
-        hl("QuickFixLine", { fg = colors.blu })
-        hl("QuickFixError", { fg = colors.red })
-        hl("qfSeparator", { fg = colors.fg3 })
-        hl("qfSeparator1", { link = "qfSeparator" })
-        hl("qfSeparator2", { link = "qfSeparator" })
-        hl("qfLineNr", { link = "Normal" })
-        hl("qfFileName", { link = "Normal" })
 
         --NOTE:  LSP Diagnostics Diff
         hl("LspReferenceText", { bg = colors.bg3 })
@@ -140,16 +137,13 @@ local function m39k()
         hl("DiagnosticVirtualTextInfo", { fg = colors.blu, italic = true })
         hl("DiagnosticVirtualTextHint", { fg = colors.pur, italic = true })
         -- diff
-        hl("DiffChange", { bg = colors.diff_x })
-        hl("DiffText", { bg = colors.diff_t, fg = colors.fg0 })
-        hl("DiffAdd", { bg = colors.diff_a })
-        hl("DiffDelete", { bg = colors.diff_d, fg = colors.diff_l })
-        hl("diffAdded", { fg = colors.gre })
-        hl("diffRemoved", { fg = colors.red })
-        hl("diffChanged", { fg = colors.ora })
-        hl("@diff.plus", { link = "diffAdded" })
-        hl("@diff.minus", { link = "diffRemoved" })
-        hl("@diff.delta", { link = "diffChanged" })
+        hl("DiffAdd", { bg = colors.diff_add })
+        hl("DiffDelete", { bg = colors.diff_del, fg = colors.fg1 })
+        hl("DiffChange", { bg = colors.diff_changed })
+        hl("DiffText", { bg = colors.diff_text, fg = colors.red0 })
+        hl("@diff.plus", { link = "DiffAdd" })
+        hl("@diff.minus", { link = "DiffDelete" })
+        hl("@diff.delta", { link = "DiffChange" })
 
         --NOTE: Syntax
         hl("Function", { fg = colors.fg0 })
@@ -227,15 +221,30 @@ local function m39k()
         hl("@comment.documentation", { fg = colors.blu })
         hl("@character.printf", { fg = colors.ora })
 
-        hl("@attribute", { fg = colors.green })
+        hl("@attribute", { fg = colors.green0 })
         hl("@tag.attribute", { fg = colors.blu })
+
+        --NOTE: quickfix
+        hl("QuickFixLine", { fg = colors.blu })
+        hl("QuickFixError", { fg = colors.red })
+        hl("qfSeparator", { fg = colors.fg3 })
+        hl("qfSeparator1", { link = "qfSeparator" })
+        hl("qfSeparator2", { link = "qfSeparator" })
+        hl("qfLineNr", { link = "Function" })
+        hl("qfFileName", { link = "Function" })
 
         --PLUG:
         hl("GitSignsAdd", { fg = colors.gray8 })
         hl("GitSignsChange", { fg = colors.ora })
         hl("GitSignsDelete", { fg = colors.red })
+        hl("diffAdded", { fg = colors.gre })
+        hl("diffRemoved", { fg = colors.red })
+        hl("diffChanged", { fg = colors.ora })
+        hl("CodeDiffCharInsert", { bg = colors.green1 })
+        hl("CodeDiffCharDelete", { bg = colors.red1 })
+        hl("CodeDiffFiller", { fg = colors.gray3 })
 
-        hl("FlashMatch", { link = "Normal" })
+        hl("FlashMatch", { link = "Function" })
         hl("FlashCurrent", { bg = colors.high })
         hl("FlashLabel", { fg = colors.high, bold = true })
 
@@ -247,7 +256,7 @@ local function m39k()
         hl("NvimTreeIndentMarker", { link = "Comment" })
         hl("NvimTreeGitFolderDirtyHL", { fg = colors.red })
         hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
-        hl("NvimTreeGitFileNewHL", { fg = colors.green })
+        hl("NvimTreeGitFileNewHL", { fg = colors.green0 })
         hl("AlphaHeader", { fg = colors.miku })
 
         hl("HeirlineA", { fg = colors.blu })
@@ -257,7 +266,7 @@ local function m39k()
         hl("IndentLineCurrent", { link = "Whitespace" })
 
         hl("DapBreakpointHighlight", { fg = colors.red })
-        hl("DapStoppedHiglight", { fg = colors.green })
+        hl("DapStoppedHiglight", { fg = colors.green0 })
 
         hl("NvimDapVirtualText", { link = "Comment" })
         hl("NvimDapVirtualTextChanged", { fg = colors.red })

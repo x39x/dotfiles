@@ -1,5 +1,4 @@
 {
-    "chat.commandCenter.enabled": false,
     "chat.disableAIFeatures": true,
     "security.workspace.trust.enabled": false,
     "window.commandCenter": false,
@@ -8,6 +7,8 @@
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "workbench.activityBar.location": "top",
     "workbench.editor.enablePreview": false,
+    "workbench.preferredDarkColorTheme": "Dark Modern",
+    "workbench.preferredLightColorTheme": "Light Modern",
     "editor.scrollbar.horizontal": "hidden",
     "editor.scrollbar.vertical": "hidden",
     "editor.minimap.enabled": false,
@@ -60,140 +61,285 @@
     "vim.normalModeKeyBindingsNonRecursive": [
         // nav
         {
-            "before": ["<leader>", "h"],
-            "commands": ["workbench.action.previousEditor"]
+            "before": [
+                "<leader>",
+                "h"
+            ],
+            "commands": [
+                "workbench.action.previousEditor"
+            ]
         },
         {
-            "before": ["<leader>", "l"],
-            "commands": ["workbench.action.nextEditor"]
+            "before": [
+                "<leader>",
+                "l"
+            ],
+            "commands": [
+                "workbench.action.nextEditor"
+            ]
         },
         // edit
         {
-            "before": ["L"],
-            "after": ["$"]
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
         },
         {
-            "before": ["H"],
-            "after": ["^"]
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
         },
         {
-            "before": ["J"],
-            "after": ["j"]
+            "before": [
+                "J"
+            ],
+            "after": [
+                "j"
+            ]
         },
         {
-            "before": ["|"],
-            "after": ["J"]
+            "before": [
+                "|"
+            ],
+            "after": [
+                "J"
+            ]
         },
         {
-            "before": ["%"],
-            "after": ["q"]
+            "before": [
+                "%"
+            ],
+            "after": [
+                "q"
+            ]
         },
         {
-            "before": ["q"],
-            "after": ["%"]
+            "before": [
+                "q"
+            ],
+            "after": [
+                "%"
+            ]
         },
         {
-            "before": ["<leader>", ","],
-            "after": ["*", "N"]
+            "before": [
+                "<leader>",
+                ","
+            ],
+            "after": [
+                "*",
+                "N"
+            ]
         },
         {
-            "before": ["<BackSpace>"],
-            "commands": [":nohl"]
+            "before": [
+                "<BackSpace>"
+            ],
+            "commands": [
+                ":nohl"
+            ]
         },
         //lsp
         {
-            "before": ["g", "d"],
-            "commands": ["editor.action.revealDefinition"]
+            "before": [
+                "g",
+                "d"
+            ],
+            "commands": [
+                "editor.action.revealDefinition"
+            ]
         },
         {
-            "before": ["g", "D"],
-            "commands": ["editor.action.revealDeclaration"]
+            "before": [
+                "g",
+                "D"
+            ],
+            "commands": [
+                "editor.action.revealDeclaration"
+            ]
         },
         {
-            "before": ["g", "r"],
-            "commands": ["editor.action.goToReferences"]
+            "before": [
+                "g",
+                "r"
+            ],
+            "commands": [
+                "editor.action.goToReferences"
+            ]
         },
         {
-            "before": ["g", "l"],
-            "commands": ["editor.action.showHover"]
+            "before": [
+                "g",
+                "l"
+            ],
+            "commands": [
+                "editor.action.showHover"
+            ]
         },
         {
-            "before": ["g", "a"],
-            "commands": ["editor.action.showHover"]
+            "before": [
+                "g",
+                "a"
+            ],
+            "commands": [
+                "editor.action.showHover"
+            ]
         },
         {
-            "before": ["g", "o"],
-            "commands": ["editor.action.goToImplementation"]
+            "before": [
+                "g",
+                "o"
+            ],
+            "commands": [
+                "editor.action.goToImplementation"
+            ]
         },
         {
-            "before": ["g", "n"],
-            "commands": ["editor.action.rename"]
+            "before": [
+                "g",
+                "n"
+            ],
+            "commands": [
+                "editor.action.rename"
+            ]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
-            "before": ["H"],
-            "after": ["^"]
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
         },
         {
-            "before": ["L"],
-            "after": ["$", "h"]
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$",
+                "h"
+            ]
         },
         {
-            "before": ["J"],
-            "after": ["j"]
+            "before": [
+                "J"
+            ],
+            "after": [
+                "j"
+            ]
         },
         {
-            "before": ["|"],
-            "after": ["J"]
+            "before": [
+                "|"
+            ],
+            "after": [
+                "J"
+            ]
         },
         {
-            "before": ["%"],
-            "after": ["q"]
+            "before": [
+                "%"
+            ],
+            "after": [
+                "q"
+            ]
         },
         {
-            "before": ["q"],
-            "after": ["%"]
+            "before": [
+                "q"
+            ],
+            "after": [
+                "%"
+            ]
         },
         {
-            "before": ["<"],
-            "after": ["<", "g", "v"]
+            "before": [
+                "<"
+            ],
+            "after": [
+                "<",
+                "g",
+                "v"
+            ]
         },
         {
-            "before": [">"],
-            "after": [">", "g", "v"]
+            "before": [
+                ">"
+            ],
+            "after": [
+                ">",
+                "g",
+                "v"
+            ]
         }
     ],
     "vim.operatorPendingModeKeyBindingsNonRecursive": [
         {
-            "before": ["L"],
-            "after": ["$"]
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
         },
         {
-            "before": ["H"],
-            "after": ["^"]
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
         },
         {
-            "before": ["J"],
-            "after": ["j"]
+            "before": [
+                "J"
+            ],
+            "after": [
+                "j"
+            ]
         },
         {
-            "before": ["|"],
-            "after": ["J"]
+            "before": [
+                "|"
+            ],
+            "after": [
+                "J"
+            ]
         },
         {
-            "before": ["%"],
-            "after": ["q"]
+            "before": [
+                "%"
+            ],
+            "after": [
+                "q"
+            ]
         },
         {
-            "before": ["q"],
-            "after": ["%"]
+            "before": [
+                "q"
+            ],
+            "after": [
+                "%"
+            ]
         }
     ],
     "vim.insertModeKeyBindings": [
         {
-            "before": ["j", "k"],
-            "after": ["<Esc>"]
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
         }
-    ]
+    ],
 }

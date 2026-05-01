@@ -36,7 +36,6 @@ require("blink.cmp").setup({
                 enabled = true,
                 window = { border = cmp_border, scrollbar = false },
         },
-
         completion = {
                 keyword = { range = "prefix" },
                 menu = {

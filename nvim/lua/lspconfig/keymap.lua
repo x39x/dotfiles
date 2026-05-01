@@ -7,17 +7,18 @@ local lsp_rename = function()
                 end
         end)
 end
+
 -- see :h lsp-defaults
 return function(bufnr)
         local keymap = vim.keymap.set
         local opts = require("utils.keymap_opts")
 
         keymap("n", "gl", function()
-                vim.lsp.buf.hover({ border = "solid" })
+                vim.lsp.buf.hover({ border = "double" })
         end, opts({ buffer = bufnr, desc = "Lsp hover" }))
 
         keymap("n", "ga", function()
-                vim.diagnostic.open_float({ border = "solid" })
+                vim.diagnostic.open_float({ border = "double" })
         end, opts({ buffer = bufnr, desc = "Lsp diagnostic" }))
 
         keymap("n", "gd", require("fzf-lua").lsp_definitions, opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
@@ -30,7 +31,6 @@ return function(bufnr)
         keymap("n", "grr", require("fzf-lua").lsp_references, opts({ buffer = bufnr, desc = "Lsp fzf references" }))
         keymap("n", "gD", vim.lsp.buf.declaration, opts({ buffer = bufnr, desc = "Lsp declaration" }))
         keymap("n", "grn", lsp_rename, opts({ buffer = bufnr, desc = "Lsp rename" }))
-        keymap("n", "gra", vim.lsp.buf.code_action, opts({ buffer = bufnr, desc = "Lsp code action" }))
         keymap(
                 "n",
                 "<leader>ga",
