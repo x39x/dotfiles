@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-entry=$(cliphist list \
-    | grep -v '^[[:space:]]*[0-9]\+[[:space:]]\+\[\[.*\]\][[:space:]]*$' \
-    | tofi --font-size=12)
+entry=$(cliphist list |
+    grep -v '^[[:space:]]*[0-9]\+[[:space:]]\+\[\[.*\]\][[:space:]]*$' |
+    tofi --font-size=12)
 
 if [ -n "$entry" ]; then
     echo "$entry" | cliphist decode | wl-copy
