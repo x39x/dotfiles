@@ -2,18 +2,19 @@ vim.pack.add({
         "https://github.com/goolord/alpha-nvim",
         "https://github.com/nvimdev/indentmini.nvim",
         "https://github.com/rebelot/heirline.nvim",
+        "https://github.com/lewis6991/satellite.nvim",
         "https://github.com/folke/todo-comments.nvim",
         "https://github.com/brenoprata10/nvim-highlight-colors",
+        "https://github.com/lewis6991/gitsigns.nvim",
 })
 
---PLUG: alpha
+-- --PLUG: alpha
 require("alpha").setup({
         layout = {
-                --val a:8
-                { type = "padding", val = 8 },
+                { type = "padding", val = 6 },
                 {
                         type = "text",
-                        val = require("ui.header").b,
+                        val = require("ui.header").a,
                         opts = {
                                 position = "center",
                                 hl = "AlphaHeader",
@@ -48,7 +49,31 @@ require("todo-comments").setup({
         merge_keywords = false,
 })
 
-require("nvim-highlight-colors").setup()
+require("satellite").setup({
+        winblend = 100,
+        excluded_filetypes = {
+                "quickfix",
+        },
+        handlers = {
+                gitsigns = {
+                        enable = false,
+                },
+        },
+})
 
+require("nvim-highlight-colors").setup()
 require("ui.39line")
 require("ui.colorscheme").set()
+
+require("gitsigns").setup({
+        signs = {
+                add = { text = "▎" },
+                change = { text = "▎" },
+        },
+        signs_staged = {
+                add = { text = "┃" },
+                change = { text = "┃" },
+        },
+        signs_staged_enable = true,
+        -- signcolumn = false,
+})

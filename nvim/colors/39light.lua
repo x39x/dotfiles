@@ -40,12 +40,14 @@ local colors = {
         green1 = "#1B7F37",
         green5 = "#397d2c",
         green2 = "#077D18",
+        green7 = "#6DB083",
         green6 = "#8EC39D",
         green3 = "#BEE6BE",
         green4 = "#E9F5E6",
 
         red0 = "#f50000",
         red2 = "#CE0606",
+        red7 = "#DB3B4B",
         red4 = "#de0202",
         red8 = "#D3302F",
         red1 = "#DC2626",
@@ -58,6 +60,7 @@ local colors = {
         blueC = "#174ad4",
         blue3 = "#264eff",
         blue7 = "#174be6",
+        blueG = "#3369D6",
         blue4 = "#1750EB",
         blue5 = "#0A69DA",
         blueB = "#8cb1de",
@@ -116,7 +119,7 @@ local function m39k()
         hl("MsgSeparator", { link = "CursorLine" })
         hl("WarningMsg", { fg = colors.orange })
         hl("ErrorMsg", { fg = colors.red1 })
-        hl("ModeMsg", { bg = colors.bg0, fg = colors.bg0 })
+        hl("ModeMsg", { bg = colors.bg0, fg = colors.fg0 })
         hl("Title", { fg = colors.blueD, bold = true })
         hl("Underlined", { underline = true })
 
@@ -226,15 +229,15 @@ local function m39k()
         hl("qfFileName", { link = "Function" })
 
         --PLUG:
-        hl("GitSignsAdd", { fg = colors.green0 })
-        hl("GitSignsChange", { fg = colors.orange })
-        hl("GitSignsDelete", { fg = colors.red1 })
+        hl("diffAdded", { fg = colors.green7 })
+        hl("diffRemoved", { fg = colors.red2 })
+        hl("diffChanged", { fg = colors.brown1 })
+        hl("GitSignsAdd", { link = "diffAdded" })
+        hl("GitSignsChange", { link = "diffChanged" })
+        hl("GitSignsDelete", { link = "diffRemoved" })
         hl("CodeDiffCharInsert", { bg = colors.green6 })
         hl("CodeDiffCharDelete", { bg = colors.red6 })
         hl("CodeDiffFiller", { fg = colors.bg4 })
-        hl("diffAdded", { fg = colors.green2 })
-        hl("diffRemoved", { fg = colors.red2 })
-        hl("diffChanged", { fg = colors.brown1 })
 
         hl("FlashMatch", { link = "Function" })
         hl("FlashCurrent", { bg = colors.red1 })
@@ -258,11 +261,11 @@ local function m39k()
         hl("IndentLine", { link = "Whitespace" })
         hl("IndentLineCurrent", { link = "Whitespace" })
 
-        hl("DapBreakpointHighlight", { fg = colors.red2 })
-        hl("DapStoppedHiglight", { fg = colors.green0 })
+        hl("DapBreakpointHighlight", { fg = colors.red7 })
+        hl("DapStoppedHiglight", { fg = colors.blueG })
 
         hl("NvimDapVirtualText", { link = "Comment" })
-        hl("NvimDapVirtualTextChanged", { fg = colors.red2 })
+        hl("NvimDapVirtualTextChanged", { fg = colors.red7 })
 
         vim.g.terminal_color_background = colors.bg0
         vim.g.terminal_color_foreground = colors.fg0

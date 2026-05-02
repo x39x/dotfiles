@@ -29,17 +29,27 @@ vim.pack.add({
         },
         -- tools
         "https://github.com/folke/flash.nvim",
-        "https://github.com/esmuellert/codediff.nvim",
         "https://github.com/nvim-mini/mini.bufremove",
+        "https://github.com/Kicamon/markdown-table-mode.nvim",
 
-        -- "https://github.com/sindrets/diffview.nvim",
+        "https://github.com/NeogitOrg/neogit",
+        "https://github.com/esmuellert/codediff.nvim",
+
+        "https://github.com/kawre/leetcode.nvim",
+        "https://github.com/MunifTanjim/nui.nvim",
 })
+
+local keymap = vim.keymap.set
+local keymap_opts = require("utils.keymap_opts")
 
 -- PLUG: mini.bufremove
 require("mini.bufremove").setup()
 
 -- PLUG: nvim-surround
 require("nvim-surround").setup()
+
+-- PLUG: EasyAlign
+keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
 
 -- PLUG: autopairs
 require("nvim-autopairs").setup({
@@ -49,7 +59,34 @@ require("nvim-autopairs").setup({
 require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
 require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
 
---PLUG:  motion
+-- PLUG: yazi
+require("yazi").setup({
+        open_for_directories = true,
+        yazi_floating_window_border = "double",
+        keymaps = {
+                open_file_in_horizontal_split = "<c-s>",
+                grep_in_directory = "<c-x>",
+                replace_in_directory = false,
+                change_working_directory = "<c-g>",
+        },
+        integrations = {
+                grep_in_directory = "fzf-lua",
+                grep_in_selected_files = "fzf-lua",
+        },
+})
+keymap("n", "<leader>n", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
+
+-- PLUG: deffview
+require("codediff").setup({
+        highlights = {
+                line_insert = "DiffAdd",
+                line_delete = "DiffDelete",
+                char_insert = "CodeDiffCharInsert",
+                char_delete = "CodeDiffCharDelete",
+        },
+})
+
+-- PLUG: flash
 require("flash").setup({
         labels = "asdfghjkl;weruiopzxcvnm",
         modes = {
@@ -68,8 +105,6 @@ require("flash").setup({
         },
 })
 
-local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
 keymap({ "n" }, "f", require("flash").jump, keymap_opts({ desc = "Flash jump" }))
 keymap({ "o", "v" }, "f", function()
         local prev_row, _ = unpack(vim.api.nvim_win_get_cursor(0))
@@ -94,10 +129,9 @@ keymap({ "o", "v" }, "f", function()
                 vim.api.nvim_win_set_cursor(0, { row - 1, last_col })
         end
 end, keymap_opts({ desc = "Flash jump" }))
-keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
 
+require("nvim.lua.base.extra")
 require("base.filetree")
 require("base.treesitter")
 require("base.cmp")
 require("base.fzf")
-require("base.extras")
