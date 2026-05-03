@@ -1,6 +1,7 @@
 if status is-interactive
 
         abbr -a v     nvim 
+        abbr -a y     yazi
         abbr -a g     git
         abbr -a gb    git branch
         abbr -a gk    git checkout

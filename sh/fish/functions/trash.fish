@@ -3,6 +3,10 @@ function trash
 
     # mkdir ~/.Trash dir
     if not test -d $TRASH_DIR
+        # macOS don't do this
+        if string match -q "Darwin" (uname -s)
+            return 0
+        end
         mkdir -p $TRASH_DIR
     end
 

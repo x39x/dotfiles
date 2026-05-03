@@ -61,10 +61,6 @@ require("satellite").setup({
         },
 })
 
-require("nvim-highlight-colors").setup()
-require("ui.39line")
-require("ui.colorscheme").set()
-
 require("gitsigns").setup({
         signs = {
                 add = { text = "▎" },
@@ -77,3 +73,8 @@ require("gitsigns").setup({
         signs_staged_enable = true,
         -- signcolumn = false,
 })
+
+require("nvim-highlight-colors").setup()
+
+require("ui.39line")
+require("ui.colorscheme").set()

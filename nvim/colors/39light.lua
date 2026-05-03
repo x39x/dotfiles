@@ -60,7 +60,6 @@ local colors = {
         blueC = "#174ad4",
         blue3 = "#264eff",
         blue7 = "#174be6",
-        blueG = "#3369D6",
         blue4 = "#1750EB",
         blue5 = "#0A69DA",
         blueB = "#8cb1de",
@@ -262,7 +261,7 @@ local function m39k()
         hl("IndentLineCurrent", { link = "Whitespace" })
 
         hl("DapBreakpointHighlight", { fg = colors.red7 })
-        hl("DapStoppedHiglight", { fg = colors.blueG })
+        hl("DapStoppedHiglight", { fg = colors.green0 })
 
         hl("NvimDapVirtualText", { link = "Comment" })
         hl("NvimDapVirtualTextChanged", { fg = colors.red7 })

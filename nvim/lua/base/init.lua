@@ -6,10 +6,8 @@ vim.pack.add({
         "https://github.com/kylechui/nvim-surround",
         "https://github.com/windwp/nvim-autopairs",
         "https://github.com/junegunn/vim-easy-align",
-        -- fzf
+        -- file explor / search
         "https://github.com/ibhagwan/fzf-lua",
-        -- filetree
-        "https://github.com/nvim-tree/nvim-tree.lua",
         "https://github.com/mikavilpas/yazi.nvim",
         -- treesitter
         "https://github.com/romus204/tree-sitter-manager.nvim", -- tree-sitter CLI must be installed system-wide
@@ -130,8 +128,7 @@ keymap({ "o", "v" }, "f", function()
         end
 end, keymap_opts({ desc = "Flash jump" }))
 
-require("nvim.lua.base.extra")
-require("base.filetree")
+require("base.extra")
 require("base.treesitter")
 require("base.cmp")
 require("base.fzf")
