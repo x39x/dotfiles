@@ -1,128 +1,93 @@
 # 参考 squirrel.yaml
 patch:
-    style:
-        color_scheme: macos_light
-        color_scheme_dark: macos_dark
+  style:
+    color_scheme: macos_light
+    color_scheme_dark: macos_dark
 
-        # 预设选项：（可被皮肤覆盖；如果皮肤没写，则默认使用这些属性。）
-        text_orientation: horizontal # horizontal | vertical
-        candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear | tabled
-        inline_preedit: true # 拼音位于： 候选框内 false | 行内 true
-        corner_radius: 10
-        hilited_corner_radius: 0
-        border_height: 0 # 外边框 高
-        border_width: 0 # 外边框 宽
-        line_spacing: 5 # 行间距
-        spacing: 10
-        base_offset: 0
-        color_space: srgb # 色彩空间： srgb | display_p3
-        candidate_format: "%c\u2005%@\u2005" # 编号 %c 和候选词 %@ 前后的空间
-        font_face: "PingFang SC" # 字体及大小
-        comment_font_face: "Songti SC"
-        label_font_face: "SF Mono"
-        font_point: 21
-        label_font_point: 18
-        comment_font_point: 18
+    # 预设选项：（可被皮肤覆盖；如果皮肤没写，则默认使用这些属性。）
+    text_orientation: horizontal # horizontal | vertical
+    candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear | tabled
+    inline_preedit: true # 拼音位于： 候选框内 false | 行内 true
+    corner_radius: 10
+    hilited_corner_radius: 0
+    border_height: 0 # 外边框 高
+    border_width: 0 # 外边框 宽
+    line_spacing: 5 # 行间距
+    spacing: 10
+    base_offset: 0
+    color_space: srgb # 色彩空间： srgb | display_p3
+    candidate_format: "%c\u2005%@\u2005\u2005" # 编号 %c 和候选词 %@ 前后的空间
+    font_face: "PingFang SC" # 字体及大小
+    comment_font_face: "Songti SC"
+    label_font_face: "SF Mono"
+    font_point: 21
+    label_font_point: 18
+    comment_font_point: 18
 
-    # 皮肤列表
-    preset_color_schemes:
-        macos_light:
-            name: "MacOS Light"
-            candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear | tabled
-            font_point: 16
-            label_font_point: 12
-            comment_font_point: 16
-            translucency: false # 磨砂： false | true
-            mutual_exclusive: false # 色不叠加： false | true
-            corner_radius: 5 # 外边框 圆角半径
-            hilited_corner_radius: 5 # 选中框 圆角半径
-            surrounding_extra_expansion: 0 # 候选项背景相对大小？
-            shadow_size: 0 # 阴影大小
-            base_offset: 0 # 字基高
-            alpha: 1 # 透明度，0~1
-            back_color: 0xFFFFFF # 底色
-            hilited_candidate_back_color: 0xD75A00 # 选中底色
-            label_color: 0x999999 # 序号颜色
-            hilited_candidate_label_color: 0xFFFFFF # 选中序号颜色
-            candidate_text_color: 0x3c3c3c # 文字颜色
-            hilited_candidate_text_color: 0xFFFFFF # 选中文字颜色
-            comment_text_color: 0x999999 # 注颜色
-            hilited_comment_text_color: 0xFFFFFF # 选中注颜色
-            candidate_back_color: 0xFFFFFF # 候选项底色
-            border_color: 0xFFFFFF # 外边框颜色
-
-        macos_dark:
-            name: "MacOS Dark"
-            candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear | tabled
-            font_point: 16
-            label_font_point: 12
-            comment_font_point: 16
-            candidate_format: "%c\u2005%@\u2005" # 编号 %c 和候选词 %@ 前后的空间
-            translucency: false # 磨砂： false | true
-            mutual_exclusive: false # 色不叠加： false | true
-            corner_radius: 5 # 外边框 圆角半径
-            hilited_corner_radius: 5 # 选中框 圆角半径
-            surrounding_extra_expansion: 0 # 候选项背景相对大小？
-            shadow_size: 0 # 阴影大小
-            base_offset: 0 # 字基高
-            alpha: 1 # 透明度，0~1
-            back_color: 0x414142 # 底色
-            hilited_candidate_back_color: 0xCF5902 # 选中底色
-            label_color: 0x999999 # 序号颜色
-            hilited_candidate_label_color: 0xFFFFFF # 选中序号颜色
-            candidate_text_color: 0xe9e9ea # 文字颜色
-            hilited_candidate_text_color: 0xFFFFFF # 选中文字颜色
-            comment_text_color: 0x999999 # 注颜色
-            hilited_comment_text_color: 0x999999 # 选中注颜色
-            candidate_back_color: 0x414142 # 候选项底色
-            border_color: 0x050505 # 外边框颜色
-
-        wechat_light:
-            name: "Wechat Light"
-            font_point: 16
-            label_font_point: 13
-            comment_font_point: 16
-            candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear | tabled
-            translucency: false # 磨砂： false | true
-            mutual_exclusive: false # 色不叠加： false | true
-            corner_radius: 5 # 外边框 圆角半径
-            hilited_corner_radius: 5 # 选中框 圆角半径
-            surrounding_extra_expansion: 0 # 候选项背景相对大小？
-            shadow_size: 0 # 阴影大小
-            base_offset: 0 # 字基高
-            alpha: 1 # 透明度，0~1
-            back_color: 0xFFFFFF # 底色
-            hilited_candidate_back_color: 0x79af22 # 选中底色
-            label_color: 0x999999 # 序号颜色
-            hilited_candidate_label_color: 0xFFFFFF # 选中序号颜色
-            candidate_text_color: 0x3c3c3c # 文字颜色
-            hilited_candidate_text_color: 0xFFFFFF # 选中文字颜色
-            comment_text_color: 0x999999 # 注颜色
-            hilited_comment_text_color: 0x999999 # 选中注颜色
-            candidate_back_color: 0xFFFFFF # 候选项底色
-            border_color: 0xFFFFFF # 外边框颜色
-
-        wechat_dark:
-            name: "Wechat Dark"
-            font_point: 16
-            label_font_point: 13
-            comment_font_point: 16
-            candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear
-            translucency: false # 磨砂： false | true
-            mutual_exclusive: false # 色不叠加： false | true
-            corner_radius: 5 # 外边框 圆角半径
-            hilited_corner_radius: 5 # 选中框 圆角半径
-            surrounding_extra_expansion: 0 # 候选项背景相对大小？
-            shadow_size: 0 # 阴影大小
-            base_offset: 0 # 字基高
-            alpha: 1 # 透明度，0~1
-            back_color: 0x414142 # 底色
-            hilited_candidate_back_color: 0x79af22 # 选中底色
-            label_color: 0x999999 # 序号颜色
-            hilited_candidate_label_color: 0xFFFFFF # 选中序号颜色
-            candidate_text_color: 0xbbbbbb # 文字颜色
-            hilited_candidate_text_color: 0xFFFFFF # 选中文字颜色
-            comment_text_color: 0x999999 # 注颜色
-            hilited_comment_text_color: 0xFFFFFF # 选中注颜色
-            candidate_back_color: 0x414142 # 候选项底色
-            border_color: 0x292929 # 外边框颜色
+  # 皮肤列表
+  preset_color_schemes:
+    macos_light:
+      name: "扁平明／Flat Light"
+      font_face: "PingFangSC" # 字体及大小
+      font_point: 15
+      label_font_face: "PingFangSC" # 序号字体及大小
+      label_font_point: 10
+      comment_font_face: "PingFangSC" # 注字体及大小
+      comment_font_point: 15
+      candidate_format: "%c\u2005%@\u2005\u2005" # 编号 %c 和候选词 %@ 前后的空间
+      candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear
+      text_orientation: horizontal # 行文向： 横 horizontal | 纵 vertical
+      translucency: true
+      mutual_exclusive: true
+      corner_radius: 15.0
+      hilited_corner_radius: 13.0
+      border_height: -5.0
+      border_width: -5.0
+      line_spacing: 4.0
+      alpha: 1
+      shadow_size: 1.0
+      color_space: display_p3
+      back_color: 0x00FFFFFF
+      candidate_text_color: 0xB3000000
+      comment_text_color: 0x80333333
+      label_color: 0xBB333333
+      hilited_candidate_back_color: 0xDDFFFFFF
+      hilited_candidate_text_color: 0x000000
+      hilited_comment_text_color: 0xBF333333
+      hilited_candidate_label_color: 0x000000
+      # preedit_back_color: 0x1A000000
+      text_color: 0xBF323232
+      hilited_text_color: 0xBF1A1A1A
+    macos_dark:
+      name: "扁平暗／Flat Dark"
+      font_face: "PingFangSC" # 字体及大小
+      font_point: 15
+      label_font_face: "PingFangSC" # 序号字体及大小
+      label_font_point: 10
+      comment_font_face: "PingFangSC" # 注字体及大小
+      comment_font_point: 15
+      candidate_format: "%c\u2005%@\u2005\u2005" # 编号 %c 和候选词 %@ 前后的空间
+      candidate_list_layout: linear # 候选排布：层叠 stacked | 行 linear
+      text_orientation: horizontal # 行文向： 横 horizontal | 纵 vertical
+      translucency: true
+      mutual_exclusive: false
+      corner_radius: 15.0
+      hilited_corner_radius: 13.0
+      border_height: -5.0
+      border_width: -5.0
+      line_spacing: 4.0
+      alpha: 100
+      shadow_size: 1.0
+      color_space: display_p3
+      # --- 以下为暗色模式调整 ---
+      back_color: 0x00000000 # 半透明深灰色背景
+      candidate_text_color: 0xE6FFFFFF # 浅色候选文字
+      comment_text_color: 0x80BBBBBB # 浅灰色注释文字
+      label_color: 0xBBBBBBBB # 浅灰色序号
+      hilited_candidate_back_color: 0xDDD75A00 # 略深的半透明高亮背景
+      hilited_candidate_text_color: 0xFFFFFF # 白色高亮候选文字
+      hilited_comment_text_color: 0xBFBBBBBB # 浅灰色高亮注释文字
+      hilited_candidate_label_color: 0xFFFFFF # 白色高亮序号
+      # preedit_back_color: 0x1A000000            # 半透明深色预编辑背景
+      text_color: 0xBFCCCCCC # 浅灰色预编辑文字
+      hilited_text_color: 0xBF999999 # 略深的高亮预编辑文字

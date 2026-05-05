@@ -15,12 +15,11 @@ vim.pack.add({
                 src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
                 version = "main",
         },
-
         "https://github.com/kevinhwang91/promise-async",
         "https://github.com/kevinhwang91/nvim-ufo",
         -- blink.cmp
         "https://github.com/rafamadriz/friendly-snippets",
-        "https://github.com/L3MON4D3/LuaSnip", -- build = "make install_jsregexp",
+
         {
                 src = "https://github.com/Saghen/blink.cmp",
                 version = vim.version.range("1.*"),

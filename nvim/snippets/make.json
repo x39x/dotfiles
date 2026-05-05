@@ -16,12 +16,7 @@
             "clean:",
             "\t@rm -f $(TARGET)"
         ],
-        "description": "basic Makefile",
-        "luasnip": {
-            "priority": 2000,
-            "autotrigger": true,
-            "wordTrig": false
-        }
+        "description": "basic Makefile"
     },
     "make_cc": {
         "prefix": "mkx",
@@ -35,11 +30,7 @@
             "\t@./$@",
             "\t@rm $@"
         ],
-        "description": "oi Makefile",
-        "luasnip": {
-            "priority": 2000,
-            "wordTrig": false
-        }
+        "description": "oi Makefile"
     },
     "cc": {
         "prefix": "cc",
@@ -51,11 +42,6 @@
             "\t@./main",
             "\t@rm main"
         ],
-        "description": "Makefile by name",
-        "luasnip": {
-            "priority": 2000,
-            "wordTrig": false,
-            "autotrigger": true
-        }
+        "description": "Makefile by name"
     }
 }

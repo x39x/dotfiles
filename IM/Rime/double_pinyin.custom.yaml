@@ -1,11 +1,11 @@
 patch:
-    # 双拼不展开
-    translator/preedit_format: []
-    # reset 0/1 表示 state 里的第一项或第二项
-    switches:
-        - name: traditionalization
-          states: [简, 繁]
-          reset: 0
-        - name: emoji
-          states: [💀, 😄]
-          reset: 1
+  # 双拼不展开
+  translator/preedit_format: []
+  # reset 0/1 表示 state 里的第一项或第二项
+  switches:
+    - name: traditionalization
+      states: [简, 繁]
+      reset: 0
+    - name: emoji
+      states: [💀, 😄]
+      reset: 1

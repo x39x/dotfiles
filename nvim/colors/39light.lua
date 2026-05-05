@@ -238,9 +238,9 @@ local function m39k()
         hl("CodeDiffCharDelete", { bg = colors.red6 })
         hl("CodeDiffFiller", { fg = colors.bg4 })
 
-        hl("FlashMatch", { link = "Function" })
-        hl("FlashCurrent", { bg = colors.red1 })
         hl("FlashLabel", { fg = colors.red4, bold = true })
+        hl("FlashCurrent", { link = "Function" })
+        hl("FlashMatch", { link = "Function" })
 
         hl("BlinkCmpKind", { fg = colors.purple0 })
 

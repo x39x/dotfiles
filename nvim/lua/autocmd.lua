@@ -1,6 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.keymap.set
 local Default = vim.api.nvim_create_augroup("Default", { clear = true })
+local autosnip = require("utils.autosnip")
 
 autocmd("FileType", {
         pattern = "*",
@@ -17,11 +18,12 @@ autocmd("BufWritePre", {
                 "*.c",
                 "*.h",
                 "*.cc",
-                "*.go",
                 "*.hh",
+                "*.cpp",
+
+                "*.go",
                 "*.py",
                 "*.rs",
-                "*.cpp",
                 "*.lua",
 
                 "*.js",
@@ -29,6 +31,7 @@ autocmd("BufWritePre", {
                 "*.ts",
                 "*.tsx",
                 "*.mjs",
+                "*.mts",
                 "*.vue",
                 "*.svelte",
 
@@ -68,16 +71,19 @@ autocmd("InsertLeave", {
 })
 
 autocmd("FileType", {
-        pattern = { "markdown", "typst" },
+        pattern = { "markdown" },
         callback = function(args)
                 local winid = vim.api.nvim_get_current_win()
                 local bufnr = args.buf
                 vim.bo[bufnr].textwidth = 120
                 vim.wo[winid][0].wrap = true
-                keymap({ "x", "n" }, "j", "gj", { silent = true, buffer = true })
-                keymap({ "x", "n" }, "k", "gk", { silent = true, buffer = true })
-                keymap("", "H", "g^", { silent = true, buffer = true })
-                keymap("", "L", "g$", { silent = true, buffer = true })
+                keymap({ "x", "n" }, "j", "gj", { silent = true, buf = args.buf })
+                keymap({ "x", "n" }, "k", "gk", { silent = true, buf = args.buf })
+                keymap("", "H", "g^", { silent = true, buf = args.buf })
+                keymap("", "L", "g$", { silent = true, buf = args.buf })
+
+                autosnip.add(";1", "```\n```", "<Esc>k0A", { buf = args.buf })
+                autosnip.add(";2", "``", "<Esc>i", { buf = args.buf })
         end,
         group = vim.api.nvim_create_augroup("TEXT", { clear = true }),
         desc = "Text autocmd",
@@ -86,12 +92,21 @@ autocmd("FileType", {
 autocmd("FileType", {
         pattern = { "lua", "c", "cpp" },
         callback = function(args)
-                local _ = args.buf
-                vim.bo[0].shiftwidth = 8
+                vim.bo[args.buf].shiftwidth = 8
         end,
         group = vim.api.nvim_create_augroup("LUA", { clear = true }),
 
         desc = "Lua autocmd",
+})
+
+autocmd("FileType", {
+        pattern = { "go" },
+        callback = function(args)
+                local template = "if err != nil {\n" .. "return err\n}"
+                autosnip.add("iff", template, "<Esc>k0teltel", { buf = args.buf })
+        end,
+        group = vim.api.nvim_create_augroup("GOLANG", { clear = true }),
+        desc = "go autocmd",
 })
 
 autocmd("FileType", {
@@ -103,19 +118,6 @@ autocmd("FileType", {
         desc = "Do't show qf in bufline",
 })
 
-autocmd("PackChanged", {
-        callback = function(ev)
-                local name, kind = ev.data.spec.name, ev.data.kind
-
-                if name == "luasnip" and (kind == "install" or kind == "update") then
-                        vim.system({ "make install_jsregexp" }, { cwd = ev.data.path }):wait()
-                end
-        end,
-        group = vim.api.nvim_create_augroup("PACK", { clear = true }),
-        desc = "pack make",
-})
-
--- Disable cursorline in diff windows
 autocmd("User", {
         pattern = "CodeDiffOpen",
         callback = function()
@@ -126,13 +128,25 @@ autocmd("User", {
         desc = "Disable cursorline in diff windows",
 })
 
+-- NOTE: https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --         callback = function()
---                 -- NOTE: https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 --                 for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
 --                         vim.api.nvim_set_hl(0, group, {})
 --                 end
 --         end,
 --         group = Default,
 --         desc = "Disable LSP semantic token highlighting",
+-- })
+
+-- autocmd("PackChanged", {
+--         callback = function(ev)
+--                 local name, kind = ev.data.spec.name, ev.data.kind
+--
+--                 if name == "luasnip" and (kind == "install" or kind == "update") then
+--                         vim.system({ "make install_jsregexp" }, { cwd = ev.data.path }):wait()
+--                 end
+--         end,
+--         group = vim.api.nvim_create_augroup("PACK", { clear = true }),
+--         desc = "pack make",
 -- })

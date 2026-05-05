@@ -1,20 +1,6 @@
 {
-    "title1": {
-        "prefix": [";1", "\uff1b1"],
-        "body": ["```$1", "```"],
-        "luasnip": {
-            "priority": 2000,
-            "autotrigger": true,
-            "wordTrig": false
-        }
-    },
-    "title2": {
-        "prefix": [";2", "\uff1b2"],
-        "body": ["`$1`"],
-        "luasnip": {
-            "priority": 2000,
-            "autotrigger": true,
-            "wordTrig": false
-        }
+    "code": {
+        "prefix": ["::1", "\uff1b\uff1b\uff1b1"],
+        "body": ["```$1", "```"]
     }
 }

@@ -5,6 +5,7 @@ end
 local colors = {
         --UI
         miku = "#ACB5DE",
+        high = "#32fa6d",
 
         red0 = "#f50000",
         red3 = "#cd3131",
@@ -142,7 +143,7 @@ local function m39k()
         hl("DiffAdd", { bg = colors.diff_a })
         hl("DiffDelete", { bg = colors.diff_d, fg = colors.gray3 })
         hl("DiffChange", { bg = colors.diff_c })
-        hl("DiffText", { bg = colors.diff_t, fg = colors.red0 })
+        hl("DiffText", { bg = colors.diff_t, fg = colors.high })
         hl("@diff.plus", { link = "DiffAdd" })
         hl("@diff.minus", { link = "DiffDelete" })
         hl("@diff.delta", { link = "DiffChange" })
@@ -245,9 +246,9 @@ local function m39k()
         hl("CodeDiffCharDelete", { bg = colors.red5 })
         hl("CodeDiffFiller", { fg = colors.gray3 })
 
+        hl("FlashLabel", { fg = colors.high, bold = true })
+        hl("FlashCurrent", { link = "Function" })
         hl("FlashMatch", { link = "Function" })
-        hl("FlashCurrent", { bg = colors.red3 })
-        hl("FlashLabel", { fg = colors.red3, bold = true })
 
         hl("BlinkCmpKind", { fg = colors.pur0 })
 
