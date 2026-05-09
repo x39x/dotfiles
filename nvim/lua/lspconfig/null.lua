@@ -9,70 +9,65 @@ local u = require("null-ls.utils")
 local FORMATTING = methods.internal.FORMATTING
 
 local oxfmt = h.make_builtin({
-        name = "oxfmt",
-        method = FORMATTING,
-        filetypes = {
-                "javascript",
-                "javascriptreact",
-                "typescript",
-                "typescriptreact",
+	name = "oxfmt",
+	method = FORMATTING,
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
 
-                "vue",
-                "svelte",
-                "astro",
+		"vue",
+		"svelte",
+		"astro",
 
-                "html",
-                "css",
-                "scss",
-                "less",
+		"html",
+		"css",
+		"scss",
+		"less",
 
-                "markdown",
-                "yaml",
-                "toml",
-                "json",
-                "jsonc",
-                "json5",
-        },
-        factory = h.formatter_factory,
-        generator_opts = {
-                command = "oxfmt",
-                args = { "$FILENAME" },
-                to_temp_file = true,
-                from_temp_file = true,
-                timeout = 10000,
-                cwd = h.cache.by_bufnr(function(params)
-                        return u.root_pattern(".oxfmtrc.json")(params.bufname)
-                end),
-        },
+		"markdown",
+		"yaml",
+		"toml",
+		"json",
+		"jsonc",
+		"json5",
+	},
+	factory = h.formatter_factory,
+	generator_opts = {
+		command = "oxfmt",
+		args = { "$FILENAME" },
+		to_temp_file = true,
+		from_temp_file = true,
+		timeout = 10000,
+		cwd = h.cache.by_bufnr(function(params)
+			return u.root_pattern(".oxfmtrc.json")(params.bufname)
+		end),
+	},
 })
 
 null_ls.setup({
-        debug = false,
-        sources = {
+	debug = false,
+	sources = {
 
-                diagnostics.codespell.with({
-                        extra_args = { "-L", "RIME,Rime,rime" },
-                }),
-                formatting.stylua.with({
-                        extra_args = {
-                                "--indent-width",
-                                "8",
-                                "--indent-type",
-                                "Spaces",
-                        },
-                }),
-                formatting.shfmt.with({
-                        extra_filetypes = { "bash", "zsh" },
-                        extra_args = {
-                                "--indent",
-                                "4",
-                        },
-                }),
-                oxfmt,
-        },
-        on_attach = function(_, bufnr)
-                vim.api.nvim_buf_create_user_command(bufnr, "F", function()
-                        vim.lsp.buf.format({ async = true })
-                end, {})
-        end,
+		diagnostics.codespell.with({
+			extra_args = { "-L", "RIME,Rime,rime" },
+		}),
+
+		formatting.shfmt.with({
+			extra_filetypes = { "bash", "zsh" },
+			extra_args = {
+				"--indent",
+				"4",
+			},
+		}),
+
+		oxfmt,
+	},
+
+	on_attach = function(_, bufnr)
+		vim.api.nvim_buf_create_user_command(bufnr, "F", function()
+			vim.lsp.buf.format({ async = true })
+		end, {})
+	end,
 })

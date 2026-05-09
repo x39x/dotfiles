@@ -13,11 +13,10 @@ keymap("", "H", "^", keymap_opts())
 
 -- swap some key
 keymap("", "q", "%", keymap_opts())
-vim.api.nvim_create_autocmd("FileType", {
-        pattern = "*",
-        callback = function()
-                keymap("", "%", "q", { noremap = true })
-        end,
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		keymap("", "%", "q", keymap_opts())
+	end,
 })
 keymap("", "J", "}", keymap_opts())
 keymap("", "K", "{", keymap_opts())
@@ -57,32 +56,23 @@ keymap("c", "<C-a>", "<Home>")
 
 -- save file
 keymap("", "<M-s>", function()
-        vim.cmd("stopinsert")
-        vim.cmd("w")
+	vim.cmd("stopinsert")
+	vim.cmd("w")
 end, keymap_opts({ desc = "save file" }))
 
 -- add new line in normal mode
 keymap("n", "<leader>s", function()
-        local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
-        vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
+	local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
+	vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
 end, keymap_opts({ desc = "add new line below" }))
 
 -- highlight current word
 keymap("n", "<leader>,", function()
-        --":let @/ = expand('<cword>') | set hlsearch<cr>"
-        vim.fn.setreg("/", vim.fn.expand("<cword>"))
-        vim.opt.hlsearch = true
+	--":let @/ = expand('<cword>') | set hlsearch<cr>"
+	vim.fn.setreg("/", vim.fn.expand("<cword>"))
+	vim.opt.hlsearch = true
 end, keymap_opts({ desc = "highlight cword" }))
 keymap("n", "<BackSpace>", "<cmd>nohl<CR>", keymap_opts({ desc = "nohl" }))
-
--- run code
-local runner = require("utils.runner")
-keymap("n", "<leader>rw", runner.run_in_tmux_window, keymap_opts({ desc = "Send cmd to tmux window" }))
-keymap("n", "<leader>-", runner.run_in_tmux_pane, keymap_opts({ desc = "Send cmd to tmux pane" }))
-keymap("n", "<leader>ra", runner.add_and_run, keymap_opts({ desc = "add cmd and run" }))
-keymap("n", "<leader>rs", runner.select_and_run, keymap_opts({ desc = "select cmd and run" }))
-keymap("n", "<leader>rc", runner.clear_project_cmds, keymap_opts({ desc = "clear current cmd" }))
-keymap("n", "<leader>rA", runner.clear_all_cmds, keymap_opts({ desc = "clear all cmd" }))
 
 --NOTE: user command
 local cmd = vim.api.nvim_create_user_command
@@ -90,11 +80,11 @@ local cmd = vim.api.nvim_create_user_command
 cmd("FormatJSON", "%!python3 -m json.tool", {})
 
 cmd("Bpwd", function()
-        print(vim.fn.expand("%:p"))
+	print(vim.fn.expand("%:p"))
 end, {})
 
 cmd("CBpwd", function()
-        local dir = vim.fn.expand("%:p:h")
-        vim.api.nvim_set_current_dir(dir)
-        print("change dir to " .. dir)
+	local dir = vim.fn.expand("%:p:h")
+	vim.api.nvim_set_current_dir(dir)
+	print("change dir to " .. dir)
 end, {})

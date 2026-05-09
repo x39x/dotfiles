@@ -1,6 +1,6 @@
 {
     "root_dir_cmake": {
-        "prefix": "iff",
+        "prefix": "iferr",
         "body": ["if err != nil {", "\t$1", "}"],
         "description": "go err"
     }

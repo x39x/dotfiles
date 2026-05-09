@@ -12,11 +12,11 @@ vim.g.maplocalleader = "\\"
 vim.g.rust_recommended_style = 0
 
 vim.filetype.add({
-        pattern = {
-                [".*.typ"] = "typst",
-                [".*.mdx"] = "markdown",
-                [".*profile"] = "bash",
-        },
+	pattern = {
+		[".*.typ"] = "typst",
+		[".*.mdx"] = "markdown",
+		[".*profile"] = "bash",
+	},
 })
 
 --NOTE: options
@@ -41,7 +41,7 @@ o.showtabline = 2 -- tabline,0:no
 o.laststatus = 3 --  global statusline
 o.signcolumn = "yes" -- sign column
 o.list = true
-o.listchars = "tab:  ,extends:⟩,precedes:⟨,trail:·" --("eol:↴,tab:»·,trail:·")
+o.listchars = "tab:  ,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
 o.fillchars = "eob: " -- hide  "~"
 --set fold
 o.foldenable = true
@@ -52,7 +52,7 @@ o.foldlevelstart = 99
 o.expandtab = true -- tab->spaces
 o.shiftwidth = 4
 o.tabstop = 8
-o.cursorline = false
+o.cursorline = true
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
 o.exrc = true -- exrc config

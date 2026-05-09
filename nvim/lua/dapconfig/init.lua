@@ -15,19 +15,19 @@
 -- ===========================================================
 
 vim.pack.add({
-        "https://github.com/mfussenegger/nvim-dap",
-        { src = "https://github.com/igorlfs/nvim-dap-view", version = "main" },
+	"https://github.com/mfussenegger/nvim-dap",
+	{ src = "https://github.com/igorlfs/nvim-dap-view", version = "main" },
 })
 
 -- sign
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
 vim.fn.sign_define(
-        "DapBreakpointCondition",
-        { text = "󰍷", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
+	"DapBreakpointCondition",
+	{ text = "󰍷", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
 )
 vim.fn.sign_define(
-        "DapBreakpointRejected",
-        { text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
+	"DapBreakpointRejected",
+	{ text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
 )
 vim.fn.sign_define("DapLogPoint", { text = "󰰎", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "", texthl = "DapStoppedHiglight", linehl = "", numhl = "" })
@@ -40,33 +40,33 @@ require("dap").defaults.fallback.switchbuf = "usevisible,usetab,uselast"
 local resolved_path = vim.fn.getcwd() .. "/.dap/launch.json"
 local dap = require("dap")
 dap.providers.configs["dap39"] = function()
-        local ok, configs = pcall(require("dap.ext.vscode").getconfigs, resolved_path)
-        if not ok then
-                local msg = "Can't get configurations from .dap/launch.json:\n%s" .. configs
-                vim.notify_once(msg, vim.log.levels.WARN, { title = "DAP" })
-                return {}
-        end
-        return configs
+	local ok, configs = pcall(require("dap.ext.vscode").getconfigs, resolved_path)
+	if not ok then
+		local msg = "Can't get configurations from .dap/launch.json:\n%s" .. configs
+		vim.notify_once(msg, vim.log.levels.WARN, { title = "DAP" })
+		return {}
+	end
+	return configs
 end
 
 require("dap-view").setup({
-        virtual_text = {
-                enabled = true,
-                position = "eol",
+	virtual_text = {
+		enabled = true,
+		position = "eol",
 
-                prefix = function(position, node, bufnr)
-                        if position == "eol" or position == "eol_right_align" then
-                                local name = vim.treesitter.get_node_text(node, bufnr)
+		prefix = function(position, node, bufnr)
+			if position == "eol" or position == "eol_right_align" then
+				local name = vim.treesitter.get_node_text(node, bufnr)
 
-                                return "[[" .. name .. " ="
-                        end
-                end,
-                suffix = function(position, _, _, _, _)
-                        if position == "eol" or position == "eol_right_align" then
-                                return "]]"
-                        end
-                end,
-        },
+				return "[[" .. name .. " ="
+			end
+		end,
+		suffix = function(position, _, _, _, _)
+			if position == "eol" or position == "eol_right_align" then
+				return "]]"
+			end
+		end,
+	},
 })
 
 -- keymap

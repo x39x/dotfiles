@@ -1,87 +1,87 @@
 local function root_markers_with_field(root_files, new_names, field, fname)
-        local path = vim.fn.fnamemodify(fname, ":h")
-        local found = vim.fs.find(new_names, { path = path, upward = true })
+	local path = vim.fn.fnamemodify(fname, ":h")
+	local found = vim.fs.find(new_names, { path = path, upward = true })
 
-        for _, f in ipairs(found or {}) do
-                for line in io.lines(f) do
-                        if line:find(field) then
-                                root_files[#root_files + 1] = vim.fs.basename(f)
-                                break
-                        end
-                end
-        end
+	for _, f in ipairs(found or {}) do
+		for line in io.lines(f) do
+			if line:find(field) then
+				root_files[#root_files + 1] = vim.fs.basename(f)
+				break
+			end
+		end
+	end
 
-        return root_files
+	return root_files
 end
 
 local function insert_package_json(root_files, field, fname)
-        return root_markers_with_field(root_files, { "package.json", "package.json5" }, field, fname)
+	return root_markers_with_field(root_files, { "package.json", "package.json5" }, field, fname)
 end
 
 return {
-        cmd = { "tailwindcss-language-server", "--stdio" },
-        filetypes = {
-                "html",
-                "css",
-                "javascript",
-                "javascriptreact",
-                "typescript",
-                "typescriptreact",
-                "vue",
-                "svelte",
-        },
-        settings = {
-                tailwindCSS = {
-                        validate = true,
-                        lint = {
-                                cssConflict = "warning",
-                                invalidApply = "error",
-                                invalidScreen = "error",
-                                invalidVariant = "error",
-                                invalidConfigPath = "error",
-                                invalidTailwindDirective = "error",
-                                recommendedVariantOrder = "warning",
-                        },
-                        classAttributes = {
-                                "class",
-                                "className",
-                                "class:list",
-                                "classList",
-                                "ngClass",
-                        },
-                        includeLanguages = {
-                                eelixir = "html-eex",
-                                elixir = "phoenix-heex",
-                                eruby = "erb",
-                                heex = "phoenix-heex",
-                                htmlangular = "html",
-                                templ = "html",
-                        },
-                },
-        },
-        before_init = function(_, config)
-                if not config.settings then
-                        config.settings = {}
-                end
-                if not config.settings.editor then
-                        config.settings.editor = {}
-                end
-                if not config.settings.editor.tabSize then
-                        config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
-                end
-        end,
-        workspace_required = true,
-        root_dir = function(bufnr, on_dir)
-                local root_files = {
-                        "tailwind.config.mjs",
-                        "tailwind.config.ts",
-                        "postcss.config.mjs",
-                        "postcss.config.ts",
-                        ".git",
-                }
-                local fname = vim.api.nvim_buf_get_name(bufnr)
-                root_files = insert_package_json(root_files, "tailwindcss", fname)
-                root_files = root_markers_with_field(root_files, { "mix.lock", "Gemfile.lock" }, "tailwind", fname)
-                on_dir(vim.fs.dirname(vim.fs.find(root_files, { path = fname, upward = true })[1]))
-        end,
+	cmd = { "tailwindcss-language-server", "--stdio" },
+	filetypes = {
+		"html",
+		"css",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"svelte",
+	},
+	settings = {
+		tailwindCSS = {
+			validate = true,
+			lint = {
+				cssConflict = "warning",
+				invalidApply = "error",
+				invalidScreen = "error",
+				invalidVariant = "error",
+				invalidConfigPath = "error",
+				invalidTailwindDirective = "error",
+				recommendedVariantOrder = "warning",
+			},
+			classAttributes = {
+				"class",
+				"className",
+				"class:list",
+				"classList",
+				"ngClass",
+			},
+			includeLanguages = {
+				eelixir = "html-eex",
+				elixir = "phoenix-heex",
+				eruby = "erb",
+				heex = "phoenix-heex",
+				htmlangular = "html",
+				templ = "html",
+			},
+		},
+	},
+	before_init = function(_, config)
+		if not config.settings then
+			config.settings = {}
+		end
+		if not config.settings.editor then
+			config.settings.editor = {}
+		end
+		if not config.settings.editor.tabSize then
+			config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
+		end
+	end,
+	workspace_required = true,
+	root_dir = function(bufnr, on_dir)
+		local root_files = {
+			"tailwind.config.mjs",
+			"tailwind.config.ts",
+			"postcss.config.mjs",
+			"postcss.config.ts",
+			".git",
+		}
+		local fname = vim.api.nvim_buf_get_name(bufnr)
+		root_files = insert_package_json(root_files, "tailwindcss", fname)
+		root_files = root_markers_with_field(root_files, { "mix.lock", "Gemfile.lock" }, "tailwind", fname)
+		on_dir(vim.fs.dirname(vim.fs.find(root_files, { path = fname, upward = true })[1]))
+	end,
 }

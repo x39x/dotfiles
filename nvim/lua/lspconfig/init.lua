@@ -39,17 +39,17 @@
 -- ===========================================================
 
 vim.pack.add({
-        "https://github.com/williamboman/mason.nvim",
-        "https://github.com/nvimtools/none-ls.nvim",
+	"https://github.com/williamboman/mason.nvim",
+	"https://github.com/nvimtools/none-ls.nvim",
 })
 
 -- set lsp float window border
 -- - "solid": Adds padding by a single whitespace cell. see h winborder
 local vim_float_win = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-        opts = opts or {}
-        opts.border = opts.border or "single"
-        return vim_float_win(contents, syntax, opts, ...)
+	opts = opts or {}
+	opts.border = opts.border or "single"
+	return vim_float_win(contents, syntax, opts, ...)
 end
 
 vim.keymap.del("", "grn")
@@ -61,68 +61,70 @@ local lsp_keymaps = require("lspconfig.keymap")
 
 -- LSP config
 vim.diagnostic.config({
-        virtual_text = false,
-        signs = {
-                text = {
-                        -- ▎ 󰌕  󰚍 󰧟   󰌶  ⚡    󰋽    ┃
-                        [vim.diagnostic.severity.ERROR] = "",
-                        [vim.diagnostic.severity.WARN] = "",
-                        [vim.diagnostic.severity.HINT] = "󰌶",
-                        [vim.diagnostic.severity.INFO] = "",
-                },
-        },
-        update_in_insert = true,
-        underline = true,
-        severity_sort = true,
-        float = {
-                focusable = false,
-                style = "minimal",
-                border = "bold",
-                source = "if_many",
-                header = "",
-                prefix = "",
-        },
+	virtual_text = false,
+	signs = {
+		text = {
+			-- ▎ 󰌕  󰚍 󰧟   󰌶  ⚡    󰋽    ┃
+			[vim.diagnostic.severity.ERROR] = "",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.HINT] = "󰌶",
+			[vim.diagnostic.severity.INFO] = "",
+		},
+	},
+	update_in_insert = true,
+	underline = true,
+	severity_sort = true,
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "bold",
+		source = "if_many",
+		header = "",
+		prefix = "",
+	},
 })
 
 local servers = {
-        "lua_ls",
-        "gopls",
-        "rust_analyzer",
+	"lua_ls",
+	"stylua",
 
-        "cmake",
-        "clangd",
+	"gopls",
+	"rust_analyzer",
 
-        "ruff",
-        "ty",
+	"cmake",
+	"clangd",
 
-        "vtsls",
-        "css",
-        "tailwindcss",
-        "vue_ls",
-        "svelte",
+	"ruff",
+	"ty",
 
-        -- "jsonls",
+	"vtsls",
+	"css",
+	"tailwindcss",
+	"vue_ls",
+	"svelte",
+
+	-- "jsonls",
 }
 
 require("mason").setup({
 
-        max_concurrent_installers = 10,
-        ui = {
-                icons = {
-                        package_installed = "",
-                        package_pending = "",
-                        package_uninstalled = "",
-                },
-                backdrop = 100,
-                border = "double",
-        },
+	max_concurrent_installers = 10,
+	ui = {
+		icons = {
+			package_installed = "",
+			package_pending = "",
+			package_uninstalled = "",
+		},
+		backdrop = 100,
+		border = "double",
+	},
 })
 
 require("lspconfig.null")
 
 vim.lsp.config("*", {
-        on_attach = function(_, bufnr)
-                lsp_keymaps(bufnr)
-        end,
+	on_attach = function(_, bufnr)
+		lsp_keymaps(bufnr)
+	end,
 })
 vim.lsp.enable(servers)

@@ -1,43 +1,43 @@
 return {
-        cmd = { "lua-language-server" },
-        filetypes = { "lua" },
-        root_markers = {
-                ".luarc.json",
-                ".luarc.jsonc",
-                ".luacheckrc",
-                ".stylua.toml",
-                "stylua.toml",
-                "selene.toml",
-                "selene.yml",
-                ".git",
-        },
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	root_markers = {
+		".luarc.json",
+		".luarc.jsonc",
+		".luacheckrc",
+		".stylua.toml",
+		"stylua.toml",
+		"selene.toml",
+		"selene.yml",
+		".git",
+	},
 
-        settings = {
-                Lua = {
-                        diagnostics = {
-                                globals = { "vim", "FzfLua", "MiniBufremove" },
-                                disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
-                        },
-                        workspace = {
-                                library = {
-                                        vim.fn.expand("$VIMRUNTIME/lua"),
-                                        vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-                                        -- vim.fn.stdpath("data") .. "/site/pack/core/opt",
-                                        "${3rd}/luv/library",
-                                },
-                                maxPreload = 100000,
-                                preloadFileSize = 10000,
-                        },
-                        format = {
-                                enable = false,
-                        },
-                        -- highlight
-                        semantic = {
-                                enable = false,
-                        },
-                        runtime = {
-                                version = "LuaJIT",
-                        },
-                },
-        },
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = { "vim", "FzfLua", "MiniBufremove" },
+				disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
+			},
+			workspace = {
+				library = {
+					vim.fn.expand("$VIMRUNTIME/lua"),
+					vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+					-- vim.fn.stdpath("data") .. "/site/pack/core/opt",
+					"${3rd}/luv/library",
+				},
+				maxPreload = 100000,
+				preloadFileSize = 10000,
+			},
+			format = {
+				enable = false,
+			},
+			-- highlight
+			semantic = {
+				enable = false,
+			},
+			runtime = {
+				version = "LuaJIT",
+			},
+		},
+	},
 }
