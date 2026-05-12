@@ -4,75 +4,52 @@ end
 
 local colors = {
 	miku = "#1F30C8",
-
+	-- base
 	bg0 = "#FFFFFF",
-	bg1 = "#F6F8FE",
-	bg2 = "#F7F8FA",
-	bg3 = "#EBECF0",
-	bg4 = "#D6D6D6",
-	bg5 = "#D5E1FF",
-
+	bg1 = "#F7F8FA",
 	fg0 = "#080808",
-	fg2 = "#8C8C8C",
-	fg1 = "#AEB3C2",
-	fg4 = "#B5B7BD",
+	fg1 = "#636363",
+	fg2 = "#AEB3C2",
+	fg3 = "#D6D6D6",
+	fg4 = "#EBECF0",
+	-- syntax
+	cya0 = "#00627A",
+	bro1 = "#b99f0e",
 
-	green0 = "#10B981",
-	green1 = "#1B7F37",
-	green2 = "#077D18",
-	green7 = "#6DB083",
-	green6 = "#8EC39D",
-	green3 = "#BEE6BE",
-	green4 = "#E9F5E6",
+	gre0 = "#077D18",
+	gra0 = "#8C8C8C",
+	blu0 = "#0133B3",
+	blu1 = "#1750EB",
+	pur0 = "#871094",
+	bro0 = "#9E880D",
+	red0 = "#D3302F",
+	-- ui
+	blu2 = "#E7EFFA",
+	blu3 = "#E3EBFE",
+	blu4 = "#B4D7FF",
+	blu5 = "#A7C5FF",
+	blu6 = "#0A69DA",
+	gre1 = "#E9F5E6",
+	gre2 = "#BEE6BE",
+	gre3 = "#8EC39D",
+	gre4 = "#6DB083",
+	gre5 = "#10B981",
+	red1 = "#FFE5E5",
+	red2 = "#FFC4C5",
+	red3 = "#de0202",
+	ora0 = "#b86114",
+	yel0 = "#F2BF56",
+	bro2 = "#B28B00",
 
-	red0 = "#f50000",
-	red2 = "#CE0606",
-	red7 = "#DB3B4B",
-	red4 = "#de0202",
-	red8 = "#D3302F",
-	red1 = "#DC2626",
-	red6 = "#FFC4C5",
-	red5 = "#FFE5E5",
-
-	blue1 = "#0137A6",
-	blue2 = "#0133B3",
-	blueD = "#0042B6",
-	blueC = "#174ad4",
-	blue3 = "#264eff",
-	blue7 = "#174be6",
-	blue4 = "#1750EB",
-	blue5 = "#0A69DA",
-	blue8 = "#B4D7FF",
-	blueF = "#A7C5FF",
-	blueA = "#E7EFFA",
-	blueE = "#E3EBFE",
-
-	orange = "#b86114",
-
-	cyan0 = "#00627A",
-
-	brown0 = "#9E880D",
-	brown1 = "#B28B00",
-
-	yellow0 = "#e6bc05",
-	yellow1 = "#F2BF56",
-	yellow2 = "#FCD57E",
-
-	purple4 = "#6B2FBA",
-	purple0 = "#871094",
-	purple2 = "#74118c",
-
-	--TODO: unused
-	cyan2 = "#248f8f",
-	cyan3 = "#3377aa",
-	cyan4 = "#36666b",
-	cyan5 = "#286d73",
-	cyan1 = "#88aa99",
-	purple3 = "#662277",
-	purple1 = "#45164F",
-	yellow4 = "#F7E6A0",
-	brown2 = "#805900",
-	brown3 = "#8c6c41",
+	-- "#45164F",
+	-- "#662277",
+	-- "#74118c",
+	-- "#6B2FBA",
+	-- "#DB3B4B",
+	-- "#805900",
+	-- "#8c6c41",
+	-- "#e6bc05",
+	-- "#F7E6A0",
 }
 
 local function m39k()
@@ -84,206 +61,327 @@ local function m39k()
 	vim.g.colors_name = "39light"
 
 	-- NOTE:  UI  https://neovim.io/doc/user/syntax/#highlight-groups
-	hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
-	hl("NormalFloat", { bg = colors.bg2 })
-	hl("FloatBorder", { bg = colors.bg2, fg = colors.bg4 })
-	hl("LineNr", { fg = colors.fg1 })
-	hl("Whitespace", { fg = colors.bg3 }) --indent line
-	hl("WinSeparator", { link = "Whitespace" })
-	hl("EndOfBuffer", { link = "Whitespace" })
-	hl("WildMenu", { bg = colors.bg2 })
-	hl("Pmenu", { bg = colors.bg2 })
-	hl("PmenuSel", { bg = colors.bg5 })
-	hl("PmenuSbar", { bg = colors.bg2 })
-	hl("PmenuThumb", { bg = colors.bg2 })
-	hl("PmenuMatch", { bold = true })
-	hl("PmenuMatchSel", { bold = true })
-	hl("TabLine", { bg = colors.bg2 })
-	hl("TabLineSel", { fg = colors.blueC, bg = colors.bg0 })
-	hl("CursorLine", { bg = colors.bg1 })
-	hl("ColorColumn", { link = "CursorLine" })
-	hl("StatusLine", { fg = colors.blue3 })
-	hl("StatusLineNC", { link = "StatusLine" })
-	hl("Folded", { bg = colors.green4 })
-	hl("Search", { bg = colors.yellow2, fg = colors.fg0 })
-	hl("CurSearch", { bg = colors.green0, fg = colors.fg0 })
-	hl("IncSearch", { bg = colors.red1, fg = colors.fg0 })
-	hl("MatchParen", { bg = colors.blue8 })
-	hl("Visual", { bg = colors.blue8 })
-	hl("Directory", { fg = colors.fg0 })
-	hl("MsgSeparator", { link = "CursorLine" })
-	hl("WarningMsg", { fg = colors.orange })
-	hl("ErrorMsg", { fg = colors.red1 })
-	hl("ModeMsg", { bg = colors.bg0, fg = colors.fg0 })
-	hl("Title", { fg = colors.blueD, bold = true })
-	hl("Underlined", { underline = true })
 
-	--NOTE: LSP DIFF
-	hl("DiagnosticError", { fg = colors.red1 })
-	hl("DiagnosticWarn", { fg = colors.orange })
-	hl("DiagnosticInfo", { fg = colors.blue5 })
-	hl("DiagnosticHint", { fg = colors.green0 })
-	hl("DiagnosticUnderlineError", { undercurl = true, sp = colors.red0 })
-	hl("DiagnosticUnderlineWarn", { undercurl = true, sp = colors.yellow1 })
-	hl("DiagnosticUnderlineInfo", { undercurl = true, sp = colors.blue5 })
-	hl("DiagnosticUnderlineHint", { undercurl = true, sp = colors.green0 })
-	--diff
-	hl("DiffAdd", { bg = colors.green3 })
-	hl("DiffDelete", { bg = colors.red5, fg = colors.fg4 })
-	hl("DiffChange", { bg = colors.blueE })
-	hl("DiffText", { bg = colors.blueF, fg = colors.red4 })
+	hl("Title", { fg = colors.blu1 })
+	hl("Directory", { fg = colors.blu0 })
+
+	hl("Normal", { fg = colors.fg0, bg = colors.bg0 })
+	hl("NormalNC", { link = "Normal" })
+
+	hl("NormalFloat", { fg = colors.fg0, bg = colors.bg1 })
+	hl("FloatBorder", { fg = colors.fg3, bg = colors.bg1 })
+	hl("FloatShadow", { fg = colors.fg3, bg = colors.bg0 })
+	hl("FloatShadowThrough", { fg = colors.fg2, bg = colors.bg0 })
+	hl("FloatTitle", { fg = colors.red0 })
+	hl("FloatFooter", { fg = colors.red0 })
+
+	hl("Pmenu", { fg = colors.fg0, bg = colors.bg1 })
+	hl("PmenuBorder", { fg = colors.fg3, bg = colors.bg1 })
+	hl("PmenuSel", { bg = colors.blu3 })
+	hl("PmenuKind", { fg = colors.blu0 })
+	hl("PmenuKindSel", { link = "PmenuSel" })
+	hl("PmenuExtra", { fg = colors.pur0 })
+	hl("PmenuExtraSel", { link = "PmenuSel" })
+	hl("PmenuShadow", { link = "Pmenu" })
+	hl("PmenuShadowThrough", { link = "Pmenu" })
+	hl("PmenuSbar", { link = "PmenuBorder" })
+	hl("PmenuThumb", { link = "PmenuBorder" })
+	hl("PmenuMatch", { fg = colors.fg0 })
+	hl("PmenuMatchSel", { link = "PmenuSel" })
+	hl("ComplMatchIns", { fg = colors.fg2 })
+	hl("PreInsert", { link = "ComplMatchIns" })
+	hl("ComplHint", { link = "ComplMatchIns" })
+	hl("ComplHintMore", { link = "ComplMatchIns" })
+	hl("SnippetTabstop", { bg = colors.blu4 })
+	hl("SnippetTabstopActive", { bg = colors.gre2 })
+	hl("WildMenu", { link = "ComplMatchIns" })
+
+	hl("TabLine", { fg = colors.fg1, bg = colors.bg1 })
+	hl("TabLineSel", { fg = colors.blu1, bg = colors.bg1 })
+	hl("TabLineFill", { link = "TabLine" })
+	hl("WinBar", { fg = colors.pur0, bg = colors.bg0 })
+	hl("WinBarNC", { link = "WinBar" })
+	hl("StatusLine", { fg = colors.blu0, bg = colors.bg0 })
+	hl("StatusLineNC", { link = "StatusLine" })
+	hl("StatusLineTerm", { link = "StatusLine" })
+	hl("StatusLineTermNC", { link = "StatusLine" })
+
+	hl("MsgArea", { bg = colors.bg0, fg = colors.fg1 })
+	hl("ModeMsg", { link = "MsgAred" })
+	hl("MoreMsg", { link = "MsgAred" })
+	hl("MsgSeparator", { bg = colors.bg0, fg = colors.fg2 })
+	hl("OkMsg", { bg = colors.bg0, fg = colors.gre5 })
+	hl("WarningMsg", { bg = colors.bg0, fg = colors.bro1 })
+	hl("ErrorMsg", { bg = colors.bg0, fg = colors.red0 })
+	hl("StdoutMsg", { link = "OkMsg" })
+	hl("StderrMsg", { link = "ErrorMsg" })
+	hl("Question", { fg = colors.fg0 })
+
+	hl("WinSeparator", { fg = colors.fg3 })
+	hl("SignColumn", { bg = colors.bg0 })
+	hl("FoldColumn", { bg = colors.bg0 })
+	hl("Folded", { bg = colors.gre1 })
+	hl("ColorColumn", { link = "Folded" })
+	hl("CursorColumn", { link = "Folded" })
+	hl("CursorLine", { bg = colors.bg1 })
+	hl("CursorLineFold", { link = "CursorLine" })
+	hl("CursorLineSign", { link = "CursorLine" })
+	hl("CursorLineNr", { link = "CursorLine" })
+	hl("LineNr", { bg = colors.bg0, fg = colors.fg2 })
+	hl("LineNrAbove", { link = "LineNr" })
+	hl("LineNrBelow", { link = "LineNr" })
+
+	hl("Visual", { bg = colors.blu4 })
+	hl("VisualNOS", { link = "Visual" })
+	hl("MatchParen", { link = "Visual" })
+	hl("Search", { link = "Visual" })
+	hl("IncSearch", { link = "Visual" })
+	hl("CurSearch", { bg = colors.gre2 })
+	hl("Substitute", { bg = colors.gre2 })
+
+	hl("Whitespace", { fg = colors.fg4 })
+	hl("Conceal", { fg = colors.fg4 })
+	hl("EndOfBuffer", { fg = colors.fg4 })
+	hl("SpecialKey", { fg = colors.pur0 })
+	hl("NonText", { fg = colors.pur0 })
+
+	hl("SpellBad", { undercurl = true, sp = colors.red0 })
+	hl("SpellCap", { undercurl = true, sp = colors.gre5 })
+	hl("SpellLocal", { undercurl = true, sp = colors.gre5 })
+	hl("SpellRare", { undercurl = true, sp = colors.bro1 })
+
+	--NOTE: DIFF
+	hl("DiffAdd", { bg = colors.gre2 })
+	hl("DiffDelete", { bg = colors.red1, fg = colors.fg2 })
+	hl("DiffChange", { bg = colors.blu3 })
+	hl("DiffText", { bg = colors.blu5, fg = colors.red3 })
+	hl("DiffTextAdd", { link = "DiffText" })
 	hl("@diff.plus", { link = "DiffAdd" })
 	hl("@diff.minus", { link = "DiffDelete" })
 	hl("@diff.delta", { link = "DiffChange" })
+	hl("Added", { fg = colors.gre4 })
+	hl("Removed", { fg = colors.red3 })
+	hl("Changed", { fg = colors.bro2 })
+	hl("diffAdded", { link = "Added" })
+	hl("diffRemoved", { link = "Changed" })
+	hl("diffChanged", { link = "Removed" })
+	hl("GitSignsAdd", { link = "Added" })
+	hl("GitSignsChange", { link = "Changed" })
+	hl("GitSignsDelete", { link = "Removed" })
+	hl("CodeDiffCharInsert", { bg = colors.gre3 })
+	hl("CodeDiffCharDelete", { bg = colors.red2 })
+	hl("CodeDiffFiller", { fg = colors.fg3 })
 
-	-- NOTE: Syntax  https://neovim.io/doc/user/syntax/#group-name
-	hl("Function", { fg = colors.fg0 })
-	hl("Identifier", { fg = colors.fg0 })
-	hl("Structure", { fg = colors.fg0 })
-	hl("StorageClass", { fg = colors.fg0 })
-	hl("Special", { fg = colors.fg0 })
-	hl("SpecialChar", { link = "Special" })
-	hl("Repeat", { fg = colors.fg0 })
-	hl("Exception", { fg = colors.fg0 })
-	hl("Conditional", { fg = colors.fg0 })
-	hl("Include", { fg = colors.fg0 })
-	hl("Tag", { fg = colors.fg })
-	hl("Comment", { fg = colors.fg2 })
-	-- 1blue
-	hl("Keyword", { fg = colors.blue2 })
-	hl("Statement", { fg = colors.blue7 })
-	hl("Number", { fg = colors.blue4 })
-	hl("Float", { fg = colors.blue4 })
-	-- 2green
-	hl("Character", { fg = colors.green1 })
-	hl("String", { fg = colors.green2 })
-	-- 3purple
-	hl("Operator", { fg = colors.purple0 })
-	hl("Define", { fg = colors.purple2 })
-	hl("PreProc", { fg = colors.purple2 })
-	hl("PreCondit", { link = "PreProc" })
-	--4cyan0
-	hl("Type", { fg = colors.purple0 })
-	hl("Typedef", { link = "Type" })
-	hl("Delimiter", { fg = colors.cyan0 })
-	hl("SpecialComment", { fg = colors.cyan0 })
-	--5brown
-	hl("Boolean", { fg = colors.brown0 })
-	hl("Macro", { fg = colors.brown0 })
-	-- 6red
-	hl("Constant", { fg = colors.red8 })
-	hl("Label", { fg = colors.red8 })
-
-	--NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
-	hl("@keyword", { link = "Keyword" })
-	hl("@function", { link = "Function" })
-	hl("@number", { link = "Number" })
-	hl("@boolean", { link = "Boolean" })
-	hl("@variable", { link = "Function" })
-	hl("@constructor", { link = "Function" })
-	hl("@module", { link = "Include" })
-	hl("@label", { link = "Label" })
-	hl("@tag", { link = "Tag" })
-	hl("@comment", { link = "Comment" })
-	hl("@operator", { link = "Operator" })
-	hl("@punctuation.delimiter", { link = "Delimiter" })
-	hl("@punctuation.bracket", { link = "Operator" })
-	hl("@punctuation.special", { link = "Constant" })
-	hl("@string", { link = "String" })
-
-	hl("@type", { link = "Type" })
-	hl("@type.builtin", { link = "Type" })
-
-	hl("@constant", { link = "Constant" })
-	hl("@constant.builtin", { link = "Constant" })
-
-	-- md
-	hl("@markup.heading.1", { fg = colors.purple0, bold = true })
-	hl("@markup.heading.2", { fg = colors.green2, bold = true })
-	hl("@markup.heading.3", { fg = colors.blue3, bold = true })
-	hl("@markup.strong", { fg = colors.blue1, bold = true })
-	hl("@markup.italic", { fg = colors.blue1, italic = true })
-	hl("@markup.link", { fg = colors.blueD })
-	-- custom
-	hl("@string.escape", { fg = colors.purple4 })
-	hl("@string.regexp", { fg = colors.brown0 })
-	hl("@string.documentation", { fg = colors.brown0 })
-	hl("@comment.documentation", { fg = colors.brown0 })
-	hl("@character.printf", { fg = colors.brown0 })
-
-	hl("@attribute", { fg = colors.red8 })
-	hl("@tag.attribute", { fg = colors.purple0 })
-
-	-- NOTE: quickfix
-	hl("QuickFixLine", { fg = colors.blue3 })
-	hl("QuickFixError", { fg = colors.red2 })
-	hl("qfSeparator", { fg = colors.bg4 })
+	--NOTE: quickfix
+	hl("QuickFixLine", { fg = colors.blu1 })
+	hl("QuickFixError", { fg = colors.red0 })
+	hl("qfSeparator", { fg = colors.fg3 })
 	hl("qfSeparator1", { link = "qfSeparator" })
 	hl("qfSeparator2", { link = "qfSeparator" })
+	--TODO: fg0
 	hl("qfLineNr", { link = "Function" })
 	hl("qfFileName", { link = "Function" })
 
-	--PLUG:
-	hl("diffAdded", { fg = colors.green7 })
-	hl("diffRemoved", { fg = colors.red2 })
-	hl("diffChanged", { fg = colors.brown1 })
-	hl("GitSignsAdd", { link = "diffAdded" })
-	hl("GitSignsChange", { link = "diffChanged" })
-	hl("GitSignsDelete", { link = "diffRemoved" })
-	hl("CodeDiffCharInsert", { bg = colors.green6 })
-	hl("CodeDiffCharDelete", { bg = colors.red6 })
-	hl("CodeDiffFiller", { fg = colors.bg4 })
+	--NOTE: lsp
+	hl("LspReferenceText", { bg = colors.gre4 })
+	hl("LspReferenceRead", { bg = colors.gre4 })
+	hl("LspReferenceWrite", { bg = colors.gre4 })
+	hl("LspReferenceTarget", { bg = colors.gre4 })
+	hl("LspInlayHint", { bg = colors.fg2, italic = true })
+	hl("LspCodeLens", { bg = colors.fg2 })
+	hl("LspCodeLensSeparator", { fg = colors.fg0 })
+	hl("LspSignatureActiveParameter", { bg = colors.gre2, bold = true })
+	-- Diagnostics (LSP)
+	hl("DiagnosticError", { fg = colors.red0 })
+	hl("DiagnosticWarn", { fg = colors.ora0 })
+	hl("DiagnosticInfo", { fg = colors.blu6 })
+	hl("DiagnosticHint", { fg = colors.pur0 })
+	hl("DiagnosticOk", { fg = colors.gre5 })
 
-	hl("FlashLabel", { fg = colors.red4, bold = true })
-	hl("FlashCurrent", { link = "Function" })
-	hl("FlashMatch", { link = "Function" })
+	hl("DiagnosticSignError", { fg = colors.red0 })
+	hl("DiagnosticSignWarn", { fg = colors.ora0 })
+	hl("DiagnosticSignInfo", { fg = colors.blu6 })
+	hl("DiagnosticSignHint", { fg = colors.pur0 })
+	hl("DiagnosticSignOk", { fg = colors.gre5 })
 
-	hl("BlinkCmpKind", { fg = colors.purple0 })
+	hl("DiagnosticFloatingError", { fg = colors.red0 })
+	hl("DiagnosticFloatingWarn", { fg = colors.ora0 })
+	hl("DiagnosticFloatingInfo", { fg = colors.blu6 })
+	hl("DiagnosticFloatingHint", { fg = colors.pur0 })
+	hl("DiagnosticFloatingOk", { fg = colors.gre5 })
 
-	hl("FzfLuaBorder", { bg = colors.bg, fg = colors.bg4 })
-	hl("FzfLuaTitle", { fg = colors.fg2 })
-	hl("FzfFgPlus", { fg = colors.green0 })
-	hl("FzfBgPlus", { bg = colors.blueA })
+	hl("DiagnosticUnderlineError", { sp = colors.red0, undercurl = true })
+	hl("DiagnosticUnderlineWarn", { sp = colors.bro1, undercurl = true })
+	hl("DiagnosticUnderlineInfo", { sp = colors.blu6, undercurl = true })
+	hl("DiagnosticUnderlineHint", { sp = colors.pur0, undercurl = true })
+	hl("DiagnosticUnderlineOk", { sp = colors.gre5, undercurl = true })
 
-	hl("NvimTreeIndentMarker", { link = "Comment" })
-	hl("NvimTreeGitFolderDirtyHL", { link = "diffRemoved" })
-	hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
-	hl("NvimTreeGitFileNewHL", { fg = colors.green0 })
+	hl("DiagnosticVirtualTextError", { sp = colors.red0, undercurl = true })
+	hl("DiagnosticVirtualTextWarn", { sp = colors.bro1, undercurl = true })
+	hl("DiagnosticVirtualTextInfo", { sp = colors.blu6, undercurl = true })
+	hl("DiagnosticVirtualTextHint", { sp = colors.pur0, undercurl = true })
+	hl("DiagnosticVirtualTextOk", { sp = colors.gre5, undercurl = true })
 
-	hl("AlphaHeader", { fg = colors.miku })
+	hl("DiagnosticVirtualLinesError", { sp = colors.red0, undercurl = true })
+	hl("DiagnosticVirtualLinesWarn", { sp = colors.bro1, undercurl = true })
+	hl("DiagnosticVirtualLinesInfo", { sp = colors.blu6, undercurl = true })
+	hl("DiagnosticVirtualLinesHint", { sp = colors.pur0, undercurl = true })
+	hl("DiagnosticVirtualLinesOk", { sp = colors.gre5, undercurl = true })
 
-	hl("HeirlineA", { fg = colors.blue2 })
-	hl("HeirlineB", { fg = colors.purple0 })
+	hl("DiagnosticDeprecated", { fg = colors.fg2 })
+	hl("DiagnosticUnnecessary", { fg = colors.fg2 })
 
+	-- NOTE: Syntax  https://neovim.io/doc/user/syntax/#group-name
+
+	--- 1white
+	hl("Function", { fg = colors.fg0 })
+	hl("Identifier", { link = "Function" })
+	hl("Statement", { link = "Function" })
+	hl("Tag", { link = "Function" })
+	hl("Include", { link = "Function" })
+	--- 2blue
+	hl("Keyword", { fg = colors.blu0 })
+	hl("Repeat", { fg = colors.blu0 })
+	hl("Exception", { link = "Keyword" })
+	hl("PreProc", { link = "Keyword" })
+	hl("Define", { link = "Keyword" })
+	hl("Conditional", { link = "Keyword" })
+	hl("PreCondit", { link = "Keyword" })
+	--- 3purple
+	hl("Type", { fg = colors.pur0 })
+	hl("Typedef", { link = "Type" })
+	hl("Structure", { link = "Type" })
+	hl("StorageClass", { link = "Type" })
+	hl("Special", { link = "Type" })
+	--- 4brown
+	hl("Boolean", { fg = colors.bro0 })
+	hl("Macro", { link = "Boolean" })
+	hl("SpecialChar", { link = "Boolean" })
+	hl("Debug", { link = "Boolean" })
+	--- 5red
+	hl("Constant", { fg = colors.red0 })
+	hl("Label", { fg = colors.red0 })
+	--- 6blue
+	-- hl("Statement", { fg = colors.blue4 })
+	hl("Number", { fg = colors.blu1 })
+	hl("Float", { link = "Number" })
+	--- comment
+	hl("Comment", { fg = colors.gra0 })
+	hl("SpecialComment", { fg = colors.cya0 })
+	--- string
+	hl("String", { fg = colors.gre0 })
+	hl("Character", { link = "String" })
+	--- delimiter
+	hl("Delimiter", { fg = colors.cya0 })
+	hl("Operator", { fg = colors.pur0 })
+	--- other
+	hl("Underlined", { underline = true })
+	hl("Ignore", { link = "Normal" })
+	hl("Error", { sp = colors.red1, undercurl = true })
+
+	--NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
+	--- 1white
+	hl("@function", { link = "Function" })
+	hl("@function.builtin", { link = "Function" })
+	hl("@variable", { link = "Function" })
+	hl("@variable.builtin", { link = "Function" })
+	hl("@property", { link = "Function" })
+	hl("@tag", { link = "Function" })
+	hl("@module", { link = "Function" })
+	--- 2blue
+	hl("@keyword", { link = "Keyword" })
+	hl("@keyword.repeat", { link = "Repeat" })
+	--- 3purple
+	hl("@type", { link = "Type" })
+	hl("@type.builtin", { link = "Type" })
+	hl("@constructor", { link = "Type" })
+	hl("@tag.attribute", { link = "Type" })
+	--- 4brown
+	hl("@boolean", { link = "Boolean" })
+	hl("@constant.builtin", { link = "Boolean" })
+	hl("@attribute", { link = "Boolean" })
+	--- 5red
+	hl("@label", { link = "Constant" })
+	hl("@constant", { link = "Constant" })
+	--- 6blue
+	hl("@number", { link = "Number" })
+	--- comment
+	hl("@comment", { link = "Comment" })
+	hl("@comment.documentation", { fg = colors.bro1 })
+	--- operator delimiter
+	hl("@operator", { link = "Operator" })
+	hl("@punctuation.delimiter", { link = "Delimiter" })
+	hl("@punctuation.bracket", { link = "Delimiter" })
+	hl("@punctuation.special", { link = "Type" })
+	--- markdown
+	hl("@markup.heading", { fg = colors.blu1 })
+	hl("@markup.heading.1", { fg = colors.red0 })
+	hl("@markup.heading.2", { fg = colors.pur0 })
+	hl("@markup.heading.3", { link = "@markup.heading" })
+	hl("@markup.heading.4", { link = "@markup.heading" })
+	hl("@markup.heading.5", { link = "@markup.heading" })
+	hl("@markup.heading.6", { link = "@markup.heading" })
+	hl("@markup.strong", { bold = true })
+	hl("@markup.italic", { italic = true })
+	hl("@markup.strikethrough", { strikethrough = true })
+	hl("@markup.underline", { underline = true })
+	hl("@markup.list", { fg = colors.bule4 })
+	hl("@markup.quote", { fg = colors.fg1 })
+	hl("@markup.math", { fg = colors.pur0 })
+	hl("@markup.link", { fg = colors.fg1, underline = true })
+
+	--NOTE: plugin
+
+	--- indent
 	hl("IndentLine", { link = "Whitespace" })
 	hl("IndentLineCurrent", { link = "Whitespace" })
-
-	hl("DapBreakpointHighlight", { fg = colors.red7 })
-	hl("DapStoppedHiglight", { fg = colors.green0 })
-
-	hl("NvimDapVirtualText", { link = "Comment" })
-	hl("NvimDapVirtualTextChanged", { fg = colors.red7 })
-
-	hl("YaziFloatBorder", { fg = colors.bg4, bg = colors.bg0 })
+	---flash
+	hl("FlashLabel", { fg = colors.red3, bold = true })
+	hl("FlashCurrent", { link = "Function" })
+	hl("FlashMatch", { link = "Function" })
+	---cmp
+	hl("BlinkCmpKind", { fg = colors.pur0 })
+	---fzf
+	hl("FzfLuaBorder", { bg = colors.bg, fg = colors.fg3 })
+	hl("FzfLuaTitle", { fg = colors.fg1 })
+	hl("FzfFgPlus", { fg = colors.gre5 })
+	hl("FzfBgPlus", { bg = colors.blu2 })
+	---nvimtree
+	hl("NvimTreeIndentMarker", { link = "Whitespace" })
+	hl("NvimTreeGitFolderDirtyHL", { fg = colors.red0 })
+	hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
+	hl("NvimTreeGitFileNewHL", { fg = colors.gre5 })
+	---alpha
+	hl("AlphaHeader", { fg = colors.miku })
+	---heirline
+	hl("HeirlineA", { fg = colors.blu0 })
+	hl("HeirlineB", { fg = colors.pur0 })
+	---dap
+	hl("DapBreakpointHighlight", { fg = colors.red0 })
+	hl("DapStoppedHiglight", { fg = colors.gre5 })
+	---yazi
+	hl("YaziFloatBorder", { fg = colors.fg3, bg = colors.bg0 })
 
 	vim.g.terminal_color_background = colors.bg0
 	vim.g.terminal_color_foreground = colors.fg0
-	vim.g.terminal_color_0 = colors.bg
-	vim.g.terminal_color_1 = colors.red4
-	vim.g.terminal_color_2 = colors.green2
-	vim.g.terminal_color_3 = colors.yellow1
-	vim.g.terminal_color_4 = colors.blue2
-	vim.g.terminal_color_5 = colors.purple0
-	vim.g.terminal_color_6 = colors.blue3
-	vim.g.terminal_color_7 = colors.fg
-	vim.g.terminal_color_8 = colors.fg
-	vim.g.terminal_color_9 = colors.red4
-	vim.g.terminal_color_10 = colors.purple0
-	vim.g.terminal_color_11 = colors.yellow0
-	vim.g.terminal_color_12 = colors.cyan0
-	vim.g.terminal_color_13 = colors.red0
-	vim.g.terminal_color_14 = colors.yellow2
-	vim.g.terminal_color_15 = colors.fg2
+
+	vim.g.terminal_color_0 = colors.fg0
+	vim.g.terminal_color_1 = colors.red0
+	vim.g.terminal_color_2 = colors.gre5
+	vim.g.terminal_color_3 = colors.yel0
+	vim.g.terminal_color_4 = colors.blu0
+	vim.g.terminal_color_5 = colors.pur0
+	vim.g.terminal_color_6 = colors.cya0
+	vim.g.terminal_color_7 = colors.bg0
+
+	vim.g.terminal_color_8 = colors.fg1
+	vim.g.terminal_color_9 = colors.red0
+	vim.g.terminal_color_10 = colors.gre5
+	vim.g.terminal_color_11 = colors.yel0
+	vim.g.terminal_color_12 = colors.blu1
+	vim.g.terminal_color_13 = colors.pur0
+	vim.g.terminal_color_14 = colors.cya0
+	vim.g.terminal_color_15 = colors.fg4
 end
 
 m39k()

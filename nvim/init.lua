@@ -42,7 +42,7 @@ o.laststatus = 3 --  global statusline
 o.signcolumn = "yes" -- sign column
 o.list = true
 o.listchars = "tab:  ,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
-o.fillchars = "eob: " -- hide  "~"
+o.fillchars = "eob: ,msgsep:─" -- hide  "~"
 --set fold
 o.foldenable = true
 o.foldcolumn = "0" --show fold in line number
@@ -57,7 +57,8 @@ o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
 o.exrc = true -- exrc config
 vim.o.qftf = "v:lua.require'utils.qftf'" --  quickfix textfunc
--- vim.o.shell = "/opt/homebrew/bin/fish"
+o.pumborder = "solid"
+-- o.shell = "/opt/homebrew/bin/fish"
 
 require("base")
 require("lspconfig")
