@@ -211,7 +211,7 @@ local Git = {
 		local result = vim.system({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" }, { text = true }):wait()
 
 		if result.code ~= 0 then
-			vim.notify("39line! statusline.lua: 233", vim.log.levels.WARN)
+			vim.notify("39line! statusline.lua,Git,init ", vim.log.levels.WARN)
 			return
 		end
 

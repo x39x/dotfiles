@@ -1,0 +1,64 @@
+*x39x.txt*                                                           x39x docs 
+
+==============================================================================
+Rg                                                                     *xx-rg*
+
+SEARCH BY FILETYPE                                                  *xx-rg-ft*
+>bash
+    rg xxx -t lua -t js
+<
+Exclude a certain type
+>bash
+    rg xxx -T lua -T js
+<
+
+SEARCH DIR                                                         *xx-rg-dir*
+>bash
+    rg xxx src/
+<
+
+GLOB                                                                 *rg-glob*
+>bash
+    rg xxx -g "src/**" -g "lua/**"
+    rg xxx -g "!node_modules/**"
+>
+
+OTHER
+
+just show file name ~
+>bash
+    rg hello -l
+>
+
+just match word ~
+>bash
+    rg hello -w
+>
+
+match multiline ~
+>bash
+    rg "hello\nworld" -U
+>
+
+case sensitive ~
+>bash
+    rg hello -s
+>
+
+no ignore ~
+>bash
+    rg hello --no-ignore
+>
+
+
+
+==============================================================================
+X39X                                                                  *xx-doc*
+
+USAGE
+    :helptags ALL
+
+WRITING
+    see: |help-writing|.
+
+vim:tw=78:ts=8:noet:ft=help:norl:

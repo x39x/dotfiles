@@ -18,14 +18,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		keymap("", "%", "q", keymap_opts())
 	end,
 })
-keymap("", "J", "}", keymap_opts())
-keymap("", "K", "{", keymap_opts())
+-- keymap("", "J", "}", keymap_opts())
+-- keymap("", "K", "{", keymap_opts())
 keymap("", "{", "J", keymap_opts())
 keymap("", "}", "K", keymap_opts())
+keymap({ "n", "v" }, "K", "<ScrollWheelUp>", keymap_opts())
+keymap({ "n", "v" }, "J", "<ScrollWheelDown>", keymap_opts())
 
 -- useless 's/S'
 keymap({ "n", "v" }, "s", '"_d', keymap_opts())
-keymap("o", "s", "d", keymap_opts())
+-- keymap("o", "s", "d", keymap_opts())
 keymap("", "S", '"_D', keymap_opts())
 
 --buffers
@@ -47,7 +49,6 @@ keymap({ "x" }, "<M-=>", ":m '<-2<CR>gv=gv", keymap_opts({ desc = "move line up"
 keymap({ "x" }, "<", "<gv", keymap_opts())
 keymap({ "x" }, ">", ">gv", keymap_opts())
 
-keymap("t", "<C-\\>", "<C-\\><C-N>", keymap_opts({ desc = "back to normal mode in terminal" }))
 keymap("c", "<C-p>", "<Up>")
 keymap("c", "<C-n>", "<Down>")
 keymap("c", "<C-f>", "<Right>")
@@ -60,7 +61,7 @@ keymap("", "<M-s>", function()
 	vim.cmd("w")
 end, keymap_opts({ desc = "save file" }))
 
--- add new line in normal mode
+-- new line
 keymap("n", "<leader>s", function()
 	local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
 	vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
@@ -70,7 +71,7 @@ end, keymap_opts({ desc = "add new line below" }))
 keymap("n", "<leader>,", function()
 	--":let @/ = expand('<cword>') | set hlsearch<cr>"
 	vim.fn.setreg("/", vim.fn.expand("<cword>"))
-	vim.opt.hlsearch = true
+	vim.o.hlsearch = true
 end, keymap_opts({ desc = "highlight cword" }))
 keymap("n", "<BackSpace>", "<cmd>nohl<CR>", keymap_opts({ desc = "nohl" }))
 

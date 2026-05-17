@@ -1,6 +1,7 @@
-[[ $- != *i* ]] && return
-[ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
-[ ! -n "$NOFISH" -a -n "$TERM_PROGRAM" ] && command -v fish >/dev/null 2>&1 && exec fish
+if [ -n "$TERM_PROGRAM" ] ; then
+    [ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
+    [ ! -n "$NOFISH" ] && command -v fish >/dev/null 2>&1 && exec fish
+fi
 
 set -o emacs
 set bell-style none

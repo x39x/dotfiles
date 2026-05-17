@@ -13,9 +13,11 @@ vim.g.rust_recommended_style = 0
 
 vim.filetype.add({
 	pattern = {
-		[".*.typ"] = "typst",
-		[".*.mdx"] = "markdown",
 		[".*profile"] = "bash",
+	},
+	extension = {
+		typ = "typst",
+		mdx = "markdown",
 	},
 })
 
@@ -30,11 +32,11 @@ o.splitbelow = true
 o.number = true
 o.numberwidth = 3
 o.smartindent = true
-o.copyindent = true -- 自动缩进时，复制已有的行的缩进结构
+o.copyindent = true
 o.ignorecase = true
 o.smartcase = true
 --
-o.wrap = false --no wrap
+o.wrap = false
 o.linebreak = true -- wrap don't break words
 o.scrolloff = 5
 o.showtabline = 2 -- tabline,0:no
@@ -42,17 +44,18 @@ o.laststatus = 3 --  global statusline
 o.signcolumn = "yes" -- sign column
 o.list = true
 o.listchars = "tab:  ,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
-o.fillchars = "eob: ,msgsep:─" -- hide  "~"
+o.fillchars = "eob: ,msgsep:─" -- eob: hide "~"
 --set fold
 o.foldenable = true
 o.foldcolumn = "0" --show fold in line number
-o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevel = 99 -- ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 --
-o.expandtab = true -- tab->spaces
+o.expandtab = true
 o.shiftwidth = 4
 o.tabstop = 8
 o.cursorline = true
+o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
 o.exrc = true -- exrc config

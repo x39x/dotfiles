@@ -36,6 +36,7 @@ default = [
         ),
     ),
     M("fmtstyle/clang-format", "~/.clang-format"),
+    M("fmtstyle/oxfmtrc.json", "~/.oxfmtrc.json"),
     M(
         "fmtstyle/rustfmt.toml",
         utils.path_for(

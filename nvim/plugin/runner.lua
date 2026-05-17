@@ -1,7 +1,7 @@
 local Path = require("plenary.path")
 
 local M = {}
-local CMD_STORE_PATH = Path:new(vim.fn.stdpath("data"), "run_cmd.json")
+local CMD_STORE_PATH = Path:new(vim.fn.stdpath("state"), "user", "run_cmd.json")
 local tmux_run = {}
 
 --==========================
@@ -258,7 +258,7 @@ local function get_command()
 
 	if not cmd then
 		vim.notify("No last command found, please add one.", vim.log.levels.WARN)
-		cmd = add_new_cmd()
+		_, cmd = add_new_cmd()
 	end
 	return root, cmd
 end

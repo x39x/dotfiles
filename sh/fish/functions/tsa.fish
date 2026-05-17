@@ -1,11 +1,11 @@
 # Toggle System Appearance
 function alat_theme
     set -l theme "$argv[1]"
-    ln -sf $HOME/.config/alacritty/themes/{$theme}.toml $HOME/.cache/alacritty.toml
+    ln -sf $HOME/.config/alacritty/themes/{$theme}.toml $HOME/.local/state/user/alacritty.toml
 end
 
 function tsa
-    set -l dir ~/.cache/39sys
+    set -l dir $HOME/.local/state/user
     set -l file "$dir/dark_mode"
 
     if not test -d $dir

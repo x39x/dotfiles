@@ -128,8 +128,23 @@ local BufferLine = utils.make_buflist(
 -- PLUG: tab
 local Tabpage = {
 	provider = function(self)
-		return " " .. "%" .. self.tabnr .. "T " .. self.tabpage .. " %T" .. " "
+		return "  " .. self.tabnr .. "  "
 	end,
+
+	on_click = {
+		callback = function(_, minwid, _, button)
+			if button == "r" then
+				vim.cmd.tabclose()
+				vim.cmd.redrawtabline()
+			else
+				vim.api.nvim_set_current_tabpage(minwid)
+			end
+		end,
+		minwid = function(self)
+			return self.tabpage
+		end,
+		name = "heirline_tabline_tab_callback",
+	},
 	hl = function(self)
 		if not self.is_active then
 			return "TabLine"

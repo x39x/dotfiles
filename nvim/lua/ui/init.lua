@@ -74,7 +74,44 @@ require("gitsigns").setup({
 	-- signcolumn = false,
 })
 
-require("nvim-highlight-colors").setup()
+require("nvim-highlight-colors").setup({
+	render = "virtual",
+
+	virtual_symbol = "⬤",
+	virtual_symbol_prefix = " ",
+	virtual_symbol_suffix = " ",
+	enable_named_colors = false,
+	enable_tailwind = true,
+
+	exclude_buffer = function(bufnr)
+		local name = vim.api.nvim_buf_get_name(bufnr)
+
+		if name == "" then
+			return true
+		end
+
+		if vim.fn.getfsize(name) > 1000000 then
+			return true
+		end
+
+		local ext = name:match("%.([%w_]+)$")
+		if not ext then
+			return true
+		end
+
+		local allowed = {
+			lua = true,
+			js = true,
+			jsx = true,
+			ts = true,
+			tsx = true,
+			css = true,
+			vue = true,
+			svelte = true,
+		}
+		return not allowed[ext]
+	end,
+})
 
 require("ui.39line")
 require("ui.colorscheme").set()

@@ -1,28 +1,31 @@
 --PLUG:  mtm
-local cmd = vim.api.nvim_create_user_command
-local del_cmd = vim.api.nvim_del_user_command
-cmd("Mtm", function()
-	del_cmd("Mtm")
-	require("markdown-table-mode").setup()
-	vim.cmd("Mtm")
-end, {})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		require("markdown-table-mode").setup()
+	end,
+})
 
 --PLUG:  leet
-cmd("Leet", function()
-	del_cmd("Leet")
-	require("leetcode").setup({
-		cn = {
-			enabled = true,
+require("leetcode").setup({
+	cn = {
+		enabled = true,
+		translator = false,
+	},
+	lang = "golang",
+	description = {
+		width = "43%",
+		position = "right",
+	},
+	injector = {
+		["cpp"] = {
+			imports = function()
+				return { "#include <bits/stdc++.h>", "using namespace std;" }
+			end,
+			after = "int main() {}",
 		},
-		injector = {
-			["python3"] = {
-				before = true,
-			},
-			["cpp"] = {
-				before = { "#include <bits/stdc++.h>" },
-			},
-		},
-		picker = { provider = "fzf-lua" },
-	})
-	vim.cmd("Leet")
-end, {})
+	},
+	picker = { provider = "fzf-lua" },
+	keys = {},
+})

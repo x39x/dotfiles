@@ -39,7 +39,6 @@ local colors = {
 	red3 = "#de0202",
 	ora0 = "#b86114",
 	yel0 = "#F2BF56",
-	bro2 = "#B28B00",
 
 	-- "#45164F",
 	-- "#662277",
@@ -48,6 +47,7 @@ local colors = {
 	-- "#DB3B4B",
 	-- "#805900",
 	-- "#8c6c41",
+	-- "#B28B00",
 	-- "#e6bc05",
 	-- "#F7E6A0",
 }
@@ -96,8 +96,8 @@ local function m39k()
 	hl("SnippetTabstopActive", { bg = colors.gre2 })
 	hl("WildMenu", { link = "ComplMatchIns" })
 
-	hl("TabLine", { fg = colors.fg1, bg = colors.bg1 })
-	hl("TabLineSel", { fg = colors.blu1, bg = colors.bg1 })
+	hl("TabLine", { fg = colors.fg0, bg = colors.bg0 })
+	hl("TabLineSel", { fg = colors.blu1, bg = colors.bg0, bold = true })
 	hl("TabLineFill", { link = "TabLine" })
 	hl("WinBar", { fg = colors.pur0, bg = colors.bg0 })
 	hl("WinBarNC", { link = "WinBar" })
@@ -159,9 +159,9 @@ local function m39k()
 	hl("@diff.plus", { link = "DiffAdd" })
 	hl("@diff.minus", { link = "DiffDelete" })
 	hl("@diff.delta", { link = "DiffChange" })
-	hl("Added", { fg = colors.gre4 })
+	hl("Added", { fg = colors.blu6 })
 	hl("Removed", { fg = colors.red3 })
-	hl("Changed", { fg = colors.bro2 })
+	hl("Changed", { fg = colors.bro1 })
 	hl("diffAdded", { link = "Added" })
 	hl("diffRemoved", { link = "Changed" })
 	hl("diffChanged", { link = "Removed" })
@@ -178,9 +178,8 @@ local function m39k()
 	hl("qfSeparator", { fg = colors.fg3 })
 	hl("qfSeparator1", { link = "qfSeparator" })
 	hl("qfSeparator2", { link = "qfSeparator" })
-	--TODO: fg0
-	hl("qfLineNr", { link = "Function" })
-	hl("qfFileName", { link = "Function" })
+	hl("qfLineNr", { fg = colors.fg0 })
+	hl("qfFileName", { fg = colors.fg0 })
 
 	--NOTE: lsp
 	hl("LspReferenceText", { bg = colors.gre4 })
@@ -256,21 +255,20 @@ local function m39k()
 	--- 4brown
 	hl("Boolean", { fg = colors.bro0 })
 	hl("Macro", { link = "Boolean" })
-	hl("SpecialChar", { link = "Boolean" })
 	hl("Debug", { link = "Boolean" })
 	--- 5red
 	hl("Constant", { fg = colors.red0 })
 	hl("Label", { fg = colors.red0 })
 	--- 6blue
-	-- hl("Statement", { fg = colors.blue4 })
 	hl("Number", { fg = colors.blu1 })
 	hl("Float", { link = "Number" })
 	--- comment
 	hl("Comment", { fg = colors.gra0 })
-	hl("SpecialComment", { fg = colors.cya0 })
+	hl("SpecialComment", { fg = colors.bro0 })
 	--- string
 	hl("String", { fg = colors.gre0 })
 	hl("Character", { link = "String" })
+	hl("SpecialChar", { fg = colors.red0 })
 	--- delimiter
 	hl("Delimiter", { fg = colors.cya0 })
 	hl("Operator", { fg = colors.pur0 })
@@ -291,6 +289,7 @@ local function m39k()
 	--- 2blue
 	hl("@keyword", { link = "Keyword" })
 	hl("@keyword.repeat", { link = "Repeat" })
+	hl("@keyword.conditional", { link = "Conditional" })
 	--- 3purple
 	hl("@type", { link = "Type" })
 	hl("@type.builtin", { link = "Type" })
@@ -307,17 +306,26 @@ local function m39k()
 	hl("@number", { link = "Number" })
 	--- comment
 	hl("@comment", { link = "Comment" })
-	hl("@comment.documentation", { fg = colors.bro1 })
+	hl("@comment.documentation", { link = "SpecialComment" })
+	--- string
+	hl("@string", { link = "String" })
+	hl("@string.documentation", { fg = colors.bro0 })
+	hl("@string.regexp", { fg = colors.blu0 })
+	hl("@string.escape", { fg = colors.pur0 })
+	hl("@string.special", { link = "SpecialChar" })
+	hl("@character", { link = "Character" })
+	hl("@character.special", { link = "SpecialChar" })
+	hl("@character.printf", { link = "SpecialChar" })
 	--- operator delimiter
 	hl("@operator", { link = "Operator" })
 	hl("@punctuation.delimiter", { link = "Delimiter" })
 	hl("@punctuation.bracket", { link = "Delimiter" })
 	hl("@punctuation.special", { link = "Type" })
 	--- markdown
-	hl("@markup.heading", { fg = colors.blu1 })
+	hl("@markup.heading", { fg = colors.gre0 })
 	hl("@markup.heading.1", { fg = colors.red0 })
 	hl("@markup.heading.2", { fg = colors.pur0 })
-	hl("@markup.heading.3", { link = "@markup.heading" })
+	hl("@markup.heading.3", { fg = colors.blu0 })
 	hl("@markup.heading.4", { link = "@markup.heading" })
 	hl("@markup.heading.5", { link = "@markup.heading" })
 	hl("@markup.heading.6", { link = "@markup.heading" })
@@ -329,6 +337,7 @@ local function m39k()
 	hl("@markup.quote", { fg = colors.fg1 })
 	hl("@markup.math", { fg = colors.pur0 })
 	hl("@markup.link", { fg = colors.fg1, underline = true })
+	hl("@variable.parameter.vimdoc", { fg = colors.bro0 })
 
 	--NOTE: plugin
 
@@ -367,13 +376,12 @@ local function m39k()
 
 	vim.g.terminal_color_0 = colors.fg0
 	vim.g.terminal_color_1 = colors.red0
-	vim.g.terminal_color_2 = colors.gre5
+	vim.g.terminal_color_2 = colors.gre0
 	vim.g.terminal_color_3 = colors.yel0
 	vim.g.terminal_color_4 = colors.blu0
 	vim.g.terminal_color_5 = colors.pur0
 	vim.g.terminal_color_6 = colors.cya0
 	vim.g.terminal_color_7 = colors.bg0
-
 	vim.g.terminal_color_8 = colors.fg1
 	vim.g.terminal_color_9 = colors.red0
 	vim.g.terminal_color_10 = colors.gre5

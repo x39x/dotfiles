@@ -97,11 +97,11 @@ local servers = {
 	"ruff",
 	"ty",
 
+	"oxfmt",
 	"vtsls",
+	"vue_ls",
 	"css",
 	"tailwindcss",
-	"vue_ls",
-	"svelte",
 
 	-- "jsonls",
 }

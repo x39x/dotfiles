@@ -1,6 +1,6 @@
 local M = {}
 
-local dark_mode_cache = vim.fn.expand("~/.cache/39sys/dark_mode")
+local dark_mode_cache = vim.fn.expand("$HOME/.local/state/user/dark_mode")
 
 local function load_cache()
 	local f = io.open(dark_mode_cache, "r")
