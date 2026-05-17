@@ -346,6 +346,7 @@ local function m39k()
 	---dap
 	hl("DapBreakpointHighlight", { fg = colors.red0 })
 	hl("DapStoppedHiglight", { fg = colors.gre1 })
+	hl("NvimDapViewWatchUpdated", { fg = colors.red0 })
 	---yazi
 	hl("YaziFloatBorder", { fg = colors.fg2, bg = colors.bg0 })
 
