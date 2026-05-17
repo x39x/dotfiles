@@ -1,48 +1,50 @@
 local function find_project_root(start_path)
-	local Path = require("plenary.path")
-	local current = Path:new(start_path)
+	local marker = vim.fs.find({ "Makefile", ".git", "CMakeLists.txt" }, {
+		path = start_path,
+		upward = true,
+		stop = vim.uv.os_homedir(),
+	})[1]
 
-	while current:absolute() ~= Path:new(vim.loop.os_homedir()):absolute() do
-		if
-			current:joinpath("Makefile"):exists()
-			or current:joinpath(".git"):exists()
-			or current:joinpath("CMakeLists.txt"):exists()
-		then
-			return current:absolute()
-		end
-		current = current:parent()
+	if not marker then
+		return nil
 	end
 
-	return nil
+	return vim.fs.dirname(marker)
 end
 
 local function find_debug_executable()
-	local Path = require("plenary.path")
 	local current_file = vim.api.nvim_buf_get_name(0)
+
+	-- no file
 	if current_file == "" then
-		return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file"), vim.fn.getcwd()
+		local cwd = vim.fn.getcwd()
+
+		return vim.fn.input("Path to executable: ", cwd .. "/", "file"), cwd
 	end
 
-	local start_path = Path:new(current_file):parent()
-	local root = find_project_root(start_path:absolute())
+	local start_dir = vim.fs.dirname(current_file)
+	local root = find_project_root(start_dir)
 
-	-- find root/debug/dbg
+	-- root/debug/dbg
 	if root then
-		local dbg_path = Path:new(root, "debug", "dbg")
-		if dbg_path:exists() then
-			return dbg_path:absolute(), root
+		local dbg_path = vim.fs.joinpath(root, "debug", "dbg")
+
+		if vim.fn.filereadable(dbg_path) == 1 then
+			return dbg_path, root
 		end
 	end
 
-	-- find ./debug/dbg
-	local fallback_dbg = Path:new(start_path, "debug", "dbg")
-	if fallback_dbg:exists() then
-		return fallback_dbg:absolute(), start_path:absolute()
+	-- ./debug/dbg
+	local fallback_dbg = vim.fs.joinpath(start_dir, "debug", "dbg")
+
+	if vim.fn.filereadable(fallback_dbg) == 1 then
+		return fallback_dbg, start_dir
 	end
 
-	-- input
-	local manual = vim.fn.input("Path to executable: ", start_path:absolute() .. "/", "file")
-	return manual, start_path:absolute()
+	-- manual input
+	local manual = vim.fn.input("Path to executable: ", start_dir .. "/", "file")
+
+	return manual, start_dir
 end
 
 local cpp = {}
@@ -64,9 +66,7 @@ cpp[#cpp + 1] = {
 }
 
 return function()
-	local Path = require("plenary.path")
-	local lldb_bin = Path:new(lldb.command)
-	if not lldb_bin:exists() then
+	if vim.fn.executable(lldb.command) == 0 then
 		vim.notify("LLDB binary not found: " .. lldb.command, vim.log.levels.WARN)
 		return
 	end

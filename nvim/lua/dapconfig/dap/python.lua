@@ -1,41 +1,46 @@
 local function find_project_root(start_path)
-	local Path = require("plenary.path")
-	local current = Path:new(start_path)
+	local root_file = vim.fs.find({ "uv.lock", "pyproject.toml", ".git" }, {
+		path = start_path,
+		upward = true,
+		stop = vim.uv.os_homedir(),
+	})[1]
 
-	while current:absolute() ~= Path:new(vim.loop.os_homedir()):absolute() do
-		if current:joinpath("uv.lock"):exists() or current:joinpath(".git"):exists() then
-			return current:absolute()
-		end
-		current = current:parent()
+	if not root_file then
+		return nil
 	end
 
-	return nil
+	return vim.fs.dirname(root_file)
 end
 
 local function find_debug_file()
-	local Path = require("plenary.path")
 	local current_file = vim.api.nvim_buf_get_name(0)
-	if not current_file or current_file == "" then
+
+	if current_file == "" then
 		return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 	end
 
-	local start_path = Path:new(current_file):parent()
-	local root = find_project_root(start_path:absolute())
+	local start_dir = vim.fs.dirname(current_file)
+
+	-- project root/main.py
+	local root = find_project_root(start_dir)
 
 	if root then
-		local dbg_path = Path:new(root, "main.py")
-		if dbg_path:exists() then
-			return dbg_path:absolute()
+		local dbg_path = vim.fs.joinpath(root, "main.py")
+
+		if vim.fn.filereadable(dbg_path) == 1 then
+			return dbg_path
 		end
 	end
 
-	local fallback_dbg = Path:new(start_path, "main.py")
-	if fallback_dbg:exists() then
-		return fallback_dbg:absolute()
+	-- current dir/main.py
+	local fallback_dbg = vim.fs.joinpath(start_dir, "main.py")
+
+	if vim.fn.filereadable(fallback_dbg) == 1 then
+		return fallback_dbg
 	end
 
-	local manual = vim.fn.input("Path to executable: ", start_path:absolute() .. "/", "file")
-	return manual
+	-- manual input
+	return vim.fn.input("Path to executable: ", start_dir .. "/", "file")
 end
 
 --NOTE: config
