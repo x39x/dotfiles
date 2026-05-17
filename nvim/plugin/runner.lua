@@ -1,7 +1,5 @@
-local Path = require("plenary.path")
-
 local M = {}
-local CMD_STORE_PATH = Path:new(vim.fn.stdpath("state"), "user", "run_cmd.json")
+local CMD_STORE_PATH = vim.fs.joinpath(vim.fn.stdpath("state"), "user", "run_cmd.json")
 local tmux_run = {}
 
 --==========================
@@ -12,7 +10,7 @@ local function notify_err(msg)
 end
 
 -- send cmd to window
-tmux_run.window = function(root, cmd)
+tmux_run.window = function(root, cmd, focus)
 	local session_result = vim.system({ "tmux", "display-message", "-p", "#S" }, { text = true }):wait()
 	if session_result.code ~= 0 then
 		notify_err("ERROR in tmux_run.lua: Failed to get tmux session")
@@ -61,7 +59,15 @@ tmux_run.window = function(root, cmd)
 	end
 	-- send run cmd
 	vim.system({ "tmux", "send-keys", "-t", session .. ":runner", "C-w", cd_cmd .. cmd, "C-j" }):wait()
-	vim.system({ "tmux", "select-window", "-t", session .. ":runner" }):wait()
+	focus = focus or true
+	if not focus then
+		vim.notify("runner done", vim.log.INFO)
+	end
+
+	-- change focus to runner
+	if focus then
+		vim.system({ "tmux", "select-window", "-t", session .. ":runner" }):wait()
+	end
 end
 
 -- send cmd to pane
@@ -153,26 +159,29 @@ end
 
 -- load JSON
 local function load_cmd_store()
-	if not CMD_STORE_PATH:exists() then
+	if vim.fn.filereadable(CMD_STORE_PATH) == 0 then
 		return {}
 	end
-
-	local ok, content = pcall(function()
-		return CMD_STORE_PATH:read()
-	end)
-
-	if not ok or not content or content == "" then
+	local ok, lines = pcall(vim.fn.readfile, CMD_STORE_PATH)
+	if not ok or not lines then
 		return {}
 	end
-
-	local decoded = vim.fn.json_decode(content)
+	local content = table.concat(lines, "\n")
+	if content == "" then
+		return {}
+	end
+	local ok_decode, decoded = pcall(vim.json.decode, content)
+	if not ok_decode then
+		return {}
+	end
 	return decoded or {}
 end
 
 -- save JSON
 local function save_cmd_store(data)
-	CMD_STORE_PATH:parent():mkdir({ parents = true })
-	CMD_STORE_PATH:write(vim.fn.json_encode(data), "w")
+	local dir = vim.fs.dirname(CMD_STORE_PATH)
+	vim.fn.mkdir(dir, "p")
+	vim.fn.writefile({ vim.json.encode(data) }, CMD_STORE_PATH)
 end
 
 -- get project root
@@ -187,28 +196,23 @@ local function detect_project_root()
 		"package.json",
 		".git",
 	}
-
-	local current = Path:new(vim.fn.expand("%:p")):parent()
-
-	for _, marker in ipairs(markers) do
-		local found = current:find_upwards(marker)
-		if found then
-			return Path:new(found):parent():absolute()
-		end
+	local current = vim.api.nvim_buf_get_name(0)
+	local root = vim.fs.root(current, markers)
+	if root then
+		return root
 	end
-
 	-- fallback
-	return current:parent():absolute()
+	return vim.fs.dirname(current)
 end
 
--- 加载已保存的命令
+-- load cmd
 local function get_project_entry()
-	local all_cmds = load_cmd_store()
+	local cmds = load_cmd_store()
 	local root = detect_project_root()
-	if not all_cmds[root] then
-		all_cmds[root] = { last = nil, all = {} }
+	if not cmds[root] then
+		cmds[root] = { last = nil, all = {} }
 	end
-	return all_cmds, root, all_cmds[root]
+	return cmds, root, cmds[root]
 end
 
 -- select form all
@@ -223,9 +227,9 @@ local function select_existing_cmd(callback)
 	vim.ui.select(entry.all, { prompt = "Select a command to run:" }, function(selected_cmd)
 		if selected_cmd then
 			entry.last = selected_cmd
-			local all_cmds = load_cmd_store()
-			all_cmds[root] = entry
-			save_cmd_store(all_cmds)
+			local cmds = load_cmd_store()
+			cmds[root] = entry
+			save_cmd_store(cmds)
 			callback(root, selected_cmd)
 		end
 	end)
@@ -233,7 +237,7 @@ end
 
 -- add new cmd
 local function add_new_cmd()
-	local all_cmds, root, entry = get_project_entry()
+	local cmds, root, entry = get_project_entry()
 
 	vim.ui.input({ prompt = "Enter new command to run: " }, function(input)
 		if not input or input == "" then
@@ -245,8 +249,8 @@ local function add_new_cmd()
 			table.insert(entry.all, input)
 		end
 		entry.last = input
-		all_cmds[root] = entry
-		save_cmd_store(all_cmds)
+		cmds[root] = entry
+		save_cmd_store(cmds)
 	end)
 	-- add and return new cmd
 	return root, entry.last
