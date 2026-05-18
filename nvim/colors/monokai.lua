@@ -315,6 +315,7 @@ local function m39k()
 	hl("@markup.quote", { fg = colors.fg2 })
 	hl("@markup.math", { fg = colors.pur0 })
 	hl("@markup.link", { fg = colors.fg2, underline = true })
+	hl("@markup.raw", { fg = colors.gre0 })
 	hl("@variable.parameter.vimdoc", { fg = colors.gre0 })
 
 	--NOTE: plug

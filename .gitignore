@@ -1,6 +1,6 @@
 __pycache__/
-karabiner/automatic_backups
-hammerspoon/Spoons
-IM/fcitx5/conf/cached_layouts
-nvim/nvim-pack-lock.json
-nvim/doc/tags
+/karabiner/automatic_backups
+/hammerspoon/Spoons
+/IM/fcitx5/conf/cached_layouts
+/nvim/nvim-pack-lock.json
+/nvim/doc/tags

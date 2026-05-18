@@ -1,3 +1,5 @@
+--TODO: vim.ui.tree https://github.com/neovim/neovim/issues/33914
+
 local get_git_root = function(file_path)
 	local file_dir = vim.fn.fnamemodify(file_path, ":h")
 
