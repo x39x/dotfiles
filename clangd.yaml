@@ -3,9 +3,9 @@ CompileFlags:
 If:
   PathMatch: [".*\\.cc$", ".*\\.hh$"]
 CompileFlags:
-  add: [-std=c++17, -Wall]
+  Add: [-std=c++17, -Wall]
 ---
 If:
   PathMatch: [".*\\.c$"]
 CompileFlags:
-  add: [-std=c11, -Wall]
+  Add: [-std=gnu17, -Wall]

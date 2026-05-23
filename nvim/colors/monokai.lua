@@ -318,6 +318,9 @@ local function m39k()
 	hl("@markup.raw", { fg = colors.gre0 })
 	hl("@variable.parameter.vimdoc", { fg = colors.gre0 })
 
+	--NOTE: custom
+	hl("@keyword.directive", { link = "Number" }) -- define ifdef in c
+
 	--NOTE: plug
 
 	--- indent

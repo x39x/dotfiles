@@ -3,18 +3,18 @@
         "prefix": "mkc",
         "body": [
             "CC = clang",
-            "CFLAGS = -std=c11 -Wall",
+            "CFLAGS = -std=gnu17 -Wall",
             "TARGET = main",
-            "SRCS := $(wildcard *.c)",
+            "SRCS := \\$(wildcard *.c)",
             "",
-            "all: $(TARGET)",
+            "all: \\$(TARGET)",
             "",
-            "$(TARGET): $(SRCS)",
-            "\t@$(CC) $(CFLAGS) $^ -o $@",
-            "\t@./$@",
+            "\\$(TARGET): \\$(SRCS)",
+            "\t@\\$(CC) \\$(CFLAGS) \\$^ -o \\$@",
+            "\t@./\\$@",
             "",
             "clean:",
-            "\t@rm -f $(TARGET)"
+            "\t@rm -f \\$(TARGET)"
         ],
         "description": "basic Makefile"
     },
@@ -23,12 +23,12 @@
         "body": [
             "CXX = clang++",
             "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",
-            "SRCS := $(wildcard *.cc)",
+            "SRCS := \\$(wildcard *.cc)",
             "",
-            "main: $(SRCS)",
-            "\t@$(CXX) $(CXXFLAGS) $^ -o $@",
-            "\t@./$@",
-            "\t@rm $@"
+            "main: \\$(SRCS)",
+            "\t@\\$(CXX) \\$(CXXFLAGS) \\$^ -o \\$@",
+            "\t@./\\$@",
+            "\t@rm \\$@"
         ],
         "description": "oi Makefile"
     },
@@ -38,7 +38,7 @@
             "CXX = clang++",
             "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",
             "%:",
-            "\t@$(CXX) $(CXXFLAGS) $@.cc -o main",
+            "\t@\\$(CXX) \\$(CXXFLAGS) \\$@.cc -o main",
             "\t@./main",
             "\t@rm main"
         ],

@@ -22,5 +22,6 @@ return {
 		"jsonc",
 		"json5",
 	},
-	workspace_required = false,
+	workspace_required = true,
+	root_markers = { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts", ".git" },
 }

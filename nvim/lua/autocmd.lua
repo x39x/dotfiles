@@ -92,7 +92,7 @@ autocmd("FileType", {
 		vim.bo[args.buf].tabstop = 4
 		vim.bo[args.buf].expandtab = false
 	end,
-	group = vim.api.nvim_create_augroup("INDET8", { clear = true }),
+	group = vim.api.nvim_create_augroup("TAB", { clear = true }),
 	desc = "indent 8",
 })
 
