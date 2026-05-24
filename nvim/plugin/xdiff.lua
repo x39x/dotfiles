@@ -86,6 +86,8 @@ local xdiff = function(opts)
 	vim.api.nvim_set_current_win(left_win)
 
 	local function quit_diff()
+		vim.keymap.del("n", "q", { buffer = left_buf })
+		vim.keymap.del("n", "q", { buffer = right_buf })
 		vim.cmd.diffoff()
 		vim.cmd.tabclose()
 	end

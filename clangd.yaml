@@ -3,9 +3,15 @@ CompileFlags:
 If:
   PathMatch: [".*\\.cc$", ".*\\.hh$"]
 CompileFlags:
-  Add: [-std=c++17, -Wall]
+  Add: [-std=c++17, -Wall, -c++]
 ---
 If:
   PathMatch: [".*\\.c$"]
 CompileFlags:
   Add: [-std=gnu17, -Wall]
+
+# CompileFlags
+#
+# -Wall  enable more warnings
+# -xc++  treat all files as C++
+# -xc    treat all files as C
