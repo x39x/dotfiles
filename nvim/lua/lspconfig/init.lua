@@ -97,7 +97,6 @@ local servers = {
 	"ruff",
 	"ty",
 
-	"oxfmt",
 	"vtsls",
 	"vue_ls",
 	"css",
