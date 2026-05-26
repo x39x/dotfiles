@@ -3,7 +3,7 @@ local function hl(group, opts)
 end
 
 local colors = {
-	miku = "#ACB5DE",
+	miku = "#b392f0",
 	-- base
 	fg0 = "#f8f8f8",
 	fg1 = "#888888",

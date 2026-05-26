@@ -343,7 +343,7 @@ local function m39k()
 	hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
 	hl("NvimTreeGitFileNewHL", { fg = colors.gre1 })
 	---alpha
-	hl("AlphaHeader", { fg = colors.gre0 })
+	hl("AlphaHeader", { fg = colors.red0 })
 	---heirline
 	hl("HeirlineA", { fg = colors.blu0 })
 	hl("HeirlineB", { fg = colors.pur0 })

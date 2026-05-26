@@ -20,6 +20,7 @@ return function(bufnr)
 	keymap("n", "ga", function()
 		vim.diagnostic.open_float({ border = "double" })
 	end, opts({ buffer = bufnr, desc = "Lsp diagnostic" }))
+	keymap("n", "gA", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 	keymap("n", "gd", require("fzf-lua").lsp_definitions, opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
 	keymap(
