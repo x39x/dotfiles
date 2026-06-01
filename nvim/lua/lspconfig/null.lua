@@ -1,12 +1,15 @@
 local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
-local diagnostics = null_ls.builtins.diagnostics
 
 local h = require("null-ls.helpers")
 local methods = require("null-ls.methods")
 local u = require("null-ls.utils")
 
 local FORMATTING = methods.internal.FORMATTING
+
+local oxfmtrc = (function()
+	return vim.fn.expand("~/.dotfiles/fmtstyle/oxfmtrc.json")
+end)()
 
 local oxfmt = h.make_builtin({
 	name = "oxfmt",
@@ -36,7 +39,7 @@ local oxfmt = h.make_builtin({
 	factory = h.formatter_factory,
 	generator_opts = {
 		command = "oxfmt",
-		args = { "$FILENAME" },
+		args = { "-c", oxfmtrc, "$FILENAME" },
 		to_temp_file = true,
 		from_temp_file = true,
 		timeout = 10000,
@@ -49,11 +52,6 @@ local oxfmt = h.make_builtin({
 null_ls.setup({
 	debug = false,
 	sources = {
-
-		diagnostics.codespell.with({
-			extra_args = { "-L", "RIME,Rime,rime" },
-		}),
-
 		formatting.shfmt.with({
 			extra_filetypes = { "bash", "zsh" },
 			extra_args = {

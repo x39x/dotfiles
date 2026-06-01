@@ -35,7 +35,8 @@
 --  mason lua-language-server
 --------------------------------------------------------------
 --- spell
---  mason codespell
+--  mason typos codespell
+--  mason harper: grammar checker
 -- ===========================================================
 
 vim.pack.add({
@@ -85,6 +86,7 @@ vim.diagnostic.config({
 })
 
 local servers = {
+	"typos",
 	"lua_ls",
 	"stylua",
 
