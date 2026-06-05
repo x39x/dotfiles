@@ -4,3 +4,5 @@ __pycache__/
 /IM/fcitx5/conf/cached_layouts
 /nvim/nvim-pack-lock.json
 /nvim/doc/tags
+/yazi/plugins
+/yazi/package.toml

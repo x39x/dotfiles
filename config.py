@@ -21,6 +21,7 @@ default = [
     M("ripgrep/rgignore", "~/.rgignore"),
     M("ripgrep/ripgreprc", "~/.config/ripgreprc"),
     M("bat", "~/.config/bat/config"),
+    M("yazi", "~/.config/yazi"),
     M(
         "lazygit.yml",
         utils.path_for(
@@ -37,6 +38,7 @@ default = [
     ),
     M("fmtstyle/clang-format", "~/.clang-format"),
     M("fmtstyle/oxfmtrc.json", "~/.oxfmtrc.json"),
+    M("fmtstyle/stylua.toml", "~/.config/stylua/stylua.toml"),
     M(
         "fmtstyle/rustfmt.toml",
         utils.path_for(
