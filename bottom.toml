@@ -1,0 +1,27 @@
+[flags]
+basic = true
+rate = 1000
+battery = true
+regex = true
+read_only = true
+process_command = true
+case_sensitive = false
+enable_cache_memory = true
+process_memory_as_value = true
+
+[processes]
+columns = [
+    "pid",
+    "name",
+    "state",
+    "cpu%",
+    "mem%",
+    "user",
+    "time",
+    "tread",
+    "twrite",
+    # "gmem%",
+    # "gpu%",
+    # "read",
+    # "write",
+]

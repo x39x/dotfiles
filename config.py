@@ -22,6 +22,7 @@ default = [
     M("ripgrep/ripgreprc", "~/.config/ripgreprc"),
     M("bat", "~/.config/bat/config"),
     M("yazi", "~/.config/yazi"),
+    M("bottom.toml", "~/.config/bottom/bottom.toml"),
     M(
         "lazygit.yml",
         utils.path_for(
