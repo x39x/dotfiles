@@ -1,4 +1,4 @@
-general.import = ["~/.cache/alacritty.toml"]
+general.import = ["~/.local/state/user/alacritty.toml"]
 
 [env]
 TERM_PROGRAM = "alacritty"
@@ -11,7 +11,7 @@ padding = { x = 0, y = 0 }
 position = { x = 650, y = 250 }
 
 [font]
-size = 13 
+size = 13
 normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
 bold_italic = { style = "Bold Italic" }
 italic = { style = "Italic" }
@@ -19,14 +19,14 @@ bold = { style = "Bold" }
 offset = { x = 1, y = 9 }
 
 [cursor]
-style = { shape="Block", blinking="Always" }
-blink_timeout=0
+style = { shape = "Block", blinking = "Always" }
+blink_timeout = 0
 
 [keyboard]
 bindings = [
-{ key = "【", mods = "Control", chars = "\u001B" }, # chars: Unicode
-{ key = "s", mods = "Super", chars = "\u001bs" },
-{ key = "c", mods = "Super", action = "Copy" },
-{ key = "v", mods = "Super", action = "Paste" },
-{ key = "q", mods = "Super", action = "Quit" },
+    { key = "【", mods = "Control", chars = "\u001B" }, # chars: Unicode
+    { key = "s", mods = "Super", chars = "\u001bs" },
+    { key = "c", mods = "Super", action = "Copy" },
+    { key = "v", mods = "Super", action = "Paste" },
+    { key = "q", mods = "Super", action = "Quit" },
 ]

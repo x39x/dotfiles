@@ -168,6 +168,14 @@ rule-providers:
     interval: 43200
     url: https://ruleset.skk.moe/Clash/non_ip/apple_services.txt
     path: ./sukkaw_ruleset/apple_services.txt
+  # apple intelligence
+  apple_ai:
+    type: http
+    behavior: domain
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/apple_intelligence.txt
+    path: ./sukkaw_ruleset/apple_ai.txt
   # 云上贵州
   apple_cn_non_ip:
     type: http
@@ -184,6 +192,13 @@ rule-providers:
     interval: 43200
     url: https://ruleset.skk.moe/Clash/domainset/apple_cdn.txt
     path: ./sukkaw_ruleset/apple_cdn.txt
+  apple_services_ip:
+    type: http
+    behavior: domain
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/sing-box/ip/apple_services.json
+    path: ./sukkaw_ruleset/apple_cdn_ip.txt
 
   #NOTE: microsoft
   # 微软国内备案的cdn
@@ -295,51 +310,38 @@ rule-providers:
     path: ./sukkaw_ruleset/china_ipv6.txt
 
 rules:
+  - DOMAIN-SUFFIX,x39x.cc,DIRECT
   - GEOSITE,category-ads-all,REJECT
-
     # AI
-  - GEOSITE,openai,AI
-  - GEOSITE,google-gemini,AI
   - RULE-SET,ai_non_ip,AI
-
-  # stream
-  - GEOSITE,youtube,PROXY
+  - GEOSITE,category-ai-!cn,AI
+    # stream
+  - RULE-SET,stream_cn,MEDIA-CN
   - RULE-SET,stream_non_ip,MEDIA
-
-    # common
-  - GEOSITE,github,PROXY
-  - GEOSITE,twitter,PROXY
-  - GEOSITE,steam,PROXY
-  - GEOSITE,spotify,PROXY
-  - GEOSITE,pixiv,PROXY
-  - GEOSITE,google,PROXY
+    # google apple ms
   - GEOSITE,google-cn,PROXY # Google CN 不走代理会导致香港等地区节点 Play Store 异常
   - RULE-SET,apple_services,Apple
+  - RULE-SET,apple_ai,Apple
   - RULE-SET,microsoft_non_ip,Apple
-
-  - RULE-SET,global_non_ip,PROXY
-  - GEOSITE,geolocation-!cn,PROXY
-
-    # Direct
-  - DOMAIN,x39x.cc,DIRECT
-  - RULE-SET,lan_non_ip,DIRECT
-
-  - RULE-SET,stream_cn,MEDIA-CN
-
   - RULE-SET,apple_cdn,Apple-CN
   - RULE-SET,apple_cn_non_ip,Apple-CN
   - RULE-SET,microsoft_cdn_non_ip,Apple-CN
-
+    # fallback
+  - RULE-SET,global_non_ip,PROXY
   - RULE-SET,direct_non_ip,DIRECT
   - RULE-SET,domestic_non_ip,DIRECT
+  - GEOSITE,gfw,PROXY
   - GEOSITE,cn,DIRECT
+  - GEOSITE,geolocation-!cn,PROXY
+    # lan
+  - RULE-SET,lan_non_ip,DIRECT
+  - GEOSITE,private,DIRECT
 
   # NOTE: ip
   - RULE-SET,lan_ip,DIRECT,no-resolve # lan 不用dns 解析
   - GEOIP,private,DIRECT,no-resolve
 
-  - GEOIP,twitter,PROXY
-  - GEOIP,google,PROXY
+  - RULE-SET,apple_services_ip,Apple
   - RULE-SET,stream_ip,MEDIA
 
   - RULE-SET,china_ip,DIRECT
