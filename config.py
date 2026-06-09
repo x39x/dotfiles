@@ -155,5 +155,4 @@ if utils.env_exists("RIME"):
     utils.ln(rime)
 
 utils.ln(default)
-
 utils.update_ln39()
