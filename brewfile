@@ -1,79 +1,62 @@
-# Clone of cat(1) with syntax highlighting and Git integration
+tap "buo/cask-upgrade", trusted: true
+tap "glepnir/iswitch", trusted: true
+brew "bash"
 brew "bat"
-# Cross-platform make
+brew "bear"
+brew "bottom"
 brew "cmake"
-# Diff that understands syntax
+brew "container"
 brew "difftastic"
-# Simple, fast and user-friendly alternative to find
+brew "dust"
 brew "fd"
-# User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
-# Command-line fuzzy finder written in Go
 brew "fzf"
-# Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# Platform built on V8 to build network applications
-brew "node@22", link: true
-# Search tool like grep and The Silver Searcher
+brew "node"
+brew "pi-coding-agent"
+brew "pnpm"
 brew "ripgrep"
-# Rust toolchain installer
 brew "rustup"
-# Simplified and community-driven man pages
-brew "tldr"
-# Terminal multiplexer
+brew "shellcheck"
+brew "sing-box"
+brew "tlrc"
 brew "tmux"
-# Display directories as trees (with optional color/HTML output)
+brew "tokei"
 brew "tree"
-# Markup-based typesetting system
+brew "tree-sitter-cli"
 brew "typst"
-# Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
-# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "wget"
 brew "yazi"
-# Shell extension to navigate your filesystem faster
 brew "zoxide"
-# GPU-accelerated terminal emulator
+brew "glepnir/iswitch/iswitch"
 cask "alacritty"
-# Chromium based browser
-cask "arc"
-# OpenAI's official ChatGPT desktop app
 cask "chatgpt"
-# Voice and text chat software
-cask "discord"
+cask "firefox"
 cask "font-iosevka-term-nerd-font"
-# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Web browser
 cask "google-chrome"
-# Desktop automation application
 cask "hammerspoon"
-# Free and open-source media player
 cask "iina"
-# Keyboard customiser
 cask "karabiner-elements"
-# Open-source keystroke visualiser
-cask "keycastr"
-# File archiver
 cask "keka"
-# Utility to open, create and modify archive files
-cask "maczip"
-# Instant messaging tool
+cask "keycastr"
+cask "mac-mouse-fix"
+cask "oracle-jdk@21"
+cask "qbittorrent"
 cask "qq"
-# Control your tools with a few keystrokes
 cask "raycast"
-# PDF reader and note-taking application
 cask "skim"
-# Video game digital distribution service
+cask "squirrel-app"
 cask "steam"
-# Unpacks archive files
-cask "the-unarchiver"
-# Open-source code editor
+cask "tencent-lemon"
+cask "ungoogled-chromium"
 cask "visual-studio-code"
-# Free messaging and calling application
 cask "wechat"
+cask "xld"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "vscodevim.vim"
 vscode "wayou.vscode-todo-highlight"
-
+uv "ruff"
+uv "ty"

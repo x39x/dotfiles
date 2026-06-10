@@ -3,8 +3,8 @@
 # doc: https://wiki.metacubex.one/config/
 # geosite 中 @cn 表示国内提供服务的域名，如 apple@cn 等，此类型推荐走直连
 
-mixed-port: 53939 # HTTP(S) 和 SOCKS 代理混合端口
-redir-port: 63939 # 透明代理端口，用于 Linux 和 MacOS
+mixed-port: 9393 # HTTP(S) 和 SOCKS 代理混合端口
+redir-port: 9392 # 透明代理端口，用于 Linux 和 MacOS
 mode: rule
 log-level: info
 ipv6: true
@@ -13,13 +13,6 @@ allow-lan: false # 局域网连接
 unified-delay: true # 开启统一延迟时，会计算 RTT，以消除连接握手等带来的不同类型节点的延迟差异
 geodata-loader: standard # memconservative：专为内存受限设备优化的加载器 (默认值)
 geo-auto-update: true
-
-# BUG: mihomo.sock on ClashX Meta 1.4.37
-# external-controller-unix: mihomo.sock
-external-controller: 127.0.0.1:59393 # WebUI  http://127.0.0.1:59393/ui
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip" #从 GitHub Pages 分支获取
-external-ui-name: xd
-secret: "xx11"
 
 profile:
   store-selected: true # 储存 API 对策略组的选择，以供下次启动时使用
