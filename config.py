@@ -15,6 +15,7 @@ default = [
     M("sh/fish", "~/.config/fish"),
     M("git", "~/.config/git"),
     M("nvim", "~/.config/nvim"),
+    M("tmux.conf", "~/.tmux.conf"),
     M("alacritty", "~/.config/alacritty"),
     M("ghostty", "~/.config/ghostty"),
     M("fdignore", "~/.config/fd/ignore"),
