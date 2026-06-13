@@ -1,28 +1,37 @@
-workspace_layout  tabbed
+workspace_layout  default
+default_border pixel 3
+default_floating_border pixel 3
 
 ### Output configuration
 output * bg "$HOME/.config/sway/bg.jpg" fill
 
 ### Input configuration
-input "2:7:SynPS/2_Synaptics_TouchPad" {
+input "1452:833:Apple_SPI_Trackpad" {
     dwt enabled
     tap enabled
     accel_profile "flat"
+    pointer_accel -0.2
+    scroll_factor 0.3
     natural_scroll enabled
     middle_emulation enabled
 }
 input "1133:50504:Logitech_USB_Receiver_Mouse" {
     accel_profile "flat"
-    pointer_accel -0.3 # mouse speed (between -1 and 1)
+    pointer_accel -0.3 # (between -1 and 1)
 }
+input "14391:4106:RealTek_MCHOSE_A7_V2_Pro" {
+    accel_profile "flat"
+    pointer_accel -0.9
+}
+
 input "type:keyboard" {
     repeat_delay 239
     repeat_rate 39
     xkb_layout "39xkb"
 }
-input "1:1:AT_Translated_Set_2_keyboard" {
+input "1452:833:Apple_SPI_Keyboard" {
     xkb_options "ctrl:swapcaps"
-    xkb_layout "thinkpad"
+    xkb_layout "39xkb"
 }
 input "6127:24814:Lenovo_TrackPoint_Keyboard_II" {
     pointer_accel 0
@@ -84,11 +93,10 @@ bindsym Mod3+Shift+9 move container to workspace number 9
 bindsym Mod3+Shift+0 move container to workspace number 0
 
 # Layout
-bindsym Mod3+b splith
-bindsym Mod3+v splitv
 bindsym Mod3+e fullscreen
-bindsym Mod3+s layout tabbed
-bindsym Mod3+x layout toggle split
+bindsym Mod3+Shift+s splitt
+bindsym Mod3+s layout toggle split
+bindsym Mod3+x layout toggle tabbed stacking
 
 # float
 bindsym Mod3+z floating toggle
@@ -121,15 +129,16 @@ mode "resize" {
 bindsym Mod3+r mode "resize"
 
 bar {
-    position top
-    tray_output none
-    status_command i3blocks
-    colors {
-        statusline #FFFFFFFF
-        background #1A3666E9
-        inactive_workspace #00000000 #1A3666CC #FFFFFFFF 
-        focused_workspace #00000000 #195788FF #FFFFFFFF 
-    }
+    swaybar_command waybar
+    # position top
+    # tray_output none
+    # status_command i3blocks
+    # colors {
+    #     statusline #FFFFFFFF
+    #     background #1A3666E9
+    #     inactive_workspace #00000000 #1A3666CC #FFFFFFFF 
+    #     focused_workspace #00000000 #195788FF #FFFFFFFF 
+    # }
 }
 
 ### Idle configuration
@@ -143,9 +152,3 @@ exec wl-paste --watch cliphist store
 exec mako
 exec fcitx5 -dr
 
-#TODO:
-bindsym Shift+space exec wtype -k escape
-bindsym Mod1+h exec wtype -k left
-bindsym Mod1+j exec wtype -k down
-bindsym Mod1+k exec wtype -k up
-bindsym Mod1+l exec wtype -k right
