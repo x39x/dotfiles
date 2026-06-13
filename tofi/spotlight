@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 set tofi_cmd_dir "$HOME/.config/tofi"
-set apps firefox alacritty
+set apps firefox alacritty ungoogled-chromium ghostty
 set tofi_list
 
 for f in $tofi_cmd_dir/*
