@@ -67,6 +67,9 @@ bindsym --locked XF86AudioMicMute exec wpctl set-mute \@DEFAULT_AUDIO_SOURCE@ to
 # brightness via brightnessctl
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ && pkill -RTMIN+3 i3blocks
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- && pkill -RTMIN+3 i3blocks
+# kbd backlight via brightness
+bindsym --locked XF86KbdBrightnessUp exec brightnessctl -d kbd_backlight set 50%+
+bindsym --locked XF86KbdBrightnessDown exec brightnessctl -d kbd_backlight set 50%-
 
 # workspace
 bindsym Mod3+1 workspace number 1
@@ -108,8 +111,9 @@ bindsym Mod3+h focus left
 bindsym Mod3+j focus down
 bindsym Mod3+k focus up
 bindsym Mod3+l focus right
-bindsym Mod4+Tab focus next
-bindsym Mod4+Shift+Tab focus prev
+# bindsym Mod4+Tab focus next
+bindsym Mod4+Tab nop
+# bindsym Mod4+Shift+Tab focus prev
 bindsym Mod4+grave focus prev
 
 # Move the focused window
@@ -129,16 +133,17 @@ mode "resize" {
 bindsym Mod3+r mode "resize"
 
 bar {
-    swaybar_command waybar
-    # position top
-    # tray_output none
-    # status_command i3blocks
-    # colors {
-    #     statusline #FFFFFFFF
-    #     background #1A3666E9
-    #     inactive_workspace #00000000 #1A3666CC #FFFFFFFF 
-    #     focused_workspace #00000000 #195788FF #FFFFFFFF 
-    # }
+    # swaybar_command waybar
+    position top
+    tray_output none
+    status_command i3blocks
+    colors {
+        statusline #FFFFFFFF
+        background #1A3666E9
+        # background #FFFFFF00
+        inactive_workspace #00000000 #1A3666CC #FFFFFFFF 
+        focused_workspace #00000000 #195788FF #FFFFFFFF 
+    }
 }
 
 ### Idle configuration
@@ -150,5 +155,5 @@ exec swayidle -w \
 
 exec wl-paste --watch cliphist store
 exec mako
+exec sway-switcher
 exec fcitx5 -dr
-
