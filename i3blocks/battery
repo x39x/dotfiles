@@ -1,6 +1,9 @@
 #!/bin/sh
 
-BATTERY_PATH=$(find /sys/class/power_supply/ -maxdepth 1 -name "BAT*" | head -n 1)
+BATTERY_PATH=$(for ps in /sys/class/power_supply/*; do
+    [ -f "$ps/type" ] && grep -qi battery "$ps/type" && echo "$ps"
+done | head -n 1)
+
 battery="$(cat ${BATTERY_PATH}/capacity)%"
 bstatus=$(cat ${BATTERY_PATH}/status)
 if [ "$bstatus" = "Charging" ]; then

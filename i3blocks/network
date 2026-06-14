@@ -1,10 +1,33 @@
 #!/bin/sh
 
-if ip route | grep -q 'metric 100' 2>/dev/null; then
-    echo "🌐 Ethernet"
-elif iwctl station wlan0 show | grep -q 'Connected'; then
-    wifi_info=$(iwctl station wlan0 show | grep 'Connected network' | awk '{print $3}')
-    echo "🌐 $wifi_info"
-else
-    echo "🚫 NoNet"
-fi
+# mihomo/singbox virtual tun0
+IGNORE_IFACES="tun0"
+
+# find all physical iface
+for iface in /sys/class/net/*; do
+    iface=$(basename "$iface")
+
+    # skip tun0
+    echo "$IGNORE_IFACES" | grep -qw "$iface" && continue
+
+    # must "up"
+    [ "$(cat /sys/class/net/$iface/operstate 2>/dev/null)" = "up" ] || continue
+
+    # WiFi
+    if [ -d "/sys/class/net/$iface/wireless" ]; then
+        ssid=$(iw dev "$iface" link 2>/dev/null | awk -F': ' '/SSID/ {print $2}')
+
+        if [ -n "$ssid" ]; then
+            echo "🌐 $ssid"
+            exit 0
+        fi
+    fi
+
+    # Ethernet（有 carrier 才算真的插网线）
+    if [ -f "/sys/class/net/$iface/carrier" ] && [ "$(cat /sys/class/net/$iface/carrier 2>/dev/null)" = "1" ]; then
+        echo "🔌 Ethernet"
+        exit 0
+    fi
+done
+
+echo "🚫 NoNet"
