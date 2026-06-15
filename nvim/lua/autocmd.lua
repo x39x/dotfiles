@@ -46,20 +46,21 @@ autocmd("BufWritePre", {
 	group = Default,
 })
 
-autocmd("InsertLeave", {
-	callback = function()
-		if vim.fn.executable("iswitch") == 0 then
-			return
-		end
-		vim.system({ "iswitch", "-s", "com.apple.keylayout.ABC" }, nil, function(proc)
-			if proc.code ~= 0 then
-				vim.notify("Failed to switch input source: " .. proc.stderr, vim.log.levels.Warn)
-			end
-		end)
-	end,
-	group = Default,
-	desc = "Auto switch to abc input",
-})
+local im_cmd
+if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
+	im_cmd = { "fcitx5-remote", "-c" }
+elseif vim.fn.has("macunix") == 1 and vim.fn.executable("iswitch") == 1 then
+	im_cmd = { "iswitch", "-s", "com.apple.keylayout.ABC" }
+end
+if im_cmd then
+	autocmd("InsertLeave", {
+		group = Default,
+		desc = "Auto switch input source",
+		callback = function()
+			vim.system(im_cmd)
+		end,
+	})
+end
 
 autocmd("FileType", {
 	pattern = { "markdown" },
