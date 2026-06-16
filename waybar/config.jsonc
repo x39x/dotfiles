@@ -1,0 +1,62 @@
+{
+    "height": 23,
+    "spacing": 0,
+    "modules-left": ["sway/workspaces","niri/workspaces"],
+
+    "modules-right": ["tray", "network", "backlight", "pulseaudio", "battery", "clock"],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+    },
+    
+    "niri/workspaces": {
+        "format": "{value}"
+    },
+
+    "network": {
+        "format-wifi": "📡 {essid}",
+        "format-ethernet": "🌐{ipaddr}/{cidr}",
+        "format-linked": "🔗{ifname} (No IP)",
+        "format-disconnected": "⛔Disconnected",
+         // "tooltip": false
+        "tooltip-format": "{ifname} via {gwaddr}",
+    },
+
+    "backlight": {
+        "format": "💡{percent}%",
+         "tooltip": false
+    },
+
+    "pulseaudio": {
+        "format": "{format_source}   {icon}{volume}%",
+        "format-bluetooth": "{format_source}  {icon}{volume}%",
+        "format-bluetooth-muted": "{format_source}  {icon}",
+        "format-muted": "{format_source}   🤫{volume}%",
+        "format-source": "🎙️{volume}%",
+        "format-source-muted": "😶{volume}%",
+        "format-icons": {
+            "headphone": "🎧",
+            "default": ["📢"],
+        },
+         "tooltip": false
+    },
+
+    "battery": {
+        "format": "{icon}{capacity}%",
+        "format-charging": "⛽{capacity}%",
+        "format-plugged": "🪫{capacity}%",
+        "format-icons": "🔋",
+         "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%a %m-%d %H:%M}",
+         "tooltip": false
+    },
+
+    "tray": {
+        "spacing": 19,
+         "tooltip": false
+    },
+}
