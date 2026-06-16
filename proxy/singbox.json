@@ -158,6 +158,23 @@
                 "action": "hijack-dns"
             },
             {
+                "rule_set": "ads",
+                "action": "reject"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "network": "udp"
+                    },
+                    {
+                        "port": 123
+                    }
+                ],
+                "outbound": "apodidae"
+            },
+            {
                 "protocol": "bittorrent",
                 "outbound": "apodidae"
             },
@@ -172,10 +189,6 @@
             {
                 "domain_suffix": "x39x.cc",
                 "outbound": "apodidae"
-            },
-            {
-                "rule_set": "ads",
-                "action": "reject"
             },
             {
                 "rule_set": "ai_nonip",
@@ -194,18 +207,6 @@
                 "outbound": "stream"
             },
             {
-                "rule_set": "apple_services_nonip",
-                "outbound": "apple"
-            },
-            {
-                "rule_set": "apple_ai_nonip",
-                "outbound": "apple"
-            },
-            {
-                "rule_set": "ms_nonip",
-                "outbound": "apple"
-            },
-            {
                 "rule_set": "apple_cdn_nonip",
                 "outbound": "apple-cn"
             },
@@ -216,6 +217,18 @@
             {
                 "rule_set": "ms_cdn_nonip",
                 "outbound": "apple-cn"
+            },
+            {
+                "rule_set": "apple_services_nonip",
+                "outbound": "apple"
+            },
+            {
+                "rule_set": "apple_ai_nonip",
+                "outbound": "apple"
+            },
+            {
+                "rule_set": "ms_nonip",
+                "outbound": "apple"
             },
             {
                 "rule_set": "global_nonip",
@@ -230,12 +243,12 @@
                 "outbound": "apodidae"
             },
             {
-                "rule_set": "gfw",
-                "outbound": "tern"
-            },
-            {
                 "rule_set": "cnsite",
                 "outbound": "apodidae"
+            },
+            {
+                "rule_set": "gfw",
+                "outbound": "tern"
             },
             {
                 "rule_set": "nocnsite",
