@@ -18,16 +18,16 @@ for iface in /sys/class/net/*; do
         ssid=$(iw dev "$iface" link 2>/dev/null | awk -F': ' '/SSID/ {print $2}')
 
         if [ -n "$ssid" ]; then
-            echo "🌐 $ssid"
+            echo "📡 $ssid"
             exit 0
         fi
     fi
 
     # Ethernet（有 carrier 才算真的插网线）
     if [ -f "/sys/class/net/$iface/carrier" ] && [ "$(cat /sys/class/net/$iface/carrier 2>/dev/null)" = "1" ]; then
-        echo "🔌 Ethernet"
+        echo "🌐 Ethernet"
         exit 0
     fi
 done
 
-echo "🚫 NoNet"
+echo "⛔Disconnected"

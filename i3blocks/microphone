@@ -11,9 +11,9 @@ while [ "$count" -lt 10 ] && [ -z "$micr" ]; do
 done
 
 if echo $micr | grep -q "[MUTED]"; then
-    micr_icon="🙊"
+    micr_icon="😶"
 else
-    micr_icon="🎤"
+    micr_icon="🎙️"
 fi
 
 micr_percent=$(echo "$micr" | grep -o '[0-9]\+\.[0-9]\+' | awk '{printf "%.0f",$1 * 100}')

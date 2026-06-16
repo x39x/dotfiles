@@ -7,7 +7,7 @@ done | head -n 1)
 battery="$(cat ${BATTERY_PATH}/capacity)%"
 bstatus=$(cat ${BATTERY_PATH}/status)
 if [ "$bstatus" = "Charging" ]; then
-    bchar="⚡"
+    bchar="⛽"
 else
     bchar="🔋"
 fi
