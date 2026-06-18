@@ -230,21 +230,29 @@ proxy-groups:
     type: select
     use:
       - provider1
+    url: https://cp.cloudflare.com
+    interval: 39
 
   - name: godwit
     type: select
     use:
       - provider2
+    url: https://cp.cloudflare.com
+    interval: 39
 
   - name: gull
     type: select
     use:
       - provider3
+    url: https://cp.cloudflare.com
+    interval: 39
 
   - name: urltest
     type: url-test
     use:
       - provider1
+    url: https://cp.cloudflare.com
+    interval: 39
 
   - name: tern
     type: select
