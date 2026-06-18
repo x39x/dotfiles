@@ -6,13 +6,23 @@
 mixed-port: 9393 # HTTP(S) 和 SOCKS 代理混合端口
 redir-port: 9392 # 透明代理端口，用于 Linux 和 MacOS
 mode: rule
+allow-lan: false # 局域网连接
+
+geox-url:
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb"
+geo-auto-update: true
+geo-update-interval: 24 # 更新间隔，单位：小时
+
 log-level: info
 ipv6: true
 
-allow-lan: false # 局域网连接
-unified-delay: true # 开启统一延迟时，会计算 RTT，以消除连接握手等带来的不同类型节点的延迟差异
-geodata-loader: standard # memconservative：专为内存受限设备优化的加载器 (默认值)
-geo-auto-update: true
+external-controller: 0.0.0.0:9391
+external-controller-unix: mihomo.sock
+external-ui-url: "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip"
+# external-ui: ./ui
+# external-ui-name: yacd
 
 profile:
   store-selected: true # 储存 API 对策略组的选择，以供下次启动时使用
@@ -29,6 +39,7 @@ tun:
     - "any:53"
     - "tcp://any:53"
   auto-route: true
+  auto-redirect: true
   auto-detect-interface: true
 
 # NOTE: Clash DNS 请求逻辑：https://wiki.metacubex.one/config/dns/diagram/#_3
@@ -42,24 +53,98 @@ dns:
   enable: true
   ipv6: true
   use-system-hosts: false # 是否查询系统 hosts
-  prefer-h3: false # true 会导致国内 DNS 解析慢
+  prefer-h3: true # true 会导致国内 DNS 解析慢
+  ipv6-timeout: 300
   # 启用 DNS 服务并让其在 53 端口（这是绝大多数操作系统将 DNS 解析报文发送到的端口）监听来自任意网络界面的 DNS 请求。
   # 如果你的设备并不需要向其他设备提供解析服务 将0.0.0.0:53 改为 127.0.0.1:53 仅监听本机的 DNS 解析报文。
-  # NOTE: 使用docker等容器时，需要设置为0.0.0.0:53，否则clash会直接丢弃容器内的dns请求
+  # 使用docker等容器时，需要设置为0.0.0.0:53，否则会直接丢弃容器内的dns请求
   listen: 0.0.0.0:53
+  # https://zhuanlan.zhihu.com/p/1949616192567357697
+  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的DNS 服务域名
+  # 只能使用纯 IP 地址，可使用加密 DNS
+  default-nameserver:
+    - 223.5.5.5 #ali
+    - tls://223.5.5.5:853
+    - 119.29.29.29 #tencent
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  fake-ip-range6: fdfe:dcba:9876::1/64 # ipv6
-  # 黑名单里的不会返回fakeip
+  fake-ip-range6: fdfe:dcba:9876::1/64
+  # 黑名单模式 fake-ip-filter 里的不会返回fakeip
   fake-ip-filter-mode: blacklist
-  # 以下匹配局域网
   fake-ip-filter:
-    - "+.lan"
-    - "+.local"
-  # 默认DNS, 用于解析DNS服务器的域名, 必须为IP (?确保国内可访问)
-  default-nameserver:
-    - 119.29.29.29 #tencent
-    - 223.5.5.5 #ali
+    [
+      "*.lan",
+      "stun.*.*.*",
+      "stun.*.*",
+      time.windows.com,
+      time.nist.gov,
+      time.apple.com,
+      time.asia.apple.com,
+      "*.ntp.org.cn",
+      "*.openwrt.pool.ntp.org",
+      time1.cloud.tencent.com,
+      time.ustc.edu.cn,
+      pool.ntp.org,
+      ntp.ubuntu.com,
+      ntp.aliyun.com,
+      ntp1.aliyun.com,
+      ntp2.aliyun.com,
+      ntp3.aliyun.com,
+      ntp4.aliyun.com,
+      ntp5.aliyun.com,
+      ntp6.aliyun.com,
+      ntp7.aliyun.com,
+      time1.aliyun.com,
+      time2.aliyun.com,
+      time3.aliyun.com,
+      time4.aliyun.com,
+      time5.aliyun.com,
+      time6.aliyun.com,
+      time7.aliyun.com,
+      "*.time.edu.cn",
+      time1.apple.com,
+      time2.apple.com,
+      time3.apple.com,
+      time4.apple.com,
+      time5.apple.com,
+      time6.apple.com,
+      time7.apple.com,
+      time1.google.com,
+      time2.google.com,
+      time3.google.com,
+      time4.google.com,
+      music.163.com,
+      "*.music.163.com",
+      "*.126.net",
+      musicapi.taihe.com,
+      music.taihe.com,
+      songsearch.kugou.com,
+      trackercdn.kugou.com,
+      "*.kuwo.cn",
+      api-jooxtt.sanook.com,
+      api.joox.com,
+      joox.com,
+      y.qq.com,
+      "*.y.qq.com",
+      streamoc.music.tc.qq.com,
+      mobileoc.music.tc.qq.com,
+      isure.stream.qqmusic.qq.com,
+      dl.stream.qqmusic.qq.com,
+      aqqmusic.tc.qq.com,
+      amobile.music.tc.qq.com,
+      "*.xiami.com",
+      "*.music.migu.cn",
+      music.migu.cn,
+      "*.msftconnecttest.com",
+      "*.msftncsi.com",
+      localhost.ptlogin2.qq.com,
+      "*.*.*.srv.nintendo.net",
+      "*.*.stun.playstation.net",
+      "xbox.*.*.microsoft.com",
+      "*.ipv6.microsoft.com",
+      "*.*.xboxlive.com",
+      speedtest.cros.wr.pvp.net,
+    ]
   # 代理节点域名解析服务器，仅用于解析代理节点的域名
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
@@ -82,75 +167,108 @@ dns:
   # fake ip 不需要配置fallback, redir-host遗留产物
 
 proxy-providers:
+  # provider1:
+  #   type: file
+  #   path: ./proxy_providers/proxy_1.yaml
+  #   health-check:
+  #     enable: true
+  #     url: https://cp.cloudflare.com
+  #     interval: 300
+  #     timeout: 1000
+  #     lazy: true
+  # provider2:
+  #   type: file
+  #   path: ./proxy_providers/proxy_2.yaml
+  #   health-check:
+  #     enable: true
+  #     url: https://cp.cloudflare.com
+  #     interval: 300
+  #     timeout: 1000
+  #     lazy: true
+  # provider3:
+  #   type: file
+  #   path: ./proxy_providers/proxy_3.yaml
+  #   health-check:
+  #     enable: true
+  #     url: https://cp.cloudflare.com
+  #     interval: 300
+  #     timeout: 1000
+  #     lazy: true
   provider1:
-    type: file
-    path: ./proxy_providers/proxy_1.yaml
+    type: http
+    url: example.com
+    proxy: DIRECT
     health-check:
       enable: true
-      url: https://www.gstatic.com/generate_204
+      url: https://cp.cloudflare.com
       interval: 300
       timeout: 1000
       lazy: true
   provider2:
-    type: file
-    path: ./proxy_providers/proxy_2.yaml
+    type: http
+    url: example.com
+    proxy: DIRECT
     health-check:
       enable: true
-      url: https://www.gstatic.com/generate_204
+      url: https://cp.cloudflare.com
       interval: 300
       timeout: 1000
       lazy: true
   provider3:
-    type: file
-    path: ./proxy_providers/proxy_3.yaml
+    type: http
+    url: example.com
+    proxy: DIRECT
     health-check:
       enable: true
-      url: https://www.gstatic.com/generate_204
+      url: https://cp.cloudflare.com
       interval: 300
       timeout: 1000
       lazy: true
 
 proxy-groups:
-  - name: PROXY-1
+  - name: cuckoo
     type: select
     use:
       - provider1
 
-  - name: PROXY-2
+  - name: godwit
     type: select
     use:
       - provider2
 
-  - name: PROXY-3
+  - name: gull
     type: select
     use:
       - provider3
-    proxies:
-      - DIRECT
 
-  - name: PROXY
-    type: select
-    proxies: [PROXY-1, PROXY-2, PROXY-3, DIRECT]
+  - name: urltest
+    type: url-test
+    use:
+      - provider1
 
-  - name: AI
+  - name: tern
     type: select
-    proxies: [PROXY-3, PROXY-2, PROXY-1, PROXY]
+    proxies: [urltest, cuckoo, godwit, gull]
 
-  - name: MEDIA
+  - name: ai
     type: select
-    proxies: [PROXY, PROXY-1, PROXY-2, PROXY-3]
+    proxies: [tern, gull, godwit, cuckoo]
 
-  - name: Apple
+  - name: stream
     type: select
-    proxies: [PROXY, PROXY-1, PROXY-2, PROXY-3, DIRECT]
+    proxies: [tern, cuckoo, godwit, gull]
 
-  - name: MEDIA-CN
+  - name: stream-cn
     type: select
-    proxies: [DIRECT, PROXY-1, PROXY-2, PROXY-3]
+    proxies: [DIRECT, cuckoo, godwit, gull]
 
-  - name: Apple-CN
+  - name: apple
     type: select
-    proxies: [DIRECT, PROXY-1, PROXY-2, PROXY-3]
+    proxies: [tern, cuckoo, godwit, gull, DIRECT]
+
+  - name: apple-cn
+    type: select
+    proxies: [DIRECT, cuckoo, godwit, gull]
 
 rule-providers:
   #NOTE: Apple
@@ -304,28 +422,30 @@ rule-providers:
 
 rules:
   - DOMAIN-SUFFIX,x39x.cc,DIRECT
+  - PROCESS-NAME,qBittorrent,DIRECT
+  - PROCESS-NAME,uTorrent,DIRECT
   - GEOSITE,category-ads-all,REJECT
     # AI
-  - RULE-SET,ai_non_ip,AI
-  - GEOSITE,category-ai-!cn,AI
+  - RULE-SET,ai_non_ip,ai
+  - GEOSITE,category-ai-!cn,ai
     # stream
-  - RULE-SET,stream_cn,MEDIA-CN
-  - RULE-SET,stream_non_ip,MEDIA
+  - RULE-SET,stream_cn,stream-cn
+  - RULE-SET,stream_non_ip,stream
     # google apple ms
-  - GEOSITE,google-cn,PROXY # Google CN 不走代理会导致香港等地区节点 Play Store 异常
-  - RULE-SET,apple_services,Apple
-  - RULE-SET,apple_ai,Apple
-  - RULE-SET,microsoft_non_ip,Apple
-  - RULE-SET,apple_cdn,Apple-CN
-  - RULE-SET,apple_cn_non_ip,Apple-CN
-  - RULE-SET,microsoft_cdn_non_ip,Apple-CN
+  - GEOSITE,google-cn,tern # Google CN 不走代理会导致香港等地区节点 Play Store 异常
+  - RULE-SET,apple_services,apple
+  - RULE-SET,apple_ai,apple
+  - RULE-SET,microsoft_non_ip,apple
+  - RULE-SET,apple_cdn,apple-cn
+  - RULE-SET,apple_cn_non_ip,apple-cn
+  - RULE-SET,microsoft_cdn_non_ip,apple-cn
     # fallback
-  - RULE-SET,global_non_ip,PROXY
+  - RULE-SET,global_non_ip,tern
   - RULE-SET,direct_non_ip,DIRECT
   - RULE-SET,domestic_non_ip,DIRECT
-  - GEOSITE,gfw,PROXY
+  - GEOSITE,gfw,tern
   - GEOSITE,cn,DIRECT
-  - GEOSITE,geolocation-!cn,PROXY
+  - GEOSITE,geolocation-!cn,tern
     # lan
   - RULE-SET,lan_non_ip,DIRECT
   - GEOSITE,private,DIRECT
@@ -334,10 +454,10 @@ rules:
   - RULE-SET,lan_ip,DIRECT,no-resolve # lan 不用dns 解析
   - GEOIP,private,DIRECT,no-resolve
 
-  - RULE-SET,apple_services_ip,Apple
-  - RULE-SET,stream_ip,MEDIA
+  - RULE-SET,apple_services_ip,apple
+  - RULE-SET,stream_ip,stream
 
   - RULE-SET,china_ip,DIRECT
   - RULE-SET,china_ip_ipv6,DIRECT
   - GEOIP,cn,DIRECT
-  - MATCH,PROXY
+  - MATCH,tern
