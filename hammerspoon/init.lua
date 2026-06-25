@@ -1,11 +1,12 @@
 local hk = require("hs.hotkey")
-local lanuchOrFocusApp = require("app").lanuchOrFocusApp
+local launchOrFocus = require("app").launchOrFocus
 local windowManager = require("window").windowManager
 local FocusDesktop = require("app").FocusDesktop
 
 -- launch or focue app
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", lanuchOrFocusApp("Google Chrome"))
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "d", lanuchOrFocusApp("Alacritty"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", launchOrFocus("com.google.Chrome"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "d", launchOrFocus("com.mitchellh.ghostty"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", launchOrFocus("com.mitchellh.ghostty"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "t", FocusDesktop())
 
 -- window manager

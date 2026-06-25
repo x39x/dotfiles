@@ -3,48 +3,30 @@ local alert = require("hs.alert")
 local application = require("hs.application")
 local timer = require("hs.timer")
 
-local function sleep(appName)
+local function appSleep(appBundleID)
 	local appToSleep = {
-		["Visual Studio Code"] = "0.3",
-		["Notes"] = "0.3",
+		["com.microsoft.VSCode"] = "0.3",
+		["com.apple.Notes"] = "0.3",
 	}
-	if appToSleep[appName] == nil then
-		return
+	if appToSleep[appBundleID] ~= nil then
+		os.execute("sleep " .. appToSleep[appBundleID])
 	end
-	os.execute("sleep " .. appToSleep[appName])
+	os.execute("sleep 0.5")
 end
 
-local function notFullScreenApp(appName)
-	local appNotFullScreen = {
-		["Preview"] = true,
-		["WezTerm"] = true,
-	}
-	if appNotFullScreen[appName] ~= nil then
-		return true
-	else
-		return false
-	end
-end
-
-local function getBundleID(appName)
-	local script = "osascript -e 'id of app \"" .. appName .. "\"'"
-	local handle = io.popen(script)
-	if handle ~= nil then
-		local result = handle:read("*a")
-		handle:close()
-		return string.gsub(result, "\n", "")
-	end
-end
-
-local function launchApp(appName, appBundleID)
+local function launchApp(appBundleID)
 	local runApp = application.launchOrFocusByBundleID(appBundleID)
+	local notFullScreenApp = {
+		["com.apple.Preview"] = true,
+		["org.alacritty"] = true,
+	}
 
 	if runApp == false then
-		alert("Failed to launch app: " .. appName)
-	elseif notFullScreenApp(appName) then
+		alert("Failed to launch app: " .. appBundleID)
+	elseif notFullScreenApp[appBundleID] then
 		return
 	else
-		-- for fullScreen when first lanuch
+		-- for fullScreen when first launch
 		local checkTimerTimeoutCounter = 0
 		CheckTimer = timer.new(0.1, function()
 			if checkTimerTimeoutCounter == 500 then
@@ -53,13 +35,12 @@ local function launchApp(appName, appBundleID)
 				return
 			end
 
-			local appsFirstLanuch = application.applicationsForBundleID(appBundleID)
-			local appFirstLanuch = appsFirstLanuch and appsFirstLanuch[1]
-			if appFirstLanuch then
-				os.execute("sleep 0.5")
-				sleep(appName)
-				if appFirstLanuch:activate() then
-					local focusedWindow = appFirstLanuch:focusedWindow()
+			local appsFirstLaunch = application.applicationsForBundleID(appBundleID)
+			local appFirstLaunch = appsFirstLaunch and appsFirstLaunch[1]
+			if appFirstLaunch then
+				appSleep(appBundleID)
+				if appFirstLaunch:activate() then
+					local focusedWindow = appFirstLaunch:focusedWindow()
 					if focusedWindow then
 						focusedWindow:setFullScreen(true)
 						CheckTimer:stop()
@@ -93,22 +74,17 @@ local function focusApp(app, appBundleID)
 	end
 end
 
-M.lanuchOrFocusApp = function(appName)
+M.launchOrFocus = function(appBundleID)
 	return function()
-		local appBundleID = getBundleID(appName)
-		if not appBundleID then
-			return
-		end
-
 		local appsIsRunning = application.applicationsForBundleID(appBundleID)
 		local appIsRunning = appsIsRunning and appsIsRunning[1]
 
 		-- If app is not open, then open it and go fullscreen
 		if not appIsRunning then
-			launchApp(appName, appBundleID)
+			launchApp(appBundleID)
 		end
 
-		-- or focus app
+		-- focus app
 		focusApp(appIsRunning, appBundleID)
 	end
 end
