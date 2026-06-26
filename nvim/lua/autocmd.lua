@@ -99,8 +99,8 @@ autocmd("FileType", {
 
 autocmd("FileType", {
 	pattern = "qf",
-	callback = function()
-		vim.opt_local.buflisted = false
+	callback = function(args)
+		vim.bo[args.buf].buflisted = false
 	end,
 	group = Default,
 	desc = "Do't show qf in bufline",

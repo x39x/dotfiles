@@ -35,8 +35,17 @@ local parsers = {
 require("tree-sitter-manager").setup({
 	ensure_installed = parsers,
 	border = "single",
-	auto_install = false, -- if enabled, install missing parsers when editing a new file
-	highlight = true, -- treesitter highlighting is enabled by default
+	auto_install = false,
+	highlight = true,
+	languages = {
+		asciidoc = {
+			install_info = {
+				url = "https://github.com/cathaysia/tree-sitter-asciidoc",
+				location = "tree-sitter-asciidoc",
+				use_repo_queries = true,
+			},
+		},
+	},
 })
 
 --BUG: treesitter.get_filetypes can't get all when startup
