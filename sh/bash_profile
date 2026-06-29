@@ -31,7 +31,7 @@ export FZF_DEFAULT_COMMAND="fd --hidden"
 # linux/osx
 if [ "$(uname)" = "Darwin" ]; then
     FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo -n {1..} | pbcopy)+abort'"
-    ADD_TO_PATH " $HOMEBREW_PREFIX/opt/rustup/bin"
+    ADD_TO_PATH "$HOMEBREW_PREFIX/opt/rustup/bin"
 elif command -v wl-copy >/dev/null 2>&1; then
     FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo -n {1..} | wl-copy)+abort'"
 fi
