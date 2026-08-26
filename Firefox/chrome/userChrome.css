@@ -5,7 +5,7 @@
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
-    background: var(--toolbar-bgcolor) !important;
+    background: var(--toolbar-background-color) !important;
 }
 
 /* remove line below address bar above result container */
@@ -44,4 +44,3 @@
 #translations-button {
     display: none !important;
 }
-
