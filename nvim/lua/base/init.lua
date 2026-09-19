@@ -10,7 +10,7 @@ vim.pack.add({
 	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/mikavilpas/yazi.nvim",
 	-- treesitter
-	"https://github.com/romus204/tree-sitter-manager.nvim", -- tree-sitter CLI must be installed system-wide
+	"https://github.com/nvim-treesitter/nvim-treesitter",
 	{
 		src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 		version = "main",

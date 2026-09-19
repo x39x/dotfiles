@@ -11,6 +11,7 @@ local parsers = {
 	"vimdoc",
 	"markdown",
 	"markdown_inline",
+	"asciidoc",
 
 	"c",
 	"go",
@@ -32,21 +33,21 @@ local parsers = {
 	"make",
 	"cmake",
 }
-require("tree-sitter-manager").setup({
-	ensure_installed = parsers,
-	border = "single",
-	auto_install = false,
-	highlight = true,
-	languages = {
-		asciidoc = {
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "TSUpdate",
+	callback = function()
+		require("nvim-treesitter.parsers").asciidoc = {
 			install_info = {
 				url = "https://github.com/cathaysia/tree-sitter-asciidoc",
+				branch = "master",
 				location = "tree-sitter-asciidoc",
-				use_repo_queries = true,
+				queries = "tree-sitter-asciidoc/queries",
 			},
-		},
-	},
+		}
+	end,
 })
+require("nvim-treesitter").install(parsers)
 
 --BUG: treesitter.get_filetypes can't get all when startup
 local patterns = { "typescriptreact" }
