@@ -35,7 +35,7 @@
 --  mason lua-language-server
 --------------------------------------------------------------
 --- spell
---  mason typos codespell
+--  mason typos/codespell
 --  mason harper: grammar checker
 -- ===========================================================
 

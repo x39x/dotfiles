@@ -18,9 +18,10 @@ vim.pack.add({
 	"https://github.com/kevinhwang91/promise-async",
 	"https://github.com/kevinhwang91/nvim-ufo",
 	-- blink.cmp
+	"https://github.com/saghen/blink.lib",
 	{
-		src = "https://github.com/Saghen/blink.cmp",
-		version = vim.version.range("1.*"),
+		src = "https://github.com/saghen/blink.cmp",
+		version = "main",
 	},
 	"https://github.com/rafamadriz/friendly-snippets",
 	-- tools

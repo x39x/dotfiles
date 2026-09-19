@@ -1,6 +1,8 @@
 local cmp_border = { " ", " ", " ", " ", " ", " ", " ", " " }
 
-require("blink.cmp").setup({
+local cmp = require("blink.cmp")
+cmp.build():pwait()
+cmp.setup({
 	completion = {
 		-- keyword = { range = "prefix" },
 		menu = {
