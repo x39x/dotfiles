@@ -10,8 +10,6 @@ base = [
 ]
 
 default = [
-    M("sh/bash_profile", "~/.bash_profile"),
-    M("sh/bashrc", "~/.bashrc"),
     M("sh/fish", "~/.config/fish"),
     M("git", "~/.config/git"),
     M("nvim", "~/.config/nvim"),
@@ -146,9 +144,11 @@ if utils.env_exists("BASE"):
     exit()
 
 if utils.get_os_name() == "Darwin":
+    utils.ln(base)
     utils.ln(macos)
 
 if utils.get_os_name() == "Linux":
+    utils.ln(base)
     utils.ln(linux)
 
 if utils.env_exists("RIME"):
