@@ -19,10 +19,9 @@ log-level: info
 ipv6: true
 
 external-controller: 0.0.0.0:9391
-external-controller-unix: mihomo.sock
-external-ui-url: "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip"
-# external-ui: ./ui
-# external-ui-name: yacd
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui: ui
+secret: "xx11"
 
 profile:
   store-selected: true # 储存 API 对策略组的选择，以供下次启动时使用
@@ -196,7 +195,7 @@ proxy-providers:
   #     lazy: true
   provider1:
     type: http
-    url: example.com
+    url: https://example.com
     proxy: DIRECT
     health-check:
       enable: true
@@ -206,7 +205,7 @@ proxy-providers:
       lazy: true
   provider2:
     type: http
-    url: example.com
+    url: https://example.com
     proxy: DIRECT
     health-check:
       enable: true
@@ -216,7 +215,7 @@ proxy-providers:
       lazy: true
   provider3:
     type: http
-    url: example.com
+    url: https://example.com
     proxy: DIRECT
     health-check:
       enable: true
@@ -316,8 +315,8 @@ rule-providers:
     behavior: domain
     format: text
     interval: 43200
-    url: https://ruleset.skk.moe/sing-box/ip/apple_services.json
-    path: ./sukkaw_ruleset/apple_cdn_ip.txt
+    url: https://ruleset.skk.moe/Clash/ip/apple_services.txt
+    path: ./sukkaw_ruleset/apple_services_ip.txt
 
   #NOTE: microsoft
   # 微软国内备案的cdn

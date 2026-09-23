@@ -59,6 +59,7 @@
             "tag": "tun-in",
             "mtu": 9000,
             "address": ["198.18.0.1/16", "fdfe:dcba:9876::1/64"],
+            "dns_mode": "hijack",
             "auto_route": true,
             "strict_route": true,
             "stack": "mixed"
@@ -66,6 +67,7 @@
         {
             "type": "mixed",
             "tag": "mixed-in",
+            "set_system_proxy": true,
             "listen": "0.0.0.0",
             "listen_port": 9393
         }
@@ -158,23 +160,6 @@
                 "action": "hijack-dns"
             },
             {
-                "rule_set": "ads",
-                "action": "reject"
-            },
-            {
-                "type": "logical",
-                "mode": "and",
-                "rules": [
-                    {
-                        "network": "udp"
-                    },
-                    {
-                        "port": 123
-                    }
-                ],
-                "outbound": "apodidae"
-            },
-            {
                 "protocol": "bittorrent",
                 "outbound": "apodidae"
             },
@@ -189,6 +174,10 @@
             {
                 "domain_suffix": "x39x.cc",
                 "outbound": "apodidae"
+            },
+            {
+                "rule_set": "ads",
+                "action": "reject"
             },
             {
                 "rule_set": "ai_nonip",
@@ -207,18 +196,6 @@
                 "outbound": "stream"
             },
             {
-                "rule_set": "apple_cdn_nonip",
-                "outbound": "apple-cn"
-            },
-            {
-                "rule_set": "apple_cn_nonip",
-                "outbound": "apple-cn"
-            },
-            {
-                "rule_set": "ms_cdn_nonip",
-                "outbound": "apple-cn"
-            },
-            {
                 "rule_set": "apple_services_nonip",
                 "outbound": "apple"
             },
@@ -229,6 +206,18 @@
             {
                 "rule_set": "ms_nonip",
                 "outbound": "apple"
+            },
+            {
+                "rule_set": "apple_cdn_nonip",
+                "outbound": "apple-cn"
+            },
+            {
+                "rule_set": "apple_cn_nonip",
+                "outbound": "apple-cn"
+            },
+            {
+                "rule_set": "ms_cdn_nonip",
+                "outbound": "apple-cn"
             },
             {
                 "rule_set": "global_nonip",
@@ -243,12 +232,12 @@
                 "outbound": "apodidae"
             },
             {
-                "rule_set": "cnsite",
-                "outbound": "apodidae"
-            },
-            {
                 "rule_set": "gfw",
                 "outbound": "tern"
+            },
+            {
+                "rule_set": "cnsite",
+                "outbound": "apodidae"
             },
             {
                 "rule_set": "nocnsite",
@@ -473,7 +462,7 @@
         "clash_api": {
             "external_controller": "0.0.0.0:9391",
             "external_ui": "ui",
-            "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
             "external_ui_download_detour": "tern",
             "secret": "xx11",
             "default_mode": "rule"
