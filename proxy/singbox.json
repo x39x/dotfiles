@@ -19,8 +19,8 @@
             {
                 "type": "fakeip",
                 "tag": "fake_dns",
-                "inet4_range": "11.0.0.0/16",
-                "inet6_range": "3ffe::/16"
+                "inet4_range": "198.18.0.0/15",
+                "inet6_range": "fc00::/18"
             }
         ],
         "rules": [
@@ -30,25 +30,11 @@
             },
             {
                 "clash_mode": "global",
-                "server": "fake_dns"
-            },
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "domain_suffix": ["ileidian.com", ".cn"]
-                    },
-                    {
-                        "rule_set": "cnsite"
-                    }
-                ],
-                "server": "cn_dns"
+                "server": "proxy_dns"
             },
             {
                 "query_type": ["A", "AAAA"],
-                "server": "fake_dns",
-                "rewrite_ttl": 1
+                "server": "fake_dns"
             }
         ],
         "final": "proxy_dns"
@@ -58,7 +44,7 @@
             "type": "tun",
             "tag": "tun-in",
             "mtu": 9000,
-            "address": ["198.18.0.1/16", "fdfe:dcba:9876::1/64"],
+            "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
             "dns_mode": "hijack",
             "auto_route": true,
             "strict_route": true,
@@ -176,10 +162,6 @@
                 "outbound": "apodidae"
             },
             {
-                "rule_set": "ads",
-                "action": "reject"
-            },
-            {
                 "rule_set": "ai_nonip",
                 "outbound": "ai"
             },
@@ -250,6 +232,10 @@
             {
                 "rule_set": "private",
                 "outbound": "apodidae"
+            },
+            {
+                "rule_set": "ads",
+                "action": "reject"
             },
             {
                 "action": "resolve"
