@@ -14,8 +14,7 @@
             {
                 "type": "https",
                 "tag": "cn_dns",
-                "server": "223.6.6.6",
-                "detour": "apodidae"
+                "server": "223.6.6.6"
             },
             {
                 "type": "fakeip",
@@ -34,15 +33,11 @@
                 "server": "proxy_dns"
             },
             {
-                "rules": {
-                    "rule_set": ["lan_nonip"]
-                },
+                "rule_set": ["lan_nonip"],
                 "server": "cn_dns"
             },
             {
-                "rules": {
-                    "rule_set": ["private"]
-                },
+                "rule_set": ["private"],
                 "server": "cn_dns"
             },
             {
@@ -50,15 +45,11 @@
                 "server": "fake_dns"
             },
             {
-                "rules": {
-                    "rule_set": ["domestic_nonip"]
-                },
+                "rule_set": ["domestic_nonip"],
                 "server": "cn_dns"
             },
             {
-                "rules": {
-                    "rule_set": ["cnsite"]
-                },
+                "rule_set": ["cnsite"],
                 "server": "cn_dns"
             }
         ],
