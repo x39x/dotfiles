@@ -8,13 +8,14 @@
             {
                 "type": "https",
                 "tag": "proxy_dns",
-                "detour": "tern",
-                "server": "1.1.1.1"
+                "server": "1.1.1.1",
+                "detour": "tern"
             },
             {
                 "type": "https",
                 "tag": "cn_dns",
-                "server": "223.6.6.6"
+                "server": "223.6.6.6",
+                "detour": "apodidae"
             },
             {
                 "type": "fakeip",
@@ -33,8 +34,32 @@
                 "server": "proxy_dns"
             },
             {
+                "rules": {
+                    "rule_set": ["lan_nonip"]
+                },
+                "server": "cn_dns"
+            },
+            {
+                "rules": {
+                    "rule_set": ["private"]
+                },
+                "server": "cn_dns"
+            },
+            {
                 "query_type": ["A", "AAAA"],
                 "server": "fake_dns"
+            },
+            {
+                "rules": {
+                    "rule_set": ["domestic_nonip"]
+                },
+                "server": "cn_dns"
+            },
+            {
+                "rules": {
+                    "rule_set": ["cnsite"]
+                },
+                "server": "cn_dns"
             }
         ],
         "final": "proxy_dns"
@@ -53,7 +78,6 @@
         {
             "type": "mixed",
             "tag": "mixed-in",
-            "set_system_proxy": true,
             "listen": "0.0.0.0",
             "listen_port": 9393
         }
@@ -126,10 +150,6 @@
     "route": {
         "rules": [
             {
-                "network": "icmp",
-                "outbound": "apodidae"
-            },
-            {
                 "action": "sniff"
             },
             {
@@ -146,19 +166,19 @@
                 "action": "hijack-dns"
             },
             {
-                "protocol": "bittorrent",
-                "outbound": "apodidae"
+                "clash_mode": "global",
+                "outbound": "tern"
             },
             {
                 "clash_mode": "direct",
                 "outbound": "apodidae"
             },
             {
-                "clash_mode": "global",
-                "outbound": "tern"
+                "protocol": "bittorrent",
+                "outbound": "apodidae"
             },
             {
-                "domain_suffix": "x39x.cc",
+                "rule_set": "direct_nonip",
                 "outbound": "apodidae"
             },
             {
@@ -178,18 +198,6 @@
                 "outbound": "stream"
             },
             {
-                "rule_set": "apple_services_nonip",
-                "outbound": "apple"
-            },
-            {
-                "rule_set": "apple_ai_nonip",
-                "outbound": "apple"
-            },
-            {
-                "rule_set": "ms_nonip",
-                "outbound": "apple"
-            },
-            {
                 "rule_set": "apple_cdn_nonip",
                 "outbound": "apple-cn"
             },
@@ -202,12 +210,20 @@
                 "outbound": "apple-cn"
             },
             {
-                "rule_set": "global_nonip",
-                "outbound": "tern"
+                "rule_set": "apple_services_nonip",
+                "outbound": "apple"
             },
             {
-                "rule_set": "direct_nonip",
-                "outbound": "apodidae"
+                "rule_set": "apple_ai_nonip",
+                "outbound": "apple"
+            },
+            {
+                "rule_set": "ms_nonip",
+                "outbound": "apple"
+            },
+            {
+                "rule_set": "global_nonip",
+                "outbound": "tern"
             },
             {
                 "rule_set": "domestic_nonip",
@@ -317,6 +333,13 @@
             },
             {
                 "type": "remote",
+                "tag": "direct_nonip",
+                "url": "https://ruleset.skk.moe/sing-box/non_ip/direct.json",
+                "download_detour": "tern",
+                "update_interval": "24h0m0s"
+            },
+            {
+                "type": "remote",
                 "tag": "ai_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/ai.json",
                 "download_detour": "tern",
@@ -338,15 +361,15 @@
             },
             {
                 "type": "remote",
-                "tag": "apple_cn_nonip",
-                "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_cn.json",
+                "tag": "apple_ai_nonip",
+                "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_intelligence.json",
                 "download_detour": "tern",
                 "update_interval": "24h0m0s"
             },
             {
                 "type": "remote",
-                "tag": "apple_ai_nonip",
-                "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_intelligence.json",
+                "tag": "apple_cn_nonip",
+                "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_cn.json",
                 "download_detour": "tern",
                 "update_interval": "24h0m0s"
             },
@@ -375,13 +398,6 @@
                 "type": "remote",
                 "tag": "global_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/global.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
-            },
-            {
-                "type": "remote",
-                "tag": "direct_nonip",
-                "url": "https://ruleset.skk.moe/sing-box/non_ip/direct.json",
                 "download_detour": "tern",
                 "update_interval": "24h0m0s"
             },
