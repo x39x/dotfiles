@@ -6,10 +6,10 @@ regex = true
 read_only = true
 process_command = true
 case_sensitive = false
-enable_cache_memory = true
-process_memory_as_value = true
+memory.cache_memory = true
 
 [processes]
+default_memory_value = true
 columns = [
     "pid",
     "name",
@@ -25,3 +25,7 @@ columns = [
     # "read",
     # "write",
 ]
+
+[styles.widgets]
+selected_text = { colour = "white", bg_colour = "blue", bold = true }
+text = { colour = "lightblue" }
