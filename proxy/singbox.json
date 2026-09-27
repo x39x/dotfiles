@@ -3,6 +3,34 @@
         "level": "info",
         "timestamp": true
     },
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "store_fakeip": true,
+            "store_dns": true
+        }
+    },
+    "services": [
+        {
+            "type": "api",
+            "tag": "dashboard",
+            "listen": "127.0.0.1",
+            "listen_port": 9391,
+            "secret": "xx11",
+            "access_control_allow_private_network": false,
+            "access_control_allow_origin": [
+                "http://localhost:9391/",
+                "https://sing-box-dashboard.sagernet.org"
+            ],
+            "dashboard": {
+                "enabled": true,
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
+            }
+        }
+    ],
     "dns": {
         "servers": [
             {
@@ -169,6 +197,10 @@
                 "outbound": "apodidae"
             },
             {
+                "protocol": "ntp",
+                "outbound": "apodidae"
+            },
+            {
                 "rule_set": "direct_nonip",
                 "outbound": "apodidae"
             },
@@ -277,162 +309,231 @@
                 "type": "remote",
                 "tag": "ads",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ads-all.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "ai",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ai-!cn.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "gfw",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/gfw.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "cnsite",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/cn.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "nocnsite",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "private",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "cnip",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/cn.srs",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "direct_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/direct.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "ai_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/ai.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "stream_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/stream.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "apple_services_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_services.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "apple_ai_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_intelligence.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "apple_cn_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_cn.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "apple_cdn_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/apple_cdn.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "ms_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/microsoft.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "ms_cdn_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/microsoft_cdn.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "global_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/global.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "domestic_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/domestic.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "lan_nonip",
                 "url": "https://ruleset.skk.moe/sing-box/non_ip/lan.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "apple_services_ip",
                 "url": "https://ruleset.skk.moe/sing-box/ip/apple_services.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "stream_ip",
                 "url": "https://ruleset.skk.moe/sing-box/ip/stream.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "china_ip",
                 "url": "https://ruleset.skk.moe/sing-box/ip/china_ip.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "type": "remote",
                 "tag": "china_ipv6",
                 "url": "https://ruleset.skk.moe/sing-box/ip/china_ip_ipv6.json",
-                "download_detour": "tern",
-                "update_interval": "24h0m0s"
+                "update_interval": "24h0m0s",
+                "http_client": {
+                    "disable_version_fallback": true,
+                    "detour": "tern"
+                }
             },
             {
                 "tag": "stream_cn",
@@ -446,19 +547,5 @@
         "final": "tern",
         "auto_detect_interface": true,
         "default_domain_resolver": "cn_dns"
-    },
-    "experimental": {
-        "cache_file": {
-            "enabled": true,
-            "store_fakeip": true
-        },
-        "clash_api": {
-            "external_controller": "0.0.0.0:9391",
-            "external_ui": "ui",
-            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
-            "external_ui_download_detour": "tern",
-            "secret": "xx11",
-            "default_mode": "rule"
-        }
     }
 }
