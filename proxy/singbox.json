@@ -61,19 +61,39 @@
                 "server": "proxy_dns"
             },
             {
-                "rule_set": ["lan_nonip"],
+                "rule_set": "lan_nonip",
                 "server": "cn_dns"
             },
             {
-                "rule_set": ["private"],
+                "rule_set": "private",
                 "server": "cn_dns"
+            },
+            {
+                "rule_set": "ads",
+                "action": "reject"
             },
             {
                 "query_type": ["A", "AAAA"],
                 "server": "fake_dns"
             },
             {
-                "rule_set": ["domestic_nonip"],
+                "rule_set": "direct_nonip",
+                "server": "cn_dns"
+            },
+            {
+                "rule_set": "apple_cdn_nonip",
+                "server": "cn_dns"
+            },
+            {
+                "rule_set": "apple_cn_nonip",
+                "server": "cn_dns"
+            },
+            {
+                "rule_set": "ms_cdn_nonip",
+                "server": "cn_dns"
+            },
+            {
+                "rule_set": "domestic_nonip",
                 "server": "cn_dns"
             },
             {
@@ -201,15 +221,11 @@
                 "outbound": "apodidae"
             },
             {
-                "rule_set": "direct_nonip",
-                "outbound": "apodidae"
-            },
-            {
                 "rule_set": "ai_nonip",
                 "outbound": "ai"
             },
             {
-                "rule_set": "ai",
+                "rule_set": "ai_geosite",
                 "outbound": "ai"
             },
             {
@@ -265,6 +281,10 @@
                 "outbound": "tern"
             },
             {
+                "rule_set": "direct_nonip",
+                "outbound": "apodidae"
+            },
+            {
                 "rule_set": "lan_nonip",
                 "outbound": "apodidae"
             },
@@ -317,7 +337,7 @@
             },
             {
                 "type": "remote",
-                "tag": "ai",
+                "tag": "ai_geosite",
                 "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ai-!cn.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {

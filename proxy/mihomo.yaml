@@ -1,7 +1,6 @@
 # NOTE:
 # example: https://github.com/MetaCubeX/mihomo/blob/Meta/docs/config.yaml
 # doc: https://wiki.metacubex.one/config/
-# geosite 中 @cn 表示国内提供服务的域名，如 apple@cn 等，此类型推荐走直连
 
 mixed-port: 9393 # HTTP(S) 和 SOCKS 代理混合端口
 redir-port: 9392 # 透明代理端口，用于 Linux 和 MacOS
@@ -29,141 +28,74 @@ profile:
 
 tun:
   enable: true
-  # system 使用系统协议栈，可以提供更稳定/全面的 tun 体验，且占用相对其他堆栈更低
-  # gvisor 通过在用户空间中实现网络协议栈，可以提供更高的安全性和隔离性，同时可以避免操作系统内核和用户空间之间的切换，从而在特定情况下具有更好的网络处理性能
-  # mixed 混合堆栈，tcp 使用 system栈，udp 使用 gvisor栈，使用体验可能相对更好
-  stack: mixed
+  stack: mips # system/gvisor/mixed/mips
   # 劫持所有dns解析请求
   dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
+    - 0.0.0.0:53
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
 
-# NOTE: Clash DNS 请求逻辑：https://wiki.metacubex.one/config/dns/diagram/#_3
-# (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
-# (2) clash 将选取 nameserver 列表内，解析最快的结果。
-# (3) 若解析结果中，IP 地址属于 国外，那么 Clash 将选择 fallback 列表内，解析最快的结果。
-# 注意：
-# (1) 如果您为了确保 DNS 解析结果无污染，请仅保留列表内以 tls:// 开头的 DNS 服务器，但是通常对于国内没有太大必要。
-# (2) 如果您不在乎可能解析到污染的结果，更加追求速度。请将 nameserver 列表的服务器插入至 fallback 列表内，并移除重复项。
+# NOTE: DNS 请求逻辑：https://wiki.metacubex.one/config/dns/diagram/#_3
 dns:
   enable: true
   ipv6: true
-  use-system-hosts: false # 是否查询系统 hosts
-  prefer-h3: true # true 会导致国内 DNS 解析慢
-  ipv6-timeout: 300
-  # 启用 DNS 服务并让其在 53 端口（这是绝大多数操作系统将 DNS 解析报文发送到的端口）监听来自任意网络界面的 DNS 请求。
-  # 如果你的设备并不需要向其他设备提供解析服务 将0.0.0.0:53 改为 127.0.0.1:53 仅监听本机的 DNS 解析报文。
+  prefer-h3: false # http3
+  ipv6-timeout: 100
+  # 启用 DNS 服务并让其在 53 端口监听来自任意网络的 DNS 请求
+  # 如果你的设备并不需要向其他设备提供解析服务可设置为 127.0.0.1:53 仅监听本机的 DNS 解析报文
   # 使用docker等容器时，需要设置为0.0.0.0:53，否则会直接丢弃容器内的dns请求
   listen: 0.0.0.0:53
-  # https://zhuanlan.zhihu.com/p/1949616192567357697
-  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的DNS 服务域名
-  # 只能使用纯 IP 地址，可使用加密 DNS
+
+  # 配置后面的nameserver、fallback和nameserver-policy向dns服务器的连接过程是否遵守遵守rules规则
+  # 如果为false（默认值）则这三部分的dns服务器在未特别指定的情况下会直连
+  # 如果为true，将会按照rules的规则匹配链接方式（走代理或直连），如果有特别指定则任然以指定值为准
+  # 仅当proxy-server-nameserver非空时可以开启此选项, 强烈不建议和prefer-h3一起使用
+  # 此外，这三者配置中的dns服务器如果出现域名会采用default-nameserver配置项解析，也请确保正确配置default-nameserver
+  respect-rules: false
+  # 用于解析 dns 服务器域名（如：https://dns.alidns.com/dns-query）的 dns
   default-nameserver:
-    - 223.5.5.5 #ali
-    - tls://223.5.5.5:853
-    - 119.29.29.29 #tencent
+    - tls://223.5.5.5:853 # ali
+    - tls://119.29.29.29:853 # tencent
+  # 仅用于解析代理节点的域名，只能使用纯 IP 地址，可使用加密 DNS
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  # 优先于 nameserver 查询
+  nameserver-policy:
+    "rule-set:lan_non_ip,direct_non_ip":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "rule-set:apple_cdn,apple_cn_non_ip,microsoft_cdn_non_ip":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "rule-set:domestic_non_ip":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "geosite:private,apple@cn":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "geosite:cn":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "geosite:category-ads-all": rcode://success
+  # 未命中 nameserver-policy 的
+  nameserver:
+    - "https://cloudflare-dns.com/dns-query"
+    - "https://dns.google/dns-query"
+  # 用于 direct 出口域名解析的 DNS 服务器，如果不填则遵循 nameserver-policy/nameserver
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-range6: fdfe:dcba:9876::1/64
   # 黑名单模式 fake-ip-filter 里的不会返回fakeip
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    [
-      "*.lan",
-      "stun.*.*.*",
-      "stun.*.*",
-      time.windows.com,
-      time.nist.gov,
-      time.apple.com,
-      time.asia.apple.com,
-      "*.ntp.org.cn",
-      "*.openwrt.pool.ntp.org",
-      time1.cloud.tencent.com,
-      time.ustc.edu.cn,
-      pool.ntp.org,
-      ntp.ubuntu.com,
-      ntp.aliyun.com,
-      ntp1.aliyun.com,
-      ntp2.aliyun.com,
-      ntp3.aliyun.com,
-      ntp4.aliyun.com,
-      ntp5.aliyun.com,
-      ntp6.aliyun.com,
-      ntp7.aliyun.com,
-      time1.aliyun.com,
-      time2.aliyun.com,
-      time3.aliyun.com,
-      time4.aliyun.com,
-      time5.aliyun.com,
-      time6.aliyun.com,
-      time7.aliyun.com,
-      "*.time.edu.cn",
-      time1.apple.com,
-      time2.apple.com,
-      time3.apple.com,
-      time4.apple.com,
-      time5.apple.com,
-      time6.apple.com,
-      time7.apple.com,
-      time1.google.com,
-      time2.google.com,
-      time3.google.com,
-      time4.google.com,
-      music.163.com,
-      "*.music.163.com",
-      "*.126.net",
-      musicapi.taihe.com,
-      music.taihe.com,
-      songsearch.kugou.com,
-      trackercdn.kugou.com,
-      "*.kuwo.cn",
-      api-jooxtt.sanook.com,
-      api.joox.com,
-      joox.com,
-      y.qq.com,
-      "*.y.qq.com",
-      streamoc.music.tc.qq.com,
-      mobileoc.music.tc.qq.com,
-      isure.stream.qqmusic.qq.com,
-      dl.stream.qqmusic.qq.com,
-      aqqmusic.tc.qq.com,
-      amobile.music.tc.qq.com,
-      "*.xiami.com",
-      "*.music.migu.cn",
-      music.migu.cn,
-      "*.msftconnecttest.com",
-      "*.msftncsi.com",
-      localhost.ptlogin2.qq.com,
-      "*.*.*.srv.nintendo.net",
-      "*.*.stun.playstation.net",
-      "xbox.*.*.microsoft.com",
-      "*.ipv6.microsoft.com",
-      "*.*.xboxlive.com",
-      speedtest.cros.wr.pvp.net,
-    ]
-  # 代理节点域名解析服务器，仅用于解析代理节点的域名
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-  # 优先于 nameserver/fallback 查询 可使用 geosite
-  nameserver-policy:
-    "geosite:cn,private,apple@cn": # apple@cn
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
-    "geosite:!cn,!private":
-      - "tls://cloudflare-dns.com"
-      - "tls://dns.google"
-  nameserver:
-    - "tls://1.1.1.1#dns"
-    - "tls://8.8.4.4#dns"
-  # 用于 direct 出口域名解析的 DNS 服务器，如果不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
-  direct-nameserver:
-    # - system
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  # fake ip 不需要配置fallback, redir-host遗留产物
+    - rule-set:direct_non_ip
+    - geosite:private
 
 proxy-providers:
   # provider1:
@@ -286,7 +218,6 @@ rule-providers:
     interval: 43200
     url: https://ruleset.skk.moe/Clash/non_ip/apple_services.txt
     path: ./sukkaw_ruleset/apple_services.txt
-  # apple intelligence
   apple_ai:
     type: http
     behavior: domain
@@ -357,8 +288,6 @@ rule-providers:
     behavior: classical
     payload:
       - "DOMAIN-SUFFIX,bilibili.com"
-      # BUG: https://github.com/v2fly/v2ray-core/issues/3485
-      - "DOMAIN-SUFFIX,hdslb.com"
 
   #NOTE: AI
   ai_non_ip:
@@ -429,8 +358,7 @@ rule-providers:
 
 rules:
   - DOMAIN-SUFFIX,x39x.cc,DIRECT
-  - PROCESS-NAME,qBittorrent,DIRECT
-  - PROCESS-NAME,uTorrent,DIRECT
+  - PROCESS-NAME,qbittorrent,DIRECT
   - GEOSITE,category-ads-all,REJECT
     # AI
   - RULE-SET,ai_non_ip,ai
@@ -440,23 +368,22 @@ rules:
   - RULE-SET,stream_non_ip,stream
     # google apple ms
   - GEOSITE,google-cn,tern # Google CN 不走代理会导致香港等地区节点 Play Store 异常
-  - RULE-SET,apple_services,apple
-  - RULE-SET,apple_ai,apple
-  - RULE-SET,microsoft_non_ip,apple
   - RULE-SET,apple_cdn,apple-cn
   - RULE-SET,apple_cn_non_ip,apple-cn
   - RULE-SET,microsoft_cdn_non_ip,apple-cn
-    # fallback
+  - RULE-SET,apple_services,apple
+  - RULE-SET,apple_ai,apple
+  - RULE-SET,microsoft_non_ip,apple
+    # general
   - RULE-SET,global_non_ip,tern
-  - RULE-SET,direct_non_ip,DIRECT
   - RULE-SET,domestic_non_ip,DIRECT
   - GEOSITE,gfw,tern
   - GEOSITE,cn,DIRECT
   - GEOSITE,geolocation-!cn,tern
     # lan
+  - RULE-SET,direct_non_ip,DIRECT
   - RULE-SET,lan_non_ip,DIRECT
   - GEOSITE,private,DIRECT
-
   # NOTE: ip
   - RULE-SET,lan_ip,DIRECT,no-resolve # lan 不用dns 解析
   - GEOIP,private,DIRECT,no-resolve
