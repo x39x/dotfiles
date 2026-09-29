@@ -30,7 +30,7 @@ vim.fn.sign_define(
 	{ text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
 )
 vim.fn.sign_define("DapLogPoint", { text = "󰰎", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "", texthl = "DapStoppedHiglight", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "", texthl = "DapStoppedHighlight", linehl = "", numhl = "" })
 
 -- Controls the behavior when jumping to a breakpoint. See :h switchbuf
 require("dap").defaults.fallback.switchbuf = "usevisible,usetab,uselast"

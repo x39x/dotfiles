@@ -371,7 +371,7 @@ local function m39k()
 	hl("HeirlineB", { fg = colors.pur0 })
 	---dap
 	hl("DapBreakpointHighlight", { fg = colors.red0 })
-	hl("DapStoppedHiglight", { fg = colors.gre5 })
+	hl("DapStoppedHighlight", { fg = colors.gre5 })
 	hl("NvimDapViewWatchUpdated", { fg = colors.red3 })
 	---yazi
 	hl("YaziFloatBorder", { fg = colors.fg3, bg = colors.bg0 })
