@@ -23,12 +23,13 @@
 --  https://github.com/swiftlang/sourcekit-lsp
 --------------------------------------------------------------
 --- javascript:
---  mason vtsls
 --  mason oxfmt
---  mason vue-language-server
---  mason svelte-language-server
+--  mason vtsls
 --  mason css-lsp
 --  mason tailwindcss-language-server
+--  mason vue-language-server
+--  mason svelte-language-server
+--  todo: oxlint
 --------------------------------------------------------------
 --- lua:
 --  mason stylua

@@ -37,10 +37,12 @@
 #reader-mode-button,
 /* urlbar */
 .urlbar-go-button,
-#main-button,
+.searchmode-switcher,
+#urlbar-revert-button-container,
 #trust-icon-container,
 #identity-permission-box,
 #star-button-box,
+#share-button,
 #translations-button {
     display: none !important;
 }

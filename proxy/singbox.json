@@ -19,7 +19,7 @@
             "secret": "xx11",
             "access_control_allow_private_network": false,
             "access_control_allow_origin": [
-                "http://localhost:9391/",
+                "http://localhost:9391",
                 "https://sing-box-dashboard.sagernet.org"
             ],
             "dashboard": {
@@ -35,14 +35,22 @@
         "servers": [
             {
                 "type": "https",
-                "tag": "proxy_dns",
-                "server": "1.1.1.1",
-                "detour": "tern"
+                "tag": "dialing",
+                "server": "223.5.5.5"
             },
             {
                 "type": "https",
                 "tag": "cn_dns",
-                "server": "223.6.6.6"
+                "server": "dns.alidns.com",
+                "domain_resolver": {
+                    "server": "dialing"
+                }
+            },
+            {
+                "type": "https",
+                "tag": "proxy_dns",
+                "server": "cloudflare-dns.com",
+                "detour": "tern"
             },
             {
                 "type": "fakeip",
@@ -297,7 +305,8 @@
                 "action": "reject"
             },
             {
-                "action": "resolve"
+                "action": "resolve",
+                "server": "proxy_dns"
             },
             {
                 "ip_is_private": true,

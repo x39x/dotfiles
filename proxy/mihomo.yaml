@@ -52,11 +52,11 @@ dns:
   # 如果为true，将会按照rules的规则匹配链接方式（走代理或直连），如果有特别指定则任然以指定值为准
   # 仅当proxy-server-nameserver非空时可以开启此选项, 强烈不建议和prefer-h3一起使用
   # 此外，这三者配置中的dns服务器如果出现域名会采用default-nameserver配置项解析，也请确保正确配置default-nameserver
-  respect-rules: false
-  # 用于解析 dns 服务器域名（如：https://dns.alidns.com/dns-query）的 dns
+  respect-rules: true
+  # 用于解析 dns 服务器域名（如：https://dns.alidns.com/dns-query）的 dns，必须ip，可加密
   default-nameserver:
-    - tls://223.5.5.5:853 # ali
-    - tls://119.29.29.29:853 # tencent
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
   # 仅用于解析代理节点的域名，只能使用纯 IP 地址，可使用加密 DNS
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
