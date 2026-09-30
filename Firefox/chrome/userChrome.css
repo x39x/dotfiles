@@ -1,41 +1,36 @@
-/* === Address bar === */
-
-/* remove border, shadow, and outline */
+/* urlbar: remove border, shadow, outline, background */
 .urlbar-background {
     border: none !important;
     box-shadow: none !important;
-    outline: none !important;
     background: var(--toolbar-background-color) !important;
+    top: 0 !important;
 }
 
-/* remove line below address bar above result container */
-.urlbarView-body-inner {
-    border: none !important;
+.urlbar-input-container {
+    outline: none !important;
 }
 
-/* remove the "Search with..." suggestion in the address bar */
+/* urlbar: remove the "Search with..." */
 #urlbar-input::placeholder {
     color: transparent !important;
 }
 
-/* dark mode address bar selected item background */
-@media (prefers-color-scheme: dark) {
-
-    .urlbarView-button-result-menu,
-    .urlbarView-row[selected] {
-        background-color: #4e4d54 !important;
-    }
+/* urlbarView: background */
+.urlbarView-body-outer,
+.urlbarView-background,
+.urlbarView-body-inner,
+.urlbarView {
+    background: var(--toolbar-background-color) !important;
+    box-shadow: none !important;
 }
 
-/* === Hide certain icons in the address bar === */
-
-/* private mode */
+/* private mode icon */
 .private-browsing-indicator-with-label,
 #reset-pbm-toolbar-button,
-/* toolbar */
+/* toolbar icon */
 #picture-in-picture-button,
 #reader-mode-button,
-/* urlbar */
+/* urlbar icon */
 .urlbar-go-button,
 .searchmode-switcher,
 #urlbar-revert-button-container,
@@ -45,4 +40,18 @@
 #share-button,
 #translations-button {
     display: none !important;
+}
+
+/* dark mode address bar selected item background */
+@media (prefers-color-scheme: dark) {
+
+    .urlbarView-button-result-menu,
+    .urlbarView-row[selected] {
+        background-color: #4e4d55 !important;
+    }
+}
+
+/* tab: outline  */
+.tab-background {
+    outline: none !important;
 }

@@ -229,6 +229,18 @@
                 "outbound": "apodidae"
             },
             {
+                "rule_set": "lan_nonip",
+                "outbound": "apodidae"
+            },
+            {
+                "rule_set": "private",
+                "outbound": "apodidae"
+            },
+            {
+                "rule_set": "direct_nonip",
+                "outbound": "apodidae"
+            },
+            {
                 "rule_set": "ai_nonip",
                 "outbound": "ai"
             },
@@ -269,35 +281,23 @@
                 "outbound": "apple"
             },
             {
-                "rule_set": "global_nonip",
-                "outbound": "tern"
-            },
-            {
                 "rule_set": "domestic_nonip",
                 "outbound": "apodidae"
+            },
+            {
+                "rule_set": "global_nonip",
+                "outbound": "tern"
             },
             {
                 "rule_set": "gfw",
                 "outbound": "tern"
             },
             {
-                "rule_set": "cnsite",
-                "outbound": "apodidae"
-            },
-            {
                 "rule_set": "nocnsite",
                 "outbound": "tern"
             },
             {
-                "rule_set": "direct_nonip",
-                "outbound": "apodidae"
-            },
-            {
-                "rule_set": "lan_nonip",
-                "outbound": "apodidae"
-            },
-            {
-                "rule_set": "private",
+                "rule_set": "cnsite",
                 "outbound": "apodidae"
             },
             {

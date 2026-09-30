@@ -360,6 +360,10 @@ rules:
   - DOMAIN-SUFFIX,x39x.cc,DIRECT
   - PROCESS-NAME,qbittorrent,DIRECT
   - GEOSITE,category-ads-all,REJECT
+    # direct
+  - RULE-SET,direct_non_ip,DIRECT
+  - RULE-SET,lan_non_ip,DIRECT
+  - GEOSITE,private,DIRECT
     # AI
   - RULE-SET,ai_non_ip,ai
   - GEOSITE,category-ai-!cn,ai
@@ -375,15 +379,11 @@ rules:
   - RULE-SET,apple_ai,apple
   - RULE-SET,microsoft_non_ip,apple
     # general
-  - RULE-SET,global_non_ip,tern
   - RULE-SET,domestic_non_ip,DIRECT
+  - RULE-SET,global_non_ip,tern
   - GEOSITE,gfw,tern
-  - GEOSITE,cn,DIRECT
   - GEOSITE,geolocation-!cn,tern
-    # lan
-  - RULE-SET,direct_non_ip,DIRECT
-  - RULE-SET,lan_non_ip,DIRECT
-  - GEOSITE,private,DIRECT
+  - GEOSITE,cn,DIRECT
   # NOTE: ip
   - RULE-SET,lan_ip,DIRECT,no-resolve # lan 不用dns 解析
   - GEOIP,private,DIRECT,no-resolve
