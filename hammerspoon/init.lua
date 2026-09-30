@@ -4,9 +4,9 @@ local windowManager = require("window").windowManager
 local FocusDesktop = require("app").FocusDesktop
 
 -- launch or focue app
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", launchOrFocus("com.google.Chrome"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", launchOrFocus("org.mozilla.firefox"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "d", launchOrFocus("com.mitchellh.ghostty"))
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", launchOrFocus("com.mitchellh.ghostty"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", launchOrFocus("com.openai.chat"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "t", FocusDesktop())
 
 -- window manager

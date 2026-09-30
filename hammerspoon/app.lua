@@ -42,7 +42,8 @@ local function launchApp(appBundleID)
 				if appFirstLaunch:activate() then
 					local focusedWindow = appFirstLaunch:focusedWindow()
 					if focusedWindow then
-						focusedWindow:setFullScreen(true)
+						-- focusedWindow:setFullScreen(true)
+						focusedWindow:moveToUnit({ 0.004, 0.004, 0.992, 0.992 })
 						CheckTimer:stop()
 						checkTimerTimeoutCounter = 0
 						return
