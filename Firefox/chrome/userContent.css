@@ -1,25 +1,12 @@
 /* === Apply this style only to Firefox Home, New Tab, and Private Browsing pages === */
 @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing){
 
-/* === Hide the Firefox logo and branding on the homepage === */
-.logo-and-wordmark {
+/* === Hide customize button === */
+.open-customization-button {
     display: none !important;
 }
 
-/* === Hide the search bar on the Firefox homepage === */
-.search-inner-wrapper {
-    display: none !important;
-}
-
-/* === Adjust hover effects for Top Sites cards and other elements on the New Tab page === */
-body {
-    /* Background color when hovering over Top Sites cards */
-    --newtab-topsites-outer-card-hover: rgba(255, 255, 255, 0.4) !important;
-    /* Background color when hovering over other elements */
-    --newtab-element-hover-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-/* === Set a custom background image for the Firefox homepage and New Tab page === */
+/* === Set  background image  === */
 body::before {
     content: "";
     z-index: -1;
