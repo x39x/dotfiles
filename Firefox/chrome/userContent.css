@@ -1,21 +1,23 @@
-/* === Apply this style only to Firefox Home, New Tab, and Private Browsing pages === */
 @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing){
 
-/* === Hide customize button === */
+/* === Hide 'customize' button === */
 .open-customization-button {
     display: none !important;
 }
 
-/* === Set  background image  === */
-body::before {
-    content: "";
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: no-repeat url(bg.png) center;
-    background-size: cover;
-    width: 100vw;
-    height: 100vh;
+/* === Private mode === */
+.showPrivate {
+    display: none !important;
+}
+
+/* === Background image === */
+body {
+    background-image: url("bg.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    overflow: hidden !important;
+    scrollbar-width: none !important;
 }
 }

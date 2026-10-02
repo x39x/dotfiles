@@ -133,60 +133,70 @@
         {
             "type": "selector",
             "tag": "tern",
+            "interrupt_exist_connections": true,
             "outbounds": ["cuckoo", "godwit", "gull"],
             "default": "cuckoo"
         },
         {
             "type": "selector",
             "tag": "cuckoo",
+            "interrupt_exist_connections": true,
             "outbounds": ["urltest"],
             "default": "urltest"
         },
         {
             "type": "selector",
             "tag": "godwit",
+            "interrupt_exist_connections": true,
             "outbounds": ["urltest"],
             "default": "urltest"
         },
         {
             "type": "selector",
             "tag": "gull",
+            "interrupt_exist_connections": true,
             "outbounds": ["urltest"],
             "default": "urltest"
         },
         {
             "type": "selector",
             "tag": "ai",
+            "interrupt_exist_connections": true,
             "outbounds": ["tern", "cuckoo", "godwit", "gull"],
             "default": "tern"
         },
         {
             "type": "selector",
             "tag": "stream",
+            "interrupt_exist_connections": true,
             "outbounds": ["tern", "cuckoo", "godwit", "gull"],
             "default": "tern"
         },
         {
             "type": "selector",
             "tag": "stream-cn",
+            "interrupt_exist_connections": true,
             "outbounds": ["tern", "cuckoo", "godwit", "gull", "apodidae"],
             "default": "apodidae"
         },
         {
             "type": "selector",
             "tag": "apple",
+            "interrupt_exist_connections": true,
             "outbounds": ["tern", "cuckoo", "godwit", "gull", "apodidae"],
             "default": "tern"
         },
         {
             "type": "selector",
             "tag": "apple-cn",
+            "interrupt_exist_connections": true,
             "outbounds": ["tern", "cuckoo", "godwit", "gull", "apodidae"],
             "default": "apodidae"
         },
         {
             "type": "urltest",
             "tag": "urltest",
+            "interrupt_exist_connections": true,
             "outbounds": []
         },
         {
