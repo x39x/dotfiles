@@ -6,7 +6,7 @@ adjust-cell-height     = 9
 adjust-cell-width      = 1
 font-thicken           = true
 
-maximize               = true
+# maximize               = true
 window-padding-y       = 0
 window-padding-x       = 0
 window-padding-balance = true
