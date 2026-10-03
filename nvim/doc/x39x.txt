@@ -1,9 +1,9 @@
 *x39x.txt*                                                           x39x docs 
 
 ==============================================================================
-Rg                                                                     *xx-rg*
+Rg                                                                        *rg*
 
-SEARCH BY FILETYPE                                                  *xx-rg-ft*
+SEARCH BY FILETYPE                                                     *rg-ft*
 >bash
     rg xxx -t lua -t js
 <
@@ -12,7 +12,7 @@ Exclude a certain type
     rg xxx -T lua -T js
 <
 
-SEARCH DIR                                                         *xx-rg-dir*
+SEARCH DIR                                                            *rg-dir*
 >bash
     rg xxx src/
 <
@@ -53,7 +53,7 @@ no ignore ~
 
 
 ==============================================================================
-X39X                                                                  *xx-doc*
+X39X                                                                     *doc*
 
 USAGE
     :helptags ALL
