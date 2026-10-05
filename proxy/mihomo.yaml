@@ -8,9 +8,9 @@ mode: rule
 allow-lan: false # 局域网连接
 
 geox-url:
-  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
-  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
-  mmdb: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb"
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
 geo-auto-update: true
 geo-update-interval: 24 # 更新间隔，单位：小时
 
@@ -18,7 +18,7 @@ log-level: info
 ipv6: true
 
 external-controller: 0.0.0.0:9391
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/metacubexd@archive/refs/heads/gh-pages.zip"
 external-ui: ui
 secret: "xx11"
 
@@ -161,28 +161,28 @@ proxy-groups:
     type: select
     use:
       - provider1
-    url: https://cp.cloudflare.com
+    url: https://cp.cloudflare.com/generate_204
     interval: 39
 
   - name: godwit
     type: select
     use:
       - provider2
-    url: https://cp.cloudflare.com
+    url: https://cp.cloudflare.com/generate_204
     interval: 39
 
   - name: seagull
     type: select
     use:
       - provider3
-    url: https://cp.cloudflare.com
+    url: https://cp.cloudflare.com/generate_204
     interval: 39
 
   - name: urltest
     type: url-test
     use:
       - provider1
-    url: https://cp.cloudflare.com
+    url: https://cp.cloudflare.com/generate_204
     interval: 39
 
   - name: albatross
