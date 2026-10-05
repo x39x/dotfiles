@@ -347,7 +347,7 @@
             {
                 "type": "remote",
                 "tag": "ads",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ads-all.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ads-all.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
@@ -357,7 +357,7 @@
             {
                 "type": "remote",
                 "tag": "ai_geosite",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ai-!cn.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ai-!cn.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
@@ -367,7 +367,7 @@
             {
                 "type": "remote",
                 "tag": "gfw",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/gfw.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/gfw.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
@@ -377,7 +377,7 @@
             {
                 "type": "remote",
                 "tag": "cnsite",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/cn.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
@@ -387,7 +387,7 @@
             {
                 "type": "remote",
                 "tag": "nocnsite",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
@@ -397,7 +397,7 @@
             {
                 "type": "remote",
                 "tag": "private",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/private.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
@@ -407,7 +407,7 @@
             {
                 "type": "remote",
                 "tag": "cnip",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/cn.srs",
+                "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs",
                 "update_interval": "24h0m0s",
                 "http_client": {
                     "disable_version_fallback": true,
