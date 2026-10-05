@@ -27,7 +27,6 @@ keybind = super+shift+v=paste_from_selection
 # search
 keybind = super+f=start_search
 keybind = super+shift+f=end_search
-keybind = escape=end_search
 keybind = super+g=navigate_search:next
 keybind = super+shift+g=navigate_search:previous
 keybind = super+e=search_selection
