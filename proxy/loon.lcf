@@ -40,8 +40,8 @@ FINAL, albatross
 
 [Remote Rule]
 https://kelee.one/Tool/Loon/Lsr/AI.lsr,              policy=ai,        tag=ai,        enabled=true
-https://rule.kelee.one/Loon/ChinaMedia.lsr,          policy=stream-cn, tag=stream-cn, enabled=true
 https://rule.kelee.one/Loon/GlobalMedia.lsr,         policy=stream,    tag=stream,    enabled=true
+https://rule.kelee.one/Loon/ChinaMedia.lsr,          policy=stream-cn, tag=stream-cn, enabled=true
 https://rule.kelee.one/Loon/Apple.lsr,               policy=apple,     tag=apple,     enabled=true
 https://rule.kelee.one/Loon/Global.lsr,              policy=albatross, tag=global,    enabled=true
 https://kelee.one/Tool/Loon/Lsr/LAN_SPLITTER.lsr,    policy=DIRECT,    tag=lan,       enabled=true
