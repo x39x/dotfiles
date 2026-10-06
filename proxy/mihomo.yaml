@@ -12,13 +12,13 @@ geox-url:
   geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
   mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
 geo-auto-update: true
-geo-update-interval: 24 # 更新间隔，单位：小时
+geo-update-interval: 24 # 更新间隔，单位小时
 
 log-level: info
 ipv6: true
 
 external-controller: 0.0.0.0:9391
-external-ui-url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/metacubexd@archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 external-ui: ui
 secret: "xx11"
 
@@ -75,10 +75,11 @@ dns:
     "geosite:private,apple@cn":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "geosite:cn":
+    "geosite:geolocation-cn":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "geosite:category-ads-all": rcode://success
+    "geosite:category-ads-all":
+      - rcode://success
   # 未命中 nameserver-policy 的
   nameserver:
     - "https://cloudflare-dns.com/dns-query"
@@ -98,33 +99,6 @@ dns:
     - geosite:private
 
 proxy-providers:
-  # provider1:
-  #   type: file
-  #   path: ./proxy_providers/proxy_1.yaml
-  #   health-check:
-  #     enable: true
-  #     url: https://cp.cloudflare.com/generate_204
-  #     interval: 300
-  #     timeout: 1000
-  #     lazy: true
-  # provider2:
-  #   type: file
-  #   path: ./proxy_providers/proxy_2.yaml
-  #   health-check:
-  #     enable: true
-  #     url: https://cp.cloudflare.com/generate_204
-  #     interval: 300
-  #     timeout: 1000
-  #     lazy: true
-  # provider3:
-  #   type: file
-  #   path: ./proxy_providers/proxy_3.yaml
-  #   health-check:
-  #     enable: true
-  #     url: https://cp.cloudflare.com/generate_204
-  #     interval: 300
-  #     timeout: 1000
-  #     lazy: true
   provider1:
     type: http
     url: https://example.com
@@ -135,20 +109,9 @@ proxy-providers:
       interval: 300
       timeout: 1000
       lazy: true
-  provider2:
-    type: http
-    url: https://example.com
-    proxy: DIRECT
-    health-check:
-      enable: true
-      url: https://cp.cloudflare.com/generate_204
-      interval: 300
-      timeout: 1000
-      lazy: true
-  provider3:
-    type: http
-    url: https://example.com
-    proxy: DIRECT
+  providerA:
+    type: file
+    path: ./proxy_providers/proxy_1.yaml
     health-check:
       enable: true
       url: https://cp.cloudflare.com/generate_204
@@ -167,14 +130,14 @@ proxy-groups:
   - name: godwit
     type: select
     use:
-      - provider2
+      - provider1
     url: https://cp.cloudflare.com/generate_204
     interval: 39
 
   - name: seagull
     type: select
     use:
-      - provider3
+      - provider1
     url: https://cp.cloudflare.com/generate_204
     interval: 39
 
@@ -287,7 +250,7 @@ rule-providers:
     type: inline
     behavior: classical
     payload:
-      - "DOMAIN-SUFFIX,bilibili.com"
+      - "DOMAIN-SUFFIX,iqiyi.com"
 
   #NOTE: AI
   ai_non_ip:
@@ -357,21 +320,18 @@ rule-providers:
     path: ./sukkaw_ruleset/china_ipv6.txt
 
 rules:
-  - DOMAIN-SUFFIX,x39x.cc,DIRECT
-  - PROCESS-NAME,qbittorrent,DIRECT
-  - GEOSITE,category-ads-all,REJECT
-    # direct
-  - RULE-SET,direct_non_ip,DIRECT
+  # direct
   - RULE-SET,lan_non_ip,DIRECT
   - GEOSITE,private,DIRECT
+  - RULE-SET,direct_non_ip,DIRECT
     # AI
   - RULE-SET,ai_non_ip,ai
   - GEOSITE,category-ai-!cn,ai
     # stream
-  - RULE-SET,stream_cn,stream-cn
   - RULE-SET,stream_non_ip,stream
-    # google apple ms
-  - GEOSITE,google-cn,albatross # Google CN 不走代理会导致香港等地区节点 Play Store 异常
+  - GEOSITE,bilibili,stream-cn
+  - RULE-SET,stream_cn,stream-cn
+    # apple ms
   - RULE-SET,apple_cdn,apple-cn
   - RULE-SET,apple_cn_non_ip,apple-cn
   - RULE-SET,microsoft_cdn_non_ip,apple-cn
@@ -382,16 +342,17 @@ rules:
   - RULE-SET,domestic_non_ip,DIRECT
   - RULE-SET,global_non_ip,albatross
   - GEOSITE,gfw,albatross
+  - GEOSITE,geolocation-cn,DIRECT
   - GEOSITE,geolocation-!cn,albatross
-  - GEOSITE,cn,DIRECT
+  - GEOSITE,category-ads-all,REJECT-DROP
   # NOTE: ip
-  - RULE-SET,lan_ip,DIRECT,no-resolve # lan 不用dns 解析
+  - RULE-SET,lan_ip,DIRECT,no-resolve
   - GEOIP,private,DIRECT,no-resolve
 
   - RULE-SET,apple_services_ip,apple
   - RULE-SET,stream_ip,stream
 
+  - GEOIP,cn,DIRECT
   - RULE-SET,china_ip,DIRECT
   - RULE-SET,china_ip_ipv6,DIRECT
-  - GEOIP,cn,DIRECT
   - MATCH,albatross
