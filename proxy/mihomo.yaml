@@ -344,7 +344,7 @@ rules:
   - GEOSITE,gfw,albatross
   - GEOSITE,geolocation-cn,DIRECT
   - GEOSITE,geolocation-!cn,albatross
-  - GEOSITE,category-ads-all,REJECT-DROP
+  - GEOSITE,category-ads-all,REJECT
   # NOTE: ip
   - RULE-SET,lan_ip,DIRECT,no-resolve
   - GEOIP,private,DIRECT,no-resolve
