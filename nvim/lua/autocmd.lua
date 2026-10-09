@@ -46,18 +46,18 @@ autocmd("BufWritePre", {
 	group = Default,
 })
 
-local im_cmd
+local switch_im
 if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
-	im_cmd = { "fcitx5-remote", "-c" }
+	switch_im = { "fcitx5-remote", "-c" }
 elseif vim.fn.has("macunix") == 1 and vim.fn.executable("iswitch") == 1 then
-	im_cmd = { "iswitch", "-s", "com.apple.keylayout.ABC" }
+	switch_im = { "iswitch", "-i", "com.apple.keylayout.ABC" }
 end
-if im_cmd then
+if switch_im then
 	autocmd("InsertLeave", {
 		group = Default,
 		desc = "Auto switch input source",
 		callback = function()
-			vim.system(im_cmd)
+			vim.system(switch_im)
 		end,
 	})
 end
