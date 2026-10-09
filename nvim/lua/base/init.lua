@@ -72,6 +72,12 @@ require("yazi").setup({
 	},
 })
 keymap("n", "<leader>n", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
+keymap("n", "<leader>N", function()
+	local cwd = vim.uv.cwd()
+	if cwd ~= nil then
+		require("yazi").yazi({}, cwd)
+	end
+end, keymap_opts({ desc = "yazi" }))
 
 -- PLUG: deffview
 require("codediff").setup({
