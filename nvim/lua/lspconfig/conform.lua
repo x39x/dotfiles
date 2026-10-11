@@ -48,6 +48,7 @@ conform.setup({
 
 		sh = { "shfmt" },
 		zsh = { "shfmt" },
+		bash = { "shfmt" },
 	},
 	stop_after_first = true,
 	default_format_opts = {

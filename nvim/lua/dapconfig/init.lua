@@ -16,7 +16,7 @@
 
 vim.pack.add({
 	"https://github.com/mfussenegger/nvim-dap",
-	{ src = "https://github.com/igorlfs/nvim-dap-view", version = "main" },
+	"https://github.com/igorlfs/nvim-dap-view",
 })
 
 -- sign
@@ -37,7 +37,7 @@ require("dap").defaults.fallback.switchbuf = "usevisible,usetab,uselast"
 
 -- my provider
 -- 最终会聚合所有 provider
-local resolved_path = vim.fn.getcwd() .. "/.dap/launch.json"
+local resolved_path = vim.uv.cwd() .. "/.dap/launch.json"
 local dap = require("dap")
 dap.providers.configs["dap39"] = function()
 	local ok, configs = pcall(require("dap.ext.vscode").getconfigs, resolved_path)

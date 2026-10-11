@@ -1,11 +1,11 @@
 -- Enables the experimental Lua module loader
 vim.loader.enable()
 
--- NVIMTREE: disable netrw at the very start of your config
+-- disable netrw at the very start
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Leader key
+-- leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 -- rust fmt
@@ -44,12 +44,13 @@ o.laststatus = 3 --  global statusline
 o.signcolumn = "yes" -- sign column
 o.list = true
 o.listchars = "tab:  ,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
-o.fillchars = "eob: ,msgsep:─" -- eob: hide "~"
+o.fillchars = "eob: ,msgsep:─,fold: " -- eob: hide "~"
 --set fold
-o.foldenable = true
-o.foldcolumn = "0" --show fold in line number
-o.foldlevel = 99 -- ufo provider need a large value, feel free to decrease the value
+o.foldlevel = 99
 o.foldlevelstart = 99
+o.foldcolumn = "0" -- don't show fold in line number
+o.foldmethod = "indent"
+o.foldtext = "v:lua.require'utils.foldtext'()"
 --
 o.expandtab = true
 o.shiftwidth = 4
@@ -57,11 +58,9 @@ o.tabstop = 8
 o.cursorline = true
 o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
-
 o.exrc = true -- exrc config
 vim.o.qftf = "v:lua.require'utils.qftf'" --  quickfix textfunc
 o.pumborder = "solid"
--- o.shell = "/opt/homebrew/bin/fish"
 
 require("base")
 require("lspconfig")

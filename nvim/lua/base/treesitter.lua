@@ -66,27 +66,18 @@ end
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = patterns,
 	callback = function()
+		local winid = vim.api.nvim_get_current_win()
 		vim.treesitter.start()
+		vim.wo[winid][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.wo[winid][0].foldmethod = "expr"
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 	group = vim.api.nvim_create_augroup("TREESITTER_HIGHLIGHT", { clear = true }),
 })
 
---PLUG: fold
-require("ufo").setup({
-	provider_selector = function(_, _, _)
-		return { "treesitter", "indent" }
-	end,
-})
-
 require("nvim-treesitter-textobjects").setup({
 	select = {
-		-- Automatically jump forward to textobj, similar to targets.vim
-		lookahead = true,
-		selection_modes = {
-			["@parameter.outer"] = "v", -- charwise
-			["@function.outer"] = "V", -- linewise
-			["@class.outer"] = "<c-v>", -- blockwise
-		},
+		lookahead = true, -- Automatically jump forward to textobj
 	},
 })
 

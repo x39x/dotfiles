@@ -11,12 +11,7 @@ vim.pack.add({
 	"https://github.com/mikavilpas/yazi.nvim",
 	-- treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
-	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-		version = "main",
-	},
-	"https://github.com/kevinhwang91/promise-async",
-	"https://github.com/kevinhwang91/nvim-ufo",
+	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 	-- blink.cmp
 	"https://github.com/saghen/blink.lib",
 	{
