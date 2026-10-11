@@ -18,8 +18,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		keymap("", "%", "q", keymap_opts())
 	end,
 })
--- keymap("", "J", "}", keymap_opts())
--- keymap("", "K", "{", keymap_opts())
 keymap("", "{", "J", keymap_opts())
 keymap("", "}", "K", keymap_opts())
 keymap({ "n", "v" }, "K", "<ScrollWheelUp>", keymap_opts())
@@ -27,12 +25,12 @@ keymap({ "n", "v" }, "J", "<ScrollWheelDown>", keymap_opts())
 
 -- useless 's/S'
 keymap({ "n", "v" }, "s", '"_d', keymap_opts())
--- keymap("o", "s", "d", keymap_opts())
+keymap("o", "s", "d", keymap_opts()) -- ss -> _dd
 keymap("", "S", '"_D', keymap_opts())
 
 --buffers
-keymap({ "n" }, "<leader>l", "<cmd>bn<CR>", keymap_opts())
-keymap({ "n" }, "<leader>h", "<cmd>bp<CR>", keymap_opts())
+keymap({ "n" }, "<leader>l", vim.cmd.bnext, keymap_opts())
+keymap({ "n" }, "<leader>h", vim.cmd.bprevious, keymap_opts())
 keymap({ "n" }, "<leader>w", MiniBufremove.delete, keymap_opts())
 
 -- Resize pane
@@ -55,10 +53,11 @@ keymap("c", "<C-f>", "<Right>")
 keymap("c", "<C-b>", "<Left>")
 keymap("c", "<C-a>", "<Home>")
 
--- save file
-keymap("", "<M-s>", function()
-	vim.cmd("stopinsert")
-	vim.cmd("w")
+-- save
+keymap({ "n", "x" }, "<M-s>", vim.cmd.write, keymap_opts({ desc = "save file" }))
+keymap("i", "<M-s>", function()
+	vim.cmd.stopinsert()
+	vim.cmd.write()
 end, keymap_opts({ desc = "save file" }))
 
 -- new line
@@ -73,7 +72,7 @@ keymap("n", "<leader>,", function()
 	vim.fn.setreg("/", vim.fn.expand("<cword>"))
 	vim.o.hlsearch = true
 end, keymap_opts({ desc = "highlight cword" }))
-keymap("n", "<BackSpace>", "<cmd>nohl<CR>", keymap_opts({ desc = "nohl" }))
+keymap("n", "<BackSpace>", vim.cmd.nohl, keymap_opts({ desc = "nohl" }))
 
 --NOTE: user command
 local cmd = vim.api.nvim_create_user_command

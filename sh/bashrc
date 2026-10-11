@@ -1,4 +1,4 @@
-if [ -n "$TERM_PROGRAM" ] ; then
+if [ -n "$TERM_PROGRAM" ]; then
     [ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
     [ ! -n "$NOFISH" ] && command -v fish >/dev/null 2>&1 && exec fish
 fi

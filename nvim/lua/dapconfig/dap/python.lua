@@ -2,7 +2,7 @@ local function find_project_root(start_path)
 	local root_file = vim.fs.find({ "uv.lock", "pyproject.toml", ".git" }, {
 		path = start_path,
 		upward = true,
-		stop = vim.uv.os_homedir(),
+		stop = vim.fs.dirname(vim.uv.os_homedir()),
 	})[1]
 
 	if not root_file then

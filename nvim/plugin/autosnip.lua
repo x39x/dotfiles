@@ -66,7 +66,7 @@ local function try_expand(pos, bucket)
 	apply_snippet(pos, indent, snip)
 
 	if snip.mode == "n" then
-		vim.cmd("stopinsert")
+		vim.cmd.stopinsert()
 	end
 end
 

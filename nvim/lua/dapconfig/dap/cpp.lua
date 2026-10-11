@@ -2,7 +2,7 @@ local function find_project_root(start_path)
 	local marker = vim.fs.find({ "Makefile", ".git", "CMakeLists.txt" }, {
 		path = start_path,
 		upward = true,
-		stop = vim.uv.os_homedir(),
+		stop = vim.fs.dirname(vim.uv.os_homedir()),
 	})[1]
 
 	if not marker then

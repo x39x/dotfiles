@@ -12,40 +12,6 @@ autocmd("FileType", {
 	desc = "Formatoptions",
 })
 
-autocmd("BufWritePre", {
-	pattern = {
-		"*.c",
-		"*.h",
-		"*.cc",
-		"*.hh",
-		"*.cpp",
-
-		"*.go",
-		"*.py",
-		"*.rs",
-		"*.lua",
-
-		"*.js",
-		"*.jsx",
-		"*.ts",
-		"*.tsx",
-		"*.mjs",
-		"*.mts",
-		"*.vue",
-		"*.svelte",
-
-		"*.md",
-		"*.mdx",
-		"*.json",
-		"*.toml",
-		"*.yaml",
-	},
-	callback = function()
-		vim.lsp.buf.format({ sync = true })
-	end,
-	group = Default,
-})
-
 local switch_im
 if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
 	switch_im = { "fcitx5-remote", "-c" }
@@ -94,7 +60,7 @@ autocmd("FileType", {
 		vim.bo[args.buf].expandtab = false
 	end,
 	group = vim.api.nvim_create_augroup("TAB", { clear = true }),
-	desc = "indent 8",
+	desc = "TAB",
 })
 
 autocmd("FileType", {

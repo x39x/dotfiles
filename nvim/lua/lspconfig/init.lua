@@ -1,12 +1,10 @@
 -- ===========================================================
 --- go:
---  mason gople
 --  go install golang.org/x/tools/gopls@latest
 --------------------------------------------------------------
 --- python:
 --  uv tool install ruff
 --  uv tool install ty
---  mason ty ruff
 --------------------------------------------------------------
 --- sh
 --  mason shfmt
@@ -42,7 +40,7 @@
 
 vim.pack.add({
 	"https://github.com/williamboman/mason.nvim",
-	"https://github.com/nvimtools/none-ls.nvim",
+	"https://github.com/stevearc/conform.nvim",
 })
 
 -- set lsp float window border
@@ -89,22 +87,19 @@ vim.diagnostic.config({
 local servers = {
 	"typos",
 	"lua_ls",
-	"stylua",
 
 	"gopls",
 	"rust_analyzer",
-
 	"cmake",
 	"clangd",
-
 	"ruff",
 	"ty",
 
 	"vtsls",
-	"vue_ls",
 	"css",
 	"tailwindcss",
 
+	-- "vue_ls",
 	-- "jsonls",
 }
 
@@ -122,7 +117,7 @@ require("mason").setup({
 	},
 })
 
-require("lspconfig.null")
+require("lspconfig.conform")
 
 vim.lsp.config("*", {
 	on_attach = function(_, bufnr)

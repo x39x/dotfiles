@@ -38,8 +38,4 @@ return function(bufnr)
 		vim.lsp.buf.workspace_diagnostics,
 		opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" })
 	)
-
-	vim.api.nvim_buf_create_user_command(bufnr, "F", function()
-		vim.lsp.buf.format({ async = true })
-	end, { desc = "lsp format" })
 end
