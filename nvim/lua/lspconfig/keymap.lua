@@ -8,11 +8,11 @@ local lsp_rename = function()
 	end)
 end
 
+local keymap = vim.keymap.set
+local opts = require("utils.keymap_opts")
+local M = {}
 -- see :h lsp-defaults
-return function(bufnr)
-	local keymap = vim.keymap.set
-	local opts = require("utils.keymap_opts")
-
+M.default = function(bufnr)
 	keymap("n", "gl", function()
 		vim.lsp.buf.hover({ border = "double" })
 	end, opts({ buffer = bufnr, desc = "Lsp hover" }))
@@ -39,3 +39,31 @@ return function(bufnr)
 		opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" })
 	)
 end
+
+local function feedkeys(keys)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
+end
+local function pumvisible()
+	return tonumber(vim.fn.pumvisible()) ~= 0
+end
+M.complete_keymap = function(client, bufnr)
+	--C-e    : dismiss the completion menu.
+	--C-x C-n: Trigger LSP completion.
+	--C-x C-o: If there's no one, fallback to vanilla omnifunc.
+	-- <C-o>s: Inside a snippet, use backspace to remove the placeholder.
+	if client:supports_method("textDocument/completion") then
+		vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+
+		keymap("i", "<C-l>", function()
+			return pumvisible() and "<C-y>" or "<C-l>"
+		end, opts({ buffer = bufnr, expr = true }))
+		keymap({ "i", "s" }, "<S-Tab>", function()
+			if vim.snippet.active({ direction = -1 }) then
+				vim.snippet.jump(-1)
+			else
+				feedkeys("<S-Tab>")
+			end
+		end, {})
+	end
+end
+return M

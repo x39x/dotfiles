@@ -27,7 +27,6 @@ cmp.setup({
 		providers = {
 			snippets = {
 				opts = {
-
 					extended_filetypes = {
 						javascriptreact = { "html" },
 					},

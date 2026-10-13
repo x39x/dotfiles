@@ -45,19 +45,17 @@ vim.pack.add({
 
 -- set lsp float window border
 -- - "solid": Adds padding by a single whitespace cell. see h winborder
-local vim_float_win = vim.lsp.util.open_floating_preview
+local lsp_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 	opts = opts or {}
 	opts.border = opts.border or "single"
-	return vim_float_win(contents, syntax, opts, ...)
+	return lsp_floating_preview(contents, syntax, opts, ...)
 end
 
 vim.keymap.del("", "grn")
 vim.keymap.del("", "gra")
 vim.keymap.del("", "grr")
 vim.keymap.del("", "gri")
-
-local lsp_keymaps = require("lspconfig.keymap")
 
 -- LSP config
 vim.diagnostic.config({
@@ -119,9 +117,11 @@ require("mason").setup({
 
 require("lspconfig.conform")
 
+local lsp_keymaps = require("lspconfig.keymap")
 vim.lsp.config("*", {
-	on_attach = function(_, bufnr)
-		lsp_keymaps(bufnr)
+	on_attach = function(client, bufnr)
+		lsp_keymaps.default(bufnr)
+		lsp_keymaps.complete_keymap(client, bufnr)
 	end,
 })
 vim.lsp.enable(servers)

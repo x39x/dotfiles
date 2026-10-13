@@ -54,6 +54,7 @@ local dropdown = function(opts)
 end
 
 require("fzf-lua").setup({
+	--:h fzf-lua-available-profiles
 	{ "hide" },
 	actions = {
 		files = {

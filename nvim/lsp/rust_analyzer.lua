@@ -172,7 +172,7 @@ return {
 		vim.api.nvim_buf_create_user_command(bufnr, "LspCargoReload", function()
 			reload_workspace(bufnr)
 		end, { desc = "Reload current cargo workspace" })
-		lsp_keymaps(bufnr)
+		lsp_keymaps.default(bufnr)
 	end,
 	on_init = function(client, _)
 		client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens

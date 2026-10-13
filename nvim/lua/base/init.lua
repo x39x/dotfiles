@@ -1,6 +1,5 @@
 vim.pack.add({
 	-- lib
-	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	-- edit
 	"https://github.com/kylechui/nvim-surround",
@@ -8,16 +7,11 @@ vim.pack.add({
 	"https://github.com/junegunn/vim-easy-align",
 	-- file explor / search
 	"https://github.com/ibhagwan/fzf-lua",
+	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/mikavilpas/yazi.nvim",
 	-- treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-	-- blink.cmp
-	"https://github.com/saghen/blink.lib",
-	{
-		src = "https://github.com/saghen/blink.cmp",
-		version = "main",
-	},
 	"https://github.com/rafamadriz/friendly-snippets",
 	-- tools
 	"https://github.com/folke/flash.nvim",
@@ -27,23 +21,23 @@ vim.pack.add({
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/esmuellert/codediff.nvim",
 
-	"https://github.com/kawre/leetcode.nvim",
-	"https://github.com/MunifTanjim/nui.nvim",
+	-- "https://github.com/kawre/leetcode.nvim",
+	-- "https://github.com/MunifTanjim/nui.nvim",
+	-- -- blink.cmp
+	-- "https://github.com/saghen/blink.lib",
+	-- {
+	-- 	src = "https://github.com/saghen/blink.cmp",
+	-- 	version = "main",
+	-- },
 })
 
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
 
--- PLUG: mini.bufremove
-require("mini.bufremove").setup()
-
--- PLUG: nvim-surround
-require("nvim-surround").setup()
-
--- PLUG: EasyAlign
 keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
 
--- PLUG: autopairs
+require("mini.bufremove").setup()
+
 require("nvim-autopairs").setup({
 	disable_filetype = { "TelescopePrompt", "fzf" },
 	enable_check_bracket_line = false,
@@ -51,7 +45,6 @@ require("nvim-autopairs").setup({
 require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
 require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
 
--- PLUG: yazi
 require("yazi").setup({
 	open_for_directories = true,
 	yazi_floating_window_border = "double",
@@ -66,8 +59,8 @@ require("yazi").setup({
 		grep_in_selected_files = "fzf-lua",
 	},
 })
-keymap("n", "<leader>n", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
-keymap("n", "<leader>N", function()
+keymap("n", "<leader>N", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
+keymap("n", "<leader>n", function()
 	local cwd = vim.uv.cwd()
 	if cwd ~= nil then
 		require("yazi").yazi({}, cwd)
@@ -85,7 +78,8 @@ require("codediff").setup({
 })
 
 -- PLUG: flash
-require("flash").setup({
+local flash = require("flash")
+flash.setup({
 	labels = "asdfghjkl;weruiopzxcvnm",
 	modes = {
 		char = {
@@ -102,33 +96,24 @@ require("flash").setup({
 		enabled = false,
 	},
 })
-
-keymap({ "n" }, "f", require("flash").jump, keymap_opts({ desc = "Flash jump" }))
-keymap({ "o", "v" }, "f", function()
+keymap({ "n" }, "f", flash.jump, keymap_opts({ desc = "flash jump(n)" }))
+keymap({ "o", "x" }, "f", function()
 	local prev_row, _ = unpack(vim.api.nvim_win_get_cursor(0))
-	require("flash").jump()
+	flash.jump({ jump = { register = true } })
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
 
 	-- backward jump, do nothing
 	if prev_row > row then
+		vim.fn.setreg("/", "")
 		return
 	end
+	-- forward jump, move to prompt end
+	local prompt_len = string.len(vim.fn.getreg("/"):gsub("^\\V", ""))
+	vim.api.nvim_win_set_cursor(0, { row, col + prompt_len - 1 })
+	vim.fn.setreg("/", "")
+end, keymap_opts({ desc = "flash jump(ov)" }))
 
-	-- forward
-	local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-
-	if col > 0 then
-		--move left
-		vim.api.nvim_win_set_cursor(0, { row, col - 1 })
-	elseif row > 1 then
-		-- prev line last
-		local prev_line = lines[row - 1]
-		local last_col = #prev_line
-		vim.api.nvim_win_set_cursor(0, { row - 1, last_col })
-	end
-end, keymap_opts({ desc = "Flash jump" }))
-
-require("base.extra")
 require("base.treesitter")
-require("base.cmp")
 require("base.fzf")
+-- require("base.extra")
+-- require("base.cmp")
