@@ -86,7 +86,7 @@ vim.diagnostic.config({
 
 local servers = {
 	"typos",
-	"lua_ls",
+	"luals",
 
 	"gopls",
 	"rust_analyzer",
@@ -96,10 +96,10 @@ local servers = {
 	"ty",
 
 	"vtsls",
-	"css",
+	"cssls",
 	"tailwindcss",
 
-	-- "vue_ls",
+	-- "vuels",
 	-- "jsonls",
 }
 

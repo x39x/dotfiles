@@ -19,16 +19,32 @@ local function insert_package_json(root_files, field, fname)
 end
 
 return {
-	cmd = { "tailwindcss-language-server", "--stdio" },
+	cmd = function(dispatchers, config)
+		local cmd = "tailwindcss-language-server"
+		if (config or {}).root_dir then
+			local local_cmd = vim.fs.joinpath(config.root_dir, "node_modules/.bin", cmd)
+			if vim.fn.executable(local_cmd) == 1 then
+				cmd = local_cmd
+			end
+		end
+		return vim.lsp.rpc.start({ cmd, "--stdio" }, dispatchers)
+	end,
 	filetypes = {
-		"html",
 		"css",
+		"html",
 		"javascript",
 		"javascriptreact",
 		"typescript",
 		"typescriptreact",
 		"vue",
-		"svelte",
+		"astro",
+	},
+	capabilities = {
+		workspace = {
+			didChangeWatchedFiles = {
+				dynamicRegistration = true,
+			},
+		},
 	},
 	settings = {
 		tailwindCSS = {
@@ -60,23 +76,17 @@ return {
 		},
 	},
 	before_init = function(_, config)
-		if not config.settings then
-			config.settings = {}
-		end
-		if not config.settings.editor then
-			config.settings.editor = {}
-		end
-		if not config.settings.editor.tabSize then
-			config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
-		end
+		config.settings = vim.tbl_deep_extend("keep", config.settings, {
+			editor = { tabSize = vim.lsp.util.get_effective_tabstop() },
+		})
 	end,
 	workspace_required = true,
 	root_dir = function(bufnr, on_dir)
 		local root_files = {
+			"tailwind.config.js",
 			"tailwind.config.mjs",
 			"tailwind.config.ts",
-			"postcss.config.mjs",
-			"postcss.config.ts",
+			-- Fallback for tailwind v4, where tailwind.config.* is not required anymore
 			".git",
 		}
 		local fname = vim.api.nvim_buf_get_name(bufnr)
