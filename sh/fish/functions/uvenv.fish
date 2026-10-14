@@ -1,11 +1,11 @@
-# cd ~/.pyVenv
+# cd ~/.pyyenv
 # mkdir myvenv
 
 # uv venv myvenv -p 3.15 
-# 会把 myvenv 作为虚拟环境目录 ~/.pyVenv/myvenv/bin/activate.fish"
+# 会把 myvenv 作为虚拟环境目录 ~/.pyvenv/myvenv/bin/activate.fish"
 
 # cd myvenv && uv venv -p 3.15
-# 会在 myenv 里新建 .venv 作为虚拟环境目录 ~/.pyVenv/myvenv/.venv/bin/activate.fish"
+# 会在 myenv 里新建 .venv 作为虚拟环境目录 ~/.pyvenv/myvenv/.venv/bin/activate.fish"
 
 # uv pip install xxx / pip install xxx
 
@@ -27,7 +27,7 @@ function uvenv
 
     if test (count $argv) -gt 0
         set env_name $argv[1]
-        set env_path "$HOME/.pyVenv/$env_name/bin/activate.fish"
+        set env_path "$HOME/.pyvenv/$env_name/bin/activate.fish"
     end
 
     if test -f $env_path
