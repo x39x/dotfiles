@@ -39,11 +39,10 @@ local set_cursor_position = function()
 end
 
 local autocmd = vim.api.nvim_create_autocmd
-local Default = vim.api.nvim_create_augroup("user.lastplace", { clear = true })
 autocmd({ "BufReadPost" }, {
 	callback = function()
 		set_cursor_position()
 	end,
-	group = Default,
+	group = vim.api.nvim_create_augroup("user.lastplace", { clear = true }),
 	desc = "Lastplace",
 })

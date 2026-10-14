@@ -1,6 +1,5 @@
 --- port from https://github.com/goolord/alpha-nvim
-local MIKU = {}
-
+local F
 local alpha_buf
 
 local alpha_close = function()
@@ -20,7 +19,7 @@ local should_skip_alpha = function()
 		return true
 	end
 
-	-- Skip when there are other listed buffers in windows.
+	-- Skip when there are other listed buffers in windows(diff).
 	local curr_buf = vim.api.nvim_get_current_buf()
 	for _, win in pairs(vim.api.nvim_list_wins()) do
 		local buf = vim.api.nvim_win_get_buf(win)
@@ -59,7 +58,6 @@ local should_skip_alpha = function()
 end
 
 local function render()
-	local F = MIKU.A
 	local win = vim.api.nvim_get_current_win()
 	local width = vim.api.nvim_win_get_width(win)
 	local height = vim.api.nvim_win_get_height(win)
@@ -74,6 +72,8 @@ local function render()
 		lines[#lines + 1] = string.rep(" ", left) .. line
 	end
 
+	vim.bo[alpha_buf].modifiable = true
+	vim.bo[alpha_buf].readonly = true
 	vim.api.nvim_buf_set_lines(alpha_buf, 0, -1, false, lines)
 	local alpha_highlight = vim.api.nvim_create_namespace("alpha_highlight")
 	vim.hl.range(alpha_buf, alpha_highlight, "AlphaHeader", { 0, 0 }, { 999, 999 })
@@ -82,8 +82,8 @@ local function render()
 end
 
 local enable_alpha = function()
-	local eventignore = vim.opt.eventignore
-	vim.opt.eventignore = "all"
+	local eventignore = vim.o.eventignore
+	vim.o.eventignore = "all"
 
 	local set = function(opt, val)
 		vim.api.nvim_set_option_value(opt, val, { scope = "local" })
@@ -107,7 +107,7 @@ local enable_alpha = function()
 	set("spell", false)
 	set("signcolumn", "no")
 
-	vim.opt.eventignore = eventignore
+	vim.o.eventignore = eventignore
 
 	local group_id = vim.api.nvim_create_augroup("alpha_temp", { clear = true })
 
@@ -124,6 +124,11 @@ local enable_alpha = function()
 
 	local resize_id = vim.api.nvim_create_augroup("alpha_temp", { clear = true })
 	vim.api.nvim_create_autocmd("VimResized", {
+		group = resize_id,
+		buffer = alpha_buf,
+		callback = render,
+	})
+	vim.api.nvim_create_autocmd("WinEnter", {
 		group = resize_id,
 		buffer = alpha_buf,
 		callback = render,
@@ -163,8 +168,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
+local MIKU = {}
 MIKU.A = {
-	offset = -3,
+	offset = -1,
 	art = {
 		[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣄⣀⣠⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
 		[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
@@ -191,6 +197,7 @@ MIKU.A = {
 }
 
 MIKU.B = {
+	offset = -4,
 	art = {
 		[[         ⢀⣴⡾⠃⠄⠄⠄⠄⠄⠈⠺⠟⠛⠛⠛⠛⠻⢿⣿⣿⣿⣿⣶⣤⡀   ]],
 		[[       ⢀⣴⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣸⣿⣿⣿⣿⣿⣿⣿⣷  ]],
@@ -208,7 +215,6 @@ MIKU.B = {
 		[[   ⣰⡗⠹⣿⣄⠄⠄⠄⢀⣿⣿⣿⣿⣿⣿⠟⣅⣥⣿⣿⣿⣿⠿⠋  ⣾⡌⢠⣿⡿⠃  ]],
 		[[  ⠜⠋⢠⣷⢻⣿⣿⣶⣾⣿⣿⣿⣿⠿⣛⣥⣾⣿⠿⠟⠛⠉             ]],
 	},
-	offset = -4,
 }
 
 MIKU.C = {
@@ -324,3 +330,4 @@ MIKU.F = {
 		[[    ⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⢀⡾⠁⠠⠈⢀⠀⡁⢈⠀⢁⠈⢠⠏⠀⠀⠈⡝⠓⠕⠕⠦⠥⣑⡄⢕⠨⡐⠅⡊⡢⠡⡑⣨⣐⢔⣡⣣⢈⢉⠩⠉⣯⠙⠍⠈⡀⠀⡀⠀⡉⠉⠓⢦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
 	},
 }
+F = MIKU.A
