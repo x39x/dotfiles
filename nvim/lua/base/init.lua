@@ -12,18 +12,20 @@ vim.pack.add({
 	-- file explor
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/mikavilpas/yazi.nvim",
-
+	-- git
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/esmuellert/codediff.nvim",
+	-- ui
+	"https://github.com/nvimdev/indentmini.nvim",
+	"https://github.com/rebelot/heirline.nvim",
+	"https://github.com/lewis6991/satellite.nvim",
+	"https://github.com/folke/todo-comments.nvim",
+	"https://github.com/brenoprata10/nvim-highlight-colors",
 
 	-- "https://github.com/windwp/nvim-autopairs",
-	-- -- blink.cmp
 	-- "https://github.com/saghen/blink.lib",
-	-- {
-	-- 	src = "https://github.com/saghen/blink.cmp",
-	-- 	version = "main",
-	-- },
+	-- "https://github.com/saghen/blink.cmp"
 })
 
 local keymap = vim.keymap.set
@@ -32,6 +34,7 @@ local keymap_opts = require("utils.keymap_opts")
 keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
 
 require("mini.bufremove").setup()
+keymap({ "n" }, "<leader>w", MiniBufremove.delete, keymap_opts())
 
 -- require("nvim-autopairs").setup({
 -- 	disable_filetype = { "TelescopePrompt", "fzf" },
@@ -53,7 +56,7 @@ require("yazi").setup({
 		grep_in_selected_files = "fzf-lua",
 	},
 })
-keymap("n", "<leader>N", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
+keymap("n", "<leader>m", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
 keymap("n", "<leader>n", function()
 	local cwd = vim.uv.cwd()
 	if cwd ~= nil then
@@ -133,5 +136,81 @@ require("gitsigns").setup({
 
 require("base.treesitter")
 require("base.fzf")
--- require("base.extra")
 -- require("base.cmp")
+
+--NOTE: ui
+
+require("base.39line")
+require("indentmini").setup({
+	exclude = {
+		"help",
+		"Trouble",
+		"alpha",
+		"typst",
+		"markdown",
+	},
+})
+
+-- todo
+require("todo-comments").setup({
+	keywords = {
+		FIX = { icon = "󰨰 ", color = "#DC2626", alt = { "BUG" } },
+		TEST = { icon = " ", color = "#AF7AC5", alt = { "FUNC", "PLUG" } },
+		WARN = { icon = " ", color = "#C0392B", alt = { "ISSUE" } },
+		TODO = { icon = " ", color = "#DC2626", alt = { "XXX", "DEBUG" } },
+		DONE = { icon = " ", color = "#1957F3" },
+		NOTE = { icon = "", color = "#10B981", alt = { "INFO", "TIPS" } },
+	},
+	merge_keywords = false,
+})
+
+require("satellite").setup({
+	winblend = 100,
+	excluded_filetypes = {
+		"quickfix",
+	},
+	handlers = {
+		gitsigns = {
+			enable = false,
+		},
+	},
+})
+
+require("nvim-highlight-colors").setup({
+	render = "virtual",
+
+	virtual_symbol = "⬤",
+	virtual_symbol_prefix = " ",
+	virtual_symbol_suffix = " ",
+	enable_named_colors = false,
+	enable_tailwind = true,
+
+	exclude_buffer = function(bufnr)
+		local name = vim.api.nvim_buf_get_name(bufnr)
+
+		if name == "" then
+			return true
+		end
+
+		if vim.fn.getfsize(name) > 1000000 then
+			return true
+		end
+
+		local ext = name:match("%.([%w_]+)$")
+		if not ext then
+			return true
+		end
+
+		local allowed = {
+			lua = true,
+			js = true,
+			jsx = true,
+			ts = true,
+			tsx = true,
+			css = true,
+			vue = true,
+			svelte = true,
+		}
+		return not allowed[ext]
+	end,
+})

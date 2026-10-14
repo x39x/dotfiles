@@ -115,6 +115,9 @@ local function get_bufs()
 		if vim.api.nvim_get_option_value("buftype", { buf = bufnr }) == "quickfix" then
 			rt = false
 		end
+		if vim.api.nvim_get_option_value("filetype", { buf = bufnr }) == "dashboard" then
+			rt = false
+		end
 		return rt
 	end, vim.api.nvim_list_bufs())
 end

@@ -40,8 +40,6 @@ o.exrc = true -- exrc config
 o.quickfixtextfunc = "v:lua.require'utils.qftf'" --  quickfix textfunc
 o.virtualedit = "block"
 --
-o.wrap = false
-o.linebreak = true -- wrap don't break words
 o.showtabline = 2 -- tabline,0:no
 o.laststatus = 3 --  global statusline
 o.showmode = false
@@ -49,13 +47,14 @@ o.signcolumn = "yes" -- sign column
 o.number = true
 o.numberwidth = 3
 o.list = true
--- o.listchars = "tab:  ,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
 o.listchars = "tab:··󰁔,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
 o.fillchars = "eob: ,msgsep:─,fold: " -- eob: hide "~"
 o.cursorline = true
 o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 --
+o.wrap = false
+o.linebreak = true -- wrap don't break words
 o.smartindent = true
 o.copyindent = true
 o.expandtab = true
@@ -75,11 +74,6 @@ o.completeopt = "menu,menuone,noinsert,popup"
 o.complete = ".,b,w,i,t,o"
 --o.previewpopup = "height:10,width:60,border:bold"
 
-require("base")
-require("lspconfig")
-require("dapconfig")
-require("ui")
-
 -- see :h map-table
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
@@ -92,7 +86,7 @@ keymap("", "L", "g_", keymap_opts())
 keymap("", "H", "^", keymap_opts())
 
 -- swap some key
-keymap("", "q", "%", keymap_opts())
+keymap("n", "q", "%", keymap_opts())
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
 		keymap("", "%", "q", keymap_opts())
@@ -111,7 +105,6 @@ keymap("", "S", '"_D', keymap_opts())
 --buffers
 keymap({ "n" }, "<leader>l", vim.cmd.bnext, keymap_opts())
 keymap({ "n" }, "<leader>h", vim.cmd.bprevious, keymap_opts())
-keymap({ "n" }, "<leader>w", MiniBufremove.delete, keymap_opts())
 
 -- Resize pane
 keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", keymap_opts({ desc = "resize window" }))
@@ -150,7 +143,7 @@ end, keymap_opts({ desc = "add new line below" }))
 keymap("n", "<leader>,", function()
 	--":let @/ = expand('<cword>') | set hlsearch<cr>"
 	vim.fn.setreg("/", vim.fn.expand("<cword>"))
-	vim.o.hlsearch = true
+	o.hlsearch = true
 end, keymap_opts({ desc = "highlight cword" }))
 keymap("n", "<BackSpace>", vim.cmd.nohl, keymap_opts({ desc = "nohl" }))
 
@@ -174,9 +167,10 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("FileType", {
 	pattern = "*",
 	callback = function()
-		-- :h fo-table
-		-- vim.o.formatoptions = vim.o.formatoptions:gsub("o", "")
-		o.formatoptions = "trc/aqwn2jlmM]"
+		-- tc: text/comment,qwn2j:format,mM] cjk
+		-- ro: <enter>/oO auto comment leader
+		-- see :h 'formatoptions'
+		o.formatoptions = "tcr/qwn2jvlmM]"
 	end,
 	group = vim.api.nvim_create_augroup("formatoptions", { clear = true }),
 	desc = "formatoptions",
@@ -228,27 +222,15 @@ autocmd("FileType", {
 		vim.bo[args.buf].expandtab = false
 		local winid = vim.api.nvim_get_current_win()
 		vim.wo[winid].listchars = "tab:   ,extends:❯,precedes:❮,trail:·"
+		local ft = vim.bo[args.buf].filetype
+		if ft == "lua" then
+			vim.bo[args.buf].tabstop = 4
+		elseif ft == "go" then
+			vim.bo[args.buf].shiftwidth = 8
+		end
 	end,
 	group = vim.api.nvim_create_augroup("tab", { clear = true }),
 	desc = "TAB",
-})
-
-autocmd("FileType", {
-	pattern = { "lua" },
-	callback = function(args)
-		vim.bo[args.buf].tabstop = 4
-	end,
-	group = vim.api.nvim_create_augroup("tab4", { clear = true }),
-	desc = "TAB4",
-})
-
-autocmd("FileType", {
-	pattern = { "go" },
-	callback = function(args)
-		vim.bo[args.buf].shiftwidth = 8
-	end,
-	group = vim.api.nvim_create_augroup("tab8", { clear = true }),
-	desc = "TAB8",
 })
 
 autocmd("FileType", {
@@ -259,3 +241,26 @@ autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("qfbufline", { clear = true }),
 	desc = "Do't show qf in bufline",
 })
+
+local dark_mode_cache = vim.fn.expand("$HOME/.local/state/user/dark_mode")
+
+local function load_cache()
+	local f = io.open(dark_mode_cache, "r")
+	if not f then
+		return ""
+	end
+	local content = f:read("*l")
+	f:close()
+	return content:lower():gsub("%s+", "")
+end
+
+if load_cache() == "true" then
+	vim.cmd.colorscheme("39dark")
+	-- vim.cmd.colorscheme("monokai")
+else
+	vim.cmd.colorscheme("39light")
+end
+
+require("base")
+require("lspconfig")
+require("dapconfig")

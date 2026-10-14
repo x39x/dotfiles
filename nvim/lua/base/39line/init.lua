@@ -1,5 +1,5 @@
-local statusline = require("ui.39line.statusline")
-local tabline = require("ui.39line.tabline")
+local statusline = require("base.39line.statusline")
+local tabline = require("base.39line.tabline")
 local utils = require("heirline.utils")
 
 local function setup_colors()
