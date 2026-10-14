@@ -1,28 +1,23 @@
 vim.pack.add({
-	-- lib
 	"https://github.com/nvim-tree/nvim-web-devicons",
-	-- edit
 	"https://github.com/kylechui/nvim-surround",
-	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/junegunn/vim-easy-align",
-	-- file explor / search
 	"https://github.com/ibhagwan/fzf-lua",
-	"https://github.com/nvim-lua/plenary.nvim",
-	"https://github.com/mikavilpas/yazi.nvim",
 	-- treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-	"https://github.com/rafamadriz/friendly-snippets",
 	-- tools
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/nvim-mini/mini.bufremove",
-	"https://github.com/Kicamon/markdown-table-mode.nvim",
+	-- file explor
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/mikavilpas/yazi.nvim",
 
+	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/esmuellert/codediff.nvim",
 
-	-- "https://github.com/kawre/leetcode.nvim",
-	-- "https://github.com/MunifTanjim/nui.nvim",
+	-- "https://github.com/windwp/nvim-autopairs",
 	-- -- blink.cmp
 	-- "https://github.com/saghen/blink.lib",
 	-- {
@@ -38,13 +33,12 @@ keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Al
 
 require("mini.bufremove").setup()
 
-require("nvim-autopairs").setup({
-	disable_filetype = { "TelescopePrompt", "fzf" },
-	enable_check_bracket_line = false,
-})
-require("nvim-autopairs").get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
-require("nvim-autopairs").get_rules("`")[1].not_filetypes = { "typst" }
+-- require("nvim-autopairs").setup({
+-- 	disable_filetype = { "TelescopePrompt", "fzf" },
+-- 	enable_check_bracket_line = false,
+-- })
 
+-- yazi
 require("yazi").setup({
 	open_for_directories = true,
 	yazi_floating_window_border = "double",
@@ -67,7 +61,7 @@ keymap("n", "<leader>n", function()
 	end
 end, keymap_opts({ desc = "yazi" }))
 
--- PLUG: deffview
+-- diff
 require("codediff").setup({
 	highlights = {
 		line_insert = "DiffAdd",
@@ -76,8 +70,18 @@ require("codediff").setup({
 		char_delete = "CodeDiffCharDelete",
 	},
 })
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CodeDiffOpen",
+	group = vim.api.nvim_create_augroup("codediffopen", { clear = true }),
+	callback = function()
+		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+			vim.wo[win].cursorline = false
+		end
+	end,
+	desc = "Disable cursorline in diff windows",
+})
 
--- PLUG: flash
+-- flash
 local flash = require("flash")
 flash.setup({
 	labels = "asdfghjkl;weruiopzxcvnm",
@@ -112,6 +116,20 @@ keymap({ "o", "x" }, "f", function()
 	vim.api.nvim_win_set_cursor(0, { row, col + prompt_len - 1 })
 	vim.fn.setreg("/", "")
 end, keymap_opts({ desc = "flash jump(ov)" }))
+
+-- gitsigns
+require("gitsigns").setup({
+	signs = {
+		add = { text = "▎" },
+		change = { text = "▎" },
+	},
+	signs_staged = {
+		add = { text = "┃" },
+		change = { text = "┃" },
+	},
+	signs_staged_enable = true,
+	-- signcolumn = false,
+})
 
 require("base.treesitter")
 require("base.fzf")

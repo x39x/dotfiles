@@ -41,6 +41,7 @@
 vim.pack.add({
 	"https://github.com/williamboman/mason.nvim",
 	"https://github.com/stevearc/conform.nvim",
+	"https://github.com/rafamadriz/friendly-snippets",
 })
 
 -- set lsp float window border
@@ -125,3 +126,14 @@ vim.lsp.config("*", {
 	end,
 })
 vim.lsp.enable(servers)
+
+-- https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function()
+		for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+			vim.api.nvim_set_hl(0, group, {})
+		end
+	end,
+	group = vim.api.nvim_create_augroup("removelsphighlight", { clear = true }),
+	desc = "Disable LSP semantic token highlighting",
+})

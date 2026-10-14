@@ -5,7 +5,6 @@ vim.pack.add({
 	"https://github.com/lewis6991/satellite.nvim",
 	"https://github.com/folke/todo-comments.nvim",
 	"https://github.com/brenoprata10/nvim-highlight-colors",
-	"https://github.com/lewis6991/gitsigns.nvim",
 })
 
 -- --PLUG: alpha
@@ -59,19 +58,6 @@ require("satellite").setup({
 			enable = false,
 		},
 	},
-})
-
-require("gitsigns").setup({
-	signs = {
-		add = { text = "▎" },
-		change = { text = "▎" },
-	},
-	signs_staged = {
-		add = { text = "┃" },
-		change = { text = "┃" },
-	},
-	signs_staged_enable = true,
-	-- signcolumn = false,
 })
 
 require("nvim-highlight-colors").setup({
