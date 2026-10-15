@@ -99,8 +99,7 @@ tmux_run.pane = function(root, run_cmd)
 	local target_win = string.format("%s:%s", session, window)
 
 	-- check if pane_1 exist
-	local list_result = vim.system({ "tmux", "list-panes", "-t", target_win, "-F", "#{pane_index}" }, { text = true })
-		:wait()
+	local list_result = vim.system({ "tmux", "list-panes", "-t", target_win, "-F", "#{pane_index}" }, { text = true }):wait()
 	if list_result.code ~= 0 then
 		notify_err("ERROR in tmux_run.lua: M.pane 3")
 		return
@@ -146,8 +145,7 @@ tmux_run.pane = function(root, run_cmd)
 	end
 
 	-- send cmd to pane_1
-	local send_result = vim.system({ "tmux", "send-keys", "-t", target_win .. ".1", "C-w", cd_cmd .. run_cmd, "C-j" })
-		:wait()
+	local send_result = vim.system({ "tmux", "send-keys", "-t", target_win .. ".1", "C-w", cd_cmd .. run_cmd, "C-j" }):wait()
 	if send_result.code ~= 0 then
 		notify_err("Failed to send command to pane 1")
 	end

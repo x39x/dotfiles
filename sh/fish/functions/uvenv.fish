@@ -27,7 +27,7 @@ function uvenv
 
     if test (count $argv) -gt 0
         set env_name $argv[1]
-        set env_path "$HOME/.pyvenv/$env_name/bin/activate.fish"
+        set env_path "$HOME/.local/share/pyvenv/$env_name/bin/activate.fish"
     end
 
     if test -f $env_path

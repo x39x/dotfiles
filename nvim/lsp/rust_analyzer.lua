@@ -1,5 +1,3 @@
-local lsp_keymaps = require("lspconfig.keymap")
-
 local function reload_workspace(bufnr)
 	local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
 	for _, client in ipairs(clients) do
@@ -31,8 +29,7 @@ end
 local function default_sysroot_src()
 	local sysroot = vim.tbl_get(vim.lsp.config["rust_analyzer"], "settings", "rust-analyzer", "cargo", "sysroot")
 	if not sysroot then
-		local result = vim.system({ "cargo", "-Z", "unstable-options", "rustc", "--print", "sysroot" }, { text = true })
-			:wait()
+		local result = vim.system({ "cargo", "-Z", "unstable-options", "rustc", "--print", "sysroot" }, { text = true }):wait()
 
 		if result.code == 0 and result.stdout then
 			sysroot = vim.trim(result.stdout)
@@ -80,10 +77,7 @@ return {
 		local cargo_workspace_root
 
 		if cargo_crate_dir == nil then
-			on_dir(
-				vim.fs.root(fname, { "rust-project.json" })
-					or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-			)
+			on_dir(vim.fs.root(fname, { "rust-project.json" }) or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1]))
 			return
 		end
 
@@ -109,9 +103,7 @@ return {
 				on_dir(cargo_workspace_root or cargo_crate_dir)
 			else
 				vim.schedule(function()
-					vim.notify(
-						("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd, output.stderr)
-					)
+					vim.notify(("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd, output.stderr))
 				end)
 			end
 		end)
@@ -172,7 +164,6 @@ return {
 		vim.api.nvim_buf_create_user_command(bufnr, "LspCargoReload", function()
 			reload_workspace(bufnr)
 		end, { desc = "Reload current cargo workspace" })
-		lsp_keymaps.default(bufnr)
 	end,
 	on_init = function(client, _)
 		client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens

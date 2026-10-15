@@ -38,12 +38,6 @@
 --  mason harper: grammar checker
 -- ===========================================================
 
-vim.pack.add({
-	"https://github.com/williamboman/mason.nvim",
-	"https://github.com/stevearc/conform.nvim",
-	"https://github.com/rafamadriz/friendly-snippets",
-})
-
 -- set lsp float window border
 -- - "solid": Adds padding by a single whitespace cell. see h winborder
 local lsp_floating_preview = vim.lsp.util.open_floating_preview
@@ -53,18 +47,13 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 	return lsp_floating_preview(contents, syntax, opts, ...)
 end
 
-vim.keymap.del("", "grn")
-vim.keymap.del("", "gra")
-vim.keymap.del("", "grr")
-vim.keymap.del("", "gri")
-
 -- LSP config
 vim.diagnostic.config({
 	virtual_text = false,
 	signs = {
 		text = {
-			-- ▎ 󰌕  󰚍 󰧟   󰌶  ⚡    󰋽    ┃
-			[vim.diagnostic.severity.ERROR] = "",
+			-- ▎ 󰌕      󰌶       ┃
+			[vim.diagnostic.severity.ERROR] = "",
 			[vim.diagnostic.severity.WARN] = "",
 			[vim.diagnostic.severity.HINT] = "󰌶",
 			[vim.diagnostic.severity.INFO] = "",
@@ -101,34 +90,68 @@ local servers = {
 	-- "vuels",
 	-- "jsonls",
 }
-
-require("mason").setup({
-
-	max_concurrent_installers = 10,
-	ui = {
-		icons = {
-			package_installed = "",
-			package_pending = "",
-			package_uninstalled = "",
-		},
-		backdrop = 100,
-		border = "double",
-	},
-})
-
-require("lspconfig.conform")
-
-local lsp_keymaps = require("lspconfig.keymap")
-vim.lsp.config("*", {
-	on_attach = function(client, bufnr)
-		lsp_keymaps.default(bufnr)
-		lsp_keymaps.complete_keymap(client, bufnr)
-	end,
-})
 vim.lsp.enable(servers)
 
--- https://www.reddit.com/r/neovim/comments/1jilkjs/comment/mjlpumh/
-vim.api.nvim_create_autocmd("LspAttach", {
+local keymap = vim.keymap.set
+local opts = require("utils.keymap_opts")
+local autocmd = vim.api.nvim_create_autocmd
+
+local function feedkeys(keys)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
+end
+local function pumvisible()
+	return tonumber(vim.fn.pumvisible()) ~= 0
+end
+
+autocmd("LspAttach", {
+	desc = "lsp keymap",
+	group = vim.api.nvim_create_augroup("hello", {}),
+	callback = function(ev)
+		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+		local bufnr = ev.buf
+
+		-- see :h lsp-defaults
+		-- vim.keymap.del("", "grr")
+		keymap("n", "gD", vim.lsp.buf.declaration, opts({ buffer = bufnr, desc = "Lsp declaration" }))
+		keymap("n", "gl", function()
+			vim.lsp.buf.hover({ border = "double" })
+		end, opts({ buffer = bufnr, desc = "Lsp hover" }))
+		keymap("n", "ga", function()
+			vim.diagnostic.open_float({ border = "double" })
+		end, opts({ buffer = bufnr, desc = "Lsp diagnostic" }))
+		keymap("n", "gA", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" }))
+
+		local status, fzflua = pcall(require, "fzf-lua")
+		if status then
+			keymap("n", "gd", fzflua.lsp_definitions, opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
+			keymap("n", "grr", fzflua.lsp_references, opts({ buffer = bufnr, desc = "Lsp fzf references" }))
+		else
+			keymap("n", "gd", vim.lsp.buf.definition, opts({ buffer = bufnr, desc = "Lsp default definitions" }))
+		end
+
+		-- <C-e> dismiss the completion menu, <C-xC-n> Trigger LSP completion.
+		-- <C-xC-o> If there's no one, fallback to vanilla omnifunc.
+		-- <C-o>s Inside a snippet, use backspace to remove the placeholder.
+		if client:supports_method("textDocument/completion") then
+			vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = false })
+
+			keymap("i", "<C-l>", function()
+				return pumvisible() and "<C-y>" or "<C-l>"
+			end, opts({ buffer = bufnr, expr = true }))
+			keymap({ "i", "s" }, "<S-Tab>", function()
+				if vim.snippet.active({ direction = -1 }) then
+					vim.snippet.jump(-1)
+				else
+					feedkeys("<S-Tab>")
+				end
+			end, {})
+		end
+	end,
+})
+
+-- :h lsp-semantic-highlght
+autocmd("LspAttach", {
 	callback = function()
 		for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
 			vim.api.nvim_set_hl(0, group, {})

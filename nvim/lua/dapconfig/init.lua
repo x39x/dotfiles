@@ -21,14 +21,8 @@ vim.pack.add({
 
 -- sign
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
-vim.fn.sign_define(
-	"DapBreakpointCondition",
-	{ text = "󰍷", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
-)
-vim.fn.sign_define(
-	"DapBreakpointRejected",
-	{ text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" }
-)
+vim.fn.sign_define("DapBreakpointCondition", { text = "󰍷", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
 vim.fn.sign_define("DapLogPoint", { text = "󰰎", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "", texthl = "DapStoppedHighlight", linehl = "", numhl = "" })
 

@@ -149,11 +149,10 @@ local Diagnostics = {
 	condition = conditions.has_diagnostics,
 
 	static = {
-
-		error_icon = "",
-		warn_icon = "",
-		info_icon = "",
-		hint_icon = "",
+		error_icon = "",
+		warn_icon = "",
+		info_icon = "󰌶",
+		hint_icon = "󰌶",
 	},
 
 	init = function(self)

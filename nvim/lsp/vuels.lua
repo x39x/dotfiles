@@ -16,10 +16,7 @@ local on_init = function(client)
 					typescriptHandler(_, result, context)
 				end, 100)
 			else
-				vim.notify(
-					"Could not find `ts_ls`, `vtsls`, or `typescript-tools` lsp client required by `vue_ls`.",
-					vim.log.levels.ERROR
-				)
+				vim.notify("Could not find `ts_ls`, `vtsls`, or `typescript-tools` lsp client required by `vue_ls`.", vim.log.levels.ERROR)
 			end
 			return
 		end

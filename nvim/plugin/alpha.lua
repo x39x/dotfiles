@@ -76,7 +76,7 @@ local function render()
 	vim.bo[alpha_buf].readonly = true
 	vim.api.nvim_buf_set_lines(alpha_buf, 0, -1, false, lines)
 	local alpha_highlight = vim.api.nvim_create_namespace("alpha_highlight")
-	vim.hl.range(alpha_buf, alpha_highlight, "AlphaHeader", { 0, 0 }, { 999, 999 })
+	vim.hl.range(alpha_buf, alpha_highlight, "Alpha", { 0, 0 }, { 999, 999 })
 	vim.bo[alpha_buf].modifiable = false
 	vim.bo[alpha_buf].readonly = false
 end

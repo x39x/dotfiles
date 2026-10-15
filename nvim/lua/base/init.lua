@@ -22,6 +22,10 @@ vim.pack.add({
 	"https://github.com/lewis6991/satellite.nvim",
 	"https://github.com/folke/todo-comments.nvim",
 	"https://github.com/brenoprata10/nvim-highlight-colors",
+	-- lsp
+	"https://github.com/williamboman/mason.nvim",
+	"https://github.com/stevearc/conform.nvim",
+	"https://github.com/rafamadriz/friendly-snippets",
 
 	-- "https://github.com/windwp/nvim-autopairs",
 	-- "https://github.com/saghen/blink.lib",
@@ -31,10 +35,18 @@ vim.pack.add({
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
 
+-- align
 keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
-
+-- bd
 require("mini.bufremove").setup()
 keymap({ "n" }, "<leader>w", MiniBufremove.delete, keymap_opts())
+-- mason
+require("mason").setup({
+	ui = {
+		backdrop = 100,
+		border = "double",
+	},
+})
 
 -- require("nvim-autopairs").setup({
 -- 	disable_filetype = { "TelescopePrompt", "fzf" },
@@ -63,26 +75,6 @@ keymap("n", "<leader>n", function()
 		require("yazi").yazi({}, cwd)
 	end
 end, keymap_opts({ desc = "yazi" }))
-
--- diff
-require("codediff").setup({
-	highlights = {
-		line_insert = "DiffAdd",
-		line_delete = "DiffDelete",
-		char_insert = "CodeDiffCharInsert",
-		char_delete = "CodeDiffCharDelete",
-	},
-})
-vim.api.nvim_create_autocmd("User", {
-	pattern = "CodeDiffOpen",
-	group = vim.api.nvim_create_augroup("codediffopen", { clear = true }),
-	callback = function()
-		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-			vim.wo[win].cursorline = false
-		end
-	end,
-	desc = "Disable cursorline in diff windows",
-})
 
 -- flash
 local flash = require("flash")
@@ -134,13 +126,27 @@ require("gitsigns").setup({
 	-- signcolumn = false,
 })
 
-require("base.treesitter")
-require("base.fzf")
--- require("base.cmp")
+-- diff
+require("codediff").setup({
+	highlights = {
+		line_insert = "DiffAdd",
+		line_delete = "DiffDelete",
+		char_insert = "CodeDiffCharInsert",
+		char_delete = "CodeDiffCharDelete",
+	},
+})
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CodeDiffOpen",
+	group = vim.api.nvim_create_augroup("codediffopen", { clear = true }),
+	callback = function()
+		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+			vim.wo[win].cursorline = false
+		end
+	end,
+	desc = "Disable cursorline in diff windows",
+})
 
---NOTE: ui
-
-require("base.39line")
+-- indent
 require("indentmini").setup({
 	exclude = {
 		"help",
@@ -164,6 +170,7 @@ require("todo-comments").setup({
 	merge_keywords = false,
 })
 
+-- scrollbar
 require("satellite").setup({
 	winblend = 100,
 	excluded_filetypes = {
@@ -214,3 +221,9 @@ require("nvim-highlight-colors").setup({
 		return not allowed[ext]
 	end,
 })
+
+require("base.conform")
+require("base.treesitter")
+require("base.fzf")
+require("base.39line")
+-- require("base.cmp")

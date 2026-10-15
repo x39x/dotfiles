@@ -53,7 +53,8 @@ local dropdown = function(opts)
 	return vim.tbl_deep_extend("force", winopts, opts)
 end
 
-require("fzf-lua").setup({
+local fzflua = require("fzf-lua")
+fzflua.setup({
 	--:h fzf-lua-available-profiles
 	{ "hide" },
 	actions = {
@@ -124,6 +125,4 @@ keymap("n", "<Leader>fs", FzfLua.colorschemes, keymap_opts({ desc = "Fzflua colo
 keymap("n", "<Leader>fm", FzfLua.marks, keymap_opts({ desc = "Fzflua marks" }))
 keymap("n", "<Leader>fe", FzfLua.resume, keymap_opts({ desc = "Fzflua resume" }))
 
-require("fzf-lua").register_ui_select({
-	winopts = dropdown(),
-})
+fzflua.register_ui_select()

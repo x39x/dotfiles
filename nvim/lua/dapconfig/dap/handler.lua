@@ -4,15 +4,13 @@ M.launch = function()
 	local keymap = require("dapconfig.dap.keymap")
 	local buf = vim.api.nvim_get_current_buf()
 	local ft = vim.bo[buf].filetype
-	if
-		vim.tbl_contains({
-			"vue",
-			"javascript",
-			"typescript",
-			"javascriptreact",
-			"typescriptreact",
-		}, ft)
-	then
+	if vim.tbl_contains({
+		"vue",
+		"javascript",
+		"typescript",
+		"javascriptreact",
+		"typescriptreact",
+	}, ft) then
 		ft = "js"
 	end
 
