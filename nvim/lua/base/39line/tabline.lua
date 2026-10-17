@@ -105,22 +105,13 @@ local BufferFileNameBlock = {
 }
 
 -- https://github.com/rebelot/heirline.nvim/blob/fae936abb5e0345b85c3a03ecf38525b0828b992/lua/heirline/utils.lua#L121
--- list bufs
 local function get_bufs()
 	return vim.tbl_filter(function(bufnr)
-		local rt = false
-		if vim.api.nvim_get_option_value("buflisted", { buf = bufnr }) then
-			rt = true
-		end
-		if vim.api.nvim_get_option_value("buftype", { buf = bufnr }) == "quickfix" then
-			rt = false
-		end
-		if vim.api.nvim_get_option_value("filetype", { buf = bufnr }) == "dashboard" then
-			rt = false
-		end
-		return rt
+		local bo = vim.bo[bufnr]
+		return bo.buflisted and bo.buftype ~= "quickfix" and bo.filetype ~= "vim"
 	end, vim.api.nvim_list_bufs())
 end
+
 local BufferLine = utils.make_buflist(
 	{ BufferFileNameBlock },
 	{ provider = "", hl = { fg = "gray" } },

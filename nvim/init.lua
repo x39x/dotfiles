@@ -71,12 +71,19 @@ o.wildignorecase = true
 --
 o.autocomplete = false
 o.completeopt = "menu,menuone,noinsert,popup"
-o.complete = ".,b,w,i,t,o"
+o.complete = ".,b,i,t,o"
 --o.previewpopup = "height:10,width:60,border:bold"
 
 -- see :h map-table
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
+
+-- local function pumvisible()
+-- 	return tonumber(vim.fn.pumvisible()) ~= 0
+-- end
+-- keymap("i", "<C-l>", function()
+-- 	return pumvisible() and "<C-y>" or "<C-l>"
+-- end, keymap_opts({ expr = true }))
 
 keymap("", "<Space>", "<Nop>", keymap_opts())
 keymap("i", "jk", "<esc>", keymap_opts())
@@ -86,16 +93,18 @@ keymap("", "L", "g_", keymap_opts())
 keymap("", "H", "^", keymap_opts())
 
 -- swap some key
-keymap("n", "q", "%", keymap_opts())
+keymap({ "n", "x" }, "q", "%", keymap_opts())
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		keymap("", "%", "q", keymap_opts())
+		keymap("n", "%", "q", keymap_opts())
 	end,
 })
-keymap("", "{", "J", keymap_opts())
-keymap("", "}", "K", keymap_opts())
-keymap({ "n", "v" }, "K", "<ScrollWheelUp>", keymap_opts())
-keymap({ "n", "v" }, "J", "<ScrollWheelDown>", keymap_opts())
+keymap({ "n", "x" }, "{", "J", keymap_opts())
+keymap({ "n", "x" }, "}", "K", keymap_opts())
+keymap({ "n", "x" }, "J", "}", keymap_opts())
+keymap({ "n", "x" }, "K", "{", keymap_opts())
+keymap({ "n", "x" }, "<leader>[", "<ScrollWheelUp>", keymap_opts())
+keymap({ "n", "x" }, "<leader>]", "<ScrollWheelDown>", keymap_opts())
 
 -- useless 's/S'
 keymap({ "n", "v" }, "s", '"_d', keymap_opts())

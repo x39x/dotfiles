@@ -27,7 +27,9 @@ vim.pack.add({
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/rafamadriz/friendly-snippets",
 
-	-- "https://github.com/windwp/nvim-autopairs",
+	"https://github.com/windwp/nvim-autopairs",
+	"https://github.com/windwp/nvim-ts-autotag",
+
 	-- "https://github.com/saghen/blink.lib",
 	-- "https://github.com/saghen/blink.cmp"
 })
@@ -52,6 +54,7 @@ require("mason").setup({
 -- 	disable_filetype = { "TelescopePrompt", "fzf" },
 -- 	enable_check_bracket_line = false,
 -- })
+-- require("nvim-ts-autotag").setup()
 
 -- yazi
 require("yazi").setup({

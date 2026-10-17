@@ -83,6 +83,7 @@ api.nvim_create_user_command("F", function()
 		end
 	end)
 end, { desc = "Format" })
+vim.keymap.set({ "n", "x" }, "<M-f>", vim.cmd.F, { desc = "format file" })
 
 api.nvim_create_user_command("Fdisable", function(args)
 	if args.bang then

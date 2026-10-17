@@ -24,7 +24,6 @@ local parsers = {
 	"tsx",
 	"html",
 	"jsdoc",
-	"svelte",
 	"javascript",
 	"typescript",
 
@@ -49,19 +48,37 @@ vim.api.nvim_create_autocmd("User", {
 })
 require("nvim-treesitter").install(parsers)
 
---BUG: treesitter.get_filetypes can't get all when startup
-local patterns = { "typescriptreact" }
-local seen = {}
-for _, parser in ipairs(parsers) do
-	local parser_patterns = vim.treesitter.language.get_filetypes(parser) or {}
+local patterns = {
+	"go",
+	"lua",
+	"rust",
+	"make",
+	"cmake",
+	"c",
+	"cpp",
+	"python",
 
-	for _, ft in ipairs(parser_patterns) do
-		if not seen[ft] then
-			seen[ft] = true
-			table.insert(patterns, ft)
-		end
-	end
-end
+	"css",
+	"html",
+	"javascript",
+	"typescript",
+	"javascriptreact",
+	"typescriptreact",
+
+	"sh",
+	"bash",
+	"fish",
+
+	"xml",
+	"yaml",
+	"toml",
+	"json",
+	"jsonc",
+	"json5",
+	"help",
+	"markdown",
+	"asciidoc",
+}
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = patterns,

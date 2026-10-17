@@ -93,70 +93,56 @@ local servers = {
 vim.lsp.enable(servers)
 
 local keymap = vim.keymap.set
-local opts = require("utils.keymap_opts")
+local keymap_opts = require("utils.keymap_opts")
 local autocmd = vim.api.nvim_create_autocmd
-
-local function feedkeys(keys)
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
-end
-local function pumvisible()
-	return tonumber(vim.fn.pumvisible()) ~= 0
-end
 
 autocmd("LspAttach", {
 	desc = "lsp keymap",
-	group = vim.api.nvim_create_augroup("hello", {}),
+	group = vim.api.nvim_create_augroup("lsp attach", { clear = true }),
 	callback = function(ev)
 		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
 		local bufnr = ev.buf
 
 		-- see :h lsp-defaults
-		-- vim.keymap.del("", "grr")
-		keymap("n", "gD", vim.lsp.buf.declaration, opts({ buffer = bufnr, desc = "Lsp declaration" }))
+		keymap("n", "gD", vim.lsp.buf.declaration, keymap_opts({ buffer = bufnr, desc = "Lsp declaration" }))
 		keymap("n", "gl", function()
 			vim.lsp.buf.hover({ border = "double" })
-		end, opts({ buffer = bufnr, desc = "Lsp hover" }))
+		end, keymap_opts({ buffer = bufnr, desc = "Lsp hover" }))
 		keymap("n", "ga", function()
 			vim.diagnostic.open_float({ border = "double" })
-		end, opts({ buffer = bufnr, desc = "Lsp diagnostic" }))
+		end, keymap_opts({ buffer = bufnr, desc = "Lsp diagnostic" }))
 		keymap("n", "gA", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
-		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" }))
+		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, keymap_opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" }))
 
 		local status, fzflua = pcall(require, "fzf-lua")
 		if status then
-			keymap("n", "gd", fzflua.lsp_definitions, opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
-			keymap("n", "grr", fzflua.lsp_references, opts({ buffer = bufnr, desc = "Lsp fzf references" }))
+			keymap("n", "gd", fzflua.lsp_definitions, keymap_opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
+			-- vim.keymap.del("", "grr")
+			keymap("n", "grr", fzflua.lsp_references, keymap_opts({ buffer = bufnr, desc = "Lsp fzf references" }))
 		else
-			keymap("n", "gd", vim.lsp.buf.definition, opts({ buffer = bufnr, desc = "Lsp default definitions" }))
+			keymap("n", "gd", vim.lsp.buf.definition, keymap_opts({ buffer = bufnr, desc = "Lsp default definitions" }))
 		end
 
-		-- <C-e> dismiss the completion menu, <C-xC-n> Trigger LSP completion.
-		-- <C-xC-o> If there's no one, fallback to vanilla omnifunc.
-		-- <C-o>s Inside a snippet, use backspace to remove the placeholder.
 		if client:supports_method("textDocument/completion") then
-			vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = false })
+			-- <C-e> dismiss the completion menu
+			-- <C-x><C-o>  omnifunc.
+			-- <C-o>s Inside a snippet, use backspace to remove the placeholder.
 
-			keymap("i", "<C-l>", function()
-				return pumvisible() and "<C-y>" or "<C-l>"
-			end, opts({ buffer = bufnr, expr = true }))
+			local function feedkeys(keys)
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
+			end
 			keymap({ "i", "s" }, "<S-Tab>", function()
 				if vim.snippet.active({ direction = -1 }) then
 					vim.snippet.jump(-1)
 				else
 					feedkeys("<S-Tab>")
 				end
-			end, {})
+			end, { buffer = bufnr })
 		end
-	end,
-})
 
--- :h lsp-semantic-highlght
-autocmd("LspAttach", {
-	callback = function()
+		-- :h lsp-semantic-highlght
 		for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
 			vim.api.nvim_set_hl(0, group, {})
 		end
 	end,
-	group = vim.api.nvim_create_augroup("removelsphighlight", { clear = true }),
-	desc = "Disable LSP semantic token highlighting",
 })
