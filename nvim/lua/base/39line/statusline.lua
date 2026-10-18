@@ -278,13 +278,19 @@ local Git = {
 	},
 }
 
+local function get_dap()
+	local ok, dap = pcall(require, "dap")
+	return ok and dap or nil
+end
+
 local DAPMessages = {
 	condition = function()
-		local session = require("dap").session()
-		return session ~= nil
+		local dap = get_dap()
+		return dap ~= nil and dap.session() ~= nil
 	end,
 	provider = function()
-		return " " .. require("dap").status()
+		local dap = get_dap()
+		return dap and (" " .. dap.status())
 	end,
 	hl = "Debug",
 }

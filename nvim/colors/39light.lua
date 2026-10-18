@@ -277,7 +277,8 @@ local function m39k()
 	hl("Ignore", { link = "Normal" })
 	hl("Error", { sp = colors.red1, undercurl = true })
 
-	--NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
+	--NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/main/CONTRIBUTING.md
+
 	--- 1white
 	hl("@function", { link = "Function" })
 	hl("@function.builtin", { link = "Function" })
