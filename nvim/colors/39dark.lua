@@ -329,14 +329,11 @@ local function m39k()
 	hl("@markup.raw", { fg = colors.ora0 })
 	hl("@variable.parameter.vimdoc", { fg = colors.ora0 })
 
-	--NOTE: custom
-	hl("@keyword.directive", { link = "Number" }) -- define ifdef in c
+	--- custom
+	hl("@keyword.directive", { link = "Number" })
 
 	--NOTE: plugin
 
-	--- indent
-	hl("IndentLine", { link = "Whitespace" })
-	hl("IndentLineCurrent", { link = "Whitespace" })
 	---flash
 	hl("FlashLabel", { fg = colors.red2, bold = true })
 	hl("FlashCurrent", { link = "Function" })

@@ -342,14 +342,11 @@ local function m39k()
 	hl("@markup.raw", { fg = colors.bro0 })
 	hl("@variable.parameter.vimdoc", { fg = colors.bro0 })
 
-	--NOTE: custom
+	--- custom
 	hl("@keyword.directive", { link = "Boolean" }) -- define ifdef in c
 
 	--NOTE: plugin
 
-	--- indent
-	hl("IndentLine", { link = "Whitespace" })
-	hl("IndentLineCurrent", { link = "Whitespace" })
 	---flash
 	hl("FlashLabel", { fg = colors.red3, bold = true })
 	hl("FlashCurrent", { link = "Function" })

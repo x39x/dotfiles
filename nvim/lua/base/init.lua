@@ -17,7 +17,7 @@ vim.pack.add({
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/esmuellert/codediff.nvim",
 	-- ui
-	"https://github.com/nvimdev/indentmini.nvim",
+	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/rebelot/heirline.nvim",
 	"https://github.com/lewis6991/satellite.nvim",
 	"https://github.com/folke/todo-comments.nvim",
@@ -149,14 +149,13 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 -- indent
-require("indentmini").setup({
-	exclude = {
-		"help",
-		"Trouble",
-		"alpha",
-		"typst",
-		"markdown",
+require("ibl").setup({
+	indent = {
+		char = "│",
+		tab_char = "│",
+		highlight = "Whitespace",
 	},
+	scope = { enabled = false },
 })
 
 -- todo

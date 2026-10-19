@@ -73,7 +73,7 @@ o.autocomplete = false
 -- o.completeopt = "menu,menuone,noinsert,popup"
 o.completeopt = "popup"
 
-o.complete = ".,b,i,t,o"
+o.complete = ".,w,b,i,t,o"
 --o.previewpopup = "height:10,width:60,border:bold"
 
 -- see :h map-table :h default-mappings
@@ -181,6 +181,13 @@ autocmd("FileType", {
 	desc = "formatoptions",
 })
 
+autocmd("TextYankPost", {
+	callback = function()
+		vim.hl.hl_op({ higroup = "CurSearch", timeout = 139 })
+	end,
+	group = vim.api.nvim_create_augroup("highlight yank text", { clear = true }),
+})
+
 local switch_im
 if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
 	switch_im = { "fcitx5-remote", "-c" }
@@ -190,7 +197,6 @@ end
 if switch_im then
 	autocmd("InsertLeave", {
 		group = vim.api.nvim_create_augroup("imswitch", { clear = true }),
-		desc = "Auto switch input source",
 		callback = function()
 			vim.system(switch_im)
 		end,
@@ -208,12 +214,11 @@ autocmd("FileType", {
 		keymap("", "H", "g^", { silent = true, buf = args.buf })
 		keymap("", "L", "g$", { silent = true, buf = args.buf })
 	end,
-	group = vim.api.nvim_create_augroup("text", { clear = true }),
-	desc = "markdown autocmd",
+	group = vim.api.nvim_create_augroup("markdown", { clear = true }),
 })
 
 autocmd("FileType", {
-	pattern = { "c", "cpp" },
+	pattern = { "c", "cpp", "go" },
 	callback = function(args)
 		vim.bo[args.buf].shiftwidth = 8
 	end,
@@ -221,18 +226,15 @@ autocmd("FileType", {
 	desc = "indent 8",
 })
 
-local listchars = "tab:   ,extends:❯,precedes:❮,trail:·"
 autocmd("FileType", {
-	pattern = { "lua", "go" },
+	pattern = { "lua", "go", "c", "cpp", "rust" },
 	callback = function(args)
 		vim.bo[args.buf].expandtab = false
 		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = listchars
-		local ft = vim.bo[args.buf].filetype
-		if ft == "lua" then
+		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
+		local indet_4 = { "lua", "rust" }
+		if vim.tbl_contains(indet_4, vim.bo[args.buf].filetype) then
 			vim.bo[args.buf].tabstop = 4
-		elseif ft == "go" then
-			vim.bo[args.buf].shiftwidth = 8
 		end
 	end,
 	group = vim.api.nvim_create_augroup("tab", { clear = true }),
@@ -243,7 +245,7 @@ autocmd("FileType", {
 	pattern = "qf",
 	callback = function(args)
 		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = listchars
+		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
 		vim.bo[args.buf].buflisted = false
 		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buffer = args.buf, silent = true })
 		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buffer = args.buf, silent = true })
