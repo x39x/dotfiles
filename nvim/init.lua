@@ -70,11 +70,13 @@ o.pumborder = "solid"
 o.wildignorecase = true
 --
 o.autocomplete = false
-o.completeopt = "menu,menuone,noinsert,popup"
+-- o.completeopt = "menu,menuone,noinsert,popup"
+o.completeopt = "popup"
+
 o.complete = ".,b,i,t,o"
 --o.previewpopup = "height:10,width:60,border:bold"
 
--- see :h map-table
+-- see :h map-table :h default-mappings
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
 
@@ -142,19 +144,13 @@ keymap("i", "<M-s>", function()
 	vim.cmd.write()
 end, keymap_opts({ desc = "save file" }))
 
--- new line
-keymap("n", "<leader>s", function()
-	local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
-	vim.api.nvim_buf_set_lines(0, row, row, true, { "" })
-end, keymap_opts({ desc = "add new line below" }))
-
 -- highlight current word
 keymap("n", "<leader>,", function()
 	--":let @/ = expand('<cword>') | set hlsearch<cr>"
 	vim.fn.setreg("/", vim.fn.expand("<cword>"))
 	o.hlsearch = true
 end, keymap_opts({ desc = "highlight cword" }))
-keymap("n", "<BackSpace>", vim.cmd.nohl, keymap_opts({ desc = "nohl" }))
+-- keymap("n", "<BackSpace>", vim.cmd.nohl, keymap_opts({ desc = "nohl" }))
 
 --NOTE: user command
 local cmd = vim.api.nvim_create_user_command
@@ -225,12 +221,13 @@ autocmd("FileType", {
 	desc = "indent 8",
 })
 
+local listchars = "tab:   ,extends:❯,precedes:❮,trail:·"
 autocmd("FileType", {
 	pattern = { "lua", "go" },
 	callback = function(args)
 		vim.bo[args.buf].expandtab = false
 		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = "tab:   ,extends:❯,precedes:❮,trail:·"
+		vim.wo[winid].listchars = listchars
 		local ft = vim.bo[args.buf].filetype
 		if ft == "lua" then
 			vim.bo[args.buf].tabstop = 4
@@ -245,16 +242,18 @@ autocmd("FileType", {
 autocmd("FileType", {
 	pattern = "qf",
 	callback = function(args)
+		local winid = vim.api.nvim_get_current_win()
+		vim.wo[winid].listchars = listchars
 		vim.bo[args.buf].buflisted = false
+		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buffer = args.buf, silent = true })
+		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buffer = args.buf, silent = true })
 	end,
 	group = vim.api.nvim_create_augroup("qfbufline", { clear = true }),
 	desc = "Do't show qf in bufline",
 })
 
-local dark_mode_cache = vim.fn.expand("$HOME/.local/state/user/dark_mode")
-
 local function load_cache()
-	local f = io.open(dark_mode_cache, "r")
+	local f = io.open(vim.fn.expand("$HOME/.local/state/user/dark_mode"), "r")
 	if not f then
 		return ""
 	end
@@ -264,8 +263,8 @@ local function load_cache()
 end
 
 if load_cache() == "true" then
-	vim.cmd.colorscheme("39dark")
-	-- vim.cmd.colorscheme("monokai")
+	-- vim.cmd.colorscheme("39dark")
+	vim.cmd.colorscheme("monokai")
 else
 	vim.cmd.colorscheme("39light")
 end

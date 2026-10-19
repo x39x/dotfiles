@@ -299,6 +299,7 @@ local function m39k()
 	hl("@punctuation.delimiter", { link = "Delimiter" })
 	hl("@punctuation.bracket", { link = "Delimiter" })
 	hl("@punctuation.special", { link = "Type" })
+	hl("@conceal", { link = "Function" })
 	--- markdown
 	hl("@markup.heading", { fg = colors.blu0 })
 	hl("@markup.heading.1", { fg = colors.red0 })

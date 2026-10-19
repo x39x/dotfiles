@@ -108,7 +108,16 @@ local BufferFileNameBlock = {
 local function get_bufs()
 	return vim.tbl_filter(function(bufnr)
 		local bo = vim.bo[bufnr]
-		return bo.buflisted and bo.buftype ~= "quickfix" and bo.filetype ~= "vim"
+		if not bo.buflisted then
+			return false
+		end
+		if vim.tbl_contains({ "quickfix", "nofile" }, bo.buftype) then
+			return false
+		end
+		if vim.tbl_contains({ "fzf" }, bo.filetype) then
+			return false
+		end
+		return true
 	end, vim.api.nvim_list_bufs())
 end
 

@@ -308,6 +308,8 @@ local function m39k()
 	hl("@punctuation.delimiter", { link = "Delimiter" })
 	hl("@punctuation.bracket", { link = "Delimiter" })
 	hl("@punctuation.special", { link = "Type" })
+	hl("@conceal", { link = "Function" })
+
 	--- markdown
 	hl("@markup.heading", { fg = colors.yel0 })
 	hl("@markup.heading.1", { fg = colors.red0 })
@@ -368,7 +370,7 @@ local function m39k()
 	vim.g.terminal_color_foreground = colors.fg0
 	vim.g.terminal_color_0 = colors.bg0
 	vim.g.terminal_color_1 = colors.red0
-	vim.g.terminal_color_2 = colors.gre0
+	vim.g.terminal_color_2 = colors.gre3
 	vim.g.terminal_color_3 = colors.yel0
 	vim.g.terminal_color_4 = colors.blu1
 	vim.g.terminal_color_5 = colors.pur0
