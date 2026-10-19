@@ -52,6 +52,7 @@ o.fillchars = "eob: ,msgsep:─,fold: " -- eob: hide "~"
 o.cursorline = true
 o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
+o.guicursor = ""
 --
 o.wrap = false
 o.linebreak = true -- wrap don't break words
