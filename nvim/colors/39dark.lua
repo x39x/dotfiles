@@ -43,13 +43,11 @@ local colors = {
 
 local function m39k()
 	vim.cmd("hi clear")
-	if vim.fn.exists("syntax_on") then
-		vim.cmd("syntax reset")
-	end
+	vim.cmd("syntax reset")
 	vim.o.background = "dark"
 	vim.g.colors_name = "39dark"
 
-	--NOTE: ui
+	-- NOTE: ui
 	hl("Title", { fg = colors.red0 })
 	hl("Directory", { fg = colors.blu0 })
 
@@ -95,7 +93,7 @@ local function m39k()
 	hl("StatusLineTermNC", { link = "StatusLine" })
 
 	hl("MsgArea", { bg = colors.bg0, fg = colors.gra0 })
-	hl("ModeMsg", { link = "MsgAred" })
+	hl("ModeMsg", { fg = colors.pur0 })
 	hl("MoreMsg", { link = "MsgAred" })
 	hl("MsgSeparator", { bg = colors.bg0, fg = colors.fg2 })
 	hl("OkMsg", { bg = colors.bg0, fg = colors.gre3 })
@@ -138,7 +136,7 @@ local function m39k()
 	hl("SpellLocal", { undercurl = true, sp = colors.gre3 })
 	hl("SpellRare", { undercurl = true, sp = colors.ora1 })
 
-	--NOTE: diff
+	-- NOTE: diff
 	hl("DiffAdd", { bg = colors.gre4 })
 	hl("DiffDelete", { bg = colors.red4, fg = colors.gra3 })
 	hl("DiffChange", { bg = colors.blu5 })
@@ -160,7 +158,7 @@ local function m39k()
 	hl("CodeDiffCharDelete", { bg = colors.red3 })
 	hl("CodeDiffFiller", { fg = colors.gra3 })
 
-	--NOTE: quickfix
+	-- NOTE: quickfix
 	hl("QuickFixLine", { fg = colors.blu0 })
 	hl("QuickFixError", { fg = colors.red1 })
 	hl("qfSeparator", { fg = colors.gra3 })
@@ -169,7 +167,7 @@ local function m39k()
 	hl("qfLineNr", { fg = colors.fg0 })
 	hl("qfFileName", { fg = colors.fg0 })
 
-	--NOTE: lsp
+	-- NOTE: lsp
 	hl("LspReferenceText", { bg = colors.gre1 })
 	hl("LspReferenceRead", { bg = colors.gre1 })
 	hl("LspReferenceWrite", { bg = colors.gre1 })
@@ -218,7 +216,7 @@ local function m39k()
 	hl("DiagnosticDeprecated", { fg = colors.fg1 })
 	hl("DiagnosticUnnecessary", { fg = colors.fg1 })
 
-	--NOTE: syntax
+	-- NOTE: syntax
 
 	--- 1white
 	hl("Function", { fg = colors.fg0 })
@@ -264,7 +262,7 @@ local function m39k()
 	hl("Ignore", { link = "Normal" })
 	hl("Error", { sp = colors.red1, undercurl = true })
 
-	--NOTE: treesitter
+	-- NOTE: treesitter
 
 	--- 1white
 	hl("@function", { link = "Function" })
@@ -332,37 +330,37 @@ local function m39k()
 	--- custom
 	hl("@keyword.directive", { link = "Number" })
 
-	--NOTE: plugin
+	-- NOTE: plugin
 
-	---flash
+	--- flash
 	hl("FlashLabel", { fg = colors.red2, bold = true })
 	hl("FlashCurrent", { link = "Function" })
 	hl("FlashMatch", { link = "Function" })
-	---cmp
+	--- cmp
 	hl("BlinkCmpKind", { fg = colors.pur0 })
-	---fzf
+	--- fzf
 	hl("FzfLuaBorder", { bg = colors.bg0, fg = colors.gra3 })
 	hl("FzfLuaTitle", { fg = colors.fg1 })
 	hl("FzfFgPlus", { fg = colors.gre5 })
 	hl("FzfBgPlus", { bg = colors.bg0 })
-	---nvimtree
+	--- nvimtree
 	hl("NvimTreeIndentMarker", { link = "Whitespace" })
 	hl("NvimTreeGitFolderDirtyHL", { fg = colors.red1 })
 	hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
 	hl("NvimTreeGitFileNewHL", { fg = colors.gre5 })
-	---alpha
+	--- alpha
 	hl("Alpha", { fg = colors.miku })
-	---heirline
+	--- heirline
 	hl("HeirlineA", { fg = colors.blu1 })
 	hl("HeirlineB", { fg = colors.pur0 })
-	---dap
+	--- dap
 	hl("DapBreakpointHighlight", { fg = colors.red1 })
 	hl("DapStoppedHighlight", { fg = colors.gre5 })
 	hl("NvimDapViewWatchUpdated", { fg = colors.red2 })
-	---yazi
+	--- yazi
 	hl("YaziFloatBorder", { fg = colors.fg2, bg = colors.bg0 })
 
-	--NOTE: term
+	-- NOTE: term
 	vim.g.terminal_color_background = colors.bg0
 	vim.g.terminal_color_foreground = colors.fg0
 	vim.g.terminal_color_0 = colors.bg0

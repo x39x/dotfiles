@@ -42,7 +42,7 @@ o.virtualedit = "block"
 --
 o.showtabline = 2 -- tabline,0:no
 o.laststatus = 3 --  global statusline
-o.showmode = false
+o.showmode = true
 o.signcolumn = "yes" -- sign column
 o.number = true
 o.numberwidth = 3

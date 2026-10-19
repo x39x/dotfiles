@@ -54,9 +54,8 @@ local colors = {
 
 local function m39k()
 	vim.cmd("hi clear")
-	if vim.fn.exists("syntax_on") then
-		vim.cmd("syntax reset")
-	end
+	vim.cmd("syntax reset")
+
 	vim.o.background = "light"
 	vim.g.colors_name = "39light"
 
@@ -107,7 +106,7 @@ local function m39k()
 	hl("StatusLineTermNC", { link = "StatusLine" })
 
 	hl("MsgArea", { bg = colors.bg0, fg = colors.fg1 })
-	hl("ModeMsg", { link = "MsgAred" })
+	hl("ModeMsg", { fg = colors.red0 })
 	hl("MoreMsg", { link = "MsgAred" })
 	hl("MsgSeparator", { bg = colors.bg0, fg = colors.fg2 })
 	hl("OkMsg", { bg = colors.bg0, fg = colors.gre5 })
@@ -150,7 +149,7 @@ local function m39k()
 	hl("SpellLocal", { undercurl = true, sp = colors.gre5 })
 	hl("SpellRare", { undercurl = true, sp = colors.bro1 })
 
-	--NOTE: DIFF
+	-- NOTE: DIFF
 	hl("DiffAdd", { bg = colors.gre2 })
 	hl("DiffDelete", { bg = colors.red1, fg = colors.fg2 })
 	hl("DiffChange", { bg = colors.blu3 })
@@ -172,7 +171,7 @@ local function m39k()
 	hl("CodeDiffCharDelete", { bg = colors.red2 })
 	hl("CodeDiffFiller", { fg = colors.fg3 })
 
-	--NOTE: quickfix
+	-- NOTE: quickfix
 	hl("QuickFixLine", { fg = colors.blu1 })
 	hl("QuickFixError", { fg = colors.red0 })
 	hl("qfSeparator", { fg = colors.fg3 })
@@ -181,7 +180,7 @@ local function m39k()
 	hl("qfLineNr", { fg = colors.fg0 })
 	hl("qfFileName", { fg = colors.fg0 })
 
-	--NOTE: lsp
+	-- NOTE: lsp
 	hl("LspReferenceText", { bg = colors.gre4 })
 	hl("LspReferenceRead", { bg = colors.gre4 })
 	hl("LspReferenceWrite", { bg = colors.gre4 })
@@ -277,7 +276,7 @@ local function m39k()
 	hl("Ignore", { link = "Normal" })
 	hl("Error", { sp = colors.red1, undercurl = true })
 
-	--NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/main/CONTRIBUTING.md
+	-- NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/main/CONTRIBUTING.md
 
 	--- 1white
 	hl("@function", { link = "Function" })
@@ -345,34 +344,34 @@ local function m39k()
 	--- custom
 	hl("@keyword.directive", { link = "Boolean" }) -- define ifdef in c
 
-	--NOTE: plugin
+	-- NOTE: plugin
 
-	---flash
+	--- flash
 	hl("FlashLabel", { fg = colors.red3, bold = true })
 	hl("FlashCurrent", { link = "Function" })
 	hl("FlashMatch", { link = "Function" })
-	---cmp
+	--- cmp
 	hl("BlinkCmpKind", { fg = colors.pur0 })
-	---fzf
+	--- fzf
 	hl("FzfLuaBorder", { bg = colors.bg, fg = colors.fg3 })
 	hl("FzfLuaTitle", { fg = colors.fg1 })
 	hl("FzfFgPlus", { fg = colors.gre5 })
 	hl("FzfBgPlus", { bg = colors.blu2 })
-	---nvimtree
+	--- nvimtree
 	hl("NvimTreeIndentMarker", { link = "Whitespace" })
 	hl("NvimTreeGitFolderDirtyHL", { fg = colors.red0 })
 	hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
 	hl("NvimTreeGitFileNewHL", { fg = colors.gre5 })
-	---alpha
+	--- alpha
 	hl("Alpha", { fg = colors.miku })
-	---heirline
+	--- heirline
 	hl("HeirlineA", { fg = colors.blu0 })
 	hl("HeirlineB", { fg = colors.pur0 })
-	---dap
+	--- dap
 	hl("DapBreakpointHighlight", { fg = colors.red0 })
 	hl("DapStoppedHighlight", { fg = colors.gre5 })
 	hl("NvimDapViewWatchUpdated", { fg = colors.red3 })
-	---yazi
+	--- yazi
 	hl("YaziFloatBorder", { fg = colors.fg3, bg = colors.bg0 })
 
 	vim.g.terminal_color_background = colors.bg0

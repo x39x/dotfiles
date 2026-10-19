@@ -31,7 +31,7 @@
 --------------------------------------------------------------
 --- lua:
 --  mason stylua
---  mason lua-language-server
+--  mason emmylua_ls/lua-language-server
 --------------------------------------------------------------
 --- spell
 --  mason typos/codespell
@@ -74,7 +74,8 @@ vim.diagnostic.config({
 
 local servers = {
 	"typos",
-	"luals",
+	-- "luals",
+	"emmyluals",
 
 	"gopls",
 	"rust_analyzer",
