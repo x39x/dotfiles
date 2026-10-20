@@ -59,6 +59,7 @@ require("mason").setup({
 require("yazi").setup({
 	open_for_directories = true,
 	yazi_floating_window_border = "double",
+	highlight_hovered_buffers_in_same_directory = false,
 	keymaps = {
 		open_file_in_horizontal_split = "<c-s>",
 		grep_in_directory = "<c-x>",

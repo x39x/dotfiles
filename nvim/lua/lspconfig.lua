@@ -86,7 +86,7 @@ local servers = {
 
 	"vtsls",
 	"cssls",
-	"tailwindcss",
+	-- "tailwindcss",
 
 	-- "vuels",
 	-- "jsonls",
