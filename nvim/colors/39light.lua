@@ -14,8 +14,6 @@ local colors = {
 	fg4 = "#EBECF0",
 	-- syntax
 	cya0 = "#00627A",
-	bro1 = "#b99f0e",
-
 	gre0 = "#077D18",
 	gra0 = "#8C8C8C",
 	blu0 = "#0133B3",
@@ -29,16 +27,16 @@ local colors = {
 	blu4 = "#B4D7FF",
 	blu5 = "#A7C5FF",
 	blu6 = "#0A69DA",
-	gre1 = "#E9F5E6",
-	gre2 = "#BEE6BE",
-	gre3 = "#8EC39D",
-	gre4 = "#6DB083",
-	gre5 = "#10B981",
+	gre1 = "#BEE6BE",
+	gre2 = "#8EC39D",
+	gre3 = "#6DB083",
+	gre4 = "#10B981",
 	red1 = "#FFE5E5",
 	red2 = "#FFC4C5",
 	red3 = "#de0202",
 	ora0 = "#b86114",
 	yel0 = "#F2BF56",
+	bro1 = "#b99f0e",
 
 	-- "#45164F",
 	-- "#662277",
@@ -50,6 +48,7 @@ local colors = {
 	-- "#B28B00",
 	-- "#e6bc05",
 	-- "#F7E6A0",
+	-- "#E9F5E6",
 }
 
 local function m39k()
@@ -92,7 +91,7 @@ local function m39k()
 	hl("ComplHint", { link = "ComplMatchIns" })
 	hl("ComplHintMore", { link = "ComplMatchIns" })
 	hl("SnippetTabstop", { bg = colors.blu4 })
-	hl("SnippetTabstopActive", { bg = colors.gre2 })
+	hl("SnippetTabstopActive", { bg = colors.gre1 })
 	hl("WildMenu", { link = "ComplMatchIns" })
 
 	hl("TabLine", { fg = colors.fg0, bg = colors.bg0 })
@@ -109,7 +108,7 @@ local function m39k()
 	hl("ModeMsg", { fg = colors.red0 })
 	hl("MoreMsg", { link = "MsgAred" })
 	hl("MsgSeparator", { bg = colors.bg0, fg = colors.fg2 })
-	hl("OkMsg", { bg = colors.bg0, fg = colors.gre5 })
+	hl("OkMsg", { bg = colors.bg0, fg = colors.gre4 })
 	hl("WarningMsg", { bg = colors.bg0, fg = colors.bro1 })
 	hl("ErrorMsg", { bg = colors.bg0, fg = colors.red0 })
 	hl("StdoutMsg", { link = "OkMsg" })
@@ -119,7 +118,7 @@ local function m39k()
 	hl("WinSeparator", { fg = colors.fg3 })
 	hl("SignColumn", { bg = colors.bg0 })
 	hl("FoldColumn", { bg = colors.bg0 })
-	hl("Folded", { bg = colors.gre1 })
+	hl("Folded", { bg = colors.bg1 })
 	hl("ColorColumn", { link = "Folded" })
 	hl("CursorColumn", { link = "Folded" })
 	hl("CursorLine", { bg = colors.bg1 })
@@ -135,8 +134,8 @@ local function m39k()
 	hl("MatchParen", { link = "Visual" })
 	hl("Search", { link = "Visual" })
 	hl("IncSearch", { link = "Visual" })
-	hl("CurSearch", { bg = colors.gre2 })
-	hl("Substitute", { bg = colors.gre2 })
+	hl("CurSearch", { bg = colors.gre1 })
+	hl("Substitute", { bg = colors.red1 }) --:range s///
 
 	hl("Whitespace", { fg = colors.fg4 })
 	hl("Conceal", { fg = colors.fg4 })
@@ -145,12 +144,12 @@ local function m39k()
 	hl("NonText", { fg = colors.pur0 })
 
 	hl("SpellBad", { undercurl = true, sp = colors.red0 })
-	hl("SpellCap", { undercurl = true, sp = colors.gre5 })
-	hl("SpellLocal", { undercurl = true, sp = colors.gre5 })
+	hl("SpellCap", { undercurl = true, sp = colors.gre4 })
+	hl("SpellLocal", { undercurl = true, sp = colors.gre4 })
 	hl("SpellRare", { undercurl = true, sp = colors.bro1 })
 
 	-- NOTE: DIFF
-	hl("DiffAdd", { bg = colors.gre2 })
+	hl("DiffAdd", { bg = colors.gre1 })
 	hl("DiffDelete", { bg = colors.red1, fg = colors.fg2 })
 	hl("DiffChange", { bg = colors.blu3 })
 	hl("DiffText", { bg = colors.blu5, fg = colors.red3 })
@@ -167,7 +166,7 @@ local function m39k()
 	hl("GitSignsAdd", { link = "Added" })
 	hl("GitSignsChange", { link = "Changed" })
 	hl("GitSignsDelete", { link = "Removed" })
-	hl("CodeDiffCharInsert", { bg = colors.gre3 })
+	hl("CodeDiffCharInsert", { bg = colors.gre2 })
 	hl("CodeDiffCharDelete", { bg = colors.red2 })
 	hl("CodeDiffFiller", { fg = colors.fg3 })
 
@@ -181,50 +180,50 @@ local function m39k()
 	hl("qfFileName", { fg = colors.fg0 })
 
 	-- NOTE: lsp
-	hl("LspReferenceText", { bg = colors.gre4 })
-	hl("LspReferenceRead", { bg = colors.gre4 })
-	hl("LspReferenceWrite", { bg = colors.gre4 })
-	hl("LspReferenceTarget", { bg = colors.gre4 })
+	hl("LspReferenceText", { bg = colors.gre3 })
+	hl("LspReferenceRead", { bg = colors.gre3 })
+	hl("LspReferenceWrite", { bg = colors.gre3 })
+	hl("LspReferenceTarget", { bg = colors.gre3 })
 	hl("LspInlayHint", { bg = colors.fg2, italic = true })
 	hl("LspCodeLens", { bg = colors.fg2 })
 	hl("LspCodeLensSeparator", { fg = colors.fg0 })
-	hl("LspSignatureActiveParameter", { bg = colors.gre2, bold = true })
+	hl("LspSignatureActiveParameter", { bg = colors.gre1, bold = true })
 	-- Diagnostics (LSP)
 	hl("DiagnosticError", { fg = colors.red0 })
 	hl("DiagnosticWarn", { fg = colors.ora0 })
 	hl("DiagnosticInfo", { fg = colors.blu6 })
 	hl("DiagnosticHint", { fg = colors.pur0 })
-	hl("DiagnosticOk", { fg = colors.gre5 })
+	hl("DiagnosticOk", { fg = colors.gre4 })
 
 	hl("DiagnosticSignError", { fg = colors.red0 })
 	hl("DiagnosticSignWarn", { fg = colors.ora0 })
 	hl("DiagnosticSignInfo", { fg = colors.blu6 })
 	hl("DiagnosticSignHint", { fg = colors.pur0 })
-	hl("DiagnosticSignOk", { fg = colors.gre5 })
+	hl("DiagnosticSignOk", { fg = colors.gre4 })
 
 	hl("DiagnosticFloatingError", { fg = colors.red0 })
 	hl("DiagnosticFloatingWarn", { fg = colors.ora0 })
 	hl("DiagnosticFloatingInfo", { fg = colors.blu6 })
 	hl("DiagnosticFloatingHint", { fg = colors.pur0 })
-	hl("DiagnosticFloatingOk", { fg = colors.gre5 })
+	hl("DiagnosticFloatingOk", { fg = colors.gre4 })
 
 	hl("DiagnosticUnderlineError", { sp = colors.red0, undercurl = true })
 	hl("DiagnosticUnderlineWarn", { sp = colors.bro1, undercurl = true })
 	hl("DiagnosticUnderlineInfo", { sp = colors.blu6, undercurl = true })
 	hl("DiagnosticUnderlineHint", { sp = colors.pur0, undercurl = true })
-	hl("DiagnosticUnderlineOk", { sp = colors.gre5, undercurl = true })
+	hl("DiagnosticUnderlineOk", { sp = colors.gre4, undercurl = true })
 
 	hl("DiagnosticVirtualTextError", { sp = colors.red0, undercurl = true })
 	hl("DiagnosticVirtualTextWarn", { sp = colors.bro1, undercurl = true })
 	hl("DiagnosticVirtualTextInfo", { sp = colors.blu6, undercurl = true })
 	hl("DiagnosticVirtualTextHint", { sp = colors.pur0, undercurl = true })
-	hl("DiagnosticVirtualTextOk", { sp = colors.gre5, undercurl = true })
+	hl("DiagnosticVirtualTextOk", { sp = colors.gre4, undercurl = true })
 
 	hl("DiagnosticVirtualLinesError", { sp = colors.red0, undercurl = true })
 	hl("DiagnosticVirtualLinesWarn", { sp = colors.bro1, undercurl = true })
 	hl("DiagnosticVirtualLinesInfo", { sp = colors.blu6, undercurl = true })
 	hl("DiagnosticVirtualLinesHint", { sp = colors.pur0, undercurl = true })
-	hl("DiagnosticVirtualLinesOk", { sp = colors.gre5, undercurl = true })
+	hl("DiagnosticVirtualLinesOk", { sp = colors.gre4, undercurl = true })
 
 	hl("DiagnosticDeprecated", { fg = colors.fg2 })
 	hl("DiagnosticUnnecessary", { fg = colors.fg2 })
@@ -355,13 +354,13 @@ local function m39k()
 	--- fzf
 	hl("FzfLuaBorder", { bg = colors.bg, fg = colors.fg3 })
 	hl("FzfLuaTitle", { fg = colors.fg1 })
-	hl("FzfFgPlus", { fg = colors.gre5 })
+	hl("FzfFgPlus", { fg = colors.gre4 })
 	hl("FzfBgPlus", { bg = colors.blu2 })
 	--- nvimtree
 	hl("NvimTreeIndentMarker", { link = "Whitespace" })
 	hl("NvimTreeGitFolderDirtyHL", { fg = colors.red0 })
 	hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
-	hl("NvimTreeGitFileNewHL", { fg = colors.gre5 })
+	hl("NvimTreeGitFileNewHL", { fg = colors.gre4 })
 	--- alpha
 	hl("Alpha", { fg = colors.miku })
 	--- heirline
@@ -369,7 +368,7 @@ local function m39k()
 	hl("HeirlineB", { fg = colors.pur0 })
 	--- dap
 	hl("DapBreakpointHighlight", { fg = colors.red0 })
-	hl("DapStoppedHighlight", { fg = colors.gre5 })
+	hl("DapStoppedHighlight", { fg = colors.gre4 })
 	hl("NvimDapViewWatchUpdated", { fg = colors.red3 })
 	--- yazi
 	hl("YaziFloatBorder", { fg = colors.fg3, bg = colors.bg0 })
@@ -387,7 +386,7 @@ local function m39k()
 	vim.g.terminal_color_7 = colors.bg0
 	vim.g.terminal_color_8 = colors.fg1
 	vim.g.terminal_color_9 = colors.red0
-	vim.g.terminal_color_10 = colors.gre5
+	vim.g.terminal_color_10 = colors.gre4
 	vim.g.terminal_color_11 = colors.yel0
 	vim.g.terminal_color_12 = colors.blu1
 	vim.g.terminal_color_13 = colors.pur0

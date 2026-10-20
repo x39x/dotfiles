@@ -48,7 +48,7 @@ o.number = true
 o.numberwidth = 3
 o.list = true
 o.listchars = "tab:··󰁔,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
-o.fillchars = "eob: ,msgsep:─,fold: " -- eob: hide "~"
+o.fillchars = "eob: ,msgsep:─,fold: ,diff:╱" -- eob: hide "~"
 o.cursorline = true
 o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
@@ -184,7 +184,7 @@ autocmd("FileType", {
 
 autocmd("TextYankPost", {
 	callback = function()
-		vim.hl.hl_op({ higroup = "CurSearch", timeout = 139 })
+		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
 	end,
 	group = vim.api.nvim_create_augroup("highlight yank text", { clear = true }),
 })

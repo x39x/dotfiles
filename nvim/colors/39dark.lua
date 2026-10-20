@@ -19,7 +19,6 @@ local colors = {
 	blu4 = "#385570",
 	blu5 = "#25323E",
 	gre1 = "#274B34",
-	gre2 = "#32fa6d",
 	gre3 = "#1B7F37",
 	gre4 = "#192C20",
 	gre5 = "#0FBC79",
@@ -106,7 +105,7 @@ local function m39k()
 	hl("WinSeparator", { fg = colors.bg2 })
 	hl("SignColumn", { bg = colors.bg0 })
 	hl("FoldColumn", { bg = colors.bg0 })
-	hl("Folded", { bg = colors.bg2 })
+	hl("Folded", { bg = colors.bg1 })
 	hl("ColorColumn", { link = "Folded" })
 	hl("CursorColumn", { link = "Folded" })
 	hl("CursorLine", { bg = colors.bg0 })
@@ -122,7 +121,7 @@ local function m39k()
 	hl("MatchParen", { link = "Visual" })
 	hl("Search", { link = "Visual" })
 	hl("IncSearch", { link = "Visual" })
-	hl("CurSearch", { bg = colors.gre1 })
+	hl("CurSearch", { bg = colors.red3 })
 	hl("Substitute", { bg = colors.gre1 })
 
 	hl("Whitespace", { fg = colors.bg1 })
@@ -140,7 +139,7 @@ local function m39k()
 	hl("DiffAdd", { bg = colors.gre4 })
 	hl("DiffDelete", { bg = colors.red4, fg = colors.gra3 })
 	hl("DiffChange", { bg = colors.blu5 })
-	hl("DiffText", { bg = colors.blu4, fg = colors.gre2 })
+	hl("DiffText", { bg = colors.blu4, fg = colors.red2 })
 	hl("DiffTextAdd", { link = "DiffText" })
 	hl("@diff.plus", { link = "DiffAdd" })
 	hl("@diff.minus", { link = "DiffDelete" })
