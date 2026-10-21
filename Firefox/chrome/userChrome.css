@@ -5,7 +5,6 @@
     background: var(--toolbar-background-color) !important;
     top: 0 !important;
 }
-
 .urlbar-input-container {
     outline: none !important;
 }
@@ -24,31 +23,40 @@
     box-shadow: none !important;
 }
 
-/* private mode icon */
-.private-browsing-indicator-with-label,
-#reset-pbm-toolbar-button,
-/* toolbar icon */
-#picture-in-picture-button,
-#reader-mode-button,
-/* urlbar icon */
-.urlbar-go-button,
-.searchmode-switcher,
-#urlbar-revert-button-container,
-#trust-icon-container,
-#identity-permission-box,
-#star-button-box,
-#share-button,
-#translations-button {
-    display: none !important;
-}
-
-/* dark mode address bar selected item background */
+/* dark mode url bar selected item background */
 @media (prefers-color-scheme: dark) {
-
     .urlbarView-button-result-menu,
     .urlbarView-row[selected] {
         background-color: #4e4d55 !important;
     }
+}
+
+/* url bar icon */
+#identity-permission-box,
+#trust-icon-container,
+#reader-mode-button,
+#picture-in-picture-button,
+#urlbar-revert-button-container,
+.searchmode-switcher,
+.urlbar-go-button {
+    display: none !important;
+}
+
+/* bookmark */
+image#star-button {
+    display: none !important;
+}
+#star-button-box:hover,
+#star-button-box:active,
+#star-button-box:focus,
+#star-button-box:focus-visible {
+    background: none !important;
+}
+
+/* private mode */
+#nav-bar-overflow-button,
+.private-browsing-indicator-button {
+    display: none !important;
 }
 
 /* tab: outline  */
