@@ -14,7 +14,7 @@ no } K
 let mapleader = "\<Space>"
 nno <leader>, :let @/ = '<c-r><c-w>' \| set hls<CR>
 nno <C-l> :nohl<CR>
-"dark: retrobox evening  koehler, light: delek morning
+"dark: retrobox koehler, light: delek
 set bg=dark
 colo retrobox 
 let &t_SI = "\e[6 q"

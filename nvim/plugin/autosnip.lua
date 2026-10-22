@@ -1,176 +1,140 @@
-local snippets = {}
+---@class Autosnip
+---@field body string[]
+---@field callback fun(args: table|nil)
 
----@class SnippetOpts
----@field lang string
----@field abbr string
----@field template string[]
----@field cursor_pos function
----@field eol? boolean
----@field mode? string
+---@type table<string,Autosnip>
+local auto_snippets = {}
+---@type table<string,string[]>
+local auto_triggers = {}
 
----@param snip SnippetOpts
-local add = function(snip)
-	snip = vim.tbl_extend("force", { eol = true, mode = "i" }, snip or {})
+local AUTO = {}
 
-	local lang = snip.lang
-	local abbr = snip.abbr
-	local key = abbr:sub(-1)
-
-	snippets[lang] = snippets[lang] or {}
-	snippets[lang][key] = snippets[lang][key] or {}
-
-	snippets[lang][key][abbr] = snip
-end
-
-local function inside_word(col0, line)
-	local next_char = line:sub(col0 + 1, col0 + 1)
-	return next_char ~= "" and next_char:match("%w") ~= nil
-end
-
-local function apply_snippet(pos, indent, snip)
-	local lines = vim.deepcopy(snip.template)
-
-	for i = 2, #lines do
-		lines[i] = indent .. lines[i]
+---@param ft string
+---@param buf number
+---@param pos table
+---@return string|nil
+function AUTO.should_expand(ft, buf, pos)
+	local line = vim.api.nvim_buf_get_lines(buf, pos.row - 1, pos.row, true)[1]
+	if not line then
+		return nil
 	end
 
-	vim.api.nvim_buf_set_text(0, pos.row - 1, pos.col - #snip.abbr, pos.row - 1, pos.col, lines)
+	-- Get the word immediately before the cursor.
+	-- Any non-whitespace character is allowed, including CJK and emoji.
+	local before_cursor = line:sub(1, pos.col)
+	local cursor_word = before_cursor:match("(%S+)$")
+	if not cursor_word then
+		return nil
+	end
 
-	snip.set_cursor(pos)
+	-- Check whether the snippet exists.
+	local snippet = auto_snippets[ft][cursor_word]
+	if not snippet then
+		return nil
+	end
+
+	-- Inline snippets can expand anywhere.
+	if snippet.inline then
+		return cursor_word
+	end
+
+	-- The character after the word must be whitespace or EOL.
+	local after_cursor = line:sub(pos.col + 1)
+	local next_char = after_cursor:sub(1, 1)
+	if next_char ~= "" and not next_char:match("[ \t]") then
+		return nil
+	end
+
+	-- Non-inline snippets require only whitespace after the cursor.
+	if after_cursor:match("^%s*$") then
+		return cursor_word
+	end
+	return nil
 end
 
-local function try_expand(pos, bucket)
-	local col0 = vim.fn.col(".") - 1
-	local line = vim.fn.getline(".")
+---@param prefix string
+---@param ft string
+---@return boolean
+function AUTO.expand(prefix, ft)
+	local snippet = auto_snippets[ft][prefix]
+	local snippet_str = table.concat(snippet.body, "\n")
+	vim.snippet.expand(snippet_str)
 
-	if inside_word(col0, line) then
-		return
+	return snippet.callback and snippet.callback()
+end
+
+---@param buf number
+---@param ft string
+function AUTO.set(ft, buf)
+	for _, k in pairs(auto_triggers[ft]) do
+		vim.keymap.set("i", k, function()
+			local cur = vim.api.nvim_win_get_cursor(0)
+			local pos = { row = cur[1], col = cur[2] }
+
+			-- -- insert trigger key and move cursor first
+			vim.api.nvim_buf_set_text(0, pos.row - 1, pos.col, pos.row - 1, pos.col, { k })
+			pos.col = pos.col + 1
+			vim.api.nvim_win_set_cursor(0, { pos.row, pos.col })
+			vim.notify("col: " .. (pos.col + 1), vim.log.levels.WARN)
+			local prefix = AUTO.should_expand(ft, buf, pos)
+			if prefix then
+				vim.api.nvim_buf_set_text(0, pos.row - 1, pos.col - #prefix, pos.row - 1, pos.col, {})
+				AUTO.expand(prefix, ft)
+			end
+		end, { noremap = true, silent = true, buf = buf })
 	end
+end
 
-	local before = line:sub(1, col0)
-	local word = before:match("%S+$") or before
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown", "go" },
+	callback = function(args)
+		local ft = args.match
 
-	local snip = bucket[word]
-	if not snip then
-		return
-	end
-
-	if snip.eol then
-		local trimmed = line:gsub("%s+$", "")
-		if col0 < #trimmed then
+		if auto_triggers[ft] then
 			return
 		end
-	end
 
-	local indent = line:match("^%s+") or ""
-	apply_snippet(pos, indent, snip)
+		auto_triggers[ft] = {}
+		for k in pairs(auto_snippets[ft]) do
+			table.insert(auto_triggers[ft], k:sub(-1))
+		end
+		auto_triggers[ft] = vim.list.unique(auto_triggers[ft])
 
-	if snip.mode == "n" then
-		vim.cmd.stopinsert()
-	end
-end
-
----@param opts { lang:string, args:integer }
-local load = function(opts)
-	local lang = opts.lang
-	local lang_snips = snippets[lang]
-	if not lang_snips then
-		return
-	end
-
-	for key, bucket in pairs(lang_snips) do
-		vim.keymap.set("i", key, function()
-			vim.schedule(function()
-				local cur = vim.api.nvim_win_get_cursor(0)
-				local pos = { row = cur[1], col = cur[2] }
-
-				-- insert trigger key
-				vim.api.nvim_buf_set_text(0, pos.row - 1, pos.col, pos.row - 1, pos.col, { key })
-
-				pos.col = pos.col + 1
-				vim.api.nvim_win_set_cursor(0, { pos.row, pos.col })
-
-				try_expand(pos, bucket)
-			end)
-		end, { noremap = true, silent = true, buf = opts.buf })
-	end
-end
-
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd("FileType", {
-	pattern = { "go" },
-	callback = function(args)
-		add({
-			lang = "go",
-			abbr = "iff",
-			template = { "if err != nil {", "\treturn err", "}" },
-			set_cursor = function(pos)
-				local line = vim.fn.getline(pos.row + 1)
-				vim.api.nvim_win_set_cursor(0, {
-					pos.row + 1,
-					string.len(line) - 2,
-				})
-			end,
-			mode = "n",
-		})
-		load({ lang = "go", buf = args.buf })
+		AUTO.set(ft, args.buf)
 	end,
-	group = vim.api.nvim_create_augroup("go.snippets", { clear = true }),
-	desc = "go snippets",
+	group = vim.api.nvim_create_augroup("matsu.autosnip", { clear = true }),
 })
 
-autocmd("FileType", {
-	pattern = { "markdown" },
-	callback = function(args)
-		add({
-			lang = "markdown",
-			abbr = ";1",
-			template = { "```", "```" },
+-- NOTE: snippets
+auto_snippets.markdown = {
+	["；1"] = {
+		body = { "```${1:txt}\n${2:print()}", "```", "${0}" },
+	},
+	[";1"] = {
+		body = { "```${1:txt}\n${2:print()}", "```", "${0}" },
+	},
+	[";2"] = {
+		body = { "`${1}`${0}" },
+		inline = true,
+	},
+	["；2"] = {
+		body = { "`${1}`${0}" },
+		inline = true,
+	},
+	[";a1"] = {
+		body = { "hello ${1:world}!${0}" },
+		inline = true,
+		callback = function()
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "n", false)
+		end,
+	},
+}
 
-			set_cursor = function(pos)
-				vim.api.nvim_win_set_cursor(0, {
-					pos.row,
-					pos.col + string.len(";1"),
-				})
-			end,
-		})
-		add({
-			lang = "markdown",
-			abbr = "；1",
-			template = { "```", "```" },
-			set_cursor = function(pos)
-				vim.api.nvim_win_set_cursor(0, {
-					pos.row,
-					pos.col + string.len("；1"),
-				})
-			end,
-		})
-		add({
-			lang = "markdown",
-			abbr = ";2",
-			template = { "``" },
-
-			set_cursor = function(pos)
-				vim.api.nvim_win_set_cursor(0, {
-					pos.row,
-					pos.col - 1,
-				})
-			end,
-		})
-		add({
-			lang = "markdown",
-			abbr = "；2",
-			template = { "``" },
-			set_cursor = function(pos)
-				vim.api.nvim_win_set_cursor(0, {
-					pos.row,
-					pos.col - 3,
-				})
-			end,
-		})
-		load({ lang = "markdown", buf = args.buf })
-	end,
-	group = vim.api.nvim_create_augroup("markdown.snippets", { clear = true }),
-	desc = "markdown snippets",
-})
+auto_snippets.go = {
+	["iff"] = {
+		body = { "if err != nil {", "\treturn err${0}", "}" },
+		callback = function()
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "n", false)
+		end,
+	},
+}

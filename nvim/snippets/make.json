@@ -33,7 +33,7 @@
         "description": "oi Makefile"
     },
     "cc": {
-        "prefix": "cc",
+        "prefix": "mkw",
         "body": [
             "CXX = clang++",
             "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",

@@ -1,6 +1,8 @@
 --- port from https://github.com/goolord/alpha-nvim
 local F
 local alpha_buf
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 local alpha_close = function()
 	vim.api.nvim_buf_delete(alpha_buf, {})
@@ -112,26 +114,26 @@ local enable_alpha = function()
 
 	vim.o.eventignore = eventignore
 
-	local group_id = vim.api.nvim_create_augroup("alpha_temp", { clear = true })
+	local group_id = augroup("matsu.alpha.close", { clear = true })
 
-	vim.api.nvim_create_autocmd("BufUnload", {
+	autocmd("BufUnload", {
 		group = group_id,
 		buffer = alpha_buf,
 		callback = alpha_close,
 	})
 
-	vim.api.nvim_create_autocmd("SessionLoadPost", {
+	autocmd("SessionLoadPost", {
 		group = group_id,
 		callback = alpha_close,
 	})
 
-	local resize_id = vim.api.nvim_create_augroup("alpha_temp", { clear = true })
-	vim.api.nvim_create_autocmd("VimResized", {
+	local resize_id = augroup("matsu.alpha.resized", { clear = true })
+	autocmd("VimResized", {
 		group = resize_id,
 		buffer = alpha_buf,
 		callback = render,
 	})
-	vim.api.nvim_create_autocmd("WinEnter", {
+	autocmd("WinEnter", {
 		group = resize_id,
 		buffer = alpha_buf,
 		callback = render,
@@ -162,8 +164,8 @@ local alpha_start = function()
 	render()
 end
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	group = vim.api.nvim_create_augroup("alpha_start", { clear = true }),
+autocmd("VimEnter", {
+	group = augroup("matsu.alpha_start", { clear = true }),
 	pattern = "*",
 	nested = true,
 	callback = function()

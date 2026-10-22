@@ -72,21 +72,23 @@ o.wildignorecase = true
 --
 o.autocomplete = false
 -- o.completeopt = "menu,menuone,noinsert,popup"
-o.completeopt = "popup"
+o.completeopt = "menu,popup"
+-- o.completeopt = "popup"
 
-o.complete = ".,w,b,i,t,o"
---o.previewpopup = "height:10,width:60,border:bold"
+o.complete = ".,w,b,o,Fv:lua.snippet_complete"
+o.completefunc = "v:lua.snippet_complete"
+-- o.previewpopup = "height:10,width:60,border:bold" -- doesn't work
 
 -- see :h map-table :h default-mappings
 local keymap = vim.keymap.set
 local keymap_opts = require("utils.keymap_opts")
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
--- local function pumvisible()
--- 	return tonumber(vim.fn.pumvisible()) ~= 0
--- end
--- keymap("i", "<C-l>", function()
--- 	return pumvisible() and "<C-y>" or "<C-l>"
--- end, keymap_opts({ expr = true }))
+-- <C-e>:  dismiss the completion menu
+keymap("i", "<C-l>", function()
+	return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
+end, keymap_opts({ expr = true }))
 
 keymap("", "<Space>", "<Nop>", keymap_opts())
 keymap("i", "jk", "<esc>", keymap_opts())
@@ -97,7 +99,8 @@ keymap("", "H", "^", keymap_opts())
 
 -- swap some key
 keymap({ "n", "x" }, "q", "%", keymap_opts())
-vim.api.nvim_create_autocmd("VimEnter", {
+autocmd("VimEnter", {
+	group = augroup("matsu.keymap.percent_sign", { clear = true }),
 	callback = function()
 		keymap("n", "%", "q", keymap_opts())
 	end,
@@ -168,26 +171,35 @@ cmd("CBpwd", function()
 	print("change dir to " .. dir)
 end, {})
 
-local autocmd = vim.api.nvim_create_autocmd
-
 autocmd("FileType", {
 	pattern = "*",
+	group = augroup("matsu.formatoptions", { clear = true }),
 	callback = function()
 		-- tc: text/comment,qwn2j:format,mM] cjk
 		-- ro: <enter>/oO auto comment leader
 		-- see :h 'formatoptions'
 		o.formatoptions = "tcr/qwn2jvlmM]"
 	end,
-	group = vim.api.nvim_create_augroup("formatoptions", { clear = true }),
-	desc = "formatoptions",
 })
 
 autocmd("TextYankPost", {
+	group = augroup("matsu.highlight.yank", { clear = true }),
 	callback = function()
-		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+		if not vim.v.event.visual then
+			vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
+			-- 0.13
+			-- vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+		end
 	end,
-	group = vim.api.nvim_create_augroup("highlight yank text", { clear = true }),
 })
+
+-- 0.13
+-- autocmd("TextPutPost", {
+-- 	group = augroup("matsu.highlight.remove", { clear = true }),
+-- 	callback = function()
+-- 		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+-- 	end,
+-- })
 
 local switch_im
 if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
@@ -197,7 +209,7 @@ elseif vim.fn.has("macunix") == 1 and vim.fn.executable("iswitch") == 1 then
 end
 if switch_im then
 	autocmd("InsertLeave", {
-		group = vim.api.nvim_create_augroup("imswitch", { clear = true }),
+		group = augroup("matsu.imswitch", { clear = true }),
 		callback = function()
 			vim.system(switch_im)
 		end,
@@ -215,7 +227,7 @@ autocmd("FileType", {
 		keymap("", "H", "g^", { silent = true, buf = args.buf })
 		keymap("", "L", "g$", { silent = true, buf = args.buf })
 	end,
-	group = vim.api.nvim_create_augroup("markdown", { clear = true }),
+	group = augroup("matsu.markdown", { clear = true }),
 })
 
 autocmd("FileType", {
@@ -223,23 +235,35 @@ autocmd("FileType", {
 	callback = function(args)
 		vim.bo[args.buf].shiftwidth = 8
 	end,
-	group = vim.api.nvim_create_augroup("indet8", { clear = true }),
-	desc = "indent 8",
+	group = augroup("matsu.indet", { clear = true }),
 })
 
 autocmd("FileType", {
 	pattern = { "lua", "go", "c", "cpp", "rust" },
 	callback = function(args)
-		vim.bo[args.buf].expandtab = false
-		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
-		local indet_4 = { "lua", "rust" }
-		if vim.tbl_contains(indet_4, vim.bo[args.buf].filetype) then
-			vim.bo[args.buf].tabstop = 4
+		local bo = vim.bo[args.buf]
+		bo.expandtab = false
+
+		if vim.tbl_contains({ "lua", "rust" }, bo.filetype) then
+			bo.tabstop = 4
 		end
 	end,
-	group = vim.api.nvim_create_augroup("tab", { clear = true }),
-	desc = "TAB",
+	group = augroup("matsu.tab", { clear = true }),
+})
+
+autocmd("BufWinEnter", {
+	callback = function(args)
+		local winid = vim.api.nvim_get_current_win()
+		if not vim.api.nvim_win_is_valid(winid) then
+			return
+		end
+
+		local ft = vim.bo[args.buf].filetype
+		if vim.tbl_contains({ "lua", "go", "c", "cpp", "rust" }, ft) then
+			vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
+		end
+	end,
+	group = augroup("matsu.tab.listchars", { clear = true }),
 })
 
 autocmd("FileType", {
@@ -251,8 +275,7 @@ autocmd("FileType", {
 		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buffer = args.buf, silent = true })
 		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buffer = args.buf, silent = true })
 	end,
-	group = vim.api.nvim_create_augroup("qfbufline", { clear = true }),
-	desc = "Do't show qf in bufline",
+	group = augroup("matsu.qfbufline", { clear = true }),
 })
 
 local function load_cache()

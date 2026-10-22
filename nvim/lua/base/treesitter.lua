@@ -33,7 +33,10 @@ local parsers = {
 	"cmake",
 }
 
-vim.api.nvim_create_autocmd("User", {
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+autocmd("User", {
+	group = augroup("matsu.treesitter.update", { clear = true }),
 	pattern = "TSUpdate",
 	callback = function()
 		require("nvim-treesitter.parsers").asciidoc = {
@@ -46,9 +49,10 @@ vim.api.nvim_create_autocmd("User", {
 		}
 	end,
 })
+
 require("nvim-treesitter").install(parsers)
 
-local patterns = {
+local filetype = {
 	"go",
 	"lua",
 	"rust",
@@ -80,8 +84,9 @@ local patterns = {
 	"asciidoc",
 }
 
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = patterns,
+autocmd("FileType", {
+	group = augroup("matsu.treesitter.start", { clear = true }),
+	pattern = filetype,
 	callback = function()
 		local winid = vim.api.nvim_get_current_win()
 		vim.treesitter.start()
@@ -89,7 +94,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.wo[winid][0].foldmethod = "expr"
 		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
-	group = vim.api.nvim_create_augroup("TREESITTER_HIGHLIGHT", { clear = true }),
 })
 
 require("nvim-treesitter-textobjects").setup({

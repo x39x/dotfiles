@@ -31,7 +31,7 @@
 --------------------------------------------------------------
 --- lua:
 --  mason stylua
---  mason emmylua_ls/lua-language-server
+--  mason lua-language-server
 --------------------------------------------------------------
 --- spell
 --  mason typos/codespell
@@ -74,8 +74,7 @@ vim.diagnostic.config({
 
 local servers = {
 	"typos",
-	-- "luals",
-	"emmyluals",
+	"luals",
 
 	"gopls",
 	"rust_analyzer",
@@ -89,6 +88,7 @@ local servers = {
 	-- "tailwindcss",
 
 	-- "vuels",
+	-- "emmyluals",
 	-- "jsonls",
 }
 vim.lsp.enable(servers)
@@ -101,7 +101,10 @@ autocmd("LspAttach", {
 	desc = "lsp keymap",
 	group = vim.api.nvim_create_augroup("lsp attach", { clear = true }),
 	callback = function(ev)
-		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+		if not assert(vim.lsp.get_client_by_id(ev.data.client_id)) then
+			return
+		end
+
 		local bufnr = ev.buf
 
 		-- see :h lsp-defaults
@@ -115,30 +118,12 @@ autocmd("LspAttach", {
 		keymap("n", "gA", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, keymap_opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" }))
 
-		local status, fzflua = pcall(require, "fzf-lua")
-		if status then
-			keymap("n", "gd", fzflua.lsp_definitions, keymap_opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
-			-- vim.keymap.del("", "grr")
-			keymap("n", "grr", fzflua.lsp_references, keymap_opts({ buffer = bufnr, desc = "Lsp fzf references" }))
+		if FzfLua then
+			keymap("n", "gd", FzfLua.lsp_definitions, keymap_opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
+			keymap("n", "grr", FzfLua.lsp_references, keymap_opts({ buffer = bufnr, desc = "Lsp fzf references" }))
 		else
+			-- lsp has default grr
 			keymap("n", "gd", vim.lsp.buf.definition, keymap_opts({ buffer = bufnr, desc = "Lsp default definitions" }))
-		end
-
-		if client:supports_method("textDocument/completion") then
-			-- <C-e> dismiss the completion menu
-			-- <C-x><C-o>  omnifunc.
-			-- <C-o>s Inside a snippet, use backspace to remove the placeholder.
-
-			local function feedkeys(keys)
-				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
-			end
-			keymap({ "i", "s" }, "<S-Tab>", function()
-				if vim.snippet.active({ direction = -1 }) then
-					vim.snippet.jump(-1)
-				else
-					feedkeys("<S-Tab>")
-				end
-			end, { buffer = bufnr })
 		end
 
 		-- :h lsp-semantic-highlght

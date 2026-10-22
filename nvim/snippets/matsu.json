@@ -1,0 +1,7 @@
+{
+    "hello_world": {
+        "prefix": "hwd",
+        "body": ["Hello world!"],
+        "description": "global snippet example"
+    }
+}
