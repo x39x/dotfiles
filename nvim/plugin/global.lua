@@ -1,12 +1,23 @@
+_G.matsu_foldtext = function()
+	local start_line = vim.v.foldstart
+	local end_line = vim.v.foldend
+	local lines = end_line - start_line + 1
+
+	local text = vim.api.nvim_buf_get_lines(0, start_line - 1, start_line, true)[1] or ""
+	text = text:gsub("\t", string.rep(" ", vim.bo[0].tabstop))
+	return text .. "   󰁂 " .. lines .. " lines "
+end
+
 -- https://github.com/vim/vim/issues/4425#issuecomment-640123274
 -- QuickFixTextFunc
-return function(info)
+_G.matsu_qftf = function(info)
 	local qfl = info.quickfix == 1 and vim.fn.getqflist({ id = info.id, items = 0 }).items
 		or vim.fn.getloclist(info.winid, { id = info.id, items = 0 }).items
+		or {}
 
 	--  计算合适的 max_width
 	local lens = {}
-	for _, e in ipairs(qfl) do
+	for _, e in pairs(qfl) do
 		local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
 		table.insert(lens, vim.fn.strchars(fname, true))
 	end

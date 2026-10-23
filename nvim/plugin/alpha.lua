@@ -114,16 +114,8 @@ local enable_alpha = function()
 
 	vim.o.eventignore = eventignore
 
-	local group_id = augroup("matsu.alpha.close", { clear = true })
-
-	autocmd("BufUnload", {
-		group = group_id,
-		buffer = alpha_buf,
-		callback = alpha_close,
-	})
-
 	autocmd("SessionLoadPost", {
-		group = group_id,
+		group = augroup("matsu.alpha.close", { clear = true }),
 		callback = alpha_close,
 	})
 

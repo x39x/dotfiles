@@ -37,7 +37,7 @@ o.smartcase = true
 o.scrolloff = 5
 o.sidescrolloff = 5
 o.exrc = true -- exrc config
-o.quickfixtextfunc = "v:lua.require'utils.qftf'" --  quickfix textfunc
+o.quickfixtextfunc = "v:lua.matsu_qftf" --  quickfix textfunc
 o.virtualedit = "block"
 --
 o.showtabline = 2 -- tabline,0:no
@@ -66,15 +66,12 @@ o.foldlevel = 99
 o.foldlevelstart = 99
 o.foldcolumn = "0" -- don't show fold in line number
 o.foldmethod = "manual"
-o.foldtext = "v:lua.require'utils.foldtext'()"
-o.pumborder = "solid"
-o.wildignorecase = true
+o.foldtext = "v:lua.matsu_foldtext"
 --
+o.pumborder = "solid"
 o.autocomplete = false
 -- o.completeopt = "menu,menuone,noinsert,popup"
 o.completeopt = "menu,popup"
--- o.completeopt = "popup"
-
 o.complete = ".,w,b,o,Fv:lua.snippet_complete"
 o.completefunc = "v:lua.snippet_complete"
 -- o.previewpopup = "height:10,width:60,border:bold" -- doesn't work
@@ -235,29 +232,17 @@ autocmd("FileType", {
 autocmd("FileType", {
 	pattern = { "lua", "go", "c", "cpp", "rust" },
 	callback = function(args)
-		local bo = vim.bo[args.buf]
-		bo.expandtab = false
-
-		if vim.tbl_contains({ "lua", "rust" }, bo.filetype) then
-			bo.tabstop = 4
+		vim.bo[args.buf].expandtab = false
+		if vim.tbl_contains({ "lua", "rust" }, args.match) then
+			vim.bo[args.buf].tabstop = 4
 		end
-	end,
-	group = augroup("matsu.tab", { clear = true }),
-})
-
-autocmd("BufWinEnter", {
-	callback = function(args)
 		local winid = vim.api.nvim_get_current_win()
 		if not vim.api.nvim_win_is_valid(winid) then
 			return
 		end
-
-		local ft = vim.bo[args.buf].filetype
-		if vim.tbl_contains({ "lua", "go", "c", "cpp", "rust" }, ft) then
-			vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
-		end
+		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
 	end,
-	group = augroup("matsu.tab.listchars", { clear = true }),
+	group = augroup("matsu.tab", { clear = true }),
 })
 
 autocmd("FileType", {
