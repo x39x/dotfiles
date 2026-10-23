@@ -1,48 +1,46 @@
-local bo = vim.bo
-local api = vim.api
-local cmd = vim.cmd
+local ignore_filetype = { "gitcommit", "gitrebase", "svn", "NvimTree", "fzf" }
 
-local config = {
-	ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", "NvimTree", "fzf" },
-	ignore_buftype = { "quickfix", "nofile", "help", "prompt", "terminal" },
-}
-
-local set_cursor_position = function()
-	if vim.tbl_contains(config.ignore_buftype, bo.buftype) then
-		return
-	end
-	if vim.tbl_contains(config.ignore_filetype, bo.filetype) then
+local function restore_cursor()
+	-- stop if not a normal buffer (common files buftyle is "")
+	if vim.bo.buftype ~= "" then
 		return
 	end
 
-	if api.nvim_buf_get_name(0) == "" then
+	-- stop if filetype is ignored
+	if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
 		return
 	end
 
-	local cursor_position = api.nvim_buf_get_mark(0, '"')
-	local row, col = cursor_position[1], cursor_position[2]
-
-	if row > 0 and row <= api.nvim_buf_line_count(0) then
-		local win_height = vim.fn.line("w$") - vim.fn.line("w0")
-		local lines_after_cursor = api.nvim_buf_line_count(0) - row
-
-		api.nvim_win_set_cursor(0, { row, col })
-
-		if api.nvim_buf_line_count(0) == vim.fn.line("w$") then
-			-- Do nothing, just moved the cursor
-		elseif lines_after_cursor > (win_height / 2 - 1) then
-			cmd.normal("zz")
-		else
-			api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-e>", true, false, true), "n", false)
-		end
+	-- stop if line is already specified (like during start with `nvim file +num`)
+	local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
+	if cursor_line > 1 then
+		return
 	end
+
+	local mark_position = vim.api.nvim_buf_get_mark(0, '"')
+	local mark_row, mark_col = mark_position[1], mark_position[2]
+
+	-- stop if can't restore proper line for some reason
+	local current_line_count = vim.api.nvim_buf_line_count(0)
+	if not (1 <= mark_row and mark_row <= current_line_count) then
+		return
+	end
+	-- normal! g`"zv
+	vim.api.nvim_win_set_cursor(0, { mark_row, mark_col })
+	vim.cmd.normal("zz")
 end
 
-local autocmd = vim.api.nvim_create_autocmd
-autocmd({ "BufReadPost" }, {
-	callback = function()
-		set_cursor_position()
-	end,
+-- create autocommand which runs once on `FileType` for every new buffer
+-- file type is set after "BufReadPre", ignore_filetype need
+vim.api.nvim_create_autocmd("BufReadPre", {
 	group = vim.api.nvim_create_augroup("user.lastplace", { clear = true }),
-	desc = "Lastplace",
+	callback = function(args)
+		vim.api.nvim_create_autocmd("FileType", {
+			buffer = args.buf,
+			once = true,
+			callback = function()
+				restore_cursor()
+			end,
+		})
+	end,
 })

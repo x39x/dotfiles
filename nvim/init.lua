@@ -81,60 +81,54 @@ o.completefunc = "v:lua.snippet_complete"
 
 -- see :h map-table :h default-mappings
 local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 -- <C-e>:  dismiss the completion menu
 keymap("i", "<C-l>", function()
 	return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
-end, keymap_opts({ expr = true }))
+end, { expr = true })
 
-keymap("", "<Space>", "<Nop>", keymap_opts())
-keymap("i", "jk", "<esc>", keymap_opts())
+keymap("", "<Space>", "<Nop>")
+keymap("i", "jk", "<esc>")
 
 -- better  ^ $
-keymap("", "L", "g_", keymap_opts())
-keymap("", "H", "^", keymap_opts())
+keymap("", "L", "g_")
+keymap("", "H", "^")
 
 -- swap some key
-keymap({ "n", "x" }, "q", "%", keymap_opts())
+keymap({ "n", "v" }, "q", "%")
 autocmd("VimEnter", {
 	group = augroup("matsu.keymap.percent_sign", { clear = true }),
 	callback = function()
-		keymap("n", "%", "q", keymap_opts())
+		keymap("n", "%", "q")
 	end,
 })
-keymap({ "n", "x" }, "{", "J", keymap_opts())
-keymap({ "n", "x" }, "}", "K", keymap_opts())
-keymap({ "n", "x" }, "J", "}", keymap_opts())
-keymap({ "n", "x" }, "K", "{", keymap_opts())
-keymap({ "n", "x" }, "<leader>[", "<ScrollWheelUp>", keymap_opts())
-keymap({ "n", "x" }, "<leader>]", "<ScrollWheelDown>", keymap_opts())
+keymap("", "{", "J")
+keymap("", "}", "K")
+keymap("", "J", "}")
+keymap("", "K", "{")
+keymap({ "n", "x" }, "<leader>[", "<ScrollWheelUp>")
+keymap({ "n", "x" }, "<leader>]", "<ScrollWheelDown>")
 
 -- useless 's/S'
-keymap({ "n", "v" }, "s", '"_d', keymap_opts())
-keymap("o", "s", "d", keymap_opts()) -- ss -> _dd
-keymap("", "S", '"_D', keymap_opts())
+keymap({ "n", "v" }, "s", '"_d')
+keymap("o", "s", "d") -- ss -> _dd
+keymap("", "S", '"_D')
 
 --buffers
-keymap({ "n" }, "<leader>l", vim.cmd.bnext, keymap_opts())
-keymap({ "n" }, "<leader>h", vim.cmd.bprevious, keymap_opts())
-
--- Resize pane
-keymap({ "n", "x" }, "<M-Up>", "<cmd>resize +2<CR>", keymap_opts({ desc = "resize window" }))
-keymap({ "n", "x" }, "<M-Down>", "<cmd>resize -2<CR>", keymap_opts({ desc = "resize window" }))
-keymap({ "n", "x" }, "<M-Left>", "<cmd>vertical resize -2<CR>", keymap_opts({ desc = "resize window" }))
-keymap({ "n", "x" }, "<M-Right>", "<cmd>vertical resize +2<CR>", keymap_opts({ desc = "resize window" }))
+keymap({ "n" }, "<leader>l", vim.cmd.bnext)
+keymap({ "n" }, "<leader>h", vim.cmd.bprevious)
 
 -- Move  line / code block
-keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>==", keymap_opts({ desc = "move line down" }))
-keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>==", keymap_opts({ desc = "move line up" }))
-keymap({ "x" }, "<M-->", ":m '>+1<CR>gv=gv", keymap_opts({ desc = "move line down" }))
-keymap({ "x" }, "<M-=>", ":m '<-2<CR>gv=gv", keymap_opts({ desc = "move line up" }))
-keymap({ "x" }, "<", "<gv", keymap_opts())
-keymap({ "x" }, ">", ">gv", keymap_opts())
+keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>")
+keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>")
+keymap("x", "<M-->", ":m '>+1<CR>gv=gv")
+keymap("x", "<M-=>", ":m '<-2<CR>gv=gv")
+keymap("x", "<", "<gv")
+keymap("x", ">", ">gv")
 
+-- cmdline mode
 keymap("c", "<C-p>", "<Up>")
 keymap("c", "<C-n>", "<Down>")
 keymap("c", "<C-f>", "<Right>")
@@ -142,34 +136,34 @@ keymap("c", "<C-b>", "<Left>")
 keymap("c", "<C-a>", "<Home>")
 
 -- save
-keymap({ "n", "x" }, "<M-s>", vim.cmd.write, keymap_opts({ desc = "save file" }))
+keymap({ "n", "v" }, "<M-s>", vim.cmd.write)
 keymap("i", "<M-s>", function()
 	vim.cmd.stopinsert()
 	vim.cmd.write()
-end, keymap_opts({ desc = "save file" }))
+end)
 
 -- highlight current word
 keymap("n", "<leader>,", function()
 	--":let @/ = expand('<cword>') | set hlsearch<cr>"
 	vim.fn.setreg("/", vim.fn.expand("<cword>"))
 	o.hlsearch = true
-end, keymap_opts({ desc = "highlight cword" }))
--- keymap("n", "<BackSpace>", vim.cmd.nohl, keymap_opts({ desc = "nohl" }))
+end)
 
---NOTE: user command
-local cmd = vim.api.nvim_create_user_command
+-- NOTE: autocmd/user_comman
 
-cmd("FormatJSON", "%!python3 -m json.tool", {})
+local user_command = vim.api.nvim_create_user_command
 
-cmd("Bpwd", function()
-	print(vim.fn.expand("%:p"))
+user_command("Bufpwd", function()
+	vim.notify("Bufpwd: " .. vim.fn.expand("%:p"))
 end, {})
 
-cmd("CBpwd", function()
+user_command("Bufcpwd", function()
 	local dir = vim.fn.expand("%:p:h")
 	vim.api.nvim_set_current_dir(dir)
-	print("change dir to " .. dir)
+	vim.notify("Bufcpwd: " .. dir)
 end, {})
+
+user_command("Fjson", "%!python3 -m json.tool", {})
 
 autocmd("FileType", {
 	pattern = "*",
@@ -186,20 +180,20 @@ autocmd("TextYankPost", {
 	group = augroup("matsu.highlight.yank", { clear = true }),
 	callback = function()
 		if not vim.v.event.visual then
-			vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
+			-- vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
 			-- 0.13
-			-- vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+			vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
 		end
 	end,
 })
 
 -- 0.13
--- autocmd("TextPutPost", {
--- 	group = augroup("matsu.highlight.remove", { clear = true }),
--- 	callback = function()
--- 		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
--- 	end,
--- })
+autocmd("TextPutPost", {
+	group = augroup("matsu.highlight.remove", { clear = true }),
+	callback = function()
+		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+	end,
+})
 
 local switch_im
 if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
@@ -272,8 +266,8 @@ autocmd("FileType", {
 		local winid = vim.api.nvim_get_current_win()
 		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
 		vim.bo[args.buf].buflisted = false
-		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buffer = args.buf, silent = true })
-		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buffer = args.buf, silent = true })
+		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buf = args.buf })
+		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buf = args.buf })
 	end,
 	group = augroup("matsu.qfbufline", { clear = true }),
 })

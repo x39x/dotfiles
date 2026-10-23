@@ -65,8 +65,6 @@ dapview.setup({
 })
 
 --- keymap
-local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
 local dap_keymaps = {
 	{
 		mode = "n",
@@ -94,8 +92,9 @@ local dap_keymaps = {
 	},
 }
 
+local keymap = vim.keymap.set
 local dapkeymap_set = function(buf)
-	local opts = { noremap = true, silent = true, buffer = buf }
+	local opts = { buf = buf }
 	for _, map in ipairs(dap_keymaps) do
 		keymap(map.mode, map.lhs, map.rhs, vim.tbl_extend("force", opts, { desc = map.desc }))
 	end
@@ -103,7 +102,7 @@ end
 
 local dapkeymap_clear = function(buf)
 	for _, map in ipairs(dap_keymaps) do
-		pcall(vim.keymap.del, map.mode, map.lhs, { buffer = buf })
+		pcall(vim.keymap.del, map.mode, map.lhs, { buf = buf })
 	end
 end
 
@@ -153,6 +152,6 @@ local view = function()
 	end
 end
 
-keymap("n", "<leader>dl", launch, keymap_opts({ desc = "Dap launch" }))
-keymap("n", "<leader>dt", terminate, keymap_opts({ desc = "Dap terminate" }))
-keymap("n", "<leader>dv", view, keymap_opts({ desc = "Dap view toggle" }))
+keymap("n", "<leader>dl", launch)
+keymap("n", "<leader>dt", terminate)
+keymap("n", "<leader>dv", view)

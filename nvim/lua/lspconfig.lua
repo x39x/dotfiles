@@ -94,7 +94,6 @@ local servers = {
 vim.lsp.enable(servers)
 
 local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("LspAttach", {
@@ -108,22 +107,22 @@ autocmd("LspAttach", {
 		local bufnr = ev.buf
 
 		-- see :h lsp-defaults
-		keymap("n", "gD", vim.lsp.buf.declaration, keymap_opts({ buffer = bufnr, desc = "Lsp declaration" }))
+		keymap("n", "gD", vim.lsp.buf.declaration, { buf = bufnr })
 		keymap("n", "gl", function()
 			vim.lsp.buf.hover({ border = "double" })
-		end, keymap_opts({ buffer = bufnr, desc = "Lsp hover" }))
+		end, { buf = bufnr })
 		keymap("n", "ga", function()
 			vim.diagnostic.open_float({ border = "double" })
-		end, keymap_opts({ buffer = bufnr, desc = "Lsp diagnostic" }))
-		keymap("n", "gA", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
-		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, keymap_opts({ buffer = bufnr, desc = "Lsp workspace diagnostics" }))
+		end, { buf = bufnr })
+		keymap("n", "gA", vim.diagnostic.setloclist, { buf = bufnr })
+		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
 
 		if FzfLua then
-			keymap("n", "gd", FzfLua.lsp_definitions, keymap_opts({ buffer = bufnr, desc = "Lsp fzf definitions" }))
-			keymap("n", "grr", FzfLua.lsp_references, keymap_opts({ buffer = bufnr, desc = "Lsp fzf references" }))
+			keymap("n", "gd", FzfLua.lsp_definitions, { buf = bufnr })
+			keymap("n", "grr", FzfLua.lsp_references, { buf = bufnr })
 		else
 			-- lsp has default grr
-			keymap("n", "gd", vim.lsp.buf.definition, keymap_opts({ buffer = bufnr, desc = "Lsp default definitions" }))
+			keymap("n", "gd", vim.lsp.buf.definition, { buf = bufnr })
 		end
 
 		-- :h lsp-semantic-highlght

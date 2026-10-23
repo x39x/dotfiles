@@ -1,8 +1,8 @@
----@class Autosnip
+---@class autosnip.Autosnip
 ---@field body string[]
 ---@field callback fun(args: table|nil)
 
----@type table<string,Autosnip>
+---@type table<string,autosnip.Autosnip>
 local auto_snippets = {}
 ---@type table<string,string[]>
 local auto_triggers = {}

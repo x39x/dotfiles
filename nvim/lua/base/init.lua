@@ -6,16 +6,9 @@ vim.pack.add({
 	-- treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-	-- tools
-	"https://github.com/folke/flash.nvim",
-	"https://github.com/nvim-mini/mini.bufremove",
 	-- file explor
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/mikavilpas/yazi.nvim",
-	-- git
-	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/NeogitOrg/neogit",
-	"https://github.com/esmuellert/codediff.nvim",
 	-- ui
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/rebelot/heirline.nvim",
@@ -26,21 +19,20 @@ vim.pack.add({
 	"https://github.com/williamboman/mason.nvim",
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/rafamadriz/friendly-snippets",
+	-- tools
+	"https://github.com/folke/flash.nvim",
+	"https://github.com/lewis6991/gitsigns.nvim",
 
+	"https://github.com/esmuellert/codediff.nvim",
 	-- "https://github.com/windwp/nvim-autopairs",
 	-- "https://github.com/windwp/nvim-ts-autotag",
 	-- "https://github.com/saghen/blink.lib",
 	-- "https://github.com/saghen/blink.cmp"
 })
-
 local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
 
 -- align
-keymap({ "n", "v" }, "<leader>aa", "<Plug>(EasyAlign)", keymap_opts({ desc = "Align" }))
--- bd
-require("mini.bufremove").setup()
-keymap({ "n" }, "<leader>w", MiniBufremove.delete, keymap_opts())
+keymap({ "n", "x" }, "<leader>aa", "<Plug>(EasyAlign)", { desc = "Align" })
 -- mason
 require("mason").setup({
 	ui = {
@@ -48,6 +40,9 @@ require("mason").setup({
 		border = "double",
 	},
 })
+
+-- "<buffer>", "<nowait>", "<silent>", "<script>", "<expr>" and
+-- "<unique>" can be used in any order.  They must appear right after the
 
 -- require("nvim-autopairs").setup({
 -- 	disable_filetype = { "TelescopePrompt", "fzf" },
@@ -71,13 +66,13 @@ require("yazi").setup({
 		grep_in_selected_files = "fzf-lua",
 	},
 })
-keymap("n", "<leader>m", require("yazi").yazi, keymap_opts({ desc = "yazi" }))
+keymap("n", "<leader>m", require("yazi").yazi)
 keymap("n", "<leader>n", function()
 	local cwd = vim.uv.cwd()
 	if cwd ~= nil then
 		require("yazi").yazi({}, cwd)
 	end
-end, keymap_opts({ desc = "yazi" }))
+end)
 
 -- flash
 local flash = require("flash")
@@ -98,7 +93,7 @@ flash.setup({
 		enabled = false,
 	},
 })
-keymap({ "n" }, "f", flash.jump, keymap_opts({ desc = "flash jump(n)" }))
+keymap({ "n" }, "f", flash.jump)
 keymap({ "o", "x" }, "f", function()
 	local prev_row, _ = unpack(vim.api.nvim_win_get_cursor(0))
 	flash.jump({ jump = { register = true } })
@@ -113,7 +108,7 @@ keymap({ "o", "x" }, "f", function()
 	local prompt_len = string.len(vim.fn.getreg("/"):gsub("^\\V", ""))
 	vim.api.nvim_win_set_cursor(0, { row, col + prompt_len - 1 })
 	vim.fn.setreg("/", "")
-end, keymap_opts({ desc = "flash jump(ov)" }))
+end)
 
 -- gitsigns
 require("gitsigns").setup({
@@ -186,41 +181,21 @@ require("satellite").setup({
 })
 
 require("nvim-highlight-colors").setup({
-	render = "virtual",
-
-	virtual_symbol = "⬤",
-	virtual_symbol_prefix = " ",
-	virtual_symbol_suffix = " ",
+	render = "background",
 	enable_named_colors = false,
 	enable_tailwind = true,
 
 	exclude_buffer = function(bufnr)
-		local name = vim.api.nvim_buf_get_name(bufnr)
-
-		if name == "" then
-			return true
-		end
-
-		if vim.fn.getfsize(name) > 1000000 then
-			return true
-		end
-
-		local ext = name:match("%.([%w_]+)$")
-		if not ext then
-			return true
-		end
-
 		local allowed = {
-			lua = true,
-			js = true,
-			jsx = true,
-			ts = true,
-			tsx = true,
-			css = true,
-			vue = true,
-			svelte = true,
+			"lua",
+			"css",
+			"html",
+			"javascript",
+			"typescript",
+			"javascriptreact",
+			"typescriptreact",
 		}
-		return not allowed[ext]
+		return not vim.tbl_contains(allowed, vim.bo[bufnr].filetype)
 	end,
 })
 

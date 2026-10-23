@@ -1,20 +1,20 @@
 -- https://github.com/Massolari/nvim-snippets
 local SNIPPET = {}
 
----@class Snippet
+---@class snippets.Snippet
 ---@field prefix string|string[]
 ---@field body string|string[]
 ---@field description? string|string[]
 
----@class ProcessedSnippet
+---@class snippets.ProcessedSnippet
 ---@field prefix string
 ---@field body string
 ---@field description? string
 
----@type table<string, table<string, ProcessedSnippet>>
+---@type table<string, table<string, snippets.ProcessedSnippet>>
 SNIPPET.cache = {}
 
----@type table<string, ProcessedSnippet>
+---@type table<string, snippets.ProcessedSnippet>
 SNIPPET.loaded_snippets = {}
 
 ---@type table<string, string[]>
@@ -22,8 +22,8 @@ SNIPPET.registry = {}
 
 --NOTE: load snippets
 
----@param snippet_raw Snippet
----@return table<string, ProcessedSnippet>
+---@param snippet_raw snippets.Snippet
+---@return table<string, snippets.ProcessedSnippet>
 local function process_snippet(snippet_raw)
 	local processed_snippets = {}
 
@@ -62,7 +62,7 @@ local function read_file(path)
 end
 
 ---@param filetype string
----@return table<string, ProcessedSnippet>
+---@return table<string, snippets.ProcessedSnippet>
 local function get_snippets_for_ft(filetype)
 	local ft_snippets = {}
 	local ft_snippets_files_list = SNIPPET.registry[filetype]
@@ -200,7 +200,7 @@ SNIPPET.registry = snippet_map
 --NOTE: complete
 
 ---@param prefix string
----@param snippet ProcessedSnippet
+---@param snippet snippets.ProcessedSnippet
 ---@param kind string
 local function snippet_to_complete_items(prefix, snippet, kind)
 	local info = string.format("%s```\n%s\n```", snippet.description, snippet.body)

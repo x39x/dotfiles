@@ -338,14 +338,12 @@ end
 
 -- run code
 local keymap = vim.keymap.set
-local keymap_opts = require("utils.keymap_opts")
-keymap("n", "<leader>rw", M.run_in_tmux_window, keymap_opts({ desc = "Send cmd to tmux window" }))
--- keymap("n", "<leader>-", M.run_in_tmux_pane, keymap_opts({ desc = "Send cmd to tmux pane" }))
-keymap("n", "<leader>ra", M.add_and_run, keymap_opts({ desc = "add cmd and run" }))
-keymap("n", "<leader>rs", M.select_and_run, keymap_opts({ desc = "select cmd and run" }))
-keymap("n", "<leader>rc", M.clear_project_cmds, keymap_opts({ desc = "clear current cmd" }))
-keymap("n", "<leader>rA", M.clear_all_cmds, keymap_opts({ desc = "clear all cmd" }))
+keymap("n", "<leader>rw", M.run_in_tmux_window)
+-- keymap("n", "<leader>-", M.run_in_tmux_pane)
+keymap("n", "<leader>ra", M.add_and_run)
+keymap("n", "<leader>rs", M.select_and_run)
+keymap("n", "<leader>rc", M.clear_project_cmds)
+keymap("n", "<leader>rA", M.clear_all_cmds)
 
-keymap("n", "<leader>-", "<cmd>so %<enter>", keymap_opts({ desc = "Send cmd to tmux pane" }))
--- "silent! !open %"
+keymap("n", "<leader>-", "<cmd>so %<enter>")
 -- "silent! !open -a Skim.app %:p:r.pdf"
