@@ -17,7 +17,7 @@ _G.matsu_qftf = function(info)
 
 	--  计算合适的 max_width
 	local lens = {}
-	for _, e in pairs(qfl) do
+	for _, e in ipairs(qfl) do
 		local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
 		table.insert(lens, vim.fn.strchars(fname, true))
 	end

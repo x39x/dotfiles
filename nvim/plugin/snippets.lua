@@ -39,7 +39,7 @@ local function process_snippet(snippet_raw)
 	end
 	description = description .. "\n\n"
 
-	for _, p in pairs(prefix) do
+	for _, p in ipairs(prefix) do
 		processed_snippets[p] = {
 			prefix = p,
 			body = table.concat(body, "\n"),
@@ -70,7 +70,7 @@ local function get_snippets_for_ft(filetype)
 		return ft_snippets
 	end
 
-	for _, f in pairs(ft_snippets_files_list) do
+	for _, f in ipairs(ft_snippets_files_list) do
 		local snippets_contents = read_file(f)
 		if snippets_contents then
 			local s = vim.json.decode(snippets_contents)
@@ -100,7 +100,7 @@ local function load_snippets(filetype)
 	local extended_filetype = { javascript = { "html", "css" } }
 	local extended_snippets = {}
 	if extended_filetype[filetype] ~= nil then
-		for _, ft in pairs(extended_filetype[filetype]) do
+		for _, ft in ipairs(extended_filetype[filetype]) do
 			extended_snippets = get_snippets_for_ft(ft)
 		end
 	end
@@ -108,7 +108,7 @@ local function load_snippets(filetype)
 	-- global snippets
 	local global_filetype = { "matsu" }
 	local global_snippets = {}
-	for _, ft in pairs(global_filetype) do
+	for _, ft in ipairs(global_filetype) do
 		global_snippets = get_snippets_for_ft(ft)
 	end
 
@@ -151,17 +151,17 @@ local function load_snippet_packagejson(path)
 	end
 
 	local pkg_data = vim.json.decode(data)
-	local snippet_meta_list = vim.tbl_get(pkg_data, "contributes", "snippets")
-	if not snippet_meta_list then
+	local snippet_info_list = vim.tbl_get(pkg_data, "contributes", "snippets")
+	if not snippet_info_list then
 		return {}
 	end
 
 	local result = {}
-	for _, snippet_meta in pairs(snippet_meta_list) do
+	for _, snippet_meta in ipairs(snippet_info_list) do
 		local languages = snippet_meta.language or {}
 		languages = type(languages) == "string" and { languages } or languages
 
-		for _, language in pairs(languages) do
+		for _, language in ipairs(languages) do
 			local paths = result[language] or {}
 			table.insert(paths, vim.fs.normalize(vim.fs.joinpath(path, snippet_meta.path)))
 			result[language] = paths
@@ -176,7 +176,7 @@ end
 local local_snippet_path = vim.fs.joinpath(vim.fn.stdpath("config"), "snippets")
 local friendly_snippet_path = ""
 
-for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+for _, path in ipairs(vim.api.nvim_list_runtime_paths()) do
 	if path:match("friendly.snippets") then
 		friendly_snippet_path = path
 		break

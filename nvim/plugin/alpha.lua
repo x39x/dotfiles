@@ -23,7 +23,7 @@ local should_skip_alpha = function()
 
 	-- Skip when there are other listed buffers in windows(diff).
 	local curr_buf = vim.api.nvim_get_current_buf()
-	for _, win in pairs(vim.api.nvim_list_wins()) do
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
 		local buf = vim.api.nvim_win_get_buf(win)
 		if buf ~= curr_buf and vim.bo[buf].buflisted then
 			return true
@@ -35,7 +35,7 @@ local should_skip_alpha = function()
 		return true
 	end
 
-	for _, arg in pairs(vim.v.argv) do
+	for _, arg in ipairs(vim.v.argv) do
 		-- whitelisted arguments
 		-- always open
 		if arg == "--startuptime" then

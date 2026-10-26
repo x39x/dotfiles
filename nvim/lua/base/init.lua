@@ -11,7 +11,6 @@ vim.pack.add({
 	"https://github.com/mikavilpas/yazi.nvim",
 	-- ui
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
-	"https://github.com/rebelot/heirline.nvim",
 	"https://github.com/lewis6991/satellite.nvim",
 	"https://github.com/folke/todo-comments.nvim",
 	"https://github.com/brenoprata10/nvim-highlight-colors",
@@ -22,8 +21,8 @@ vim.pack.add({
 	-- tools
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
-
 	"https://github.com/esmuellert/codediff.nvim",
+
 	-- "https://github.com/windwp/nvim-autopairs",
 	-- "https://github.com/windwp/nvim-ts-autotag",
 	-- "https://github.com/saghen/blink.lib",
@@ -157,12 +156,11 @@ require("ibl").setup({
 -- todo
 require("todo-comments").setup({
 	keywords = {
-		FIX = { icon = "󰨰 ", color = "#DC2626", alt = { "BUG" } },
-		TEST = { icon = " ", color = "#AF7AC5", alt = { "FUNC", "PLUG" } },
-		WARN = { icon = " ", color = "#C0392B", alt = { "ISSUE" } },
-		TODO = { icon = " ", color = "#DC2626", alt = { "XXX", "DEBUG" } },
-		DONE = { icon = " ", color = "#1957F3" },
-		NOTE = { icon = "", color = "#10B981", alt = { "INFO", "TIPS" } },
+		NOTE = { icon = "", color = "#10B981", alt = { "TIPS" } },
+		TODO = { icon = " ", color = "#DC2626", alt = { "XXX", "FIX" } },
+		TEST = { icon = " ", color = "#1957F3", alt = { "DONE", "PASS" } },
+		WARN = { icon = " ", color = "#FD971E", alt = { "WARNING", "PERF" } },
+		HACK = { icon = " ", color = "#AF7AC5", alt = { "FUNC", "PLUG" } },
 	},
 	merge_keywords = false,
 })
@@ -202,5 +200,4 @@ require("nvim-highlight-colors").setup({
 require("base.conform")
 require("base.treesitter")
 require("base.fzf")
-require("base.39line")
 -- require("base.cmp")

@@ -42,18 +42,17 @@ o.virtualedit = "block"
 --
 o.showtabline = 2 -- tabline,0:no
 o.laststatus = 3 --  global statusline
-o.showmode = true
+o.showmode = false
 o.signcolumn = "yes" -- sign column
 o.number = true
 o.numberwidth = 3
 o.list = true
-o.listchars = "tab:··󰁔,extends:❯,precedes:❮,trail:·" -- "eol:↴" │»·
+o.listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 o.fillchars = "eob: ,msgsep:─,fold: ,diff:╱" -- eob: hide "~"
 o.cursorline = true
-o.cursorlineopt = "number"
+-- o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
-o.guicursor = ""
---
+
 o.wrap = false
 o.linebreak = true -- wrap don't break words
 o.smartindent = true
@@ -66,7 +65,7 @@ o.foldlevel = 99
 o.foldlevelstart = 99
 o.foldcolumn = "0" -- don't show fold in line number
 o.foldmethod = "manual"
-o.foldtext = "v:lua.matsu_foldtext"
+o.foldtext = "v:lua.matsu_foldtext()"
 --
 o.pumborder = "solid"
 o.autocomplete = false
@@ -177,21 +176,21 @@ autocmd("TextYankPost", {
 	group = augroup("matsu.highlight.yank", { clear = true }),
 	callback = function()
 		if not vim.v.event.visual then
-			-- vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
+			vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
 			-- 0.13
-			vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+			-- vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
 		end
 	end,
 })
 
 -- 0.13
-autocmd("TextPutPost", {
-	group = augroup("matsu.highlight.remove", { clear = true }),
-	callback = function()
-		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
-	end,
-})
-
+-- autocmd("TextPutPost", {
+-- 	group = augroup("matsu.highlight.remove", { clear = true }),
+-- 	callback = function()
+-- 		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+-- 	end,
+-- })
+--
 local switch_im
 if vim.fn.has("linux") == 1 and vim.fn.executable("fcitx5-remote") == 1 then
 	switch_im = { "fcitx5-remote", "-c" }
@@ -240,7 +239,7 @@ autocmd("FileType", {
 		if not vim.api.nvim_win_is_valid(winid) then
 			return
 		end
-		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
+		vim.wo[winid].listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 	end,
 	group = augroup("matsu.tab", { clear = true }),
 })
@@ -249,7 +248,7 @@ autocmd("FileType", {
 	pattern = "qf",
 	callback = function(args)
 		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = "tab:  ,extends:❯,precedes:❮,trail:·"
+		vim.wo[winid].listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 		vim.bo[args.buf].buflisted = false
 		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buf = args.buf })
 		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buf = args.buf })

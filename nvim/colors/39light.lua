@@ -140,8 +140,8 @@ hl("Substitute", { bg = colors.red1 }) --:range s///
 hl("Whitespace", { fg = colors.fg4 })
 hl("Conceal", { fg = colors.fg4 })
 hl("EndOfBuffer", { fg = colors.fg4 })
+hl("NonText", { fg = colors.fg2 }) -- fillchar:extends: < >
 hl("SpecialKey", { fg = colors.pur0 })
-hl("NonText", { fg = colors.pur0 })
 
 hl("SpellBad", { undercurl = true, sp = colors.red0 })
 hl("SpellCap", { undercurl = true, sp = colors.gre4 })
@@ -225,8 +225,8 @@ hl("DiagnosticVirtualLinesInfo", { sp = colors.blu6, undercurl = true })
 hl("DiagnosticVirtualLinesHint", { sp = colors.pur0, undercurl = true })
 hl("DiagnosticVirtualLinesOk", { sp = colors.gre4, undercurl = true })
 
-hl("DiagnosticDeprecated", { fg = colors.fg2 })
-hl("DiagnosticUnnecessary", { fg = colors.fg2 })
+hl("DiagnosticDeprecated", { sp = colors.fg1, undercurl = true })
+hl("DiagnosticUnnecessary", { sp = colors.fg1, underline = true })
 
 -- NOTE: Syntax  https://neovim.io/doc/user/syntax/#group-name
 
@@ -364,8 +364,9 @@ hl("NvimTreeGitFileNewHL", { fg = colors.gre4 })
 --- alpha
 hl("Alpha", { fg = colors.miku })
 --- heirline
-hl("HeirlineA", { fg = colors.blu0 })
-hl("HeirlineB", { fg = colors.pur0 })
+hl("MatsuLineA", { fg = colors.blu0 })
+hl("MatsuLineB", { fg = colors.pur0 })
+hl("MatsuLineC", { fg = colors.gre4 })
 --- dap
 hl("DapBreakpointHighlight", { fg = colors.red0 })
 hl("DapStoppedHighlight", { fg = colors.gre4 })

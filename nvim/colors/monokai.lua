@@ -102,7 +102,7 @@ hl("FoldColumn", { bg = colors.bg0 })
 hl("Folded", { bg = colors.bg1 })
 hl("ColorColumn", { link = "Folded" })
 hl("CursorColumn", { link = "Folded" })
-hl("CursorLine", { bg = colors.bg0 })
+hl("CursorLine", { bg = colors.bg1 })
 hl("CursorLineFold", { link = "CursorLine" })
 hl("CursorLineSign", { link = "CursorLine" })
 hl("CursorLineNr", { link = "CursorLine" })
@@ -121,8 +121,8 @@ hl("Substitute", { bg = colors.gre2 })
 hl("Whitespace", { fg = colors.bg2 })
 hl("Conceal", { fg = colors.bg2 })
 hl("EndOfBuffer", { fg = colors.bg2 })
+hl("NonText", { fg = colors.gra1 })
 hl("SpecialKey", { fg = colors.pur0 })
-hl("NonText", { fg = colors.pur0 })
 
 hl("SpellBad", { undercurl = true, sp = colors.red0 })
 hl("SpellCap", { undercurl = true, sp = colors.gre0 })
@@ -206,8 +206,8 @@ hl("DiagnosticVirtualLinesInfo", { sp = colors.blu0, undercurl = true })
 hl("DiagnosticVirtualLinesHint", { sp = colors.pur0, undercurl = true })
 hl("DiagnosticVirtualLinesOk", { sp = colors.gre0, undercurl = true })
 
-hl("DiagnosticDeprecated", { fg = colors.fg2 })
-hl("DiagnosticUnnecessary", { fg = colors.fg2 })
+hl("DiagnosticDeprecated", { sp = colors.fg1, undercurl = true })
+hl("DiagnosticUnnecessary", { sp = colors.fg1, underline = true })
 
 -- NOTE: Syntax
 
@@ -342,9 +342,10 @@ hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
 hl("NvimTreeGitFileNewHL", { fg = colors.gre1 })
 --- alpha
 hl("Alpha", { fg = colors.red0 })
---- heirline
-hl("HeirlineA", { fg = colors.blu0 })
-hl("HeirlineB", { fg = colors.pur0 })
+--- line
+hl("MatsuLineA", { fg = colors.blu0 })
+hl("MatsuLineB", { fg = colors.pur0 })
+hl("MatsuLineC", { fg = colors.gre1 })
 --- dap
 hl("DapBreakpointHighlight", { fg = colors.red0 })
 hl("DapStoppedHighlight", { fg = colors.gre1 })

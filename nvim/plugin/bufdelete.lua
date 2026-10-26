@@ -58,8 +58,10 @@ local function bufdelete(opts)
 	if vim.api.nvim_buf_is_valid(bufnr) then
 		local ei = vim.o.eventignore
 		vim.o.eventignore = "DiagnosticChanged"
+		-- bdelete  保留 ctrl-o 跳转列表等缓存
+		-- bwipeout 完全弹出
 		---@diagnostic disable-next-line
-		pcall(vim.cmd, "bdelete! " .. bufnr)
+		pcall(vim.cmd, "bwipeout! " .. bufnr)
 		vim.o.eventignore = ei
 	end
 end

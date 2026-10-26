@@ -66,7 +66,7 @@ end
 ---@param buf number
 ---@param ft string
 function AUTO.set(ft, buf)
-	for _, k in pairs(auto_triggers[ft]) do
+	for _, k in ipairs(auto_triggers[ft]) do
 		vim.keymap.set("i", k, function()
 			local cur = vim.api.nvim_win_get_cursor(0)
 			local pos = { row = cur[1], col = cur[2] }
