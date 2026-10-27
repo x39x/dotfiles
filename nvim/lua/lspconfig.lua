@@ -73,7 +73,8 @@ vim.diagnostic.config({
 
 local servers = {
 	"typos",
-	"luals",
+	-- "luals",
+	"emmyluals",
 
 	"gopls",
 	"rust_analyzer",
@@ -84,10 +85,9 @@ local servers = {
 
 	"vtsls",
 	"cssls",
-	-- "tailwindcss",
 
+	-- "tailwindcss",
 	-- "vuels",
-	-- "emmyluals",
 	-- "jsonls",
 }
 vim.lsp.enable(servers)

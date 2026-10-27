@@ -6,7 +6,6 @@
 local function bufdelete(opts)
 	opts = opts or {}
 	if type(opts.filter) == "function" then
-		---@diagnostic disable-next-line
 		for _, b in ipairs(vim.tbl_filter(opts.filter, vim.api.nvim_list_bufs())) do
 			if vim.bo[b].buflisted then
 				bufdelete({ buf = b, filter = false })

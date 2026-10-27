@@ -49,7 +49,7 @@ o.numberwidth = 3
 o.list = true
 o.listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 o.fillchars = "eob: ,msgsep:─,fold: ,diff:╱" -- eob: hide "~"
-o.cursorline = true
+o.cursorline = false
 -- o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
 
@@ -71,7 +71,7 @@ o.pumborder = "solid"
 o.autocomplete = false
 -- o.completeopt = "menu,menuone,noinsert,popup"
 o.completeopt = "menu,popup"
-o.complete = ".,w,b,o,Fv:lua.snippet_complete"
+o.complete = ".,w,o,Fv:lua.snippet_complete"
 o.completefunc = "v:lua.snippet_complete"
 -- o.previewpopup = "height:10,width:60,border:bold" -- doesn't work
 
@@ -81,9 +81,9 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 -- <C-e>:  dismiss the completion menu
-keymap("i", "<C-l>", function()
-	return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
-end, { expr = true })
+-- keymap("i", "<C-l>", function()
+-- 	return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
+-- end, { expr = true })
 
 keymap("", "<Space>", "<Nop>")
 keymap("i", "jk", "<esc>")
@@ -239,21 +239,24 @@ autocmd("FileType", {
 		if not vim.api.nvim_win_is_valid(winid) then
 			return
 		end
-		vim.wo[winid].listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
+		vim.wo[winid].listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
 	end,
 	group = augroup("matsu.tab", { clear = true }),
 })
 
 autocmd("FileType", {
+	group = augroup("matsu.qfbufline", { clear = true }),
 	pattern = "qf",
 	callback = function(args)
-		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 		vim.bo[args.buf].buflisted = false
+		vim.bo[args.buf].tabstop = 4
+		local winid = vim.api.nvim_get_current_win()
+		vim.wo[winid].listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
+		vim.wo[winid].statusline = "%{%g:matsu_statusline()%}"
+
 		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buf = args.buf })
 		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buf = args.buf })
 	end,
-	group = augroup("matsu.qfbufline", { clear = true }),
 })
 
 local function load_cache()

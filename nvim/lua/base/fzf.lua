@@ -88,6 +88,11 @@ fzflua.setup({
 		winopts = dropdown(),
 	},
 
+	buffers = {
+		previewer = false,
+		winopts = dropdown(),
+	},
+
 	zoxide = {
 		winopts = dropdown({
 			preview = {
@@ -100,6 +105,8 @@ fzflua.setup({
 
 	grep = {
 		rg_glob = true,
+		glob_flag = "",
+		glob_separator = "",
 		rg_glob_fn = function(query, _)
 			local regex, flags = query:match("^(.-)%s%-%-%s(.*)$")
 			return (regex or query), flags
@@ -123,5 +130,6 @@ keymap("n", "<leader>fl", FzfLua.live_grep)
 keymap("n", "<Leader>fs", FzfLua.colorschemes)
 keymap("n", "<Leader>fm", FzfLua.marks)
 keymap("n", "<Leader>fe", FzfLua.resume)
+keymap("n", "<Leader>b", FzfLua.buffers)
 
-fzflua.register_ui_select()
+fzflua.register_ui_select({ winopts = dropdown() })

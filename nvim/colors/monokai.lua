@@ -346,6 +346,7 @@ hl("Alpha", { fg = colors.red0 })
 hl("MatsuLineA", { fg = colors.blu0 })
 hl("MatsuLineB", { fg = colors.pur0 })
 hl("MatsuLineC", { fg = colors.gre1 })
+hl("MatsuLineD", { fg = colors.red0 })
 --- dap
 hl("DapBreakpointHighlight", { fg = colors.red0 })
 hl("DapStoppedHighlight", { fg = colors.gre1 })

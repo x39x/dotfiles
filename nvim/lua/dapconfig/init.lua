@@ -155,3 +155,38 @@ end
 keymap("n", "<leader>dl", launch)
 keymap("n", "<leader>dt", terminate)
 keymap("n", "<leader>dv", view)
+
+--- usercmd
+local create_launch_json = function(opts)
+	local file = opts.args ~= "" and vim.trim(opts.args) or ".vscode/launch.json"
+
+	local path = vim.fs.joinpath(vim.uv.cwd(), file)
+
+	vim.fn.mkdir(vim.fs.dirname(path), "p")
+
+	local tbl = {
+		["$schema"] = "https://raw.githubusercontent.com/mfussenegger/dapconfig-schema/master/dapconfig-schema.json",
+		version = "0.2.0",
+		configurations = {
+			{
+				name = "",
+				type = "",
+				request = "launch",
+				mode = "debug",
+				program = "",
+				console = "integratedTerminal",
+				args = {},
+			},
+		},
+	}
+
+	local json = vim.json.encode(tbl, { indent = "    " })
+
+	vim.fn.writefile(vim.split(json, "\n"), path)
+
+	vim.notify("launch.json created at: " .. path)
+end
+
+vim.api.nvim_create_user_command("DapJson", create_launch_json, {
+	nargs = "?",
+})

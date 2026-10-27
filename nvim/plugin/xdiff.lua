@@ -1,12 +1,11 @@
---TODO: vim.ui.tree https://github.com/neovim/neovim/issues/33914
+-- TODO: vim.ui.tree https://github.com/neovim/neovim/issues/33914
 
 local get_git_root = function(file_path)
-	local file_dir = vim.fn.fnamemodify(file_path, ":h")
-
-	local result = vim.system({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" }, { text = true }):wait()
+	local result = vim.system({ "git", "-C", vim.fs.dirname(file_path), "rev-parse", "--show-toplevel" }, { text = true }):wait()
 
 	if result.code ~= 0 then
-		vim.notify("WARN in xdiff:get_git_root()", vim.log.levels.WARN)
+		vim.notify("[xdiff]: error in get_git_root()", vim.log.levels.WARN)
+		vim.notify((result.stderr or ""), vim.log.levels.WARN)
 		return nil
 	end
 
@@ -14,17 +13,19 @@ local get_git_root = function(file_path)
 end
 
 -- git show
-local get_revision_content = function(git_root, rev, file_path)
+local get_revision_content = function(git_root, rev, relative_path)
 	local result = vim.system({
 		"git",
 		"-C",
 		git_root,
+		"--no-pager",
 		"show",
-		("%s:%s"):format(rev, file_path),
+		("%s:%s"):format(rev, relative_path),
 	}, { text = true }):wait()
 
 	if result.code ~= 0 then
-		vim.notify("xdiff: git show failed: " .. (result.stderr or ""), vim.log.levels.ERROR)
+		vim.notify("[xdiff]: error in get_revision_content()", vim.log.levels.WARN)
+		vim.notify((result.stderr or ""), vim.log.levels.WARN)
 		return nil
 	end
 
@@ -41,65 +42,67 @@ end
 local xdiff = function(opts)
 	local rev = opts.args ~= "" and vim.trim(opts.args) or "HEAD"
 
-	local current_path = vim.fn.expand("%:p")
-	local git_root = get_git_root(current_path)
+	local file_path = vim.api.nvim_buf_get_name(0)
+	local git_root = get_git_root(file_path)
 
 	if not git_root then
 		return
 	end
 
-	local relative_path = current_path:gsub("^" .. vim.pesc(git_root) .. "/", "")
-
+	local relative_path = file_path:gsub("^" .. vim.pesc(git_root) .. "/", "")
 	local content = get_revision_content(git_root, rev, relative_path)
 
 	if not content then
 		return
 	end
 
+	-- original buf
+	local original_buf = vim.api.nvim_get_current_buf()
+
 	-- new tab
-	vim.cmd("tab split")
+	vim.api.nvim_open_tabpage(original_buf, true, { after = -1 })
 
-	-- current buffer
-	local left_buf = vim.api.nvim_get_current_buf()
-	local left_win = vim.api.nvim_get_current_win()
-
+	-- original buf_win
+	local original_win = vim.api.nvim_get_current_win()
 	vim.cmd.diffthis()
 
-	-- 右边 revision buffer
-	vim.cmd.vnew()
+	-- diff_buf
+	local diff_buf = vim.api.nvim_create_buf(false, true)
 
-	local right_buf = vim.api.nvim_get_current_buf()
+	vim.api.nvim_buf_set_name(diff_buf, "Xdiff://" .. rev .. ":" .. relative_path)
+	vim.bo[diff_buf].filetype = vim.bo[original_buf].filetype or "txt"
 
-	vim.bo[right_buf].filetype = vim.bo[left_buf].filetype or "txt"
-	vim.bo[right_buf].modifiable = true
+	vim.api.nvim_buf_set_lines(diff_buf, 0, -1, false, content)
 
-	vim.api.nvim_buf_set_lines(right_buf, 0, -1, false, content)
+	-- wipe: wipeout buf after close win
+	vim.bo[diff_buf].buftype = "nowrite"
+	vim.bo[diff_buf].bufhidden = "wipe"
+	vim.bo[diff_buf].modifiable = false
+	vim.bo[diff_buf].readonly = true
+	vim.bo[diff_buf].swapfile = false
 
-	vim.bo[right_buf].modifiable = false
-	vim.bo[right_buf].buftype = "nofile"
-	vim.bo[right_buf].bufhidden = "wipe"
-	vim.bo[right_buf].swapfile = false
-	vim.bo[right_buf].readonly = true
-
+	-- diff_win
+	local diff_win = vim.api.nvim_open_win(diff_buf, true, { split = "right" })
+	vim.wo[diff_win].listchars = vim.wo[original_win].listchars
 	vim.cmd.diffthis()
 
-	vim.api.nvim_set_current_win(left_win)
+	-- back to original win
+	vim.api.nvim_set_current_win(original_win)
 
-	local function quit_diff()
-		vim.keymap.del("n", "q", { buffer = left_buf })
-		vim.keymap.del("n", "q", { buffer = right_buf })
+	local function quit()
+		vim.keymap.del("n", "q", { buffer = diff_buf })
+		vim.keymap.del("n", "q", { buffer = original_buf })
+		vim.api.nvim_win_close(diff_win, false)
 		vim.cmd.diffoff()
 		vim.cmd.tabclose()
 	end
 
-	vim.keymap.set("n", "q", quit_diff, {
-		buffer = left_buf,
-		silent = true,
+	vim.keymap.set("n", "q", quit, {
+		buffer = original_buf,
 	})
 
-	vim.keymap.set("n", "q", quit_diff, {
-		buffer = right_buf,
-		silent = true,
+	vim.keymap.set("n", "q", quit, {
+		buffer = diff_buf,
 	})
 end
 

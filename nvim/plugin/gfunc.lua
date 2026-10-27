@@ -19,7 +19,7 @@ _G.matsu_qftf = function(info)
 	local lens = {}
 	for _, e in ipairs(qfl) do
 		local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
-		table.insert(lens, vim.fn.strchars(fname, true))
+		table.insert(lens, vim.api.nvim_strwidth(fname))
 	end
 	table.sort(lens)
 	local idx = math.floor((#lens + 1) * 0.75)
@@ -27,8 +27,8 @@ _G.matsu_qftf = function(info)
 
 	-- local max_width = 20
 
-	-- clamp 为 [10, 39] 之间
-	max_width = math.min(math.max(max_width, 10), 39)
+	-- clamp 为 [10, 43] 之间
+	max_width = math.min(math.max(max_width, 10), 43)
 
 	local result = {}
 

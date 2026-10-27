@@ -1,6 +1,6 @@
 local api = vim.api
 local fn = vim.fn
-local au = vim.api.nvim_create_autocmd
+local au = api.nvim_create_autocmd
 local aug = api.nvim_create_augroup("matsu.matsuline", { clear = true })
 
 local state = {
@@ -22,6 +22,9 @@ end
 local function file_flag(bufnr)
 	bufnr = bufnr or 0
 	local bo = vim.bo[bufnr]
+	if not bo then
+		return
+	end
 	if bo.readonly then
 		return "[]"
 	elseif bo.buftype == "terminal" then
@@ -90,6 +93,8 @@ local function filename_block()
 		set_hl("MatsuLineBold"),
 		set_hl("MatsuLineA", true),
 		name,
+		set_hl("StatusLine"),
+		file_flag(),
 		"   ",
 	})
 end
@@ -143,7 +148,7 @@ local diagnostic_levels = {
 
 local function diagnostics()
 	local parts = {}
-	local counts = state.diagnostic[vim.api.nvim_get_current_buf()] or {}
+	local counts = state.diagnostic[api.nvim_get_current_buf()] or {}
 
 	for _, level in ipairs(diagnostic_levels) do
 		local count = counts[level.severity]
@@ -161,7 +166,7 @@ local function diagnostics()
 end
 
 local function update_diagnostics(bufnr)
-	bufnr = bufnr or vim.api.nvim_get_current_buf()
+	bufnr = bufnr or api.nvim_get_current_buf()
 	if not api.nvim_buf_is_valid(bufnr) then
 		return
 	end
@@ -190,17 +195,22 @@ local special_filetypes = { fzf = true, alpha = true }
 local special_buftypes = { terminal = true, nofile = true, prompt = true, help = true }
 
 local function special_name()
-	local bo = vim.bo
+	local bo = vim.bo[0]
 	local hi = set_hl("MatsuLineBold") .. set_hl("MatsuLineA", true)
 	if bo.buftype == "quickfix" then
 		return vim.tbl_isempty(fn.getloclist(0)) and hi .. "quickfix" or hi .. "localfix"
 	end
+	if bo.buftype == "nowrite" then
+		return filename_block()
+	end
 	if special_filetypes[bo.filetype] then
 		return hi .. bo.filetype
 	end
+
 	if special_buftypes[bo.buftype] then
 		return hi .. bo.buftype
 	end
+
 	return hi .. "[No Type]"
 end
 
@@ -224,6 +234,9 @@ function layout.special()
 		special_name(),
 		"%<%=",
 		workdir(),
+		"   ",
+		set_hl("MatsuLineBold"),
+		"%6(%c:%L%)",
 		"   ",
 	})
 end
@@ -255,7 +268,7 @@ local function render_stl()
 end
 
 ---========================================================================
--- tabline
+-- topbar
 ---========================================================================
 
 local LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
@@ -271,30 +284,33 @@ end
 
 local function is_valid_buffer(bufnr)
 	local bo = vim.bo[bufnr]
+	if not bo then
+		return
+	end
 	return bo.buflisted and not EXCLUDED_BUFTYPES[bo.buftype] and not EXCLUDED_FILETYPES[bo.filetype]
 end
 
 local function get_buffer_name(bufnr)
-	local name = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
+	local name = vim.fs.basename(api.nvim_buf_get_name(bufnr))
 	if name == "" then
 		return "[No Name]"
 	end
 
-	local len = vim.fn.strchars(name)
+	local len = fn.strchars(name)
 	if len > 39 then
-		return vim.fn.strcharpart(name, 0, 13) .. "..." .. vim.fn.strcharpart(name, len - 19)
+		return fn.strcharpart(name, 0, 13) .. "..." .. fn.strcharpart(name, len - 19)
 	end
 	return name
 end
 
 local function collect_buffers()
-	local current = vim.api.nvim_get_current_buf()
+	local current = api.nvim_get_current_buf()
 	if is_valid_buffer(current) then
 		state.active_bufnr = current
 	end
 
 	local buffers = {}
-	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+	for _, bufnr in ipairs(api.nvim_list_bufs()) do
 		if is_valid_buffer(bufnr) then
 			local index = #buffers + 1
 			buffers[index] = {
@@ -320,7 +336,7 @@ local function render_buffer(buffer)
 		table.concat({
 			" ",
 			set_hl("MatsuLineBold"),
-			set_hl("MatsuLineC", true),
+			set_hl("MatsuLineD", true),
 			buffer.label,
 			name_hl,
 			escape_statusline(buffer.name),
@@ -328,7 +344,7 @@ local function render_buffer(buffer)
 			flag,
 		})
 	)
-	local width = 1 + vim.fn.strdisplaywidth(buffer.label .. buffer.name .. flag)
+	local width = 1 + fn.strdisplaywidth(buffer.label .. buffer.name .. flag)
 
 	return { str = str, width = width, is_active = buffer.bufnr == state.active_bufnr }
 end
@@ -404,9 +420,9 @@ end
 
 local function click_buffer(bufnr, _, button)
 	if button == "r" then
-		vim.api.nvim_buf_delete(bufnr, { force = false })
+		api.nvim_buf_delete(bufnr, { force = false })
 	elseif api.nvim_buf_is_valid(bufnr) then
-		vim.api.nvim_win_set_buf(0, bufnr)
+		api.nvim_win_set_buf(0, bufnr)
 	end
 	vim.cmd.redrawtabline()
 end
@@ -426,11 +442,11 @@ end
 
 -- 返回 tab 区域的渲染串和显示宽度；超过 max_width 时退为 " 当前/总数 "
 local function render_tabs(max_width)
-	local current_tabid = vim.api.nvim_get_current_tabpage()
+	local current_tabid = api.nvim_get_current_tabpage()
 	local tabs, parts, width = {}, {}, 0
 
-	for i, tabid in ipairs(vim.api.nvim_list_tabpages()) do
-		tabs[i] = { tabid = tabid, tabnr = vim.api.nvim_tabpage_get_number(tabid) }
+	for i, tabid in ipairs(api.nvim_list_tabpages()) do
+		tabs[i] = { tabid = tabid, tabnr = api.nvim_tabpage_get_number(tabid) }
 		parts[i] = render_tab(tabs[i], current_tabid)
 		width = width + 2 + #tostring(tabs[i].tabnr)
 	end
@@ -440,7 +456,7 @@ local function render_tabs(max_width)
 		return "", 0
 	end
 	if width > max_width then
-		local str = string.format(" %d/%d ", vim.fn.tabpagenr(), #tabs)
+		local str = string.format(" %d/%d ", fn.tabpagenr(), #tabs)
 		return str, #str
 	end
 	return table.concat(parts), width
@@ -449,8 +465,8 @@ end
 local function click_tab(tabid, _, button)
 	if button == "r" then
 		vim.cmd.tabclose()
-	elseif vim.api.nvim_tabpage_is_valid(tabid) then
-		vim.api.nvim_set_current_tabpage(tabid)
+	elseif api.nvim_tabpage_is_valid(tabid) then
+		api.nvim_set_current_tabpage(tabid)
 	end
 	vim.cmd.redrawtabline()
 end
@@ -472,20 +488,20 @@ local function jump()
 	state.show_labels = true
 	vim.cmd.redrawtabline()
 
-	local char = vim.fn.getcharstr()
+	local char = fn.getcharstr()
 	local tabnr = tonumber(char)
 
 	if tabnr then
 		for _, tab in ipairs(state.tabs) do
-			if tab.tabnr == tabnr and vim.api.nvim_tabpage_is_valid(tab.tabid) then
-				vim.api.nvim_set_current_tabpage(tab.tabid)
+			if tab.tabnr == tabnr and api.nvim_tabpage_is_valid(tab.tabid) then
+				api.nvim_set_current_tabpage(tab.tabid)
 				break
 			end
 		end
 	else
 		for _, buffer in ipairs(state.buffers) do
-			if buffer.label == char and vim.api.nvim_buf_is_valid(buffer.bufnr) then
-				vim.api.nvim_win_set_buf(0, buffer.bufnr)
+			if buffer.label == char and api.nvim_buf_is_valid(buffer.bufnr) then
+				api.nvim_win_set_buf(0, buffer.bufnr)
 				break
 			end
 		end
@@ -509,6 +525,7 @@ local function apply_highlights()
 	link_if_unset("MatsuLineA", "Function")
 	link_if_unset("MatsuLineB", "Keyword")
 	link_if_unset("MatsuLineC", "Added")
+	link_if_unset("MatsuLineD", "Removed")
 
 	api.nvim_set_hl(0, "TopBarStatus", { fg = "green" })
 	api.nvim_set_hl(0, "MatsuLineBold", { bold = true })
@@ -541,8 +558,8 @@ _G.matsu_click_tab = click_tab
 vim.g.matsu_statusline = render_stl
 vim.g.matsu_topbar = render_tb
 
-vim.o.statusline = "%{%g:matsu_statusline()%}"
-vim.o.tabline = "%{%g:matsu_topbar()%}"
+vim.go.statusline = "%{%g:matsu_statusline()%}"
+vim.go.tabline = "%{%g:matsu_topbar()%}"
 
 vim.keymap.set("n", "<leader>j", jump)
 

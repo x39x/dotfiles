@@ -1,8 +1,9 @@
 ---@class autosnip.Autosnip
 ---@field body string[]
----@field callback fun(args: table|nil)
+---@field inline? boolean
+---@field callback? fun(args: table|nil)
 
----@type table<string,autosnip.Autosnip>
+---@type table<string,table<string,autosnip.Autosnip>>
 local auto_snippets = {}
 ---@type table<string,string[]>
 local auto_triggers = {}
@@ -10,7 +11,7 @@ local auto_triggers = {}
 local AUTO = {}
 
 ---@param ft string
----@param buf number
+---@param buf int
 ---@param pos table
 ---@return string|nil
 function AUTO.should_expand(ft, buf, pos)
@@ -54,16 +55,16 @@ end
 
 ---@param prefix string
 ---@param ft string
----@return boolean
 function AUTO.expand(prefix, ft)
 	local snippet = auto_snippets[ft][prefix]
 	local snippet_str = table.concat(snippet.body, "\n")
 	vim.snippet.expand(snippet_str)
-
-	return snippet.callback and snippet.callback()
+	if snippet.callback then
+		snippet.callback()
+	end
 end
 
----@param buf number
+---@param buf int
 ---@param ft string
 function AUTO.set(ft, buf)
 	for _, k in ipairs(auto_triggers[ft]) do
