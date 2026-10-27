@@ -67,15 +67,13 @@ end
 
 vim.api.nvim_create_user_command("Bufdelete", function(opts)
 	local filters = {
-		all = function()
+		a = function() -- all
 			return true
 		end,
-		-- except the current one
-		others = function(b)
+		o = function(b) -- others: except the current one
 			return b ~= vim.api.nvim_get_current_buf()
 		end,
-		-- delete all invisible buffers
-		invisible = function(b)
+		invisible = function(b) -- delete all invisible buffers
 			return vim.fn.bufwinnr(b) == -1
 		end,
 	}
@@ -83,7 +81,7 @@ vim.api.nvim_create_user_command("Bufdelete", function(opts)
 end, {
 	nargs = "?",
 	complete = function()
-		return { "all", "others", "invisible" }
+		return { "a", "o", "invisible" }
 	end,
 })
 
