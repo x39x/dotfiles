@@ -92,7 +92,6 @@ local xdiff = function(opts)
 	local function quit()
 		vim.keymap.del("n", "q", { buffer = diff_buf })
 		vim.keymap.del("n", "q", { buffer = original_buf })
-		vim.api.nvim_win_close(diff_win, false)
 		vim.cmd.diffoff()
 		vim.cmd.tabclose()
 	end

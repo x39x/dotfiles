@@ -44,6 +44,9 @@ end
 ---========================================================================
 -- statusline
 ---========================================================================
+local FT_FILETYPE = { fzf = true, alpha = true }
+local FT_FILENAME = { man = true }
+local BT_FILENAME = { nowrite = true, acwrite = true }
 
 local function is_inactive()
 	return api.nvim_get_current_win() ~= tonumber(vim.g.actual_curwin)
@@ -190,24 +193,30 @@ local function update_dap_status()
 	end
 end
 
---- special buffers (quickfix / terminal / ...)
-local special_filetypes = { fzf = true, alpha = true }
-local special_buftypes = { terminal = true, nofile = true, prompt = true, help = true }
-
+--- special buffers
 local function special_name()
 	local bo = vim.bo[0]
 	local hi = set_hl("MatsuLineBold") .. set_hl("MatsuLineA", true)
-	if bo.buftype == "quickfix" then
-		return vim.tbl_isempty(fn.getloclist(0)) and hi .. "quickfix" or hi .. "localfix"
-	end
-	if bo.buftype == "nowrite" then
-		return filename_block()
-	end
-	if special_filetypes[bo.filetype] then
+
+	if FT_FILETYPE[bo.filetype] then
 		return hi .. bo.filetype
 	end
 
-	if special_buftypes[bo.buftype] then
+	if FT_FILENAME[bo.filetype] then
+		return filename_block()
+	end
+
+	if BT_FILENAME[bo.buftype] then
+		return filename_block()
+	end
+
+	-- quickfix type
+	if bo.buftype == "quickfix" then
+		return vim.tbl_isempty(fn.getloclist(0)) and hi .. "quickfix" or hi .. "localfix"
+	end
+
+	-- fallback
+	if bo.buftype then
 		return hi .. bo.buftype
 	end
 
@@ -270,10 +279,9 @@ end
 ---========================================================================
 -- topbar
 ---========================================================================
-
 local LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
-local EXCLUDED_BUFTYPES = { quickfix = true, nofile = true }
 local EXCLUDED_FILETYPES = { fzf = true }
+local EXCLUDED_BUFTYPES = { quickfix = true }
 
 -- 包裹 click 函数：%{id}@v:lua.{handler}@ ... %X
 local function clickable(handler, id, text)
@@ -287,7 +295,23 @@ local function is_valid_buffer(bufnr)
 	if not bo then
 		return
 	end
-	return bo.buflisted and not EXCLUDED_BUFTYPES[bo.buftype] and not EXCLUDED_FILETYPES[bo.filetype]
+
+	--- special ft/bt
+	if bo.filetype == "man" then
+		return true
+	end
+
+	--- exclude ft/bt
+
+	if EXCLUDED_FILETYPES[bo.filetype] then
+		return false
+	end
+
+	if EXCLUDED_BUFTYPES[bo.buftype] then
+		return false
+	end
+
+	return bo.buflisted
 end
 
 local function get_buffer_name(bufnr)

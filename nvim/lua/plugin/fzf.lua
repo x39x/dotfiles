@@ -37,7 +37,8 @@ local dropdown = function(opts)
 		preview = {
 			border = function(_, m)
 				if m.type == "fzf" then
-					return "none"
+					-- see man fzf，none 会无边距，设置border并将颜色设置为背景色
+					return "sharp"
 				else
 					return { "─", "─", "─", " ", "─", "─", "─", " " }
 				end
@@ -64,8 +65,12 @@ fzflua.setup({
 	},
 	winopts = ivy,
 	fzf_colors = {
-		["fg+"] = { "fg", "FzfFgPlus" },
-		["bg+"] = { "bg", "FzfBgPlus" },
+		["border"] = { "bg", "Normal" },
+		["fg+"] = { "fg", "FzfSelectedFg" },
+		["bg+"] = { "bg", "FzfSelectedBg" },
+		-- ["hl"] = { "fg", "FzfMatched" },
+		-- ["hl+"] = { "fg", "FzfMatched" },
+		-- ["marker"] = { "fg", "FzfMatched" },
 	},
 
 	-- picker option
@@ -133,3 +138,16 @@ keymap("n", "<Leader>fe", FzfLua.resume)
 keymap("n", "<Leader>b", FzfLua.buffers)
 
 fzflua.register_ui_select({ winopts = dropdown() })
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = vim.api.nvim_create_augroup("matsu.fzflua", { clear = true }),
+	callback = function()
+		if vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = "FzfSelectedFg" })) then
+			vim.api.nvim_set_hl(0, "FzfLuaTitle", { link = "Whitespace" })
+			vim.api.nvim_set_hl(0, "FzfLuaBorder", { link = "Whitespace" })
+			vim.api.nvim_set_hl(0, "FzfLuaPreviewBorder", { link = "Whitespace" })
+			-- vim.api.nvim_set_hl(0, "FzfSelectedFg", { link = "Added" })
+			-- vim.api.nvim_set_hl(0, "FzfSelectedBg", { link = "Normal" })
+		end
+	end,
+})

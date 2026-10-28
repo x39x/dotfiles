@@ -166,9 +166,6 @@ hl("diffChanged", { link = "Removed" })
 hl("GitSignsAdd", { link = "Added" })
 hl("GitSignsChange", { link = "Changed" })
 hl("GitSignsDelete", { link = "Removed" })
-hl("CodeDiffCharInsert", { bg = colors.gre2 })
-hl("CodeDiffCharDelete", { bg = colors.red2 })
-hl("CodeDiffFiller", { fg = colors.fg3 })
 
 -- NOTE: quickfix
 hl("QuickFixLine", { fg = colors.blu1 })
@@ -354,8 +351,9 @@ hl("BlinkCmpKind", { fg = colors.pur0 })
 --- fzf
 hl("FzfLuaBorder", { bg = colors.bg, fg = colors.fg3 })
 hl("FzfLuaTitle", { fg = colors.fg1 })
-hl("FzfFgPlus", { fg = colors.gre4 })
-hl("FzfBgPlus", { bg = colors.blu2 })
+hl("FzfSelectedFg", { fg = colors.gre4 })
+hl("FzfSelectedBg", { bg = colors.blu2 })
+-- hl("FzfMatched", { fg = colors.blu1 })
 --- nvimtree
 hl("NvimTreeIndentMarker", { link = "Whitespace" })
 hl("NvimTreeGitFolderDirtyHL", { fg = colors.red0 })

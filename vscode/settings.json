@@ -49,7 +49,7 @@
         {
             "text": "DONE:",
             "color": "#FFFFFF",
-            "backgroundColor": "#0000FF",
+            "backgroundColor": "#1957F3",
             "overviewRulerColor": "grey"
         }
     ],
@@ -61,285 +61,140 @@
     "vim.normalModeKeyBindingsNonRecursive": [
         // nav
         {
-            "before": [
-                "<leader>",
-                "h"
-            ],
-            "commands": [
-                "workbench.action.previousEditor"
-            ]
+            "before": ["<leader>", "h"],
+            "commands": ["workbench.action.previousEditor"]
         },
         {
-            "before": [
-                "<leader>",
-                "l"
-            ],
-            "commands": [
-                "workbench.action.nextEditor"
-            ]
+            "before": ["<leader>", "l"],
+            "commands": ["workbench.action.nextEditor"]
         },
         // edit
         {
-            "before": [
-                "L"
-            ],
-            "after": [
-                "$"
-            ]
+            "before": ["L"],
+            "after": ["g", "_"]
         },
         {
-            "before": [
-                "H"
-            ],
-            "after": [
-                "^"
-            ]
+            "before": ["H"],
+            "after": ["^"]
         },
         {
-            "before": [
-                "J"
-            ],
-            "after": [
-                "j"
-            ]
+            "before": ["J"],
+            "after": ["}"]
         },
         {
-            "before": [
-                "|"
-            ],
-            "after": [
-                "J"
-            ]
+            "before": ["{"],
+            "after": ["J"]
         },
         {
-            "before": [
-                "%"
-            ],
-            "after": [
-                "q"
-            ]
+            "before": ["%"],
+            "after": ["q"]
         },
         {
-            "before": [
-                "q"
-            ],
-            "after": [
-                "%"
-            ]
+            "before": ["q"],
+            "after": ["%"]
         },
         {
-            "before": [
-                "<leader>",
-                ","
-            ],
-            "after": [
-                "*",
-                "N"
-            ]
+            "before": ["<leader>", ","],
+            "after": ["*", "N"]
         },
         {
-            "before": [
-                "<BackSpace>"
-            ],
-            "commands": [
-                ":nohl"
-            ]
+            "before": ["<C-l>"],
+            "commands": [":nohl"]
         },
         //lsp
         {
-            "before": [
-                "g",
-                "d"
-            ],
-            "commands": [
-                "editor.action.revealDefinition"
-            ]
+            "before": ["g", "d"],
+            "commands": ["editor.action.revealDefinition"]
         },
         {
-            "before": [
-                "g",
-                "D"
-            ],
-            "commands": [
-                "editor.action.revealDeclaration"
-            ]
+            "before": ["g", "D"],
+            "commands": ["editor.action.revealDeclaration"]
         },
         {
-            "before": [
-                "g",
-                "r"
-            ],
-            "commands": [
-                "editor.action.goToReferences"
-            ]
+            "before": ["g", "r", "r"],
+            "commands": ["editor.action.goToReferences"]
         },
         {
-            "before": [
-                "g",
-                "l"
-            ],
-            "commands": [
-                "editor.action.showHover"
-            ]
+            "before": ["g", "l"],
+            "commands": ["editor.action.showHover"]
         },
         {
-            "before": [
-                "g",
-                "a"
-            ],
-            "commands": [
-                "editor.action.showHover"
-            ]
+            "before": ["g", "a"],
+            "commands": ["editor.action.showHover"]
         },
         {
-            "before": [
-                "g",
-                "o"
-            ],
-            "commands": [
-                "editor.action.goToImplementation"
-            ]
+            "before": ["g", "o"],
+            "commands": ["editor.action.goToImplementation"]
         },
         {
-            "before": [
-                "g",
-                "n"
-            ],
-            "commands": [
-                "editor.action.rename"
-            ]
+            "before": ["g", "r", "n"],
+            "commands": ["editor.action.rename"]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
-            "before": [
-                "H"
-            ],
-            "after": [
-                "^"
-            ]
+            "before": ["H"],
+            "after": ["^"]
         },
         {
-            "before": [
-                "L"
-            ],
-            "after": [
-                "$",
-                "h"
-            ]
+            "before": ["L"],
+            "after": ["g", "_"]
         },
         {
-            "before": [
-                "J"
-            ],
-            "after": [
-                "j"
-            ]
+            "before": ["J"],
+            "after": ["}"]
         },
         {
-            "before": [
-                "|"
-            ],
-            "after": [
-                "J"
-            ]
+            "before": ["{"],
+            "after": ["J"]
         },
         {
-            "before": [
-                "%"
-            ],
-            "after": [
-                "q"
-            ]
+            "before": ["%"],
+            "after": ["q"]
         },
         {
-            "before": [
-                "q"
-            ],
-            "after": [
-                "%"
-            ]
+            "before": ["q"],
+            "after": ["%"]
         },
         {
-            "before": [
-                "<"
-            ],
-            "after": [
-                "<",
-                "g",
-                "v"
-            ]
+            "before": ["<"],
+            "after": ["<", "g", "v"]
         },
         {
-            "before": [
-                ">"
-            ],
-            "after": [
-                ">",
-                "g",
-                "v"
-            ]
+            "before": [">"],
+            "after": [">", "g", "v"]
         }
     ],
     "vim.operatorPendingModeKeyBindingsNonRecursive": [
         {
-            "before": [
-                "L"
-            ],
-            "after": [
-                "$"
-            ]
+            "before": ["L"],
+            "after": ["$"]
         },
         {
-            "before": [
-                "H"
-            ],
-            "after": [
-                "^"
-            ]
+            "before": ["H"],
+            "after": ["^"]
         },
         {
-            "before": [
-                "J"
-            ],
-            "after": [
-                "j"
-            ]
+            "before": ["J"],
+            "after": ["{"]
         },
         {
-            "before": [
-                "|"
-            ],
-            "after": [
-                "J"
-            ]
+            "before": ["{"],
+            "after": ["J"]
         },
         {
-            "before": [
-                "%"
-            ],
-            "after": [
-                "q"
-            ]
+            "before": ["%"],
+            "after": ["q"]
         },
         {
-            "before": [
-                "q"
-            ],
-            "after": [
-                "%"
-            ]
+            "before": ["q"],
+            "after": ["%"]
         }
     ],
     "vim.insertModeKeyBindings": [
         {
-            "before": [
-                "j",
-                "k"
-            ],
-            "after": [
-                "<Esc>"
-            ]
+            "before": ["j", "k"],
+            "after": ["<Esc>"]
         }
-    ],
+    ]
 }

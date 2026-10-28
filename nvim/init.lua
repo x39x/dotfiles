@@ -211,7 +211,7 @@ autocmd("FileType", {
 	callback = function(args)
 		local winid = vim.api.nvim_get_current_win()
 		vim.bo[args.buf].textwidth = 120
-		vim.wo[winid][0].wrap = true
+		vim.wo[winid][args.buf].wrap = true
 		keymap({ "x", "n" }, "j", "gj", { silent = true, buf = args.buf })
 		keymap({ "x", "n" }, "k", "gk", { silent = true, buf = args.buf })
 		keymap("", "H", "g^", { silent = true, buf = args.buf })
@@ -235,11 +235,7 @@ autocmd("FileType", {
 		if vim.tbl_contains({ "lua", "rust" }, args.match) then
 			vim.bo[args.buf].tabstop = 4
 		end
-		local winid = vim.api.nvim_get_current_win()
-		if not vim.api.nvim_win_is_valid(winid) then
-			return
-		end
-		vim.wo[winid].listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
+		vim.wo.listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
 	end,
 	group = augroup("matsu.tab", { clear = true }),
 })
@@ -250,32 +246,19 @@ autocmd("FileType", {
 	callback = function(args)
 		vim.bo[args.buf].buflisted = false
 		vim.bo[args.buf].tabstop = 4
-		local winid = vim.api.nvim_get_current_win()
-		vim.wo[winid].listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
-		vim.wo[winid].statusline = "%{%g:matsu_statusline()%}"
+		vim.wo.listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
+		vim.wo.statusline = "%{%g:matsu_statusline()%}"
 
 		keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buf = args.buf })
 		keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buf = args.buf })
 	end,
 })
 
-local function load_cache()
-	local f = io.open(vim.fn.expand("$HOME/.local/state/user/dark_mode"), "r")
-	if not f then
-		return ""
-	end
-	local content = f:read("*l")
-	f:close()
-	return content:lower():gsub("%s+", "")
-end
-
-if load_cache() == "true" then
-	-- vim.cmd.colorscheme("39dark")
-	vim.cmd.colorscheme("monokai")
-else
-	vim.cmd.colorscheme("39light")
-end
-
-require("base")
+require("plugin")
 require("lspconfig")
-require("dapconfig")
+
+ok, _ = pcall(vim.cmd.so, vim.fs.normalize("$HOME/.local/state/matsu/colo.vim"))
+
+if not ok then
+	vim.cmd.colo("retrobox")
+end

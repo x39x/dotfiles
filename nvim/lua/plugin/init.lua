@@ -2,6 +2,7 @@ vim.pack.add({
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/kylechui/nvim-surround",
 	"https://github.com/junegunn/vim-easy-align",
+	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/ibhagwan/fzf-lua",
 	-- treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
@@ -21,18 +22,33 @@ vim.pack.add({
 	-- tools
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/esmuellert/codediff.nvim",
+}, { confirm = false })
 
-	-- "https://github.com/windwp/nvim-autopairs",
-	-- "https://github.com/windwp/nvim-ts-autotag",
-	-- "https://github.com/saghen/blink.lib",
-	-- "https://github.com/saghen/blink.cmp"
-})
 local keymap = vim.keymap.set
+local usercmd = vim.api.nvim_create_user_command
 
--- align
+------------------------------------------------------------------
+--- search / format  / treesitter
+------------------------------------------------------------------
+
+require("plugin.conform")
+require("plugin.treesitter")
+require("plugin.fzf")
+
+------------------------------------------------------------------
+--- tools
+------------------------------------------------------------------
+
+--- align
 keymap({ "n", "x" }, "<leader>aa", "<Plug>(EasyAlign)", { desc = "Align" })
--- mason
+
+--- autopairs
+require("nvim-autopairs").setup({
+	disable_filetype = { "TelescopePrompt", "fzf" },
+	enable_check_bracket_line = false,
+})
+
+--- mason
 require("mason").setup({
 	ui = {
 		backdrop = 100,
@@ -40,16 +56,7 @@ require("mason").setup({
 	},
 })
 
--- "<buffer>", "<nowait>", "<silent>", "<script>", "<expr>" and
--- "<unique>" can be used in any order.  They must appear right after the
-
--- require("nvim-autopairs").setup({
--- 	disable_filetype = { "TelescopePrompt", "fzf" },
--- 	enable_check_bracket_line = false,
--- })
--- require("nvim-ts-autotag").setup()
-
--- yazi
+--- yazi
 require("yazi").setup({
 	open_for_directories = true,
 	yazi_floating_window_border = "double",
@@ -73,7 +80,7 @@ keymap("n", "<leader>n", function()
 	end
 end)
 
--- flash
+--- flash
 local flash = require("flash")
 flash.setup({
 	labels = "asdfghjkl;weruiopzxcvnm",
@@ -104,12 +111,13 @@ keymap({ "o", "x" }, "f", function()
 		return
 	end
 	-- forward jump, move to prompt end
+	-- setreg adds ad invisible "\V"
 	local prompt_len = string.len(vim.fn.getreg("/"):gsub("^\\V", ""))
 	vim.api.nvim_win_set_cursor(0, { row, col + prompt_len - 1 })
 	vim.fn.setreg("/", "")
 end)
 
--- gitsigns
+--- gitsigns
 require("gitsigns").setup({
 	signs = {
 		add = { text = "▎" },
@@ -120,30 +128,50 @@ require("gitsigns").setup({
 		change = { text = "┃" },
 	},
 	signs_staged_enable = true,
+
 	-- signcolumn = false,
-})
+	on_attach = function(bufnr)
+		local gitsigns = require("gitsigns")
 
--- diff
-require("codediff").setup({
-	highlights = {
-		line_insert = "DiffAdd",
-		line_delete = "DiffDelete",
-		char_insert = "CodeDiffCharInsert",
-		char_delete = "CodeDiffCharDelete",
-	},
-})
-vim.api.nvim_create_autocmd("User", {
-	pattern = "CodeDiffOpen",
-	group = vim.api.nvim_create_augroup("codediffopen", { clear = true }),
-	callback = function()
-		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-			vim.wo[win].cursorline = false
+		local function map(mode, l, r, opts)
+			opts = opts or {}
+			opts.buffer = bufnr
+			keymap(mode, l, r, opts)
 		end
+
+		-- Navigation
+		map("n", "]c", function()
+			if vim.wo.diff then
+				vim.cmd.normal({ "]c", bang = true })
+			else
+				gitsigns.nav_hunk("next")
+			end
+		end)
+
+		map("n", "[c", function()
+			if vim.wo.diff then
+				vim.cmd.normal({ "[c", bang = true })
+			else
+				gitsigns.nav_hunk("prev")
+			end
+		end)
+		map("n", "<leader>gq", gitsigns.setqflist)
+		map("n", "<leader>gQ", function()
+			gitsigns.setqflist("all")
+		end)
+		map("n", "<leader>gp", gitsigns.preview_hunk_inline)
+		map("n", "<leader>gb", gitsigns.toggle_current_line_blame)
+
+		map("n", "<leader>gl", gitsigns.toggle_signs)
+		map("n", "<leader>gL", gitsigns.toggle_linehl)
 	end,
-	desc = "Disable cursorline in diff windows",
 })
 
--- indent
+------------------------------------------------------------------
+--- ui
+------------------------------------------------------------------
+
+--- indent line
 require("ibl").setup({
 	indent = {
 		char = "│",
@@ -153,7 +181,7 @@ require("ibl").setup({
 	scope = { enabled = false },
 })
 
--- todo
+--- todo
 require("todo-comments").setup({
 	keywords = {
 		NOTE = { icon = "", color = "#10B981", alt = { "TIPS" } },
@@ -165,7 +193,7 @@ require("todo-comments").setup({
 	merge_keywords = false,
 })
 
--- scrollbar
+--- scrollbar
 require("satellite").setup({
 	winblend = 100,
 	excluded_filetypes = {
@@ -178,6 +206,7 @@ require("satellite").setup({
 	},
 })
 
+--- show color
 require("nvim-highlight-colors").setup({
 	render = "background",
 	enable_named_colors = false,
@@ -197,7 +226,37 @@ require("nvim-highlight-colors").setup({
 	end,
 })
 
-require("base.conform")
-require("base.treesitter")
-require("base.fzf")
--- require("base.cmp")
+------------------------------------------------------------------
+--- dap
+------------------------------------------------------------------
+
+vim.pack.add({
+	"https://github.com/mfussenegger/nvim-dap",
+	"https://github.com/igorlfs/nvim-dap-view",
+}, { load = false, confirm = false })
+
+usercmd("PaDap", function()
+	vim.cmd.packadd("nvim-dap-view")
+	vim.cmd.packadd("nvim-dap")
+	require("plugin.dapconfig")
+end, {})
+
+------------------------------------------------------------------
+--- unload
+------------------------------------------------------------------
+vim.pack.add({
+	"https://github.com/windwp/nvim-ts-autotag",
+	-- "https://github.com/saghen/blink.lib",
+	-- "https://github.com/saghen/blink.cmp",
+}, { load = false, confirm = false })
+
+usercmd("PaAutotag", function()
+	vim.cmd.packadd("nvim-ts-autotag")
+	require("nvim-ts-autotag").setup()
+end, {})
+
+-- usercmd("PaBlink", function()
+-- 	vim.cmd.packadd("blink.lib")
+-- 	vim.cmd.packadd("blink.cmp")
+-- 	require("plugin.cmp")
+-- end, {})

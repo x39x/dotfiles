@@ -3,7 +3,6 @@ from pathlib import Path
 from ln39 import M, utils
 
 base = [
-    M("sh/bashrc", "~/.bashrc"),
     M("sh/bash_profile", "~/.bash_profile"),
     M("vimrc", "~/.vimrc"),
     M("screenrc", "~/.screenrc"),

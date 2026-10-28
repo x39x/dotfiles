@@ -19,8 +19,8 @@ ADD_TO_PATH "$CARGO_HOME/bin"
 ADD_TO_PATH "$HOME/.local/bin"
 
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
-# bg+: bottom bar, fg+: selected item,gutter: sidebar
-FZF_DEFAULT_OPTS="--color=bg+:-1,fg+:#0FBC79,hl+:#BE002F,hl:#1A56FD,border:#C0C0C0,marker:#1A56FD"
+# bg+/fg+:selected, hl:matched text, hl+:selected matched, marker:multiple marker, gutter: sidebar, pointer: selected left bar,#BE002F
+FZF_DEFAULT_OPTS="--color=bg+:-1,fg+:#0FBC79,hl:#1A56FD,hl+:#1A56FD,border:#C0C0C0,marker:#1A56FD"
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --multi --no-separator --no-scrollbar --gutter ' ' --reverse --height 23% --min-height=13+"
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-r:toggle-sort'"
 export FZF_DEFAULT_OPTS
@@ -48,6 +48,16 @@ esac
 
 case "$-" in
 *i*)
-    . "$HOME/.bashrc"
+    set -o emacs
+    set bell-style none
+    shopt -s autocd
+    export CLICOLOR=1
+    export PS1='\n\u@\h:\[\e[34m\]\w\[\e[0m\]\n\$ '
+
+    if [ -n "$TERM_PROGRAM" ]; then
+        [ ! -f "$HOME/.hushlogin" ] && touch "$HOME/.hushlogin" #don't show last login info
+        [ "$(uname)" = "Darwin" ] && . "$HOME/.bashrc"
+        [ ! -n "$NOFISH" ] && command -v fish >/dev/null 2>&1 && exec fish
+    fi
     ;;
 esac

@@ -14,11 +14,6 @@
 
 -- ===========================================================
 
-vim.pack.add({
-	"https://github.com/mfussenegger/nvim-dap",
-	"https://github.com/igorlfs/nvim-dap-view",
-})
-
 -- sign
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
 vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DapBreakpointHighlight", linehl = "", numhl = "" })
@@ -119,7 +114,7 @@ local launch = function()
 		ft = "js"
 	end
 
-	local ok, dap_config = pcall(require, "dapconfig.dap." .. ft)
+	local ok, dap_config = pcall(require, "plugin.dapconfig.dap." .. ft)
 
 	if ok then
 		dap_config()

@@ -45,7 +45,7 @@ return {
 
 			diagnostics = {
 				globals = { "FzfLua" },
-				disable = { "unnecessary-if" },
+				disable = { "unnecessary-if", "unresolved-require" },
 			},
 		},
 	},
