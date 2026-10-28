@@ -64,11 +64,12 @@ end
 ---@param filetype string
 ---@return table<string, snippets.ProcessedSnippet>
 local function get_snippets_for_ft(filetype)
-	local ft_snippets = {}
 	local ft_snippets_files_list = SNIPPET.registry[filetype]
 	if not ft_snippets_files_list then
-		return ft_snippets
+		return {}
 	end
+
+	local ft_snippets = {}
 
 	for _, f in ipairs(ft_snippets_files_list) do
 		local snippets_contents = read_file(f)
