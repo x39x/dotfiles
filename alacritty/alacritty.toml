@@ -1,4 +1,4 @@
-general.import = ["~/.local/state/user/alacritty.toml"]
+general.import = ["~/.local/state/matsu/alacritty.toml"]
 
 [env]
 TERM_PROGRAM = "alacritty"

@@ -46,6 +46,7 @@
 image#star-button {
     display: none !important;
 }
+#star-button-box,
 #star-button-box:hover,
 #star-button-box:active,
 #star-button-box:focus,

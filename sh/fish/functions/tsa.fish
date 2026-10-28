@@ -20,13 +20,13 @@ function tsa
         set current (cat $mode)
         if test $current = "true"
             echo false > $mode
-            echo "colo $VIM_DARK_THEME" > $vim_theme
+            echo "colo 39light" > $vim_theme
         else
             echo true > $mode
-            echo "colo 39light" > $vim_theme
+            echo "colo $VIM_DARK_THEME" > $vim_theme
         end
     else
-        echo true > $mode
+        echo false > $mode
         echo "colo 39light" > $vim_theme
     end
 end

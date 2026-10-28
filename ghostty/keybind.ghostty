@@ -1,6 +1,8 @@
-keybind=clear
+keybind = clear
 keybind = super+s=esc:s
 keybind = ctrl+【=text:\x1b[
+keybind = alt+k=toggle_command_palette
+keybind = global:cmd+backquote=toggle_quick_terminal
 # basic
 keybind = super+n=new_window
 keybind = super+q=quit
@@ -84,3 +86,4 @@ keybind = super+arrow_left=text:\x01
 keybind = super+arrow_right=text:\x05
 keybind = alt+arrow_left=esc:b
 keybind = alt+arrow_right=esc:f
+
