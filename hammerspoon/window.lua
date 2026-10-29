@@ -23,11 +23,11 @@ local winSize = {
 M.windowManager = function(size)
 	return function()
 		local win = window.focusedWindow()
-		if win == nil then
+		if not win then
 			return
 		end
 
-		-- Handle fullScreen toggle
+		-- toggle fullScreen
 		if size == "fullScreen" then
 			win:setFullScreen(not win:isFullScreen())
 			return

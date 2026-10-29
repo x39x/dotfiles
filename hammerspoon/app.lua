@@ -1,100 +1,113 @@
 local M = {}
+
 local alert = require("hs.alert")
 local application = require("hs.application")
 local timer = require("hs.timer")
+local window = require("hs.window")
 
-local function appSleep(appBundleID)
-	local appToSleep = {
-		["com.microsoft.VSCode"] = "0.3",
-		["com.apple.Notes"] = "0.3",
-	}
-	if appToSleep[appBundleID] ~= nil then
-		os.execute("sleep " .. appToSleep[appBundleID])
-	end
-	os.execute("sleep 0.5")
+local WINDOW_LAYOUT = {
+	["com.apple.Preview"] = false,
+	["org.alacritty"] = false,
+}
+
+local function getApp(bundleID)
+	local apps = application.applicationsForBundleID(bundleID)
+	return apps and apps[1]
 end
 
-local function launchApp(appBundleID)
-	local runApp = application.launchOrFocusByBundleID(appBundleID)
-	local notFullScreenApp = {
-		["com.apple.Preview"] = true,
-		["org.alacritty"] = true,
-	}
-
-	if runApp == false then
-		alert("Failed to launch app: " .. appBundleID)
-	elseif notFullScreenApp[appBundleID] then
+local function layoutWindow(win, bundleID)
+	if WINDOW_LAYOUT[bundleID] == false then
 		return
-	else
-		-- for fullScreen when first launch
-		local checkTimerTimeoutCounter = 0
-		CheckTimer = timer.new(0.1, function()
-			if checkTimerTimeoutCounter == 500 then
-				CheckTimer:stop()
-				checkTimerTimeoutCounter = 0
-				return
-			end
+	end
+	if WINDOW_LAYOUT[bundleID] ~= nil then
+		win:moveToUnit(WINDOW_LAYOUT[bundleID])
+		return
+	end
+	win:moveToUnit({ 0.004, 0.004, 0.992, 0.992 })
+end
 
-			local appsFirstLaunch = application.applicationsForBundleID(appBundleID)
-			local appFirstLaunch = appsFirstLaunch and appsFirstLaunch[1]
-			if appFirstLaunch then
-				appSleep(appBundleID)
-				if appFirstLaunch:activate() then
-					local focusedWindow = appFirstLaunch:focusedWindow()
-					if focusedWindow then
-						-- focusedWindow:setFullScreen(true)
-						focusedWindow:moveToUnit({ 0.004, 0.004, 0.992, 0.992 })
-						CheckTimer:stop()
-						checkTimerTimeoutCounter = 0
-						return
-					end
-				end
-			end
-			checkTimerTimeoutCounter = checkTimerTimeoutCounter + 1
+local function launchApp(bundleID)
+	local launched = application.launchOrFocusByBundleID(bundleID)
+
+	if launched == false then
+		alert.show("Failed to launch app: " .. bundleID)
+		return
+	end
+
+	local app, win
+
+	timer.waitUntil(function()
+		app = getApp(bundleID)
+		if not app then
+			return false
+		end
+
+		win = app:mainWindow() or app:focusedWindow()
+		if not win then
+			return false
+		end
+		return true
+	end, function()
+		timer.doAfter(0.5, function()
+			app:activate(true)
+			layoutWindow(win, bundleID)
+			win:focus()
 		end)
-		CheckTimer:start()
+	end)
+end
+
+local function activateApp(app)
+	app:activate(true)
+	app:unhide()
+end
+
+local function toggleFocus(app)
+	local win = app:mainWindow()
+
+	if not win then
+		-- when hide with cmd+m, you must "launch" app
+		application.launchOrFocusByBundleID(app:bundleID())
 		return
 	end
-end
 
-local function focusApp(app, appBundleID)
-	local MainWin = app:mainWindow()
-	if MainWin then
-		if MainWin:isFullScreen() == true then
-			MainWin:application():activate(true)
-			MainWin:focus()
-		elseif app:isFrontmost() == true then
-			MainWin:application():hide()
-		else
-			MainWin:application():activate(true)
-			MainWin:application():unhide()
-			MainWin:focus()
-		end
-	else
-		application.launchOrFocusByBundleID(appBundleID)
+	if win:isFullScreen() then
+		activateApp(app)
+		win:focus()
+		return
 	end
-end
 
-M.launchOrFocus = function(appBundleID)
-	return function()
-		local appsIsRunning = application.applicationsForBundleID(appBundleID)
-		local appIsRunning = appsIsRunning and appsIsRunning[1]
-
-		-- If app is not open, then open it and go fullscreen
-		if not appIsRunning then
-			launchApp(appBundleID)
-		end
-
-		-- focus app
-		focusApp(appIsRunning, appBundleID)
+	if app:isFrontmost() then
+		app:hide()
+		return
 	end
+
+	activateApp(app)
+	win:focus()
 end
 
-M.FocusDesktop = function()
-	return function()
-		local desktop = require("hs.window").desktop()
+local function focusDesktop()
+	local desktop = window.desktop()
+	if desktop then
 		desktop:application():activate(true)
 		desktop:focus()
+	end
+end
+
+function M.launchOrFocus(bundleID)
+	return function()
+		if bundleID == "Desktop" then
+			focusDesktop()
+			return
+		end
+
+		local app = getApp(bundleID)
+
+		if not app then
+			launchApp(bundleID)
+			return
+		end
+
+		toggleFocus(app)
 	end
 end
 
