@@ -2,13 +2,10 @@ from pathlib import Path
 
 from ln39 import M, utils
 
-base = [
+default = [
     M("sh/bash_profile", "~/.bash_profile"),
     M("vimrc", "~/.vimrc"),
     M("screenrc", "~/.screenrc"),
-]
-
-default = [
     M("sh/fish", "~/.config/fish"),
     M("git", "~/.config/git"),
     M("nvim", "~/.config/nvim"),
@@ -76,8 +73,25 @@ linux = [
     M("fontconfig", "~/.config/fontconfig"),
 ]
 
+
+def set_hs_path(_):
+    utils.run(
+        [
+            "defaults",
+            "write",
+            "org.hammerspoon.Hammerspoon",
+            "MJConfigFile",
+            "~/Library/Application Support/hammerspoon/init.lua",
+        ],
+    )
+
+
 macos = [
-    M("hammerspoon", "~/.hammerspoon"),
+    M(
+        "hammerspoon",
+        "~/Library/Application Support/hammerspoon",
+        before_ln=set_hs_path,
+    ),
     M("karabiner/karabiner.json", "~/.config/karabiner/karabiner.json"),
 ]
 
@@ -137,17 +151,10 @@ def update_rime_repo():
     print()
 
 
-# NOTE:
-if utils.env_exists("BASE"):
-    utils.ln(base)
-    exit()
-
 if utils.get_os_name() == "Darwin":
-    utils.ln(base)
     utils.ln(macos)
 
 if utils.get_os_name() == "Linux":
-    utils.ln(base)
     utils.ln(linux)
 
 if utils.env_exists("RIME"):
