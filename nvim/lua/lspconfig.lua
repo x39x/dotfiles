@@ -49,6 +49,7 @@ end
 
 -- LSP config
 vim.diagnostic.config({
+	underline = true,
 	virtual_text = false,
 	signs = {
 		text = {
@@ -58,17 +59,14 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.HINT] = "",
 		},
 	},
-	update_in_insert = true,
-	underline = true,
-	severity_sort = true,
 	float = {
-		focusable = false,
-		style = "minimal",
-		border = "bold",
-		source = "if_many",
 		header = "",
 		prefix = "",
+		source = "if_many",
+		border = "single",
 	},
+	update_in_insert = false,
+	severity_sort = true,
 })
 
 local servers = {
@@ -90,6 +88,7 @@ local servers = {
 	-- "vuels",
 	-- "jsonls",
 }
+
 vim.lsp.enable(servers)
 
 local keymap = vim.keymap.set
@@ -103,17 +102,27 @@ autocmd("LspAttach", {
 			return
 		end
 
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+		if client and vim.tbl_contains({ "typos" }, client.config.name) then
+			return
+		end
+
 		local bufnr = ev.buf
 
 		-- see :h lsp-defaults
 		keymap("n", "gD", vim.lsp.buf.declaration, { buf = bufnr })
+
 		keymap("n", "gl", function()
 			vim.lsp.buf.hover({ border = "double" })
 		end, { buf = bufnr })
+
 		keymap("n", "ga", function()
 			vim.diagnostic.open_float({ border = "double" })
 		end, { buf = bufnr })
+
 		keymap("n", "gA", vim.diagnostic.setloclist, { buf = bufnr })
+
 		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
 
 		if FzfLua then

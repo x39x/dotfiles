@@ -1,6 +1,6 @@
 ---@class bufutils.BufdeleteOpt
----@field buf? number
----@field filter? boolean|fun(buf: number): boolean
+---@field buf? int
+---@field filter? boolean|fun(buf: int): boolean
 
 ---@param opts? bufutils.BufdeleteOpt
 local function bufdelete(opts)
@@ -80,9 +80,12 @@ vim.api.nvim_create_user_command("Bufdelete", function(opts)
 	bufdelete({ filter = filters[opts.args] or false })
 end, {
 	nargs = "?",
-	complete = function()
-		return { "a", "o", "invisible" }
+	complete = function(arglead)
+		local actions = { "a", "o", "invisible" }
+		return vim.tbl_filter(function(action)
+			return action:find("^" .. vim.pesc(arglead)) ~= nil
+		end, actions)
 	end,
 })
 
-vim.keymap.set({ "n" }, "<leader>w", bufdelete, { noremap = true, silent = true })
+vim.keymap.set({ "n" }, "<leader>w", bufdelete)

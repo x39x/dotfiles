@@ -11,7 +11,6 @@ local parsers = {
 	"vimdoc",
 	"markdown",
 	"markdown_inline",
-	"asciidoc",
 
 	"c",
 	"go",
@@ -27,28 +26,10 @@ local parsers = {
 	"javascript",
 	"typescript",
 
-	"fish",
 	"bash",
 	"make",
 	"cmake",
 }
-
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-autocmd("User", {
-	group = augroup("matsu.treesitter.update", { clear = true }),
-	pattern = "TSUpdate",
-	callback = function()
-		require("nvim-treesitter.parsers").asciidoc = {
-			install_info = {
-				url = "https://github.com/cathaysia/tree-sitter-asciidoc",
-				branch = "master",
-				location = "tree-sitter-asciidoc",
-				queries = "tree-sitter-asciidoc/queries",
-			},
-		}
-	end,
-})
 
 require("nvim-treesitter").install(parsers)
 
@@ -71,7 +52,6 @@ local filetype = {
 
 	"sh",
 	"bash",
-	"fish",
 
 	"xml",
 	"yaml",
@@ -81,9 +61,10 @@ local filetype = {
 	"json5",
 	"help",
 	"markdown",
-	"asciidoc",
 }
 
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 autocmd("FileType", {
 	group = augroup("matsu.treesitter.start", { clear = true }),
 	pattern = filetype,
@@ -92,7 +73,7 @@ autocmd("FileType", {
 		vim.treesitter.start()
 		vim.wo[winid][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
 		vim.wo[winid][0].foldmethod = "expr"
-		-- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })
 

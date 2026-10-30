@@ -2,6 +2,7 @@ local M = {}
 
 local store_path = vim.fs.joinpath(vim.fn.stdpath("state"), "user", "run_cmd.json")
 local keymap = vim.keymap.set
+local ROOT_MAKER = { "go.mod", "Cargo.toml", "pyproject.toml", "setup.py", "CMakeLists.txt", "Makefile", "package.json", ".git" }
 
 --==========================
 -- Storage
@@ -12,13 +13,13 @@ local function load()
 		return {}
 	end
 
-	local ok, content = pcall(vim.fn.readfile, store_path)
-	if not ok or #content == 0 then
+	local read_ok, content = pcall(vim.fn.readfile, store_path)
+	if not read_ok or #content == 0 then
 		return {}
 	end
 
-	local ok, data = pcall(vim.json.decode, table.concat(content, "\n"))
-	return ok and type(data) == "table" and data or {}
+	local json_ok, data = pcall(vim.json.decode, table.concat(content, "\n"))
+	return json_ok and type(data) == "table" and data or {}
 end
 
 local function save(data)
@@ -27,19 +28,8 @@ local function save(data)
 end
 
 local function get_root()
-	local markers = {
-		"go.mod",
-		"Cargo.toml",
-		"pyproject.toml",
-		"setup.py",
-		"CMakeLists.txt",
-		"Makefile",
-		"package.json",
-		".git",
-	}
-
 	local file = vim.api.nvim_buf_get_name(0)
-	return vim.fs.root(file, markers) or vim.fs.dirname(file)
+	return vim.fs.root(file, ROOT_MAKER) or vim.fs.dirname(file)
 end
 
 local function get_entry()
@@ -206,8 +196,7 @@ local function run_tmux(root, cmd, target)
 
 	local command = pwd == root and cmd or ("cd " .. vim.fn.shellescape(root) .. " && " .. cmd)
 
-	local status
-	tmux({
+	local status = tmux({
 		"send-keys",
 		"-t",
 		pane_target,
@@ -317,6 +306,8 @@ vim.api.nvim_create_user_command("Runner", function(opts)
 		M.add()
 	elseif action == "select" then
 		M.select()
+	elseif action == "edit" then
+		vim.cmd.edit(store_path)
 	elseif action == "clear" then
 		M.clear()
 	elseif action == "clearall" then
@@ -326,8 +317,11 @@ vim.api.nvim_create_user_command("Runner", function(opts)
 	end
 end, {
 	nargs = "?",
-	complete = function()
-		return { "add", "select", "clear", "clearall" }
+	complete = function(arglead, cmdline, cursorpos)
+		local actions = { "add", "select", "clear", "clearall", "edit" }
+		return vim.tbl_filter(function(action)
+			return action:find("^" .. vim.pesc(arglead)) ~= nil
+		end, actions)
 	end,
 })
 

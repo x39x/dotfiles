@@ -46,7 +46,7 @@ o.exrc = true -- exrc config
 o.quickfixtextfunc = "v:lua.matsu_qftf" --  quickfix textfunc
 o.virtualedit = "block"
 --
-o.showtabline = 2 -- tabline,0:no
+o.showtabline = 2 -- 0: no
 o.laststatus = 3 --  global statusline
 o.showmode = false
 o.signcolumn = "yes" -- sign column
@@ -58,7 +58,7 @@ o.fillchars = "eob: ,msgsep:─,fold: ,diff:╱" -- eob: hide "~"
 o.cursorline = false
 -- o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
-
+--
 o.wrap = false
 o.linebreak = true -- wrap don't break words
 o.smartindent = true
@@ -69,15 +69,14 @@ o.tabstop = 8
 --
 o.foldlevel = 99
 o.foldlevelstart = 99
-o.foldcolumn = "0" -- don't show fold in line number
+o.foldcolumn = "0" -- don't show fold in column
 o.foldmethod = "manual"
 o.foldtext = "v:lua.matsu_foldtext()"
 --
 o.pumborder = "solid"
 o.autocomplete = false
 o.completeopt = "menu,menuone,noinsert,popup"
--- o.completeopt = "menu,popup"
-o.complete = "o,Fv:lua.snippet_complete,.,w"
+o.complete = ".,w,o,Fv:lua.snippet_complete"
 o.completefunc = "v:lua.snippet_complete"
 -- o.previewpopup = "height:10,width:60,border:bold" -- doesn't work
 
@@ -156,6 +155,7 @@ end)
 command("Bufpwd", function(args)
 	local file = vim.api.nvim_buf_get_name(0)
 	local message = "Bufpwd: " .. file
+
 	if args.bang then
 		local dir = vim.fs.dirname(file)
 		message = "cd: " .. dir
@@ -166,6 +166,19 @@ command("Bufpwd", function(args)
 end, { bang = true })
 
 command("Fjson", "%!python3 -m json.tool", {})
+
+command("Scratch", function(args)
+	local scratch_file = vim.fs.normalize("$HOME/dev/tmp/" .. os.date("%B_%d_%I_%M_%S") .. "." .. args.args)
+
+	vim.cmd.edit(scratch_file)
+
+	local scratch_buf = vim.api.nvim_get_current_buf()
+
+	keymap("n", "<localleader>d", function()
+		vim.api.nvim_buf_delete(scratch_buf, { force = true })
+		vim.fs.rm(scratch_file, { force = true })
+	end, { buf = scratch_buf })
+end, { nargs = "?" })
 
 ------------------------------------------------------------------------------
 -- plugin/lsp/colorscheme
