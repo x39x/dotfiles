@@ -37,6 +37,7 @@ conform.setup({
 		typescriptreact = { "oxfmt" },
 		javascriptreact = { "oxfmt" },
 		vue = { "oxfmt" },
+		astro = { "oxfmt" },
 		css = { "oxfmt" },
 		html = { "oxfmt" },
 		markdown = { "oxfmt" },

@@ -36,7 +36,7 @@
 #trust-icon-container,
 #reader-mode-button,
 #picture-in-picture-button,
-/* #urlbar-revert-button-container, */
+#urlbar-revert-button-container,
 .searchmode-switcher,
 .urlbar-go-button {
     display: none !important;

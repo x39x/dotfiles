@@ -184,9 +184,9 @@ require("ibl").setup({
 --- todo
 require("todo-comments").setup({
 	keywords = {
-		NOTE = { icon = "", color = "#10B981", alt = { "TIPS" } },
-		TODO = { icon = " ", color = "#DC2626", alt = { "XXX", "FIX" } },
-		TEST = { icon = " ", color = "#1957F3", alt = { "DONE", "PASS" } },
+		NOTE = { icon = "", color = "#10B981", alt = { "TIPS", "DONE" } },
+		BUG = { icon = " ", color = "#DC2626", alt = { "XXX", "FIX", "ISSUE" } },
+		TODO = { icon = " ", color = "#1957F3", alt = { "PASS" } },
 		WARN = { icon = " ", color = "#FD971E", alt = { "WARNING", "PERF" } },
 		HACK = { icon = " ", color = "#AF7AC5", alt = { "FUNC", "PLUG" } },
 	},

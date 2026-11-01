@@ -1,8 +1,8 @@
 local M = {}
-
+---@diagnostic disable-next-line
 local store_path = vim.fs.joinpath(vim.fn.stdpath("state"), "user", "run_cmd.json")
-local keymap = vim.keymap.set
 local ROOT_MAKER = { "go.mod", "Cargo.toml", "pyproject.toml", "setup.py", "CMakeLists.txt", "Makefile", "package.json", ".git" }
+local keymap = vim.keymap.set
 
 --==========================
 -- Storage
@@ -317,6 +317,7 @@ vim.api.nvim_create_user_command("Runner", function(opts)
 	end
 end, {
 	nargs = "?",
+	---@diagnostic disable-next-line
 	complete = function(arglead, cmdline, cursorpos)
 		local actions = { "add", "select", "clear", "clearall", "edit" }
 		return vim.tbl_filter(function(action)
@@ -329,6 +330,9 @@ keymap("n", "<leader>-", function()
 	local ft = vim.bo.filetype
 	if ft == "lua" then
 		vim.cmd.source("%")
+	elseif vim.tbl_contains({ "markdown", "html" }, ft) then
+		local file = vim.api.nvim_buf_get_name(0)
+		vim.cmd((string.format("silent !open %s -a firefox", file)))
 	else
 		M.run()
 	end

@@ -5,7 +5,7 @@ local launchOrFocus = require("app").launchOrFocus
 -- launch or focue app
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "f", launchOrFocus("org.mozilla.firefox"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "d", launchOrFocus("com.mitchellh.ghostty"))
-hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", launchOrFocus("com.openai.chat"))
+hk.bind({ "ctrl", "alt", "cmd", "shift" }, "a", launchOrFocus("com.openai.codex"))
 hk.bind({ "ctrl", "alt", "cmd", "shift" }, "t", launchOrFocus("Desktop"))
 
 -- window manager
