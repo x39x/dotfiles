@@ -112,6 +112,7 @@ keymap({ "o", "x" }, "f", function()
 	end
 	-- forward jump, move to prompt end
 	-- setreg adds ad invisible "\V"
+	---@diagnostic disable-next-line
 	local prompt_len = string.len(vim.fn.getreg("/"):gsub("^\\V", ""))
 	vim.api.nvim_win_set_cursor(0, { row, col + prompt_len - 1 })
 	vim.fn.setreg("/", "")

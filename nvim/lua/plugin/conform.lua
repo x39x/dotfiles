@@ -1,6 +1,7 @@
 local function find_oxfmtrc()
-	local default_config = vim.fn.expand("~/.dotfiles/fmtstyle/oxfmtrc.json")
+	local default_config = vim.fs.normalize("~/.dotfiles/fmtstyle/oxfmtrc.json")
 	local current_file = vim.api.nvim_buf_get_name(0)
+
 	if current_file == "" then
 		return default_config
 	end
