@@ -25,6 +25,7 @@ default = [
             macos="~/Library/Application Support/lazygit/config.yml",
         ),
     ),
+    # clangd lsp
     M(
         "clangd.yaml",
         utils.path_for(
@@ -32,8 +33,8 @@ default = [
             macos="~/Library/Preferences/clangd/config.yaml",
         ),
     ),
+    # fmt
     M("fmtstyle/clang-format", "~/.clang-format"),
-    M("fmtstyle/oxfmtrc.json", "~/.oxfmtrc.json"),
     M("fmtstyle/stylua.toml", "~/.config/stylua/stylua.toml"),
     M(
         "fmtstyle/rustfmt.toml",
@@ -42,6 +43,7 @@ default = [
             macos="~/Library/Application Support/rustfmt/rustfmt.toml",
         ),
     ),
+    # vscode
     M(
         "vscode/settings.json",
         utils.path_for(
@@ -56,10 +58,6 @@ default = [
             linux="~/.config/Code/User/keybindings.json",
         ),
     ),
-    M(
-        "mpv",
-        "~/.config/mpv",
-    ),
 ]
 
 linux = [
@@ -71,6 +69,10 @@ linux = [
     M("imv", "~/.config/imv"),
     M("swappy", "~/.config/swappy"),
     M("fontconfig", "~/.config/fontconfig"),
+    M(
+        "mpv",
+        "~/.config/mpv",
+    ),
 ]
 
 

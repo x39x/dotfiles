@@ -18,13 +18,23 @@ SEARCH DIR
 <
 
 GLOB
+
+same as gitignore
 >bash
     rg xxx -g "src/**" -g "lua/**"
     rg xxx -g "!node_modules/**"
+    rg xxx -g "!**/*test*"
+    rg xxx -g "*.{c,h}"
+    rg xxx -g "src/**"
+    rg xxx -g "*.js"
+    rg xxx -g "*.{js,ts,jsx,tsx}"
+    rg xxx -g "v[u,t][e,s]ls.lua"
 >
 
 REGEX
 
+rg use Rust regex, see https://docs.rs/regex/latest/regex/#syntax
+PCRE2 support can be enabled with -P/--pcre2
 >bash
     rg '^hello'                 Match at beginning of line
     rg 'hello$'                 Match at end of line
@@ -59,7 +69,10 @@ case sensitive ~
 
 no ignore ~
 >bash
-    rg hello --no-ignore
+    rg hello --no-ignore     # disable all ignore-related filtering
+    rg hello -u              # will disable .gitignore handling
+    rg hello -uu             # will search hidden files and directories 
+    rg hello -uuu            # will search binary files
 >
 
 ==============================================================================

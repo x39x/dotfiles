@@ -313,13 +313,13 @@ vim.api.nvim_create_user_command("Runner", function(opts)
 	elseif action == "clearall" then
 		M.clear(true)
 	else
-		vim.notify("Usage: Runner [add|select|clear|clearall]", vim.log.levels.ERROR)
+		vim.notify("Usage: Runner [add|select|edit|clear|clearall]", vim.log.levels.ERROR)
 	end
 end, {
 	nargs = "?",
 	---@diagnostic disable-next-line
 	complete = function(arglead, cmdline, cursorpos)
-		local actions = { "add", "select", "clear", "clearall", "edit" }
+		local actions = { "add", "select", "edit", "clear", "clearall" }
 		return vim.tbl_filter(function(action)
 			return action:find("^" .. vim.pesc(arglead)) ~= nil
 		end, actions)
