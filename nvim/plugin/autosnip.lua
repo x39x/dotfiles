@@ -12,7 +12,7 @@ local AUTO = {}
 
 ---@param ft string
 ---@param buf int
----@param pos table
+---@param pos {row: int, col: int}
 ---@return string|nil
 function AUTO.should_expand(ft, buf, pos)
 	local line = vim.api.nvim_buf_get_lines(buf, pos.row - 1, pos.row, true)[1]
@@ -92,6 +92,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		local ft = args.match
 
 		if auto_triggers[ft] then
+			AUTO.set(ft, args.buf)
 			return
 		end
 

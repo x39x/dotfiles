@@ -22,7 +22,6 @@ id_rsa
 node_modules
 build
 
-*cache*
-*history*
-*debug*
+*cache/
+*debug/
 *.pdf

@@ -22,6 +22,7 @@ vim.pack.add({
 	-- tools
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/stevearc/overseer.nvim",
 }, { confirm = false })
 
 local keymap = vim.keymap.set
@@ -34,6 +35,30 @@ local usercmd = vim.api.nvim_create_user_command
 require("plugin.conform")
 require("plugin.treesitter")
 require("plugin.fzf")
+
+------------------------------------------------------------------
+--- tasks/runner
+------------------------------------------------------------------
+
+local overseer = require("overseer")
+overseer.setup({
+	form = {
+		border = "double",
+	},
+
+	component_aliases = {
+		default_vscode = {
+			"default",
+			"on_result_diagnostics",
+			{ "on_result_diagnostics_quickfix", close = true, open = true },
+		},
+	},
+})
+
+overseer.add_template_hook({ module = "^make.*", filetype = "c" }, function(task_defn, util)
+	util.add_component(task_defn, { "on_output_parse", problem_matcher = "$gcc" })
+	util.add_component(task_defn, { "on_result_diagnostics_quickfix", close = true, open = true })
+end)
 
 ------------------------------------------------------------------
 --- tools

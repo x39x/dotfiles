@@ -85,7 +85,6 @@ o.completefunc = "v:lua.snippet_complete"
 ------------------------------------------------------------------------------
 -- see :h map-table :h default-mappings
 
--- <C-e>:  dismiss the completion menu
 keymap("i", "<C-l>", function()
 	return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
 end, { expr = true })
