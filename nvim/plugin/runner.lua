@@ -142,7 +142,7 @@ end
 --- get tmux cmd/target
 ------------------------------------------------------------------
 
-local TMUX = {}
+local Tmux = {}
 
 local function choose_target(callback)
 	vim.ui.select({ "pane", "window" }, {
@@ -160,7 +160,7 @@ local function execute(cmd, target)
 	end
 end
 
-function TMUX.add()
+function Tmux.add()
 	vim.ui.input({ prompt = "Runner add: " }, function(cmd)
 		if not cmd or cmd == "" then
 			return
@@ -172,7 +172,7 @@ function TMUX.add()
 	end)
 end
 
-function TMUX.select()
+function Tmux.select()
 	if not CACHE.all or #CACHE.all == 0 then
 		vim.notify("No commands found", vim.log.levels.INFO)
 		return
@@ -191,17 +191,17 @@ function TMUX.select()
 	end)
 end
 
-function TMUX.run()
+function Tmux.run()
 	local last = CACHE.last
 
 	if not last then
-		return TMUX.add()
+		return Tmux.add()
 	end
 
 	execute(last.cmd, last.target)
 end
 
-function TMUX.clear()
+function Tmux.clear()
 	CACHE = {}
 	vim.notify("Cleared all commands", vim.log.levels.INFO)
 end
@@ -214,13 +214,13 @@ vim.api.nvim_create_user_command("Tmux", function(opts)
 	local action = opts.args
 
 	if action == "" then
-		TMUX.run()
+		Tmux.run()
 	elseif action == "add" then
-		TMUX.add()
+		Tmux.add()
 	elseif action == "select" then
-		TMUX.select()
+		Tmux.select()
 	elseif action == "clear" then
-		TMUX.clear()
+		Tmux.clear()
 	else
 		vim.notify("Usage: Runner [add|select|clear]", vim.log.levels.ERROR)
 	end
@@ -262,7 +262,7 @@ local function overseer_run()
 end
 
 local runners = {
-	tmux = TMUX.run,
+	tmux = Tmux.run,
 	overseer = overseer_run,
 }
 
@@ -311,8 +311,11 @@ keymap("n", "<leader>_", function()
 	selected = nil
 	vim.notify("Runner cleared")
 end)
-keymap("n", "<leader>t", vim.cmd.OverseerToggle)
+keymap("n", "<leader>s", function()
+	require("overseer.commands")._toggle({ bang = true, direction = "bottom" })
+end)
 
-keymap("n", "<leader>rr", vim.cmd.OverseerRun)
-keymap("n", "<leader>rs", TMUX.select, { desc = "Runner select" })
-keymap("n", "<leader>ra", TMUX.add, { desc = "Runner add" })
+keymap("n", "<leader>ra", Tmux.add, { desc = "Runner add" })
+keymap("n", "<leader>rs", Tmux.select, { desc = "Runner select" })
+keymap("n", "<leader>rk", Tmux.run, { desc = "Runner add" })
+keymap("n", "<leader>rj", vim.cmd.OverseerRun)

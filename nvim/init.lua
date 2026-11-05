@@ -75,7 +75,7 @@ o.foldtext = "v:lua.matsu_foldtext()"
 --
 o.pumborder = "solid"
 o.autocomplete = false
-o.completeopt = "menu,menuone,noinsert,popup"
+o.completeopt = "menu,menuone,noinsert,popup,fuzzy"
 o.complete = ".,w,o,Fv:lua.snippet_complete"
 o.completefunc = "v:lua.snippet_complete"
 -- o.previewpopup = "height:10,width:60,border:bold" -- doesn't work

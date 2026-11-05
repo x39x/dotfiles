@@ -1,0 +1,54 @@
+{
+    "task": {
+        "prefix": "task",
+        "body": [
+            "{",
+            "\t\"version\": \"2.0.0\",",
+            "\t\"tasks\": [",
+            "\t\t{",
+            "\t\t\t\"label\": \"task build\",",
+            "\t\t\t\"type\": \"process\",",
+            "\t\t\t\"command\": \"make\",",
+            "\t\t\t\"options\": {",
+            "\t\t\t\t\"cwd\": \"${workspaceFolder}\"",
+            "\t\t\t},",
+            "\t\t\t\"problemMatcher\": \"$gcc\",",
+            "\t\t\t\"group\": {",
+            "\t\t\t\t\"kind\": \"build\",",
+            "\t\t\t\t\"isDefault\": true",
+            "\t\t\t}",
+            "\t\t}",
+            "\t]",
+            "}"
+        ],
+        "description": [
+            "https://code.visualstudio.com/docs/debugtest/tasks",
+            "https://code.visualstudio.com/docs/reference/variables-reference",
+            "https://github.com/stevearc/overseer.nvim/blob/master/doc/guides.md#vs-code-tasks"
+        ]
+    },
+    "launch": {
+        "prefix": "launch",
+        "body": [
+            "{",
+            "\t\"$schema\": \"https://raw.githubusercontent.com/mfussenegger/dapconfig-schema/master/dapconfig-schema.json\",",
+            "\t\"configurations\": [",
+            "\t\t{",
+            "\t\t\t\"args\": [],",
+            "\t\t\t\"program\": \"\",",
+            "\t\t\t\"console\": \"integratedTerminal\",",
+            "\t\t\t\"name\": \"\",",
+            "\t\t\t\"mode\": \"debug\",",
+            "\t\t\t\"type\": \"\",",
+            "\t\t\t\"request\": \"launch\"",
+            "\t\t}",
+            "\t],",
+            "\t\"version\": \"0.2.0\"",
+            "}"
+        ],
+        "description": [
+            "https://code.visualstudio.com/docs/debugtest/debugging-configuration",
+            "https://code.visualstudio.com/docs/reference/variables-reference"
+        ]
+    }
+}

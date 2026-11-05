@@ -20,9 +20,10 @@ vim.pack.add({
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/rafamadriz/friendly-snippets",
 	-- tools
+	"https://github.com/stevearc/overseer.nvim",
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/stevearc/overseer.nvim",
+	"https://github.com/tpope/vim-fugitive",
 }, { confirm = false })
 
 local keymap = vim.keymap.set
@@ -53,6 +54,7 @@ overseer.setup({
 			{ "on_result_diagnostics_quickfix", close = true, open = true },
 		},
 	},
+	template_timeout_ms = 0,
 })
 
 overseer.add_template_hook({ module = "^make.*", filetype = "c" }, function(task_defn, util)

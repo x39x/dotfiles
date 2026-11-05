@@ -68,6 +68,21 @@ fzflua.setup({
 			true,
 		},
 	},
+	keymap = {
+		builtin = {
+			["<C-f>"] = "preview-page-down",
+			["<C-b>"] = "preview-page-up",
+		},
+		fzf = {
+			true,
+			["ctrl-j"] = "half-page-down",
+			["ctrl-k"] = "half-page-up",
+			["ctrl-z"] = "toggle-all",
+			["ctrl-r"] = "first",
+			["ctrl-f"] = "preview-page-down",
+			["ctrl-b"] = "preview-page-up",
+		},
+	},
 	winopts = ivy,
 	fzf_colors = {
 		["border"] = { "bg", "Normal" },

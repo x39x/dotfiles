@@ -1,46 +1,60 @@
 {
-    "make_c": {
+    "c": {
         "prefix": "mkc",
         "body": [
-            "CC = clang",
-            "CFLAGS = -std=gnu17 -Wall",
-            "TARGET = main",
+            "CC := cc",
+            "CFLAGS := -std=gnu17 -Wall",
             "SRCS := \\$(wildcard *.c)",
             "",
-            "all: \\$(TARGET)",
+            ".PHONY: all",
             "",
-            "\\$(TARGET): \\$(SRCS)",
+            "all: main",
+            "",
+            "main: \\$(SRCS)",
             "\t@\\$(CC) \\$(CFLAGS) \\$^ -o \\$@",
-            "\t@./\\$@",
-            "",
-            "clean:",
-            "\t@rm -f \\$(TARGET)"
+            "\t@./\\$@ && rm \\$@"
         ],
         "description": "basic Makefile"
     },
-    "make_cc": {
-        "prefix": "mkx",
+    "cp": {
+        "prefix": "mkp",
         "body": [
-            "CXX = clang++",
-            "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",
-            "SRCS := \\$(wildcard *.cc)",
+            "CC = cc",
+            "CFLAGS = -std=gnu17 -Wall -O2",
             "",
-            "main: \\$(SRCS)",
-            "\t@\\$(CXX) \\$(CXXFLAGS) \\$^ -o \\$@",
-            "\t@./\\$@",
-            "\t@rm \\$@"
+            "TARGET := main",
+            "SRCS := src/\\$(TARGET).c \\$(wildcard src/*/*.c)",
+            "OBJS := \\$(patsubst src/%.c, obj/%.o,\\$(SRCS))",
+            "DEPS := \\$(OBJS:.o=.d)",
+            "",
+            ".PHONY: all clean",
+            "",
+            "all: \\$(TARGET)",
+            "\t@./\\$^",
+            "",
+            "\\$(TARGET): \\$(OBJS)",
+            "\t@\\$(CC) \\$(CFLAGS) \\$^ -o  \\$@",
+            "",
+            "obj/%.o: src/%.c",
+            "\t@mkdir -p \\$(@D)",
+            "\t@\\$(CC) \\$(CFLAGS) -MMD \\$^ -c -o \\$@",
+            "",
+            "clean:",
+            "\t@rm -rf \\$(TARGET) ./obj",
+            "",
+            "-include:\\$(DEPS)"
         ],
-        "description": "oi Makefile"
+        "description": "tiny c project"
     },
     "cc": {
-        "prefix": "mkw",
+        "prefix": "mkx",
         "body": [
-            "CXX = clang++",
-            "CXXFLAGS = -std=c++17 -Wall -Wextra -Wfatal-errors",
+            "CXX := clang++",
+            "CXXFLAGS := -std=c++17 -Wall -Wextra -Wfatal-errors",
             "%:",
             "\t@\\$(CXX) \\$(CXXFLAGS) \\$@.cc -o main",
             "\t@./main",
-            "\t@rm main"
+            "\t@touch \\$@"
         ],
         "description": "Makefile by name"
     }
