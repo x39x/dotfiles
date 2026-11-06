@@ -287,7 +287,7 @@ local function runner()
 		return
 	end
 
-	vim.ui.select({ "tmux", "overseer" }, {
+	vim.ui.select({ "overseer", "tmux" }, {
 		prompt = "Run: ",
 	}, function(choice)
 		local run = runners[choice]

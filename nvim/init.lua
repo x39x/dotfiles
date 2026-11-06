@@ -104,12 +104,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		keymap("n", "%", "q")
 	end,
 })
-keymap("", "{", "J")
-keymap("", "}", "K")
-keymap("", "J", "}")
-keymap("", "K", "{")
-keymap({ "n", "x" }, "<leader>[", "<ScrollWheelUp>")
-keymap({ "n", "x" }, "<leader>]", "<ScrollWheelDown>")
+
+keymap({ "n", "x" }, "K", "<ScrollWheelUp>")
+keymap({ "n", "x" }, "J", "<ScrollWheelDown>")
+keymap({ "n", "x" }, "|", "J")
 
 -- useless 's/S'
 keymap({ "n", "v" }, "s", '"_d')
