@@ -20,21 +20,20 @@ autocmd("TextYankPost", {
 	group = augroup("matsu.highlight.yank", { clear = true }),
 	callback = function()
 		if not vim.v.event.visual then
-			vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
+			-- vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
 			-- 0.13
-			-- vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+			vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
 		end
 	end,
 })
 
 -- 0.13
--- autocmd("TextPutPost", {
--- 	group = augroup("matsu.highlight.remove", { clear = true }),
--- 	callback = function()
--- 		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
--- 	end,
--- })
---
+autocmd("TextPutPost", {
+	group = augroup("matsu.highlight.remove", { clear = true }),
+	callback = function()
+		vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
+	end,
+})
 
 --- input method
 local switch_im
@@ -75,18 +74,6 @@ autocmd("FileType", {
 		vim.bo[args.buf].shiftwidth = 8
 	end,
 	group = augroup("matsu.indet", { clear = true }),
-})
-
-autocmd("FileType", {
-	pattern = { "lua", "go", "c", "cpp", "rust" },
-	callback = function(args)
-		vim.bo[args.buf].expandtab = false
-		if vim.tbl_contains({ "lua", "rust" }, args.match) then
-			vim.bo[args.buf].tabstop = 4
-		end
-		vim.wo.listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
-	end,
-	group = augroup("matsu.tab", { clear = true }),
 })
 
 --- quickfix

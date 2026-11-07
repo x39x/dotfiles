@@ -107,18 +107,17 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 keymap({ "n", "x" }, "K", "<ScrollWheelUp>")
 keymap({ "n", "x" }, "J", "<ScrollWheelDown>")
-keymap({ "n", "x" }, "|", "J")
+keymap({ "n" }, "<bar>", "mzJ`z")
+keymap({ "x" }, "<bar>", "J")
 
--- useless 's/S'
+-- keymap({ "n" }, ";", "m",)
+-- keymap({ "n" }, "m", "]", { remap = true })
+-- keymap({ "n" }, ",", "[", { remap = true })
+
 keymap({ "n", "v" }, "s", '"_d')
 keymap("o", "s", "d") -- ss -> _dd
 keymap("", "S", '"_D')
 
---buffers
-keymap({ "n" }, "<leader>l", vim.cmd.bnext)
-keymap({ "n" }, "<leader>h", vim.cmd.bprevious)
-
--- Move  line / code block
 keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>")
 keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>")
 keymap("x", "<M-->", ":m '>+1<CR>gv=gv")
@@ -126,7 +125,6 @@ keymap("x", "<M-=>", ":m '<-2<CR>gv=gv")
 keymap("x", "<", "<gv")
 keymap("x", ">", ">gv")
 
--- cmdline mode
 keymap("c", "<C-p>", "<Up>")
 keymap("c", "<C-n>", "<Down>")
 keymap("c", "<C-f>", "<Right>")
@@ -140,7 +138,6 @@ keymap("i", "<M-s>", function()
 	vim.cmd.write()
 end)
 
--- highlight current word
 keymap("n", "<leader>,", function()
 	--":let @/ = expand('<cword>') | set hlsearch<cr>"
 	vim.fn.setreg("/", vim.fn.expand("<cword>"))
@@ -184,7 +181,7 @@ end, { nargs = "?" })
 require("plugin")
 require("lspconfig")
 
-ok, _ = pcall(vim.cmd.so, vim.fs.normalize("$HOME/.local/state/matsu/colo.vim"))
+ok, _ = pcall(vim.cmd.so, "~/.local/state/matsu/colo.vim")
 
 if not ok then
 	vim.cmd.colo("retrobox")

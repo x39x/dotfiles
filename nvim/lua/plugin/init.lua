@@ -46,13 +46,15 @@ overseer.setup({
 	form = {
 		border = "double",
 	},
-
 	component_aliases = {
 		default_vscode = {
 			"default",
 			"on_result_diagnostics",
 			{ "on_result_diagnostics_quickfix", close = true, open = true },
 		},
+	},
+	task_list = {
+		min_height = 11,
 	},
 	template_timeout_ms = 0,
 })
@@ -230,6 +232,9 @@ require("satellite").setup({
 	handlers = {
 		gitsigns = {
 			enable = false,
+		},
+		marks = {
+			key = "<nop>",
 		},
 	},
 })

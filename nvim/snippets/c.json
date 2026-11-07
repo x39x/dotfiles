@@ -1,0 +1,7 @@
+{
+    "guard": {
+        "prefix": "guard",
+        "body": ["#ifndef ${1}_H", "#define $1_H\n", "$0\n", "#endif // $1"],
+        "description": "go err"
+    }
+}

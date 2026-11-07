@@ -9,6 +9,7 @@
             "\t\t\t\"label\": \"task build\",",
             "\t\t\t\"type\": \"process\",",
             "\t\t\t\"command\": \"make\",",
+            "\t\t\t\"args\": [],",
             "\t\t\t\"options\": {",
             "\t\t\t\t\"cwd\": \"${workspaceFolder}\"",
             "\t\t\t},",

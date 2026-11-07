@@ -16,3 +16,7 @@ unfocused-split-opacity = 1
 macos-option-as-alt     = true
 
 env                     = TERM_PROGRAM=ghostty
+
+# background-blur = 32
+# background-opacity = 0.75
+# background-opacity-cells = true

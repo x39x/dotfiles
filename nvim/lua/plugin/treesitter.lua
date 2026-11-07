@@ -68,12 +68,14 @@ local augroup = vim.api.nvim_create_augroup
 autocmd("FileType", {
 	group = augroup("matsu.treesitter.start", { clear = true }),
 	pattern = filetype,
-	callback = function()
+	callback = function(args)
 		local winid = vim.api.nvim_get_current_win()
 		vim.treesitter.start()
 		vim.wo[winid][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
 		vim.wo[winid][0].foldmethod = "expr"
-		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		if args.match ~= "make" then
+			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
 	end,
 })
 
