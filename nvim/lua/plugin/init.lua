@@ -23,7 +23,7 @@ vim.pack.add({
     "https://github.com/stevearc/overseer.nvim",
     "https://github.com/folke/flash.nvim",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/tpope/vim-fugitive",
+    "https://github.com/neogitorg/neogit",
 }, { confirm = false })
 
 local keymap = vim.keymap.set
@@ -232,9 +232,6 @@ require("satellite").setup({
     handlers = {
         gitsigns = {
             enable = false,
-        },
-        marks = {
-            key = "<nop>",
         },
     },
 })

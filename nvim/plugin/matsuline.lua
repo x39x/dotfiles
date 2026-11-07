@@ -11,7 +11,6 @@ local state = {
     active_bufnr = nil,
     -- stateline
     dap = "",
-    diagnostic = {},
 }
 
 local function set_hl(name, inherit)
@@ -149,10 +148,12 @@ local diagnostic_levels = {
 
 local function diagnostics()
     local parts = {}
-    local counts = state.diagnostic[api.nvim_get_current_buf()] or {}
+
+    -- diagnostic is already cached by lsp
+    local counts = vim.diagnostic.count(api.nvim_get_current_buf()) or {}
 
     for _, level in ipairs(diagnostic_levels) do
-        local count = counts[level.severity]
+        local count = counts[level.severity] or 0
         if count and count > 0 then
             parts[#parts + 1] = table.concat({
                 set_hl(level.hl),
@@ -163,23 +164,8 @@ local function diagnostics()
             })
         end
     end
+
     return vim.trim(table.concat(parts))
-end
-
-local function update_diagnostics(bufnr)
-    bufnr = bufnr or api.nvim_get_current_buf()
-    if not api.nvim_buf_is_valid(bufnr) then
-        return
-    end
-
-    local counts = vim.diagnostic.count(bufnr)
-
-    local buf_cache = {}
-    for _, level in ipairs(diagnostic_levels) do
-        buf_cache[level.severity] = counts[level.severity] or 0
-    end
-
-    state.diagnostic[bufnr] = buf_cache
 end
 
 --- dap
@@ -592,22 +578,12 @@ vim.g.matsu_topbar = render_tb
 vim.go.statusline = "%{%g:matsu_statusline()%}"
 vim.go.tabline = "%{%g:matsu_topbar()%}"
 
-vim.keymap.set("n", "<leader>j", jump)
+vim.keymap.set("n", "<leader><leader>", jump)
+vim.keymap.set("n", "<leader>h", jump)
 
 ---========================================================================
 -- state
 ---========================================================================
-
---- lsp
-au({ "DiagnosticChanged", "LspAttach", "LspDetach" }, {
-    group = aug,
-    callback = function(args)
-        vim.schedule(function()
-            update_diagnostics(args.buf)
-            vim.cmd.redrawstatus({ bang = true })
-        end)
-    end,
-})
 
 --- dap
 au("User", {
@@ -618,14 +594,5 @@ au("User", {
             update_dap_status()
             vim.cmd.redrawstatus({ bang = true })
         end)
-    end,
-})
-
---- clear
-au("BufWipeout", {
-    group = aug,
-    callback = function(args)
-        state.diagnostic[args.buf] = nil
-        state.dap = ""
     end,
 })

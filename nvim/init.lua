@@ -113,6 +113,8 @@ keymap({ "x" }, "<bar>", "J")
 -- keymap({ "n" }, ";", "m",)
 -- keymap({ "n" }, "m", "]", { remap = true })
 -- keymap({ "n" }, ",", "[", { remap = true })
+keymap({ "n" }, "<leader>k", "[", { remap = true })
+keymap({ "n" }, "<leader>j", "]", { remap = true })
 
 keymap({ "n", "v" }, "s", '"_d')
 keymap("o", "s", "d") -- ss -> _dd

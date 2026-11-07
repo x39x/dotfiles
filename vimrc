@@ -7,10 +7,9 @@ set list lcs=tab:»··,trail:· fcs=eob:\
 ino jk <ESC>
 no H ^
 no L g_
-no J }
-no K {
-no { J
-no } K
+no <bar> J
+no K k
+no J j
 let mapleader = "\<Space>"
 nno <leader>, :let @/ = '<c-r><c-w>' \| set hls<CR>
 nno <C-l> :nohl<CR>

@@ -105,6 +105,10 @@ local xdiff = function(opts)
     })
 end
 
+-- TODO: branch completation /cache
+-- git for-each-ref --format='%(refname:short)' refs/heads/
+-- git for-each-ref --format='%(refname:strip=2)' refs/remotes/
+
 vim.api.nvim_create_user_command("Xdiff", xdiff, {
     nargs = "?",
 })
