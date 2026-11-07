@@ -1,59 +1,59 @@
 local function hl(group, properties)
-	vim.api.nvim_set_hl(0, group, properties)
+    vim.api.nvim_set_hl(0, group, properties)
 end
 
 local colors = {
-	miku = "#1F30C8",
-	-- base
-	bg0 = "#FFFFFF",
-	bg1 = "#F7F8FA",
-	fg0 = "#080808",
-	fg1 = "#636363",
-	fg2 = "#AEB3C2",
-	fg3 = "#D6D6D6",
-	fg4 = "#EBECF0",
-	-- syntax
-	cya0 = "#00627A",
-	gre0 = "#077D18",
-	gra0 = "#8C8C8C",
-	blu0 = "#0133B3",
-	blu1 = "#1750EB",
-	pur0 = "#871094",
-	bro0 = "#9E880D",
-	red0 = "#D3302F",
-	-- ui
-	blu2 = "#E7EFFA",
-	blu3 = "#E3EBFE",
-	blu4 = "#B4D7FF",
-	blu5 = "#A7C5FF",
-	blu6 = "#0A69DA",
-	gre1 = "#BEE6BE",
-	gre2 = "#8EC39D",
-	gre3 = "#6DB083",
-	gre4 = "#10B981",
-	red1 = "#FFE5E5",
-	red2 = "#FFC4C5",
-	red3 = "#de0202",
-	ora0 = "#b86114",
-	yel0 = "#F2BF56",
-	bro1 = "#b99f0e",
+    miku = "#1F30C8",
+    -- base
+    bg0 = "#FFFFFF",
+    bg1 = "#F7F8FA",
+    fg0 = "#080808",
+    fg1 = "#636363",
+    fg2 = "#AEB3C2",
+    fg3 = "#D6D6D6",
+    fg4 = "#EBECF0",
+    -- syntax
+    cya0 = "#00627A",
+    gre0 = "#077D18",
+    gra0 = "#8C8C8C",
+    blu0 = "#0133B3",
+    blu1 = "#1750EB",
+    pur0 = "#871094",
+    bro0 = "#9E880D",
+    red0 = "#D3302F",
+    -- ui
+    blu2 = "#E7EFFA",
+    blu3 = "#E3EBFE",
+    blu4 = "#B4D7FF",
+    blu5 = "#A7C5FF",
+    blu6 = "#0A69DA",
+    gre1 = "#BEE6BE",
+    gre2 = "#8EC39D",
+    gre3 = "#6DB083",
+    gre4 = "#10B981",
+    red1 = "#FFE5E5",
+    red2 = "#FFC4C5",
+    red3 = "#de0202",
+    ora0 = "#b86114",
+    yel0 = "#F2BF56",
+    bro1 = "#b99f0e",
 
-	-- "#45164F",
-	-- "#662277",
-	-- "#74118c",
-	-- "#6B2FBA",
-	-- "#DB3B4B",
-	-- "#805900",
-	-- "#8c6c41",
-	-- "#B28B00",
-	-- "#e6bc05",
-	-- "#F7E6A0",
-	-- "#E9F5E6",
+    -- "#45164F",
+    -- "#662277",
+    -- "#74118c",
+    -- "#6B2FBA",
+    -- "#DB3B4B",
+    -- "#805900",
+    -- "#8c6c41",
+    -- "#B28B00",
+    -- "#e6bc05",
+    -- "#F7E6A0",
+    -- "#E9F5E6",
 }
 
 vim.cmd("hi clear")
 if vim.fn.exists("syntax_on") == 1 then
-	vim.cmd("syntax reset")
+    vim.cmd("syntax reset")
 end
 vim.o.background = "light"
 vim.g.colors_name = "39light"

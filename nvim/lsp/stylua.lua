@@ -1,5 +1,5 @@
 return {
-	cmd = { "stylua", "--search-parent-directories", "--lsp" },
-	filetypes = { "lua" },
-	root_markers = { ".stylua.toml", "stylua.toml", ".git" },
+    cmd = { "stylua", "--search-parent-directories", "--lsp" },
+    filetypes = { "lua" },
+    root_markers = { ".stylua.toml", "stylua.toml", ".git" },
 }

@@ -15,13 +15,13 @@ vim.g.rust_recommended_style = 0
 
 -- filetype
 vim.filetype.add({
-	pattern = {
-		[".*profile"] = "bash",
-	},
-	extension = {
-		typ = "typst",
-		mdx = "markdown",
-	},
+    pattern = {
+        [".*profile"] = "bash",
+    },
+    extension = {
+        typ = "typst",
+        mdx = "markdown",
+    },
 })
 
 local keymap = vim.keymap.set
@@ -86,7 +86,7 @@ o.completefunc = "v:lua.snippet_complete"
 -- see :h map-table :h default-mappings
 
 keymap("i", "<C-l>", function()
-	return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
+    return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
 end, { expr = true })
 
 keymap("", "<Space>", "<Nop>")
@@ -99,10 +99,10 @@ keymap("", "H", "^")
 -- swap some key
 keymap({ "n", "v" }, "q", "%")
 vim.api.nvim_create_autocmd("VimEnter", {
-	group = vim.api.nvim_create_augroup("matsu.keymapq", { clear = true }),
-	callback = function()
-		keymap("n", "%", "q")
-	end,
+    group = vim.api.nvim_create_augroup("matsu.keymapq", { clear = true }),
+    callback = function()
+        keymap("n", "%", "q")
+    end,
 })
 
 keymap({ "n", "x" }, "K", "<ScrollWheelUp>")
@@ -134,44 +134,44 @@ keymap("c", "<C-a>", "<Home>")
 -- save
 keymap({ "n", "v" }, "<M-s>", vim.cmd.write)
 keymap("i", "<M-s>", function()
-	vim.cmd.stopinsert()
-	vim.cmd.write()
+    vim.cmd.stopinsert()
+    vim.cmd.write()
 end)
 
 keymap("n", "<leader>,", function()
-	--":let @/ = expand('<cword>') | set hlsearch<cr>"
-	vim.fn.setreg("/", vim.fn.expand("<cword>"))
-	o.hlsearch = true
+    --":let @/ = expand('<cword>') | set hlsearch<cr>"
+    vim.fn.setreg("/", vim.fn.expand("<cword>"))
+    o.hlsearch = true
 end)
 
 --- command
 
 command("Bufpwd", function(args)
-	local file = vim.api.nvim_buf_get_name(0)
-	local message = "Bufpwd: " .. file
+    local file = vim.api.nvim_buf_get_name(0)
+    local message = "Bufpwd: " .. file
 
-	if args.bang then
-		local dir = vim.fs.dirname(file)
-		message = "cd: " .. dir
-		vim.api.nvim_set_current_dir(dir)
-	end
+    if args.bang then
+        local dir = vim.fs.dirname(file)
+        message = "cd: " .. dir
+        vim.api.nvim_set_current_dir(dir)
+    end
 
-	vim.notify(message, vim.log.levels.WARN)
+    vim.notify(message, vim.log.levels.WARN)
 end, { bang = true })
 
 command("Fjson", "%!python3 -m json.tool", {})
 
 command("Scratch", function(args)
-	local scratch_file = vim.fs.normalize("$HOME/dev/tmp/" .. os.date("%B_%d_%I_%M_%S") .. "." .. args.args)
+    local scratch_file = vim.fs.normalize("$HOME/dev/tmp/" .. os.date("%B_%d_%I_%M_%S") .. "." .. args.args)
 
-	vim.cmd.edit(scratch_file)
+    vim.cmd.edit(scratch_file)
 
-	local scratch_buf = vim.api.nvim_get_current_buf()
+    local scratch_buf = vim.api.nvim_get_current_buf()
 
-	keymap("n", "<localleader>d", function()
-		vim.api.nvim_buf_delete(scratch_buf, { force = true })
-		vim.fs.rm(scratch_file, { force = true })
-	end, { buf = scratch_buf })
+    keymap("n", "<localleader>d", function()
+        vim.api.nvim_buf_delete(scratch_buf, { force = true })
+        vim.fs.rm(scratch_file, { force = true })
+    end, { buf = scratch_buf })
 end, { nargs = "?" })
 
 ------------------------------------------------------------------------------
@@ -184,5 +184,5 @@ require("lspconfig")
 ok, _ = pcall(vim.cmd.so, "~/.local/state/matsu/colo.vim")
 
 if not ok then
-	vim.cmd.colo("retrobox")
+    vim.cmd.colo("retrobox")
 end

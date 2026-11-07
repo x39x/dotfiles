@@ -42,51 +42,51 @@
 -- - "solid": Adds padding by a single whitespace cell. see h winborder
 local lsp_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-	opts = opts or {}
-	opts.border = opts.border or "single"
-	return lsp_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or "single"
+    return lsp_floating_preview(contents, syntax, opts, ...)
 end
 
 -- LSP config
 vim.diagnostic.config({
-	underline = true,
-	virtual_text = false,
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = "",
-			[vim.diagnostic.severity.WARN] = "",
-			[vim.diagnostic.severity.INFO] = "",
-			[vim.diagnostic.severity.HINT] = "",
-		},
-	},
-	float = {
-		header = "",
-		prefix = "",
-		source = "if_many",
-		border = "single",
-	},
-	update_in_insert = false,
-	severity_sort = true,
+    underline = true,
+    virtual_text = false,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.INFO] = "",
+            [vim.diagnostic.severity.HINT] = "",
+        },
+    },
+    float = {
+        header = "",
+        prefix = "",
+        source = "if_many",
+        border = "single",
+    },
+    update_in_insert = false,
+    severity_sort = true,
 })
 
 local servers = {
-	"typos",
-	-- "luals",
-	"emmyluals",
+    "typos",
+    -- "luals",
+    "emmyluals",
 
-	"gopls",
-	"rust_analyzer",
-	"cmake",
-	"clangd",
-	"ruff",
-	"ty",
+    "gopls",
+    "rust_analyzer",
+    "cmake",
+    "clangd",
+    "ruff",
+    "ty",
 
-	"vtsls",
-	"cssls",
+    "vtsls",
+    "cssls",
 
-	-- "tailwindcss",
-	-- "vuels",
-	-- "jsonls",
+    -- "tailwindcss",
+    -- "vuels",
+    -- "jsonls",
 }
 
 vim.lsp.enable(servers)
@@ -95,47 +95,47 @@ local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("LspAttach", {
-	desc = "lsp keymap",
-	group = vim.api.nvim_create_augroup("lsp attach", { clear = true }),
-	callback = function(ev)
-		if not assert(vim.lsp.get_client_by_id(ev.data.client_id)) then
-			return
-		end
+    desc = "lsp keymap",
+    group = vim.api.nvim_create_augroup("lsp attach", { clear = true }),
+    callback = function(ev)
+        if not assert(vim.lsp.get_client_by_id(ev.data.client_id)) then
+            return
+        end
 
-		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-		if client and vim.tbl_contains({ "typos" }, client.config.name) then
-			return
-		end
+        if client and vim.tbl_contains({ "typos" }, client.config.name) then
+            return
+        end
 
-		local bufnr = ev.buf
+        local bufnr = ev.buf
 
-		-- see :h lsp-defaults
-		keymap("n", "gD", vim.lsp.buf.declaration, { buf = bufnr })
+        -- see :h lsp-defaults
+        keymap("n", "gD", vim.lsp.buf.declaration, { buf = bufnr })
 
-		keymap("n", "gl", function()
-			vim.lsp.buf.hover({ border = "double" })
-		end, { buf = bufnr })
+        keymap("n", "gl", function()
+            vim.lsp.buf.hover({ border = "double" })
+        end, { buf = bufnr })
 
-		keymap("n", "ga", function()
-			vim.diagnostic.open_float({ border = "double" })
-		end, { buf = bufnr })
+        keymap("n", "ga", function()
+            vim.diagnostic.open_float({ border = "double" })
+        end, { buf = bufnr })
 
-		keymap("n", "gA", vim.diagnostic.setloclist, { buf = bufnr })
+        keymap("n", "gA", vim.diagnostic.setloclist, { buf = bufnr })
 
-		keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
+        keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
 
-		if FzfLua then
-			keymap("n", "gd", FzfLua.lsp_definitions, { buf = bufnr })
-			keymap("n", "grr", FzfLua.lsp_references, { buf = bufnr })
-		else
-			-- lsp has default grr
-			keymap("n", "gd", vim.lsp.buf.definition, { buf = bufnr })
-		end
+        if FzfLua then
+            keymap("n", "gd", FzfLua.lsp_definitions, { buf = bufnr })
+            keymap("n", "grr", FzfLua.lsp_references, { buf = bufnr })
+        else
+            -- lsp has default grr
+            keymap("n", "gd", vim.lsp.buf.definition, { buf = bufnr })
+        end
 
-		-- :h lsp-semantic-highlght
-		for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-			vim.api.nvim_set_hl(0, group, {})
-		end
-	end,
+        -- :h lsp-semantic-highlght
+        for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+            vim.api.nvim_set_hl(0, group, {})
+        end
+    end,
 })

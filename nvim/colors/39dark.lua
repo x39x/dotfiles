@@ -1,48 +1,48 @@
 local function hl(group, opts)
-	vim.api.nvim_set_hl(0, group, opts)
+    vim.api.nvim_set_hl(0, group, opts)
 end
 
 local colors = {
-	miku = "#b392f0",
-	-- base
-	fg0 = "#f8f8f8",
-	fg1 = "#888888",
-	fg2 = "#636363",
-	bg0 = "#1F1F1F",
-	bg1 = "#2A2A2A",
-	bg2 = "#363636",
-	-- ui
-	gra3 = "#444444",
-	blu1 = "#6db0fc",
-	blu2 = "#316bcd",
-	blu3 = "#264F78",
-	blu4 = "#385570",
-	blu5 = "#25323E",
-	gre1 = "#274B34",
-	gre3 = "#1B7F37",
-	gre4 = "#192C20",
-	gre5 = "#0FBC79",
-	red1 = "#cd3131",
-	red2 = "#ff2e2e",
-	red3 = "#6D3136",
-	red4 = "#3F1E21",
-	ora1 = "#FF9800",
-	ora2 = "#d68349",
-	-- syntax
-	gra0 = "#6b737c",
-	gre0 = "#94cc7f",
-	red0 = "#f97583",
-	blu0 = "#79b8ff",
-	pur0 = "#b392f0",
-	yel0 = "#FCE094",
-	ora0 = "#ffab70",
+    miku = "#b392f0",
+    -- base
+    fg0 = "#f8f8f8",
+    fg1 = "#888888",
+    fg2 = "#636363",
+    bg0 = "#1F1F1F",
+    bg1 = "#2A2A2A",
+    bg2 = "#363636",
+    -- ui
+    gra3 = "#444444",
+    blu1 = "#6db0fc",
+    blu2 = "#316bcd",
+    blu3 = "#264F78",
+    blu4 = "#385570",
+    blu5 = "#25323E",
+    gre1 = "#274B34",
+    gre3 = "#1B7F37",
+    gre4 = "#192C20",
+    gre5 = "#0FBC79",
+    red1 = "#cd3131",
+    red2 = "#ff2e2e",
+    red3 = "#6D3136",
+    red4 = "#3F1E21",
+    ora1 = "#FF9800",
+    ora2 = "#d68349",
+    -- syntax
+    gra0 = "#6b737c",
+    gre0 = "#94cc7f",
+    red0 = "#f97583",
+    blu0 = "#79b8ff",
+    pur0 = "#b392f0",
+    yel0 = "#FCE094",
+    ora0 = "#ffab70",
 
-	-- "#a485de",
+    -- "#a485de",
 }
 
 vim.cmd("highlight clear")
 if vim.fn.exists("syntax_on") == 1 then
-	vim.cmd("syntax reset")
+    vim.cmd("syntax reset")
 end
 
 vim.o.background = "dark"
