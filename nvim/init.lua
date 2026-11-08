@@ -110,9 +110,9 @@ keymap({ "n", "x" }, "J", "<ScrollWheelDown>")
 keymap({ "n" }, "<bar>", "mzJ`z")
 keymap({ "x" }, "<bar>", "J")
 
--- keymap({ "n" }, ";", "m",)
--- keymap({ "n" }, "m", "]", { remap = true })
--- keymap({ "n" }, ",", "[", { remap = true })
+keymap({ "n" }, ";", "m")
+keymap({ "n" }, "m", "]", { remap = true })
+keymap({ "n" }, ",", "[", { remap = true })
 keymap({ "n" }, "<leader>k", "[", { remap = true })
 keymap({ "n" }, "<leader>j", "]", { remap = true })
 

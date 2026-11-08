@@ -206,7 +206,7 @@ require("ibl").setup({
     indent = {
         char = "│",
         tab_char = "│",
-        highlight = "Whitespace",
+        highlight = "Conceal",
     },
     scope = { enabled = false },
 })
@@ -232,6 +232,9 @@ require("satellite").setup({
     handlers = {
         gitsigns = {
             enable = false,
+        },
+        marks = {
+            key = "<Ignore>",
         },
     },
 })

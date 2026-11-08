@@ -137,7 +137,7 @@ hl("IncSearch", { link = "Visual" })
 hl("CurSearch", { bg = colors.gre1 })
 hl("Substitute", { bg = colors.red1 }) --:range s///
 
-hl("Whitespace", { fg = colors.fg4 })
+hl("Whitespace", { fg = colors.fg3 }) -- listchars
 hl("Conceal", { fg = colors.fg4 })
 hl("EndOfBuffer", { fg = colors.fg4 })
 hl("NonText", { fg = colors.fg2 }) -- fillchar:extends: < >
