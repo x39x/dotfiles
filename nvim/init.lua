@@ -163,8 +163,20 @@ end, { bang = true })
 
 command("Fjson", "%!python3 -m json.tool", {})
 
-command("Scratch", function(args)
-    local scratch_file = vim.fs.normalize("$HOME/dev/tmp/" .. os.date("%B_%d_%I_%M_%S") .. "." .. args.args)
+command("S", function(args)
+    local dir = vim.fs.joinpath(vim.fn.stdpath("state"), "scratch")
+
+    if not vim.uv.fs_stat(dir) then
+        vim.fs.mkdir(dir)
+    end
+
+    if args.bang then
+        vim.cmd.edit(dir)
+    end
+
+    local ext = args.args and args.args ~= "" and args.args or "lua"
+
+    local scratch_file = vim.fs.joinpath(dir, os.date("%B_%d_%I_%M_%S") .. "." .. ext)
 
     vim.cmd.edit(scratch_file)
 
@@ -174,7 +186,7 @@ command("Scratch", function(args)
         vim.api.nvim_buf_delete(scratch_buf, { force = true })
         vim.fs.rm(scratch_file, { force = true })
     end, { buf = scratch_buf })
-end, { nargs = "?" })
+end, { nargs = "?", bang = true })
 
 ------------------------------------------------------------------------------
 -- plugin/lsp/colorscheme
