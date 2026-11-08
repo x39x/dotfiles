@@ -64,8 +64,10 @@ python[#python + 1] = {
     pythonPath = python_path,
 }
 
-return function()
-    local dap = require("dap")
-    dap.adapters.debugpy = debugpy
-    dap.configurations.python = python
-end
+return {
+    set = function()
+        local dap = require("dap")
+        dap.adapters.debugpy = debugpy
+        dap.configurations.python = python
+    end,
+}

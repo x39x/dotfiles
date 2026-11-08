@@ -48,12 +48,13 @@ dapview.setup({
             if position == "eol" or position == "eol_right_align" then
                 local name = vim.treesitter.get_node_text(node, bufnr)
 
-                return "[[" .. name .. " ="
+                return "[[ " .. name .. " ="
             end
         end,
+
         suffix = function(position, _, _, _, _)
             if position == "eol" or position == "eol_right_align" then
-                return "]]"
+                return " ]]"
             end
         end,
     },
@@ -119,7 +120,7 @@ local launch = function()
     local ok, dap_config = pcall(require, "plugin.dapconfig.dap." .. ft)
 
     if ok then
-        dap_config()
+        dap_config.set()
         dapkeymap_set(buf)
         vim.g.nvim_dap_enabled = true
         vim.notify("Launch DAP for " .. ft, vim.log.levels.INFO)

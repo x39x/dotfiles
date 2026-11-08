@@ -243,6 +243,8 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 })
 
 ----------------------------------------------------------------------------------
+-- parse
+----------------------------------------------------------------------------------
 local function safe_parse(input)
     local safe, parsed = pcall(vim.lsp._snippet_grammar.parse, input)
     if not safe then

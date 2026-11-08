@@ -33,6 +33,7 @@ go[#go + 1] = {
     request = "launch",
     program = "./${relativeFileDirname}",
 }
+
 go[#go + 1] = {
     type = "delve",
     name = "Debug test",
@@ -41,8 +42,10 @@ go[#go + 1] = {
     program = "./${relativeFileDirname}",
 }
 
-return function()
-    local dap = require("dap")
-    dap.adapters.delve = delve
-    dap.configurations.go = go
-end
+return {
+    set = function()
+        local dap = require("dap")
+        dap.adapters.delve = delve
+        dap.configurations.go = go
+    end,
+}

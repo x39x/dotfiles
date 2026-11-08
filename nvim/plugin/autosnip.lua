@@ -123,7 +123,7 @@ auto_snippets.go = {
 }
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "markdown", "go", "lua" },
+    pattern = { "markdown", "go" },
     callback = function(args)
         local ft = args.match
 

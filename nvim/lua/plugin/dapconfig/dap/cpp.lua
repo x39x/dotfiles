@@ -52,7 +52,7 @@ local program_path, project_root = find_debug_executable()
 
 local lldb = {
     type = "executable",
-    command = "/System/Volumes/Data/Library/Developer/CommandLineTools/usr/bin/lldb-dap",
+    command = "/Library/Developer/CommandLineTools/usr/bin/lldb-dap",
     name = "lldb",
 }
 
@@ -65,12 +65,14 @@ cpp[#cpp + 1] = {
     args = {},
 }
 
-return function()
-    if vim.fn.executable(lldb.command) == 0 then
-        vim.notify("LLDB binary not found: " .. lldb.command, vim.log.levels.WARN)
-        return
-    end
-    local dap = require("dap")
-    dap.adapters.lldb = lldb
-    dap.configurations.cpp = cpp
-end
+return {
+    set = function()
+        if vim.fn.executable(lldb.command) == 0 then
+            vim.notify("LLDB binary not found: " .. lldb.command, vim.log.levels.WARN)
+            return
+        end
+        local dap = require("dap")
+        dap.adapters.lldb = lldb
+        dap.configurations.cpp = cpp
+    end,
+}

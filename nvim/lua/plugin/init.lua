@@ -190,15 +190,15 @@ require("gitsigns").setup({
                 gitsigns.nav_hunk("prev")
             end
         end)
-        map("n", "<leader>gq", gitsigns.setqflist)
+        map("n", "<leader>gq", gitsigns.setqflist, { desc = "gitsigns  setqflist" })
         map("n", "<leader>gQ", function()
             gitsigns.setqflist("all")
-        end)
-        map("n", "<leader>gp", gitsigns.preview_hunk_inline)
-        map("n", "<leader>gb", gitsigns.toggle_current_line_blame)
+        end, { desc = "gitsigns  setqflist all" })
+        map("n", "<leader>gp", gitsigns.preview_hunk_inline, { desc = "gitsigns  preview_hunk_inline" })
+        map("n", "<leader>gb", gitsigns.toggle_current_line_blame, { desc = "gitsigns  toggle_current_line_blame" })
 
-        map("n", "<leader>gl", gitsigns.toggle_signs)
-        map("n", "<leader>gL", gitsigns.toggle_linehl)
+        map("n", "<leader>gl", gitsigns.toggle_signs, { desc = "gitsigns  toggle_signs" })
+        map("n", "<leader>gL", gitsigns.toggle_linehl, { desc = "gitsigns  toggle_linehl" })
     end,
 })
 

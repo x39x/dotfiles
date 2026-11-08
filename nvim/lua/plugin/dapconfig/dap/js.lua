@@ -61,38 +61,40 @@ local chrome_launch = {
     sourceMaps = true,
 }
 
-return function()
-    local dap = require("dap")
+return {
+    set = function()
+        local dap = require("dap")
 
-    for _, adapterType in ipairs({ "node", "chrome", "msedge" }) do
-        local pwaType = "pwa-" .. adapterType
+        for _, adapterType in ipairs({ "node", "chrome", "msedge" }) do
+            local pwaType = "pwa-" .. adapterType
 
-        if not dap.adapters[pwaType] then
-            dap.adapters[pwaType] = js_debug
-        end
+            if not dap.adapters[pwaType] then
+                dap.adapters[pwaType] = js_debug
+            end
 
-        -- Define adapters without the "pwa-" prefix for VSCode compatibility
-        if not dap.adapters[adapterType] then
-            dap.adapters[adapterType] = function(cb, config)
-                local nativeAdapter = dap.adapters[pwaType]
+            -- Define adapters without the "pwa-" prefix for VSCode compatibility
+            if not dap.adapters[adapterType] then
+                dap.adapters[adapterType] = function(cb, config)
+                    local nativeAdapter = dap.adapters[pwaType]
 
-                config.type = pwaType
+                    config.type = pwaType
 
-                if type(nativeAdapter) == "function" then
-                    nativeAdapter(cb, config)
-                else
-                    cb(nativeAdapter)
+                    if type(nativeAdapter) == "function" then
+                        nativeAdapter(cb, config)
+                    else
+                        cb(nativeAdapter)
+                    end
                 end
             end
         end
-    end
 
-    for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" }) do
-        dap.configurations[language] = {
-            node_launch,
-            node_attach,
-            node_ts_launch,
-            chrome_launch,
-        }
-    end
-end
+        for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" }) do
+            dap.configurations[language] = {
+                node_launch,
+                node_attach,
+                node_ts_launch,
+                chrome_launch,
+            }
+        end
+    end,
+}
