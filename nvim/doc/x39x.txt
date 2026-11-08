@@ -93,6 +93,35 @@ FZF                                                                        *fzf*
 >
 
 ==============================================================================
+mini.align                                                               *align*
+
+FILTER
+>vimdoc
+    - All variables from global table `_G`.
+
+    <row> - row number of current element.
+    <ROW> - total number of rows in parts.
+    <col> - column number of current element.
+    <COL> - total number of columns in current row.
+    <s>   - string value of current element.
+    <n>   - column pair number of current element. Useful when filtering by
+            result of pattern splitting.
+    <N>   - total number of column pairs in current row.
+>
+
+Tips: ~
+
+    - This general filtering approach can be used to both include and exclude
+      certain parts from alignment. Examples:
+
+      - Use `row ~= 2` to align all parts except from second row.
+      - Use `n == 1` to align only by first pair of columns.
+
+    - Filtering by last equal sign usually can be done with `n >= (N - 1)`
+      (because there is usually something to the right of it).
+
+
+==============================================================================
 X39X                                                                       *doc*
 
 USAGE

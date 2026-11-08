@@ -9,9 +9,21 @@ local state = {
     buffers = {},
     tabs = {},
     active_bufnr = nil,
-    -- stateline
-    dap = "",
 }
+
+---========================================================================
+-- config
+---========================================================================
+
+local STL_FT = { fzf = true }
+local STL_BT = { help = true }
+local TPB_EXCLUDED_FT = { fzf = true }
+local TPB_EXCLUDED_BT = { quickfix = true }
+local TPB_LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
+
+---========================================================================
+-- global
+---========================================================================
 
 local function set_hl(name, inherit)
     local marker = inherit and "$" or "#"
@@ -43,7 +55,6 @@ end
 ---========================================================================
 -- statusline
 ---========================================================================
-local STL_FT_FILETYPE = { fzf = true, fugitive = true }
 
 local function is_inactive()
     return api.nvim_get_current_win() ~= tonumber(vim.g.actual_curwin)
@@ -168,30 +179,25 @@ local function diagnostics()
     return vim.trim(table.concat(parts))
 end
 
---- dap
-
-local function update_dap_status()
-    local ok, dap = pcall(require, "dap")
-    if ok then
-        state.dap = " " .. dap.status()
-    end
-end
-
 --- special buffers
 local function special_name()
     local hi = set_hl("MatsuLineBold") .. set_hl("MatsuLineA", true)
 
     local ft = vim.bo[0].filetype
 
-    if STL_FT_FILETYPE[ft] then
+    if STL_FT[ft] then
         return hi .. ft
     end
 
     local bt = vim.bo[0].buftype
 
-    -- quickfix type
+    -- quickfix
     if bt == "quickfix" then
         return vim.tbl_isempty(fn.getloclist(0)) and hi .. "quickfix" or hi .. "localfix"
+    end
+
+    if STL_BT[bt] then
+        return hi .. bt
     end
 
     if bt then
@@ -242,7 +248,6 @@ function layout.default()
         filename_block(),
         diagnostics(),
         "%<%=",
-        state.dap,
         git(),
         workdir(),
         "   ",
@@ -267,11 +272,6 @@ end
 ---========================================================================
 -- topbar
 ---========================================================================
-local TPB_EXCLUDED_FILETYPES = { fzf = true }
-local TPB_EXCLUDED_BUFTYPES = { quickfix = true }
-local TPB_FT_FILETYPE = { fugitive = true }
-local TPB_LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
-
 -- 包裹 click 函数：%{id}@v:lua.{handler}@ ... %X
 local function clickable(handler, id, text)
     return string.format("%%%d@v:lua.%s@%s%%X", id, handler, text)
@@ -292,11 +292,11 @@ local function is_valid_buffer(bufnr)
 
     --- exclude ft/bt
 
-    if TPB_EXCLUDED_FILETYPES[bo.filetype] then
+    if TPB_EXCLUDED_FT[bo.filetype] then
         return false
     end
 
-    if TPB_EXCLUDED_BUFTYPES[bo.buftype] then
+    if TPB_EXCLUDED_BT[bo.buftype] then
         return false
     end
 
@@ -304,10 +304,6 @@ local function is_valid_buffer(bufnr)
 end
 
 local function get_buffer_name(bufnr)
-    if TPB_FT_FILETYPE[vim.bo[bufnr].filetype] then
-        return vim.bo[bufnr].filetype
-    end
-
     local name = vim.fs.basename(api.nvim_buf_get_name(bufnr))
     if name == "" then
         return "[No Name]"
@@ -580,19 +576,3 @@ vim.go.tabline = "%{%g:matsu_topbar()%}"
 
 vim.keymap.set("n", "<leader><leader>", jump)
 vim.keymap.set("n", "<leader>h", jump)
-
----========================================================================
--- state
----========================================================================
-
---- dap
-au("User", {
-    group = aug,
-    pattern = "DapProgressUpdate",
-    callback = function()
-        vim.schedule(function()
-            update_dap_status()
-            vim.cmd.redrawstatus({ bang = true })
-        end)
-    end,
-})

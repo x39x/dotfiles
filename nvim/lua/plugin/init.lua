@@ -1,7 +1,6 @@
 vim.pack.add({
     "https://github.com/nvim-tree/nvim-web-devicons",
     "https://github.com/kylechui/nvim-surround",
-    "https://github.com/junegunn/vim-easy-align",
     "https://github.com/windwp/nvim-autopairs",
     "https://github.com/ibhagwan/fzf-lua",
     -- treesitter
@@ -17,13 +16,14 @@ vim.pack.add({
     "https://github.com/brenoprata10/nvim-highlight-colors",
     -- lsp
     "https://github.com/williamboman/mason.nvim",
-    "https://github.com/stevearc/conform.nvim",
     "https://github.com/rafamadriz/friendly-snippets",
     -- tools
+    "https://github.com/stevearc/conform.nvim",
     "https://github.com/stevearc/overseer.nvim",
-    "https://github.com/folke/flash.nvim",
-    "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/neogitorg/neogit",
+    "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/folke/flash.nvim",
+    "https://github.com/nvim-mini/mini.align",
 }, { confirm = false })
 
 local keymap = vim.keymap.set
@@ -69,7 +69,12 @@ end)
 ------------------------------------------------------------------
 
 --- align
-keymap({ "n", "x" }, "<leader>aa", "<Plug>(EasyAlign)", { desc = "Align" })
+require("mini.align").setup({
+    mappings = {
+        start = "<leader>a",
+        start_with_preview = "<leader>A",
+    },
+})
 
 --- autopairs
 require("nvim-autopairs").setup({
