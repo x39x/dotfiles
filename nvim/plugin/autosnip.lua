@@ -53,11 +53,13 @@ function AUTO.should_expand(ft, buf, pos)
     return nil
 end
 
+local expand_vars = require("utils.snippet_variable")
+
 ---@param prefix string
 ---@param ft string
 function AUTO.expand(prefix, ft)
     local snippet = auto_snippets[ft][prefix]
-    local snippet_str = table.concat(snippet.body, "\n")
+    local snippet_str = expand_vars(table.concat(snippet.body, "\n"))
     vim.snippet.expand(snippet_str)
     if snippet.callback then
         snippet.callback()
@@ -85,27 +87,6 @@ function AUTO.set(ft, buf)
         end, { noremap = true, silent = true, buf = buf })
     end
 end
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "markdown", "go" },
-    callback = function(args)
-        local ft = args.match
-
-        if auto_triggers[ft] then
-            AUTO.set(ft, args.buf)
-            return
-        end
-
-        auto_triggers[ft] = {}
-        for k in pairs(auto_snippets[ft]) do
-            table.insert(auto_triggers[ft], k:sub(-1))
-        end
-        auto_triggers[ft] = vim.list.unique(auto_triggers[ft])
-
-        AUTO.set(ft, args.buf)
-    end,
-    group = vim.api.nvim_create_augroup("matsu.autosnip", { clear = true }),
-})
 
 -- NOTE: snippets
 auto_snippets.markdown = {
@@ -140,3 +121,24 @@ auto_snippets.go = {
         end,
     },
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown", "go", "lua" },
+    callback = function(args)
+        local ft = args.match
+
+        if auto_triggers[ft] then
+            AUTO.set(ft, args.buf)
+            return
+        end
+
+        auto_triggers[ft] = {}
+        for k in pairs(auto_snippets[ft]) do
+            table.insert(auto_triggers[ft], k:sub(-1))
+        end
+        auto_triggers[ft] = vim.list.unique(auto_triggers[ft])
+
+        AUTO.set(ft, args.buf)
+    end,
+    group = vim.api.nvim_create_augroup("matsu.autosnip", { clear = true }),
+})
