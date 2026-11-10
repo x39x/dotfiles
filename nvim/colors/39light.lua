@@ -168,13 +168,14 @@ hl("GitSignsChange", { link = "Changed" })
 hl("GitSignsDelete", { link = "Removed" })
 
 -- NOTE: quickfix
+-- https://github.com/neovim/neovim/blob/master/runtime/syntax/qf.vim
 hl("QuickFixLine", { fg = colors.blu1 })
 hl("QuickFixError", { fg = colors.red0 })
-hl("qfSeparator", { fg = colors.fg3 })
-hl("qfSeparator1", { link = "qfSeparator" })
-hl("qfSeparator2", { link = "qfSeparator" })
-hl("qfLineNr", { fg = colors.fg0 })
+hl("qfSeparator1", { fg = colors.fg3 })
+hl("qfSeparator2", { fg = colors.fg3 })
 hl("qfFileName", { fg = colors.fg0 })
+hl("qfLineNr", { fg = colors.fg0 })
+hl("qfText", { fg = colors.fg0 })
 
 -- NOTE: lsp
 hl("LspReferenceText", { bg = colors.gre3 })

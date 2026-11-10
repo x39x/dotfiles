@@ -159,11 +159,11 @@ hl("GitSignsChange", { link = "Changed" })
 -- NOTE: quickfix
 hl("QuickFixLine", { fg = colors.blu0 })
 hl("QuickFixError", { fg = colors.red1 })
-hl("qfSeparator", { fg = colors.gra3 })
-hl("qfSeparator1", { link = "qfSeparator" })
-hl("qfSeparator2", { link = "qfSeparator" })
-hl("qfLineNr", { fg = colors.fg0 })
+hl("qfSeparator1", { fg = colors.gra3 })
+hl("qfSeparator2", { fg = colors.gra3 })
 hl("qfFileName", { fg = colors.fg0 })
+hl("qfLineNr", { fg = colors.fg0 })
+hl("qfText", { fg = colors.fg0 })
 
 -- NOTE: lsp
 hl("LspReferenceText", { bg = colors.gre1 })

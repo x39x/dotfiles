@@ -8,63 +8,117 @@ _G.matsu_foldtext = function()
     return text .. "   󰁂 " .. lines .. " lines "
 end
 
--- https://github.com/vim/vim/issues/4425#issuecomment-640123274
+--NOTE:  https://github.com/vim/vim/issues/4425#issuecomment-640123274
 -- QuickFixTextFunc
-_G.matsu_qftf = function(info)
-    local qfl = info.quickfix == 1 and vim.fn.getqflist({ id = info.id, items = 0 }).items
-        or vim.fn.getloclist(info.winid, { id = info.id, items = 0 }).items
-        or {}
 
-    --  计算合适的 max_width
-    local lens = {}
-    for _, e in ipairs(qfl) do
-        local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
-        table.insert(lens, vim.api.nvim_strwidth(fname))
+local function display_width(s)
+    return vim.api.nvim_strwidth(s)
+end
+
+-- 按终端显示宽度截断，避免中文文件名被切坏或算错宽度。
+local function truncate(s, width)
+    if display_width(s) <= width then
+        return s
     end
-    table.sort(lens)
-    local idx = math.floor((#lens + 1) * 0.75)
-    local max_width = lens[idx] + 2
 
-    -- local max_width = 20
+    local ellipsis = "…"
+    local limit = width - display_width(ellipsis)
+    if limit <= 0 then
+        return ellipsis
+    end
 
-    -- clamp 为 [10, 43] 之间
-    max_width = math.min(math.max(max_width, 10), 43)
+    local prefix = ""
+    for i = 0, vim.fn.strchars(s) - 1 do
+        local char = vim.fn.strcharpart(s, i, 1)
+        if display_width(prefix .. char) > limit then
+            break
+        end
+        prefix = prefix .. char
+    end
+
+    return prefix .. ellipsis
+end
+
+local function pad_right(s, width)
+    return s .. string.rep(" ", math.max(width - display_width(s), 0))
+end
+
+local function pad_left(s, width)
+    return string.rep(" ", math.max(width - display_width(s), 0)) .. s
+end
+
+_G.matsu_qftf = function(info)
+    local list
+    if info.quickfix == 1 then
+        list = vim.fn.getqflist({ id = info.id, items = 0 })
+    else
+        list = vim.fn.getloclist(info.winid, { id = info.id, items = 0 })
+    end
+    local items = list and list.items or {}
+
+    local names = {}
+    local name_widths = {}
+    local line_width, col_width = 1, 1
+    local max_index = 0
+
+    for i, item in ipairs(items) do
+        max_index = i
+
+        local name = item.filename
+        if type(name) ~= "string" or name == "" then
+            name = vim.fn.bufname(item.bufnr or 0)
+        end
+        name = name or ""
+
+        if name ~= "" then
+            -- 相对路径优先；不在当前目录或家目录下的路径保持原样
+            name = vim.fn.fnamemodify(name, ":~:.")
+            name_widths[#name_widths + 1] = display_width(name)
+        end
+        names[i] = name
+
+        local lnum = tonumber(item.lnum) or 0
+        local col = tonumber(item.col) or 0
+        if lnum > 0 then
+            line_width = math.max(line_width, #tostring(lnum))
+        end
+        if col > 0 then
+            col_width = math.max(col_width, #tostring(col))
+        end
+    end
+
+    -- 用非空文件名的 75 百分位宽度，避免少数超长路径撑宽整列
+    table.sort(name_widths)
+    local filename_width = 10
+    if #name_widths > 0 then
+        local p75 = name_widths[math.ceil(#name_widths * 0.75)] or 0
+        filename_width = math.min(math.max(p75 + 2, 10), 43)
+    end
 
     local result = {}
-
     for i = info.start_idx, info.end_idx do
-        local e = qfl[i]
-        local fname = vim.fn.fnamemodify(vim.fn.bufname(e.bufnr), ":o") or ""
-
-        if fname ~= "" then
-            -- 截断处理
-            if vim.fn.strchars(fname, true) > max_width then
-                fname = fname:sub(1, max_width - 1) .. "…"
-            else
-                fname = string.format("%-" .. max_width .. "s   ", fname)
-            end
+        local item = items[i]
+        if not item then
+            break
         end
 
-        local pos = ""
-        if e.lnum and e.col then
-            pos = string.format("%-7s   ", e.lnum .. ":" .. e.col)
-        end
+        local name = names[i] or ""
+        local lnum = tonumber(item.lnum) or 0
+        local col = tonumber(item.col) or 0
 
-        -- multiple lines error
-        if vim.trim(pos) == "0:0" then
-            pos = string.format("%-7s", "")
-            fname = string.format("%-" .. max_width .. "s   ", "")
+        -- 0:0 项通常是多行错误的续行
+        if lnum == 0 and col == 0 then
+            name = ""
         end
+        name = pad_right(truncate(name, filename_width), filename_width)
 
-        -- no filename and position
-        if vim.trim(pos) == "" and vim.trim(fname) == "" then
-            pos = ""
-            fname = " "
-        end
+        local line_text = lnum > 0 and tostring(lnum) or ""
+        local col_text = col > 0 and tostring(col) or ""
+        local separator = (line_text ~= "" and col_text ~= "") and ":" or " "
+        local position = pad_left(line_text, line_width) .. separator .. pad_left(col_text, col_width)
 
-        local text = e.text or ""
-        local line = fname .. pos .. text
-        table.insert(result, line)
+        local text = item.text or ""
+        result[#result + 1] = name .. " | " .. position .. " | " .. text
     end
 
     return result
