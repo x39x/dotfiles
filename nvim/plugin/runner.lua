@@ -242,7 +242,10 @@ end, {
 ------------------------------------------------------------------
 
 local selected
-local overseer = require("overseer")
+local ok, overseer = pcall(require, "overseer")
+if not ok then
+    return
+end
 
 local function overseer_run()
     local task_list = require("overseer.task_list")

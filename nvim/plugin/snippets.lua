@@ -106,7 +106,7 @@ local function load_snippets(filetype)
     end
 
     -- global snippets
-    local global_filetype = { "matsu", "all" }
+    local global_filetype = { "all" }
     local global_snippets = {}
     for _, ft in ipairs(global_filetype) do
         global_snippets = get_snippets_for_ft(ft)

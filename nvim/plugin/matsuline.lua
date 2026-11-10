@@ -6,9 +6,8 @@ local aug = api.nvim_create_augroup("matsu.matsuline", { clear = true })
 local state = {
     -- tabline
     show_labels = false,
-    buffers = {},
     tabs = {},
-    active_bufnr = nil,
+    tab_names = {},
 }
 
 ---========================================================================
@@ -17,9 +16,10 @@ local state = {
 
 local STL_FT = { fzf = true }
 local STL_BT = { help = true }
-local TPB_EXCLUDED_FT = { fzf = true }
-local TPB_EXCLUDED_BT = { quickfix = true }
-local TPB_LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
+local TBL_FT = { help = true }
+local TABNAME_EXCLUDED_FT = { fzf = true }
+local TABNAME_EXCLUDED_BT = { quickfix = true }
+local TAB_LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
 
 ---========================================================================
 -- global
@@ -74,7 +74,18 @@ end
 
 --- workdir
 local function workdir()
-    local icon = fn.haslocaldir(0) == 1 and "[]" or ""
+    local icon = ""
+
+    if fn.haslocaldir(-1, 0) == 1 then
+        icon = "[T]"
+    end
+    if fn.haslocaldir(0) == 1 then
+        icon = "[W]"
+    end
+    if fn.haslocaldir(-1, -1, 0) == 1 then
+        icon = "[X]"
+    end
+
     local cwd = shorten_if_long(fn.fnamemodify(vim.uv.cwd() or "", ":~"), 0.25)
     cwd = escape_statusline(cwd)
     local trail = cwd:sub(-1) == "/" and "" or "/"
@@ -277,89 +288,80 @@ local function clickable(handler, id, text)
     return string.format("%%%d@v:lua.%s@%s%%X", id, handler, text)
 end
 
--------------------- Buffer --------------------
+-------------------- Tab --------------------
 
-local function is_valid_buffer(bufnr)
-    local bo = vim.bo[bufnr]
-    if not bo then
-        return
-    end
-
-    --- special ft/bt
-    if bo.filetype == "man" then
-        return true
-    end
-
-    --- exclude ft/bt
-
-    if TPB_EXCLUDED_FT[bo.filetype] then
-        return false
-    end
-
-    if TPB_EXCLUDED_BT[bo.buftype] then
-        return false
-    end
-
-    return bo.buflisted
-end
-
-local function get_buffer_name(bufnr)
-    local name = vim.fs.basename(api.nvim_buf_get_name(bufnr))
-    if name == "" then
-        return "[No Name]"
-    end
-
+local function shorten_tab_name(name)
     local len = fn.strchars(name)
-    if len > 39 then
-        return fn.strcharpart(name, 0, 13) .. "..." .. fn.strcharpart(name, len - 19)
+    if len > 20 then
+        return fn.strcharpart(name, 0, 19) .. "…"
     end
     return name
 end
 
-local function collect_buffers()
-    local current = api.nvim_get_current_buf()
-    if is_valid_buffer(current) then
-        state.active_bufnr = current
+local function get_localdir_name(tabnr)
+    if fn.haslocaldir(-1, tabnr) == 0 then
+        return nil
     end
 
-    local buffers = {}
-    for _, bufnr in ipairs(api.nvim_list_bufs()) do
-        if is_valid_buffer(bufnr) then
-            local index = #buffers + 1
-            buffers[index] = {
-                bufnr = bufnr,
-                name = get_buffer_name(bufnr),
-                label = state.show_labels and (TPB_LABEL_CHARS[index] or "#") or " ",
-            }
-        end
+    local dir = fn.getcwd(-1, tabnr)
+    local name = fn.fnamemodify(dir, ":t")
+    if name == "" then
+        name = dir
     end
-
-    state.buffers = buffers
-    return buffers
+    if name:sub(-1) ~= "/" then
+        name = name .. "/"
+    end
+    return shorten_tab_name(name)
 end
 
--- 渲染单个 buffer，返回 { str, width }
-local function render_buffer(buffer)
-    local flag = file_flag(buffer.bufnr)
-    local name_hl = buffer.bufnr == state.active_bufnr and set_hl("MatsuLineA", true) or set_hl("TabLine")
+local function get_buffer_name(bufnr)
+    local path = api.nvim_buf_get_name(bufnr)
+    if path == "" then
+        return "[No Name]"
+    end
 
-    local str = clickable(
-        "matsu_click_buf",
-        buffer.bufnr,
-        table.concat({
-            " ",
-            set_hl("MatsuLineBold"),
-            set_hl("MatsuLineD", true),
-            buffer.label,
-            name_hl,
-            escape_statusline(buffer.name),
-            set_hl("MatsuLineC"),
-            flag,
-        })
-    )
-    local width = 1 + fn.strdisplaywidth(buffer.label .. buffer.name .. flag)
+    local is_dir = path:sub(-1) == "/" or fn.isdirectory(path) == 1
+    path = path:gsub("/+$", "")
+    local name = path == "" and "/" or vim.fs.basename(path)
+    if is_dir and name ~= "/" then
+        name = name .. "/"
+    end
+    return shorten_tab_name(name)
+end
 
-    return { str = str, width = width, is_active = buffer.bufnr == state.active_bufnr }
+local function is_temporary_tab_window(winid, bufnr)
+    local bo = vim.bo[bufnr] or {}
+    if TABNAME_EXCLUDED_FT[bo.filetype] or TABNAME_EXCLUDED_BT[bo.buftype] then
+        return true
+    end
+    return api.nvim_win_get_config(winid).relative ~= ""
+end
+
+--TODO:
+local function get_tab_name(tab)
+    local winid = api.nvim_tabpage_get_win(tab.tabid)
+    local bufnr = api.nvim_win_get_buf(winid)
+    local localdir_name = get_localdir_name(tab.tabnr)
+
+    if localdir_name then
+        state.tab_names[tab.tabid] = localdir_name
+        return localdir_name
+    end
+
+    local ft = vim.bo[bufnr].filetype
+
+    if TBL_FT[ft] then
+        state.tab_names[tab.tabid] = ft
+        return ft
+    end
+
+    if is_temporary_tab_window(winid, bufnr) then
+        return state.tab_names[tab.tabid] or ""
+    end
+
+    local name = get_buffer_name(bufnr)
+    state.tab_names[tab.tabid] = name
+    return name
 end
 
 local function concat_range(items, first, last)
@@ -370,29 +372,73 @@ local function concat_range(items, first, last)
     return table.concat(parts)
 end
 
--- 在 max_width 内渲染 buffer 列表，保证 active buffer 可见
-local function render_buffers(max_width)
-    local items, active_idx, total = {}, 1, 0
+local function render_tab(tab, current_tabid)
+    local name_hl = tab.tabid == current_tabid and set_hl("MatsuLineB", true) or set_hl("TabLine")
+    local name = get_tab_name(tab)
+    local label = state.show_labels and tab.label or " "
+    local display = {
+        " ",
+        set_hl("MatsuLineBold"),
+        set_hl("MatsuLineD", true),
+        label,
+        name_hl,
+        escape_statusline(name),
+        "   ",
+    }
 
-    for i, buffer in ipairs(collect_buffers()) do
-        local item = render_buffer(buffer)
+    local str = clickable("matsu_click_tab", tab.tabid, table.concat(display))
+    local width = fn.strdisplaywidth(" " .. label .. name .. "   ")
+
+    --NOTE: 在 tabname 处理会有空格，这样处理会使存在 alpha 的tab不可见，但几乎没有这种情况，可以接受
+    local winid = api.nvim_tabpage_get_win(tab.tabid)
+    local bufnr = api.nvim_win_get_buf(winid)
+    if vim.bo[bufnr].filetype == "alpha" then
+        state.tab_names[tab.tabid] = ""
+        str = ""
+    end
+
+    return { str = str, width = width, is_active = tab.tabid == current_tabid }
+end
+
+-- 在 max_width 内渲染 tabs，保证当前 tab 可见并向两侧扩展
+local function render_tabs(max_width)
+    local current_tabid = api.nvim_get_current_tabpage()
+    local tabids = api.nvim_list_tabpages()
+    local tabs, live_tabids, items, active_idx, total = {}, {}, {}, 1, 0
+
+    for i, tabid in ipairs(tabids) do
+        local tab = {
+            tabid = tabid,
+            tabnr = api.nvim_tabpage_get_number(tabid),
+            label = TAB_LABEL_CHARS[i] or "#",
+        }
+        tabs[i] = tab
+        live_tabids[tabid] = true
+        local item = render_tab(tab, current_tabid)
         items[i] = item
         total = total + item.width
         if item.is_active then
             active_idx = i
         end
     end
+    state.tabs = tabs
+    for tabid in pairs(state.tab_names) do
+        if not live_tabids[tabid] then
+            state.tab_names[tabid] = nil
+        end
+    end
 
     if #items == 0 then
-        return ""
+        return "", 0
     end
     if total <= max_width then
-        return " " .. concat_range(items, 1, #items)
+        return concat_range(items, 1, #items), total
     end
 
-    local budget = max_width - api.nvim_strwidth("  ") -- 按照最长预留边界,使用时根据实际减去
+    ---@diagnostic disable-next-line
+    local budget = math.max(0, max_width - fn.strdisplaywidth("  "))
     local first, last = active_idx, active_idx
-    local used = items[active_idx].width -- active 即使单个超宽也强制显示 (%< fallback)
+    local used = items[active_idx].width
 
     local grew = true
     while grew do
@@ -409,70 +455,19 @@ local function render_buffers(max_width)
         end
     end
 
-    local head = " "
+    local head = ""
     if first > 1 then
         head = set_hl("Comment") .. "  "
-    else
-        -- head 预留 3 字符，这里只用了一个
-        used = used - 2
     end
 
-    -- 使 bufline 占满剩余宽度
     local trail = ""
     if last < #items then
-        -- 边界宽度已预留，used==budget 后再加""刚好，不用再减 1
-        while used < budget do
-            trail = trail .. " "
-            used = used + 1
-        end
-        trail = set_hl("Comment") .. trail .. ""
+        ---@diagnostic disable-next-line
+        local padding = math.max(0, max_width - fn.strdisplaywidth(head) - used - fn.strdisplaywidth(""))
+        trail = set_hl("Comment") .. string.rep(" ", padding) .. ""
     end
 
-    return table.concat({ head .. "%<", concat_range(items, first, last), trail })
-end
-
-local function click_buffer(bufnr, _, button)
-    if button == "r" then
-        api.nvim_buf_delete(bufnr, { force = false })
-    elseif api.nvim_buf_is_valid(bufnr) then
-        api.nvim_win_set_buf(0, bufnr)
-    end
-    vim.cmd.redrawtabline()
-end
-
--------------------- Tab --------------------
-
-local function render_tab(tab, current_tabid)
-    local tab_hl = set_hl("TabLine", true)
-    if state.show_labels then
-        tab_hl = set_hl("MatsuLineC", true)
-    elseif tab.tabid == current_tabid then
-        tab_hl = set_hl("MatsuLineB", true)
-    end
-    local ctx = table.concat({ " ", set_hl("MatsuLineBold"), tab_hl, tab.tabnr, " " })
-    return clickable("matsu_click_tab", tab.tabid, ctx)
-end
-
--- 返回 tab 区域的渲染串和显示宽度；超过 max_width 时退为 " 当前/总数 "
-local function render_tabs(max_width)
-    local current_tabid = api.nvim_get_current_tabpage()
-    local tabs, parts, width = {}, {}, 0
-
-    for i, tabid in ipairs(api.nvim_list_tabpages()) do
-        tabs[i] = { tabid = tabid, tabnr = api.nvim_tabpage_get_number(tabid) }
-        parts[i] = render_tab(tabs[i], current_tabid)
-        width = width + 2 + #tostring(tabs[i].tabnr)
-    end
-    state.tabs = tabs
-
-    if #tabs <= 1 then
-        return "", 0
-    end
-    if width > max_width then
-        local str = string.format(" %d/%d ", fn.tabpagenr(), #tabs)
-        return str, #str
-    end
-    return table.concat(parts), width
+    return table.concat({ head, "%<", concat_range(items, first, last), trail }), max_width
 end
 
 local function click_tab(tabid, _, button)
@@ -487,12 +482,9 @@ end
 -------------------- Topbar --------------------
 
 local function render_tb()
-    local columns = vim.o.columns
-    local tab_str, tab_width = render_tabs(columns / 3)
-    local buf_str = render_buffers(columns - tab_width - 3) -- space
-
-    -- 头部空格由 render_buffers 添加
-    return table.concat({ buf_str, "%=", tab_str, "   " })
+    local available = math.max(0, vim.o.columns - 6)
+    local tab_str = render_tabs(available)
+    return table.concat({ "   ", tab_str, "   " })
 end
 
 -------------------- Jump --------------------
@@ -501,20 +493,11 @@ local function jump()
     state.show_labels = true
     vim.cmd.redrawtabline()
 
-    local char = fn.getcharstr()
-    local tabnr = tonumber(char)
-
-    if tabnr then
+    local ok, char = pcall(fn.getcharstr)
+    if ok then
         for _, tab in ipairs(state.tabs) do
-            if tab.tabnr == tabnr and api.nvim_tabpage_is_valid(tab.tabid) then
+            if tab.label == char and api.nvim_tabpage_is_valid(tab.tabid) then
                 api.nvim_set_current_tabpage(tab.tabid)
-                break
-            end
-        end
-    else
-        for _, buffer in ipairs(state.buffers) do
-            if buffer.label == char and api.nvim_buf_is_valid(buffer.bufnr) then
-                api.nvim_win_set_buf(0, buffer.bufnr)
                 break
             end
         end
@@ -565,7 +548,6 @@ au("ColorScheme", {
 
 apply_highlights()
 
-_G.matsu_click_buf = click_buffer
 _G.matsu_click_tab = click_tab
 
 vim.g.matsu_statusline = render_stl
@@ -574,5 +556,4 @@ vim.g.matsu_topbar = render_tb
 vim.go.statusline = "%{%g:matsu_statusline()%}"
 vim.go.tabline = "%{%g:matsu_topbar()%}"
 
-vim.keymap.set("n", "<leader><leader>", jump)
-vim.keymap.set("n", "<leader>h", jump)
+vim.keymap.set("n", "<leader>j", jump)

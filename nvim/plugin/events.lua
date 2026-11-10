@@ -82,7 +82,9 @@ autocmd("FileType", {
     pattern = "qf",
     callback = function(args)
         vim.bo[args.buf].buflisted = false
+        vim.bo[args.buf].expandtab = false
         vim.bo[args.buf].tabstop = 4
+
         vim.wo.listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
         vim.wo.statusline = "%{%g:matsu_statusline()%}"
 

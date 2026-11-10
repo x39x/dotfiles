@@ -37,6 +37,9 @@ o.swapfile = false
 o.autochdir = false
 o.splitright = true
 o.splitbelow = true
+o.tabclose = "uselast"
+o.startofline = false
+o.synmaxcol = 200
 o.smoothscroll = true
 o.ignorecase = true
 o.smartcase = true
@@ -55,6 +58,7 @@ o.numberwidth = 3
 o.list = true
 o.listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 o.fillchars = "eob: ,msgsep:─,fold: ,diff:╱" -- eob: hide "~"
+o.guicursor = o.guicursor .. ",n:blinkon339-blinkoff339"
 o.cursorline = false
 -- o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
@@ -63,9 +67,9 @@ o.wrap = false
 o.linebreak = true -- wrap don't break words
 o.smartindent = true
 o.copyindent = true
-o.expandtab = true
 o.shiftwidth = 4
-o.tabstop = 8
+o.expandtab = true
+o.softtabstop = -1 -- " Don't mess with 'tabstop', with 'expandtab' it isn't used. " Set softtabstop=-1 to mirror 'shiftwidth'
 --
 o.foldlevel = 99
 o.foldlevelstart = 99
@@ -79,6 +83,7 @@ o.completeopt = "menu,menuone,noinsert,popup,fuzzy"
 o.complete = ".,w,o,Fv:lua.snippet_complete"
 o.completefunc = "v:lua.snippet_complete"
 -- o.previewpopup = "height:10,width:60,border:bold" -- doesn't work
+o.wildoptions = o.wildoptions .. ",fuzzy"
 
 ------------------------------------------------------------------------------
 -- keymap
@@ -113,12 +118,10 @@ keymap({ "x" }, "<bar>", "J")
 keymap({ "n" }, ";", "m")
 keymap({ "n" }, "m", "]", { remap = true })
 keymap({ "n" }, ",", "[", { remap = true })
-keymap({ "n" }, "<leader>k", "[", { remap = true })
-keymap({ "n" }, "<leader>j", "]", { remap = true })
 
-keymap({ "n", "v" }, "s", '"_d')
-keymap("o", "s", "d") -- ss -> _dd
-keymap("", "S", '"_D')
+keymap("", "s", "<nop>")
+keymap("", "S", "<nop>")
+keymap("x", "d", '"_d')
 
 keymap({ "n", "i" }, "<M-->", "<cmd>m .+1<CR>")
 keymap({ "n", "i" }, "<M-=>", "<cmd>m .-2<CR>")
@@ -134,8 +137,7 @@ keymap("c", "<C-b>", "<Left>")
 keymap("c", "<C-a>", "<Home>")
 
 -- save
-keymap({ "n", "v" }, "<M-s>", vim.cmd.write)
-keymap("i", "<M-s>", function()
+keymap({ "n", "i", "v" }, "<M-s>", function()
     vim.cmd.stopinsert()
     vim.cmd.write()
 end)
@@ -145,6 +147,21 @@ keymap("n", "<leader>,", function()
     vim.fn.setreg("/", vim.fn.expand("<cword>"))
     o.hlsearch = true
 end)
+
+-- change dir
+keymap("n", "cdb", "<cmd>lcd %:h<bar>verbose pwd<cr>")
+keymap("n", "cdg", function()
+    local dir = vim.fs.root(vim.fn.expand("%"), ".git")
+    vim.cmd.lcd(dir)
+    vim.notify("lcd: " .. dir, vim.log.levels.WARN)
+end)
+keymap("n", "cdu", "<cmd>lcd ..<bar>verbose pwd<cr>")
+keymap("n", "cd-", "<cmd>lcd -<bar>verbose pwd<cr>")
+
+-- format
+keymap("n", "gqax", "<cmd>%!tidy -q -i -xml -utf8<cr>")
+keymap("n", "gqah", "<cmd>%!tidy -q -i -ashtml -utf8<cr>")
+keymap("n", "gqaj", "<cmd>%!python3 -m json.tool<cr>")
 
 --- command
 
@@ -161,7 +178,7 @@ command("Bufpwd", function(args)
     vim.notify(message, vim.log.levels.WARN)
 end, { bang = true })
 
-command("Fjson", "%!python3 -m json.tool", {})
+local scratch_file
 
 command("S", function(args)
     local dir = vim.fs.joinpath(vim.fn.stdpath("state"), "scratch")
@@ -172,20 +189,29 @@ command("S", function(args)
 
     if args.bang then
         vim.cmd.edit(dir)
+        return
+    end
+
+    local edit = function(file)
+        vim.cmd.edit(file)
+
+        local scratch_buf = vim.api.nvim_get_current_buf()
+
+        keymap("n", "<localleader>d", function()
+            vim.api.nvim_buf_delete(scratch_buf, { force = true })
+            vim.fs.rm(file, { force = true })
+        end, { buf = scratch_buf })
+    end
+
+    if scratch_file and (not args.args or args.args == "") then
+        edit(scratch_file)
+        return
     end
 
     local ext = args.args and args.args ~= "" and args.args or "lua"
 
-    local scratch_file = vim.fs.joinpath(dir, os.date("%B_%d_%I_%M_%S") .. "." .. ext)
-
-    vim.cmd.edit(scratch_file)
-
-    local scratch_buf = vim.api.nvim_get_current_buf()
-
-    keymap("n", "<localleader>d", function()
-        vim.api.nvim_buf_delete(scratch_buf, { force = true })
-        vim.fs.rm(scratch_file, { force = true })
-    end, { buf = scratch_buf })
+    scratch_file = vim.fs.joinpath(dir, os.date("%B_%d_%I_%M_%S") .. "." .. ext)
+    edit(scratch_file)
 end, { nargs = "?", bang = true })
 
 ------------------------------------------------------------------------------
@@ -200,3 +226,87 @@ ok, _ = pcall(vim.cmd.so, "~/.local/state/matsu/colo.vim")
 if not ok then
     vim.cmd.colo("retrobox")
 end
+
+require("vim._core.ui2").enable({ msg = { target = "cmd" } })
+
+keymap("", "<leader>y", [["+y]])
+keymap("", "'", "`")
+keymap("n", "sn", "<cmd>tab split<cr>")
+keymap("n", "sj", "gt")
+keymap("n", "sk", "gT")
+
+keymap("n", "so", function()
+    if vim.v.count and vim.v.count > 0 then
+        vim.fn.setqflist({})
+        return
+    end
+
+    local has_quickfix = false
+
+    for _, win in ipairs(vim.fn.getwininfo()) do
+        if win.quickfix == 1 then
+            has_quickfix = true
+            break
+        end
+    end
+
+    if has_quickfix then
+        vim.cmd("cclose")
+    else
+        vim.cmd("copen")
+    end
+end)
+
+keymap("n", "sO", function()
+    if vim.v.count and vim.v.count > 0 then
+        vim.fn.setloclist(0, {})
+        return
+    end
+
+    local has_loclist = false
+
+    for _, win in ipairs(vim.fn.getwininfo()) do
+        if win.loclist == 1 then
+            has_loclist = true
+            break
+        end
+    end
+
+    if has_loclist then
+        vim.cmd("lclose")
+    else
+        vim.cmd("lopen")
+    end
+end)
+
+keymap("t", "<C-[>", [[<C-\><C-N>]])
+keymap("t", "<Esc>", "<Esc>") -- Map ESC to ESC, so we have a way to send literal ESC.
+
+keymap({ "i", "c" }, "<m-/>", "<c-r>=expand('%:.:h', 1)<cr>")
+keymap({ "i", "c" }, "<c-r>?", "<c-r>=substitute(getreg('/'), '[<>\\]', '', 'g')<cr>")
+keymap({ "i", "c" }, "<c-r>b", "<c-r>=fnamemodify(@%, ':t')<cr>")
+
+keymap("n", "/", "ms/")
+keymap("n", "\\c", "ms:<c-u>lvimgrep // % <bar>lw<s-left><left><left><left><left>")
+keymap("n", "\\v", "mS:<c-u>noau vimgrep /C/j **<left><left><left><left><left>")
+keymap(
+    "n",
+    "\\b",
+    [[mS:<c-u>cexpr []<bar>exe 'bufdo silent! noau vimgrepadd/\C/j %'<bar>botright copen<s-left><s-left><left><left><left>]]
+)
+keymap("", "mm", "v:count ? ':<c-u>'.v:count.'buffer<cr>' : ':set nomore<bar>ls<bar>set more<cr>:buffer<space>'", { expr = true })
+keymap("c", "<BS>", "(getcmdtype() =~ '[/?]' && getcmdline() == '') ? '\\v^(()@!.)*$<Left><Left><Left><Left><Left><Left><Left>' : '<BS>'")
+
+local neogit = require("neogit")
+
+neogit.setup({
+    disable_line_numbers = false,
+    mappings = {
+        status = {
+            ["s"] = false,
+            ["S"] = false,
+            ["o"] = "Stage",
+            ["O"] = "StageUnstaged",
+        },
+    },
+})

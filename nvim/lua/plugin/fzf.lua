@@ -17,6 +17,7 @@ local ivy = {
                 -- see man fzf，none 会无边距，设置border并将颜色设置为背景色
                 return "sharp"
             else
+                -- return { "┌", "─", "┐", "│", "┘", "─", "└", "│" }
                 return { "─", "─", "─", " ", " ", " ", " ", " " }
             end
         end,
@@ -29,6 +30,35 @@ local ivy = {
         },
     },
 }
+
+local telescope = {
+    title = false,
+    title_flags = false,
+    height = 0.73,
+    width = 0.73,
+    row = 0.4,
+    col = 0.5,
+    backdrop = 100,
+    border = "single",
+    treesitter = { enabled = false },
+    preview = {
+        border = function(_, m)
+            if m.type == "fzf" then
+                return "sharp"
+            else
+                return "single"
+            end
+        end,
+        layout = "horizontal",
+        horizontal = "right:50%",
+        title = false,
+        scrollbar = false,
+        winopts = {
+            cursorline = false,
+        },
+    },
+}
+
 local dropdown = function(opts)
     opts = opts or {}
     local winopts = {
@@ -38,15 +68,16 @@ local dropdown = function(opts)
         row = 0.4,
         col = 0.5,
         backdrop = 100,
-        border = { "─", "─", "─", " ", "─", "─", "─", " " },
+        --{ "─", "─", "─", " ", "─", "─", "─", " " },
+        -- [ "╔", "═" ,"╗", "║", "╝", "═", "╚", "║" ].
+        border = { "═", "═", "═", " ", "═", "═", "═", " " },
         treesitter = { enabled = false },
         preview = {
             border = function(_, m)
                 if m.type == "fzf" then
-                    -- see man fzf，none 会无边距，设置border并将颜色设置为背景色
                     return "sharp"
                 else
-                    return { "─", "─", "─", " ", "─", "─", "─", " " }
+                    return { "═", "═", "═", " ", "═", "═", "═", " " }
                 end
             end,
             layout = "horizontal",
@@ -128,9 +159,11 @@ fzflua.setup({
         git_icons = true,
         previewer = false,
         cwd_prompt = false,
+        winopts = telescope,
     },
     oldfiles = {
         previewer = false,
+        winopts = telescope,
     },
     colorschemes = {
         live_preview = false,
@@ -138,7 +171,7 @@ fzflua.setup({
     },
     buffers = {
         previewer = false,
-        winopts = dropdown(),
+        winopts = telescope,
     },
     keymaps = {
         winopts = {
