@@ -281,7 +281,7 @@ local function render_stl()
 end
 
 ---========================================================================
--- topbar
+-- tabline
 ---========================================================================
 -- 包裹 click 函数：%{id}@v:lua.{handler}@ ... %X
 local function clickable(handler, id, text)
@@ -373,7 +373,7 @@ local function concat_range(items, first, last)
 end
 
 local function render_tab(tab, current_tabid)
-    local name_hl = tab.tabid == current_tabid and set_hl("MatsuLineB", true) or set_hl("TabLine")
+    local name_hl = tab.tabid == current_tabid and set_hl("MatsuLineA", true) or set_hl("TabLine")
     local name = get_tab_name(tab)
     local label = state.show_labels and tab.label or " "
     local display = {
@@ -395,6 +395,7 @@ local function render_tab(tab, current_tabid)
     if vim.bo[bufnr].filetype == "alpha" then
         state.tab_names[tab.tabid] = ""
         str = ""
+        width = 0
     end
 
     return { str = str, width = width, is_active = tab.tabid == current_tabid }
@@ -431,40 +432,48 @@ local function render_tabs(max_width)
     if #items == 0 then
         return "", 0
     end
-    if total <= max_width then
-        return concat_range(items, 1, #items), total
+
+    local left_padding, right_padding = "   ", "   "
+    local left_marker, right_marker = "  ", "  "
+    local outer_width = fn.strdisplaywidth(left_padding) + fn.strdisplaywidth(right_padding)
+
+    if total + outer_width <= max_width then
+        return table.concat({ left_padding, "%<", concat_range(items, 1, #items), right_padding }), max_width
     end
 
-    ---@diagnostic disable-next-line
-    local budget = math.max(0, max_width - fn.strdisplaywidth("  "))
     local first, last = active_idx, active_idx
     local used = items[active_idx].width
+    local function edge_width(first_idx, last_idx)
+        local left = first_idx > 1 and left_marker or left_padding
+        local right = last_idx < #items and right_marker or right_padding
+        return fn.strdisplaywidth(left) + fn.strdisplaywidth(right)
+    end
 
     local grew = true
     while grew do
         grew = false
-        if last < #items and used + items[last + 1].width <= budget then
+        if last < #items and used + items[last + 1].width + edge_width(first, last + 1) <= max_width then
             last = last + 1
             used = used + items[last].width
             grew = true
         end
-        if first > 1 and used + items[first - 1].width <= budget then
+        if first > 1 and used + items[first - 1].width + edge_width(first - 1, last) <= max_width then
             first = first - 1
             used = used + items[first].width
             grew = true
         end
     end
 
-    local head = ""
-    if first > 1 then
-        head = set_hl("Comment") .. "  "
-    end
+    local left_text = first > 1 and left_marker or left_padding
+    local head = first > 1 and (set_hl("Comment") .. left_text) or left_text
+    local trail = right_padding
 
-    local trail = ""
     if last < #items then
-        ---@diagnostic disable-next-line
-        local padding = math.max(0, max_width - fn.strdisplaywidth(head) - used - fn.strdisplaywidth(""))
-        trail = set_hl("Comment") .. string.rep(" ", padding) .. ""
+        local padding = math.max(
+            0,
+            max_width - fn.strdisplaywidth(left_text) - used - fn.strdisplaywidth(right_marker)
+        )
+        trail = set_hl("Comment") .. string.rep(" ", padding) .. right_marker
     end
 
     return table.concat({ head, "%<", concat_range(items, first, last), trail }), max_width
@@ -482,9 +491,7 @@ end
 -------------------- Topbar --------------------
 
 local function render_tb()
-    local available = math.max(0, vim.o.columns - 6)
-    local tab_str = render_tabs(available)
-    return table.concat({ "   ", tab_str, "   " })
+    return render_tabs(vim.o.columns)
 end
 
 -------------------- Jump --------------------
@@ -523,7 +530,6 @@ local function apply_highlights()
     link_if_unset("MatsuLineC", "Added")
     link_if_unset("MatsuLineD", "Removed")
 
-    api.nvim_set_hl(0, "TopBarStatus", { fg = "green" })
     api.nvim_set_hl(0, "MatsuLineBold", { bold = true })
     api.nvim_set_hl(0, "TabLine", { bold = false })
     api.nvim_set_hl(0, "TabLineSel", { link = "TabLine" })
