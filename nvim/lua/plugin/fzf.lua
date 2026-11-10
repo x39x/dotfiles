@@ -174,15 +174,15 @@ fzflua.setup({
     },
 })
 
-keymap("n", "<leader>ff", FzfLua.files)
-keymap("n", "<leader>fh", FzfLua.oldfiles)
-keymap("n", "<leader>fp", FzfLua.zoxide)
-keymap("n", "<Leader>fr", FzfLua.builtin)
-keymap("n", "<leader>fl", FzfLua.live_grep)
-keymap("n", "<Leader>fs", FzfLua.colorschemes)
-keymap("n", "<Leader>fm", FzfLua.marks)
-keymap("n", "<Leader>fe", FzfLua.resume)
-keymap("n", "<Leader>b", FzfLua.buffers)
+keymap("n", "sf", FzfLua.files)
+keymap("n", "sh", FzfLua.oldfiles)
+keymap("n", "sp", FzfLua.zoxide)
+keymap("n", "sr", FzfLua.builtin)
+keymap("n", "sl", FzfLua.live_grep)
+keymap("n", "sx", FzfLua.colorschemes)
+keymap("n", "sm", FzfLua.marks)
+keymap("n", "se", FzfLua.resume)
+keymap("n", "ss", FzfLua.buffers)
 
 fzflua.register_ui_select({ winopts = dropdown() })
 

@@ -123,7 +123,12 @@ autocmd("LspAttach", {
 
         keymap("n", "gA", vim.diagnostic.setloclist, { buf = bufnr })
 
-        keymap("n", "<leader>ga", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
+        keymap("n", "<leader>da", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
+
+        keymap("n", "<leader>dl", function()
+            vim.diagnostic.config({ virtual_lines = not vim.diagnostic.config().virtual_lines })
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, { buf = bufnr, desc = "Toggle verbose diagnostics and inlay_hints." })
 
         if FzfLua then
             keymap("n", "gd", FzfLua.lsp_definitions, { buf = bufnr })

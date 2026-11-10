@@ -15,7 +15,8 @@ id_rsa
 .cargo
 .rustup
 .next
-.vscode
+.codex
+.pi
 .idea
 .tmux
 

@@ -72,7 +72,7 @@ api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
-api.nvim_create_user_command("F", function()
+vim.keymap.set({ "n", "x" }, "F", function()
     conform.format({
         bufnr = api.nvim_win_get_buf(0),
         async = true,
@@ -84,8 +84,7 @@ api.nvim_create_user_command("F", function()
             end
         end
     end)
-end, { desc = "Format" })
-vim.keymap.set({ "n", "x" }, "<M-f>", vim.cmd.F, { desc = "format file" })
+end, { desc = "format" })
 
 api.nvim_create_user_command("Fdisable", function(args)
     if args.bang then
