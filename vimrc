@@ -1,20 +1,24 @@
 syn on
 filetype plugin indent on
-set nu si hls is ic scs
-set ttimeout ttyfast ttimeoutlen=1 "esc delay
-set et ts=8 sw=4 ls=2 ru
-set list lcs=tab:»··,trail:· fcs=eob:\ 
-ino jk <ESC>
-no H ^
-no L g_
-no <bar> J
-no K k
-no J j
-let mapleader = "\<Space>"
-nno <leader>, :let @/ = '<c-r><c-w>' \| set hls<CR>
-nno <C-l> :nohl<CR>
-"dark: retrobox koehler, light: delek
+
+set nu
+set si
+set hls is ic scs
+set et sts=-1 sw=4
+set list lcs=tab:»··,trail:·
+set fcs=eob:\ 
+set bo=all " belloff
 set bg=dark
-colo retrobox 
+
+colo retrobox "koehler delek
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
+let mapleader = "\<Space>"
+
+no H ^
+no L g_
+no J j
+no <bar> J
+ino jk <ESC>
+nno <C-l> :nohl<CR>
+nno <leader>, :let @/ = '<c-r><c-w>' \| set hls<CR>
