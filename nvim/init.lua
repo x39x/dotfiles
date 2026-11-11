@@ -131,14 +131,14 @@ keymap("x", "<", "<gv")
 keymap("x", ">", ">gv")
 
 --- cmd edit
-keymap("c", "<C-p>", "<Up>")
-keymap("c", "<C-n>", "<Down>")
+keymap("c", "<C-k>", "<Up>")
+keymap("c", "<C-j>", "<Down>")
 keymap("c", "<C-f>", "<Right>")
 keymap("c", "<C-b>", "<Left>")
 keymap("c", "<C-a>", "<Home>")
 
 --- complete
-keymap("i", "<C-l>", function()
+keymap({ "i", "c" }, "<C-l>", function()
     return tonumber(vim.fn.pumvisible()) ~= 0 and "<C-y>" or "<C-l>"
 end, { expr = true })
 

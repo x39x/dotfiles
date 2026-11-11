@@ -34,7 +34,7 @@
 --  mason lua-language-server
 --------------------------------------------------------------
 --- spell
---  mason typos/codespell
+--  mason typos
 --  mason harper: grammar checker
 -- ===========================================================
 
@@ -70,13 +70,11 @@ vim.diagnostic.config({
 })
 
 local servers = {
-    "typos",
     -- "luals",
     "emmyluals",
 
     "gopls",
     "rust_analyzer",
-    "cmake",
     "clangd",
     "ruff",
     "ty",

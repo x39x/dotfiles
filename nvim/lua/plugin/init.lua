@@ -18,6 +18,7 @@ vim.pack.add({
     "https://github.com/rafamadriz/friendly-snippets",
     -- tools
     "https://github.com/stevearc/conform.nvim",
+    "https://github.com/mfussenegger/nvim-lint",
     "https://github.com/stevearc/overseer.nvim",
     "https://github.com/neogitorg/neogit",
     "https://github.com/lewis6991/gitsigns.nvim",
@@ -29,12 +30,18 @@ local keymap = vim.keymap.set
 local usercmd = vim.api.nvim_create_user_command
 
 ------------------------------------------------------------------
---- search / format  / treesitter
+--- search / lint / format  / treesitter
 ------------------------------------------------------------------
 
 require("plugin.conform")
 require("plugin.treesitter")
 require("plugin.fzf")
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        require("lint").try_lint("typos")
+    end,
+})
 
 ------------------------------------------------------------------
 --- tasks/runner
