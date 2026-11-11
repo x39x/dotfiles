@@ -188,7 +188,8 @@ keymap(
 )
 
 --- terminal
-keymap("t", "<C-]>", [[<C-\><C-N>]])
+keymap("t", "<C-[>", [[<C-\><C-N>]])
+keymap("t", "<Esc>", "<Esc>") -- Map ESC to ESC, so we have a way to send literal ESC.
 
 --- useless sS
 keymap("", "s", "<nop>")
