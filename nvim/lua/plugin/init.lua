@@ -1,7 +1,6 @@
 vim.pack.add({
     "https://github.com/nvim-tree/nvim-web-devicons",
     "https://github.com/kylechui/nvim-surround",
-    "https://github.com/windwp/nvim-autopairs",
     "https://github.com/ibhagwan/fzf-lua",
     -- treesitter
     "https://github.com/nvim-treesitter/nvim-treesitter",
@@ -76,12 +75,6 @@ require("mini.align").setup({
     },
 })
 
---- autopairs
-require("nvim-autopairs").setup({
-    disable_filetype = { "TelescopePrompt", "fzf" },
-    enable_check_bracket_line = false,
-})
-
 --- mason
 require("mason").setup({
     ui = {
@@ -152,6 +145,9 @@ keymap({ "o", "x" }, "f", function()
     vim.fn.setreg("/", "")
 end)
 
+------------------------------------------------------------------
+--- Git
+------------------------------------------------------------------
 --- gitsigns
 require("gitsigns").setup({
     signs = {
@@ -190,17 +186,53 @@ require("gitsigns").setup({
                 gitsigns.nav_hunk("prev")
             end
         end)
+
         map("n", "<leader>gq", gitsigns.setqflist, { desc = "gitsigns  setqflist" })
         map("n", "<leader>gQ", function()
             gitsigns.setqflist("all")
         end, { desc = "gitsigns  setqflist all" })
-        map("n", "<leader>gp", gitsigns.preview_hunk_inline, { desc = "gitsigns  preview_hunk_inline" })
-        map("n", "<leader>gb", gitsigns.toggle_current_line_blame, { desc = "gitsigns  toggle_current_line_blame" })
-
         map("n", "<leader>gl", gitsigns.toggle_signs, { desc = "gitsigns  toggle_signs" })
         map("n", "<leader>gL", gitsigns.toggle_linehl, { desc = "gitsigns  toggle_linehl" })
+
+        map("n", "<leader>gb", function()
+            gitsigns.blame_line({ full = true })
+        end)
+        map("n", "<leader>gB", gitsigns.toggle_current_line_blame, { desc = "gitsigns  toggle_current_line_blame" })
+
+        map("n", "<leader>gp", gitsigns.preview_hunk_inline, { desc = "gitsigns  preview_hunk_inline" })
+        map("n", "<leader>gP", gitsigns.preview_hunk)
+        map("v", "<leader>gs", function()
+            gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end)
+        map("v", "<leader>gr", function()
+            gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end)
+        map("n", "<leader>gs", gitsigns.stage_hunk)
+        map("n", "<leader>gr", gitsigns.reset_hunk)
+        map("n", "<leader>gS", gitsigns.stage_buffer)
+        map("n", "<leader>gR", gitsigns.reset_buffer)
+        -----------------------------------=====================================
+        -----------------------------------=====================================
     end,
 })
+
+--- neogit
+local neogit = require("neogit")
+neogit.setup({
+    disable_line_numbers = false,
+    mappings = {
+        status = {
+            ["s"] = false,
+            ["S"] = false,
+            ["o"] = "Stage",
+            ["O"] = "StageUnstaged",
+        },
+    },
+})
+keymap("n", "<leader>gn", neogit.open)
+keymap("n", "<leader>gN", function()
+    neogit.open({ kind = "vsplit" })
+end)
 
 ------------------------------------------------------------------
 --- ui
@@ -265,36 +297,36 @@ require("nvim-highlight-colors").setup({
 })
 
 ------------------------------------------------------------------
---- dap
+--- unload
 ------------------------------------------------------------------
 
 vim.pack.add({
     "https://github.com/mfussenegger/nvim-dap",
     "https://github.com/igorlfs/nvim-dap-view",
-}, { load = false, confirm = false })
-
-usercmd("PaDap", function()
-    vim.cmd.packadd("nvim-dap-view")
-    vim.cmd.packadd("nvim-dap")
-    require("plugin.dapconfig")
-end, {})
-
-------------------------------------------------------------------
---- unload
-------------------------------------------------------------------
-vim.pack.add({
     "https://github.com/windwp/nvim-ts-autotag",
-    -- "https://github.com/saghen/blink.lib",
-    -- "https://github.com/saghen/blink.cmp",
 }, { load = false, confirm = false })
 
-usercmd("PaAutotag", function()
-    vim.cmd.packadd("nvim-ts-autotag")
-    require("nvim-ts-autotag").setup()
-end, {})
+usercmd("Pad", function(opts)
+    local pack = opts.args
 
--- usercmd("PaBlink", function()
--- 	vim.cmd.packadd("blink.lib")
--- 	vim.cmd.packadd("blink.cmp")
--- 	require("plugin.cmp")
--- end, {})
+    if pack == "" then
+        return
+    elseif pack == "dap" then
+        vim.cmd.packadd("nvim-dap-view")
+        vim.cmd.packadd("nvim-dap")
+        require("plugin.dapconfig")
+    elseif pack == "autotag" then
+        vim.cmd.packadd("nvim-ts-autotag")
+        require("nvim-ts-autotag").setup()
+    else
+        return
+    end
+end, {
+    nargs = "?",
+    complete = function(arglead)
+        local packs = { "dap", "autotag" }
+        return vim.tbl_filter(function(pack)
+            return pack:find("^" .. vim.pesc(arglead)) ~= nil
+        end, packs)
+    end,
+})

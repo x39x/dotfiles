@@ -215,7 +215,7 @@ keymap("n", "sl", FzfLua.live_grep)
 keymap("n", "sx", FzfLua.colorschemes)
 keymap("n", "sm", FzfLua.marks)
 keymap("n", "se", FzfLua.resume)
-keymap("n", "ss", FzfLua.buffers)
+keymap("n", "sd", FzfLua.buffers)
 
 fzflua.register_ui_select({ winopts = dropdown() })
 

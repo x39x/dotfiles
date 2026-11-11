@@ -15,16 +15,8 @@ default = [
     M("fdignore", "~/.config/fd/ignore"),
     M("ripgrep/rgignore", "~/.rgignore"),
     M("ripgrep/ripgreprc", "~/.config/ripgreprc"),
-    M("bat", "~/.config/bat/config"),
     M("yazi", "~/.config/yazi"),
     M("bottom.toml", "~/.config/bottom/bottom.toml"),
-    M(
-        "lazygit.yml",
-        utils.path_for(
-            linux="~/.config/lazygit/config.yml",
-            macos="~/Library/Application Support/lazygit/config.yml",
-        ),
-    ),
     # clangd lsp
     M(
         "clangd.yaml",

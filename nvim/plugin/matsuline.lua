@@ -338,7 +338,6 @@ local function is_temporary_tab_window(winid, bufnr)
     return api.nvim_win_get_config(winid).relative ~= ""
 end
 
---TODO:
 local function get_tab_name(tab)
     local winid = api.nvim_tabpage_get_win(tab.tabid)
     local bufnr = api.nvim_win_get_buf(winid)
@@ -347,6 +346,10 @@ local function get_tab_name(tab)
     if localdir_name then
         state.tab_names[tab.tabid] = localdir_name
         return localdir_name
+    end
+
+    if is_temporary_tab_window(winid, bufnr) then
+        return state.tab_names[tab.tabid] or ""
     end
 
     local ft = vim.bo[bufnr].filetype
@@ -359,10 +362,6 @@ local function get_tab_name(tab)
     if TBL_BT[bt] then
         state.tab_names[tab.tabid] = bt
         return bt
-    end
-
-    if is_temporary_tab_window(winid, bufnr) then
-        return state.tab_names[tab.tabid] or ""
     end
 
     local name = get_buffer_name(bufnr)
