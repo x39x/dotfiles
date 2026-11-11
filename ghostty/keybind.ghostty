@@ -3,6 +3,8 @@ keybind = super+s=esc:s
 keybind = ctrl+【=text:\x1b[
 keybind = alt+k=toggle_command_palette
 keybind = global:alt+backquote=toggle_quick_terminal
+keybind = ctrl+m=text:\x0d
+keybind = ctrl+i=text:\x09
 # basic
 keybind = super+n=new_window
 keybind = super+q=quit

@@ -16,7 +16,8 @@ local state = {
 
 local STL_FT = { fzf = true }
 local STL_BT = { help = true }
-local TBL_FT = { help = true }
+local TBL_BT = { help = true, terminal = true }
+local TBL_FT = { NeogitStatus = true }
 local TABNAME_EXCLUDED_FT = { fzf = true }
 local TABNAME_EXCLUDED_BT = { quickfix = true }
 local TAB_LABEL_CHARS = { "h", "j", "k", "l", "g", "m", "n", "f", "w", "e", "r", "u" }
@@ -349,10 +350,15 @@ local function get_tab_name(tab)
     end
 
     local ft = vim.bo[bufnr].filetype
-
     if TBL_FT[ft] then
         state.tab_names[tab.tabid] = ft
         return ft
+    end
+
+    local bt = vim.bo[bufnr].buftype
+    if TBL_BT[bt] then
+        state.tab_names[tab.tabid] = bt
+        return bt
     end
 
     if is_temporary_tab_window(winid, bufnr) then
@@ -469,10 +475,8 @@ local function render_tabs(max_width)
     local trail = right_padding
 
     if last < #items then
-        local padding = math.max(
-            0,
-            max_width - fn.strdisplaywidth(left_text) - used - fn.strdisplaywidth(right_marker)
-        )
+        ---@diagnostic disable-next-line
+        local padding = math.max(0, max_width - fn.strdisplaywidth(left_text) - used - fn.strdisplaywidth(right_marker))
         trail = set_hl("Comment") .. string.rep(" ", padding) .. right_marker
     end
 
