@@ -229,8 +229,17 @@ neogit.setup({
         },
     },
 })
-keymap("n", "<leader>gn", neogit.open)
+
+keymap("n", "<leader>gn", function()
+    if not vim.b[0].gitsigns_head or vim.b[0].gitsigns_head == "" then
+        return
+    end
+    neogit.open()
+end)
 keymap("n", "<leader>gN", function()
+    if not vim.b[0].gitsigns_head or vim.b[0].gitsigns_head == "" then
+        return
+    end
     neogit.open({ kind = "vsplit" })
 end)
 

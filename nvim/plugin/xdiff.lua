@@ -40,6 +40,10 @@ local get_revision_content = function(git_root, rev, relative_path)
 end
 
 local xdiff = function(opts)
+    if not vim.b[0].gitsigns_head or vim.b[0].gitsigns_head == "" then
+        return
+    end
+
     local rev = opts.args ~= "" and vim.trim(opts.args) or "HEAD"
 
     local file_path = vim.api.nvim_buf_get_name(0)
@@ -108,7 +112,6 @@ end
 -- TODO: branch completation /cache
 -- git for-each-ref --format='%(refname:short)' refs/heads/
 -- git for-each-ref --format='%(refname:strip=2)' refs/remotes/
+vim.api.nvim_create_user_command("Xdiff", xdiff, { nargs = "?" })
 
-vim.api.nvim_create_user_command("Xdiff", xdiff, {
-    nargs = "?",
-})
+vim.keymap.set("n", "<leader>gd", xdiff)
