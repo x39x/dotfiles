@@ -1,4 +1,4 @@
-config-file             = keybind.ghostty
+config-file             = keybind
 font-family             = IosevkaTerm Nerd Font Mono
 font-family             = Kaiti SC
 font-size               = 15
@@ -12,9 +12,9 @@ window-padding-balance  = true
 window-padding-color    = extend
 theme                   = light:light,dark:dark
 unfocused-split-opacity = 1
+mouse-hide-while-typing = true
 
 macos-option-as-alt     = true
-
 env                     = TERM_PROGRAM=ghostty
 
 # background-blur = 32
