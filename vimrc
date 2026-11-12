@@ -19,6 +19,6 @@ no H ^
 no L g_
 no J j
 no <bar> J
+nn <C-l> :nohl<CR>
+nn <leader>, :let @/ = '<c-r><c-w>' \| set hls<CR>
 ino jk <ESC>
-nno <C-l> :nohl<CR>
-nno <leader>, :let @/ = '<c-r><c-w>' \| set hls<CR>
