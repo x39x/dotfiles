@@ -58,7 +58,7 @@ o.numberwidth = 3
 o.list = true
 o.listchars = "tab:··,extends:,precedes:,trail:·,nbsp:󰌎"
 o.fillchars = "eob: ,msgsep:─,fold: ,diff:╱" -- eob: hide "~"
-o.guicursor = o.guicursor .. ",n:blinkon339-blinkoff339"
+o.guicursor = o.guicursor .. ",n:blinkon339-blinkoff339,t:ver25"
 o.cursorline = false
 -- o.cursorlineopt = "number"
 o.conceallevel = 0 -- Hide * ..., 0: no ,1: leave space, 2:hide space
@@ -159,48 +159,15 @@ keymap(
 )
 keymap("c", "<BS>", "(getcmdtype() =~ '[/?]' && getcmdline() == '') ? '\\v^(()@!.)*$<Left><Left><Left><Left><Left><Left><Left>' : '<BS>'")
 
---- change dir
-
-local function cd(count, dir)
-    count = count or 0
-    local prefix = ""
-    if count == 8 then
-        prefix = "l"
-    end
-    if count == 2 then
-        prefix = "b"
-    end
-    if count == 4 then
-        prefix = "t"
-    end
-    local cmd = tostring(prefix) .. "cd " .. dir
-    vim.cmd(cmd)
-    vim.notify(cmd, vim.log.levels.WARN)
-end
-
-keymap("n", "cdb", function()
-    cd(vim.v.count, "%:h")
-end)
-keymap("n", "cdg", function()
-    local dir = vim.fs.root(vim.fn.expand("%"), ".git")
-    cd(dir)
-end)
-keymap("n", "cdu", function()
-    cd("..")
-end)
-keymap("n", "cd-", function()
-    cd("-")
-end)
-
 --- format
 keymap("n", "gqax", "<cmd>%!tidy -q -i -xml -utf8<cr>")
 keymap("n", "gqah", "<cmd>%!tidy -q -i -ashtml -utf8<cr>")
 keymap("n", "gqaj", "<cmd>%!python3 -m json.tool<cr>")
 
 --- insert ...
-keymap({ "i", "c" }, "<m-/>", "<c-r>=expand('%:.:h', 1)<cr>")
 keymap({ "i", "c" }, "<c-r>?", "<c-r>=substitute(getreg('/'), '[<>\\]', '', 'g')<cr>")
 keymap({ "i", "c" }, "<c-r>b", "<c-r>=fnamemodify(@%, ':t')<cr>")
+keymap({ "i", "c" }, "<c-r>B", "<c-r>=expand('%:.:h', 1)<cr>")
 
 --- show buffer
 keymap(
@@ -219,7 +186,7 @@ keymap("", "s", "<nop>")
 keymap("", "S", "<nop>")
 keymap("", "sn", "<cmd>tab split<cr>")
 keymap("", "sw", "<cmd>tabc<cr>")
-keymap("", "sjalways use global mark", "gt")
+keymap("", "sj", "gt")
 keymap("", "sk", "gT")
 keymap("", "so", function()
     if vim.v.count and vim.v.count > 0 then

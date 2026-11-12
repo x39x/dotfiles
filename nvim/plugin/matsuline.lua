@@ -16,7 +16,7 @@ local state = {
 
 local STL_FT = { fzf = true }
 local STL_BT = { help = true }
-local TBL_BT = { help = true, terminal = true }
+local TBL_BT = { help = true }
 local TBL_FT = { NeogitStatus = true }
 local TABNAME_EXCLUDED_FT = { fzf = true }
 local TABNAME_EXCLUDED_BT = { quickfix = true }
@@ -284,12 +284,11 @@ end
 ---========================================================================
 -- tabline
 ---========================================================================
+
 -- 包裹 click 函数：%{id}@v:lua.{handler}@ ... %X
 local function clickable(handler, id, text)
     return string.format("%%%d@v:lua.%s@%s%%X", id, handler, text)
 end
-
--------------------- Tab --------------------
 
 local function shorten_tab_name(name)
     local len = fn.strchars(name)
@@ -299,6 +298,11 @@ local function shorten_tab_name(name)
     return name
 end
 
+---------------------------------------------------------------------------
+-- components
+---------------------------------------------------------------------------
+
+--- local dir
 local function get_localdir_name(tabnr)
     if fn.haslocaldir(-1, tabnr) == 0 then
         return nil
@@ -315,6 +319,7 @@ local function get_localdir_name(tabnr)
     return shorten_tab_name(name)
 end
 
+--- buf name
 local function get_buffer_name(bufnr)
     local path = api.nvim_buf_get_name(bufnr)
     if path == "" then
@@ -330,6 +335,41 @@ local function get_buffer_name(bufnr)
     return shorten_tab_name(name)
 end
 
+--- term name
+local shell_names = {
+    bash = true,
+    fish = true,
+}
+
+local function get_term_name(bufnr)
+    local channel = vim.bo[bufnr].channel
+    if not channel or channel <= 0 then
+        return "terminal"
+    end
+
+    local pid = fn.jobpid(channel)
+    if not pid or pid <= 0 then
+        return "terminal"
+    end
+
+    local ok, children = pcall(api.nvim_get_proc_children, pid)
+    local child_pid = ok and children and children[1]
+    if not child_pid then
+        return "terminal"
+    end
+
+    local proc_ok, process_info = pcall(api.nvim_get_proc, child_pid)
+    local name = proc_ok and process_info and process_info.name
+    if not name or shell_names[name] then
+        return "terminal"
+    end
+
+    return shorten_tab_name(name .. "[sh]")
+end
+
+---------------------------------------------------------------------------
+-- make tabline
+---------------------------------------------------------------------------
 local function is_temporary_tab_window(winid, bufnr)
     local bo = vim.bo[bufnr] or {}
     if TABNAME_EXCLUDED_FT[bo.filetype] or TABNAME_EXCLUDED_BT[bo.buftype] then
@@ -341,30 +381,32 @@ end
 local function get_tab_name(tab)
     local winid = api.nvim_tabpage_get_win(tab.tabid)
     local bufnr = api.nvim_win_get_buf(winid)
-    local localdir_name = get_localdir_name(tab.tabnr)
 
+    local localdir_name = get_localdir_name(tab.tabnr)
     if localdir_name then
         state.tab_names[tab.tabid] = localdir_name
         return localdir_name
     end
 
+    -- NOTE: 这里过滤一些浮动窗口之类的，显示缓存的名称
+    --       如果要彻底不显示某个 tab，参考 alpha 的处理
     if is_temporary_tab_window(winid, bufnr) then
         return state.tab_names[tab.tabid] or ""
     end
 
     local ft = vim.bo[bufnr].filetype
-    if TBL_FT[ft] then
-        state.tab_names[tab.tabid] = ft
-        return ft
-    end
-
     local bt = vim.bo[bufnr].buftype
-    if TBL_BT[bt] then
-        state.tab_names[tab.tabid] = bt
-        return bt
+    local name
+    if TBL_FT[ft] then
+        name = ft
+    elseif TBL_BT[bt] then
+        name = bt
+    elseif bt == "terminal" then
+        name = get_term_name(bufnr)
+    else
+        name = get_buffer_name(bufnr)
     end
 
-    local name = get_buffer_name(bufnr)
     state.tab_names[tab.tabid] = name
     return name
 end
@@ -394,7 +436,8 @@ local function render_tab(tab, current_tabid)
     local str = clickable("matsu_click_tab", tab.tabid, table.concat(display))
     local width = fn.strdisplaywidth(" " .. label .. name .. "   ")
 
-    --NOTE: 在 tabname 处理会有空格，这样处理会使存在 alpha 的tab不可见，但几乎没有这种情况，可以接受
+    --NOTE: 在 tabname 处理会有空格，这样处理会使存在 alpha 的 tab
+    --      彻底不可见，但几乎没有这种情况，可以接受
     local winid = api.nvim_tabpage_get_win(tab.tabid)
     local bufnr = api.nvim_win_get_buf(winid)
     if vim.bo[bufnr].filetype == "alpha" then
@@ -407,7 +450,9 @@ local function render_tab(tab, current_tabid)
 end
 
 -- 在 max_width 内渲染 tabs，保证当前 tab 可见并向两侧扩展
-local function render_tabs(max_width)
+local function render_tbl()
+    local max_width = vim.o.columns
+
     local current_tabid = api.nvim_get_current_tabpage()
     local tabids = api.nvim_list_tabpages()
     local tabs, live_tabids, items, active_idx, total = {}, {}, {}, 1, 0
@@ -491,14 +536,9 @@ local function click_tab(tabid, _, button)
     vim.cmd.redrawtabline()
 end
 
--------------------- Topbar --------------------
-
-local function render_tb()
-    return render_tabs(vim.o.columns)
-end
-
--------------------- Jump --------------------
-
+---------------------------------------------------------------------------
+-- jump
+---------------------------------------------------------------------------
 local function jump()
     state.show_labels = true
     vim.cmd.redrawtabline()
@@ -560,9 +600,16 @@ apply_highlights()
 _G.matsu_click_tab = click_tab
 
 vim.g.matsu_statusline = render_stl
-vim.g.matsu_topbar = render_tb
+vim.g.matsu_tabline = render_tbl
 
 vim.go.statusline = "%{%g:matsu_statusline()%}"
-vim.go.tabline = "%{%g:matsu_topbar()%}"
+vim.go.tabline = "%{%g:matsu_tabline()%}"
 
 vim.keymap.set("n", "<leader>j", jump)
+
+au({ "TermRequest", "TermResponse" }, {
+    group = aug,
+    callback = function()
+        vim.cmd.redrawtabline()
+    end,
+})
