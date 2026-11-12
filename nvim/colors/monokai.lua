@@ -118,7 +118,7 @@ hl("IncSearch", { link = "Visual" })
 hl("CurSearch", { bg = colors.red1 })
 hl("Substitute", { bg = colors.gre2 })
 
-hl("Whitespace", { fg = colors.bg2 })
+hl("Whitespace", { fg = colors.gra2 })
 hl("Conceal", { fg = colors.bg2 })
 hl("EndOfBuffer", { fg = colors.bg2 })
 hl("NonText", { fg = colors.gra1 })

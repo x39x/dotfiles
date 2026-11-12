@@ -125,7 +125,7 @@ require("ibl").setup({
     indent = {
         char = "│",
         tab_char = "│",
-        highlight = "Whitespace",
+        highlight = "Conceal",
     },
     scope = { enabled = false },
 })
