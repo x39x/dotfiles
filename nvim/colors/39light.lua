@@ -137,7 +137,7 @@ hl("IncSearch", { link = "Visual" })
 hl("CurSearch", { bg = colors.gre1 })
 hl("Substitute", { bg = colors.red1 }) --:range s///
 
-hl("Whitespace", { fg = colors.fg3 }) -- listchars
+hl("Whitespace", { fg = colors.fg4 }) -- listchars
 hl("Conceal", { fg = colors.fg4 })
 hl("EndOfBuffer", { fg = colors.fg4 })
 hl("NonText", { fg = colors.fg2 }) -- fillchar:extends: < >
@@ -211,17 +211,17 @@ hl("DiagnosticUnderlineInfo", { sp = colors.blu6, undercurl = true })
 hl("DiagnosticUnderlineHint", { sp = colors.pur0, undercurl = true })
 hl("DiagnosticUnderlineOk", { sp = colors.gre4, undercurl = true })
 
-hl("DiagnosticVirtualTextError", { sp = colors.red0, undercurl = true })
-hl("DiagnosticVirtualTextWarn", { sp = colors.bro1, undercurl = true })
-hl("DiagnosticVirtualTextInfo", { sp = colors.blu6, undercurl = true })
-hl("DiagnosticVirtualTextHint", { sp = colors.pur0, undercurl = true })
-hl("DiagnosticVirtualTextOk", { sp = colors.gre4, undercurl = true })
+hl("DiagnosticVirtualTextError", { fg = colors.red0, italic = true })
+hl("DiagnosticVirtualTextWarn", { fg = colors.bro1, italic = true })
+hl("DiagnosticVirtualTextInfo", { fg = colors.blu6, italic = true })
+hl("DiagnosticVirtualTextHint", { fg = colors.pur0, italic = true })
+hl("DiagnosticVirtualTextOk", { fg = colors.gre4, italic = true })
 
-hl("DiagnosticVirtualLinesError", { sp = colors.red0, undercurl = true })
-hl("DiagnosticVirtualLinesWarn", { sp = colors.bro1, undercurl = true })
-hl("DiagnosticVirtualLinesInfo", { sp = colors.blu6, undercurl = true })
-hl("DiagnosticVirtualLinesHint", { sp = colors.pur0, undercurl = true })
-hl("DiagnosticVirtualLinesOk", { sp = colors.gre4, undercurl = true })
+hl("DiagnosticVirtualLinesError", { fg = colors.red0 })
+hl("DiagnosticVirtualLinesWarn", { fg = colors.bro1 })
+hl("DiagnosticVirtualLinesInfo", { fg = colors.blu6 })
+hl("DiagnosticVirtualLinesHint", { fg = colors.pur0 })
+hl("DiagnosticVirtualLinesOk", { fg = colors.gre4 })
 
 hl("DiagnosticDeprecated", { sp = colors.fg1, undercurl = true })
 hl("DiagnosticUnnecessary", { sp = colors.fg1, underline = true })

@@ -104,3 +104,60 @@ api.nvim_create_user_command("Fenable", function()
 end, {
     desc = "Re-enable autoformat-on-save",
 })
+
+------------------------------------------------------------------
+--- lint
+------------------------------------------------------------------
+
+local lint = require("lint")
+
+local linters_by_ft = {
+    sh = { "shellcheck" },
+    bash = { "shellcheck" },
+    go = { "golangcilint" },
+}
+
+api.nvim_create_autocmd("BufWritePost", {
+    group = api.nvim_create_augroup("matsu.lint", { clear = true }),
+    callback = function(args)
+        local buf = args.buf
+        if not api.nvim_buf_is_valid(buf) then
+            return
+        end
+
+        local linters = { "typos" }
+        vim.list_extend(linters, linters_by_ft[vim.bo[buf].filetype] or {})
+
+        -- 使用到触发事件的 buf，避免 lint 错文件
+        api.nvim_buf_call(buf, function()
+            lint.try_lint(linters)
+        end)
+    end,
+})
+
+------------------------------------------------------------------
+--- tasks/runner
+------------------------------------------------------------------
+
+local overseer = require("overseer")
+overseer.setup({
+    form = {
+        border = "double",
+    },
+    component_aliases = {
+        default_vscode = {
+            "default",
+            "on_result_diagnostics",
+            { "on_result_diagnostics_quickfix", close = true, open = true },
+        },
+    },
+    task_list = {
+        min_height = 11,
+    },
+    template_timeout_ms = 0,
+})
+
+overseer.add_template_hook({ module = "^make.*", filetype = "c" }, function(task_defn, util)
+    util.add_component(task_defn, { "on_output_parse", problem_matcher = "$gcc" })
+    util.add_component(task_defn, { "on_result_diagnostics_quickfix", close = true, open = true })
+end)

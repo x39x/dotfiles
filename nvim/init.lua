@@ -160,14 +160,37 @@ keymap(
 keymap("c", "<BS>", "(getcmdtype() =~ '[/?]' && getcmdline() == '') ? '\\v^(()@!.)*$<Left><Left><Left><Left><Left><Left><Left>' : '<BS>'")
 
 --- change dir
-keymap("n", "cdb", "<cmd>lcd %:h<bar>verbose pwd<cr>")
+
+local function cd(count, dir)
+    count = count or 0
+    local prefix = ""
+    if count == 8 then
+        prefix = "l"
+    end
+    if count == 2 then
+        prefix = "b"
+    end
+    if count == 4 then
+        prefix = "t"
+    end
+    local cmd = tostring(prefix) .. "cd " .. dir
+    vim.cmd(cmd)
+    vim.notify(cmd, vim.log.levels.WARN)
+end
+
+keymap("n", "cdb", function()
+    cd(vim.v.count, "%:h")
+end)
 keymap("n", "cdg", function()
     local dir = vim.fs.root(vim.fn.expand("%"), ".git")
-    vim.cmd.lcd(dir)
-    vim.notify("lcd: " .. dir, vim.log.levels.WARN)
+    cd(dir)
 end)
-keymap("n", "cdu", "<cmd>lcd ..<bar>verbose pwd<cr>")
-keymap("n", "cd-", "<cmd>lcd -<bar>verbose pwd<cr>")
+keymap("n", "cdu", function()
+    cd("..")
+end)
+keymap("n", "cd-", function()
+    cd("-")
+end)
 
 --- format
 keymap("n", "gqax", "<cmd>%!tidy -q -i -xml -utf8<cr>")
