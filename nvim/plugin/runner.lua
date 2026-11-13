@@ -1,255 +1,53 @@
 ------------------------------------------------------------------
---- cache
+--- terminal cache
 ------------------------------------------------------------------
 
-local CACHE = {}
+local terminal_channel
 
-local function remember(cmd, target)
-    CACHE.all = type(CACHE.all) == "table" and CACHE.all or {}
-
-    if not vim.tbl_contains(CACHE.all, cmd) then
-        table.insert(CACHE.all, cmd)
-    end
-
-    CACHE.last = {
-        cmd = cmd,
-        target = target,
-    }
-end
-
-------------------------------------------------------------------
---- tmux
-------------------------------------------------------------------
-
-local function tmux(args)
-    local result = vim.system(vim.list_extend({ "tmux" }, args), {
-        text = true,
-    }):wait()
-
-    if result.code ~= 0 then
-        vim.notify(vim.trim(result.stderr or "") ~= "" and result.stderr or "tmux command failed", vim.log.levels.ERROR)
-        return nil
-    end
-
-    return vim.trim(result.stdout or "")
-end
-
-local function tmux_win(target_name, cmd)
-    local windows = tmux({
-        "list-windows",
-        "-F",
-        "#{window_name}",
-    })
-
-    if not windows then
-        return false
-    end
-
-    if not vim.tbl_contains(vim.split(windows, "\n"), "runner") then
-        if not tmux({ "new-window", "-n", "runner" }) then
-            return false
-        end
-        -- 第一次不运行，确认目录
-        return true
-    end
-
-    local status = tmux({
-        "send-keys",
-        "-t",
-        target_name,
-        "C-u",
-        cmd,
-        "Enter",
-    })
-
-    tmux({ "select-window", "-t", target_name })
-
-    return status ~= nil
-end
-
-local function run_tmux(cmd, target)
-    local session = tmux({ "display-message", "-p", "#{session_id}" })
-    if not session then
-        return false
-    end
-
-    local target_name = session .. ":runner"
-
-    if target == "window" then
-        return tmux_win(target_name, cmd)
-    end
-
-    -- pane: send command to pane 1 of the current window
-    local window = tmux({ "display-message", "-p", "#{window_id}" })
-    if not window then
-        return false
-    end
-
-    local panes = tmux({
-        "list-panes",
-        "-t",
-        window,
-        "-F",
-        "#{pane_index}",
-    })
-
-    if not panes then
-        return false
-    end
-
-    -- bug: 有时会 focus 到 runner pane
-    local nvim_paneid = tmux({ "display-message", "-p", "#{pane_index}" })
-    if not nvim_paneid then
-        return false
-    end
-
-    if not vim.tbl_contains(vim.split(panes, "\n"), "1") then
-        if
-            not tmux({
-                "split-window",
-                "-h",
-                "-p",
-                "30",
-                "-t",
-                window,
-            })
-        then
-            return false
-        end
-
-        -- back to nvim pane
-        tmux({ "select-pane", "-t", nvim_paneid })
-        -- 第一次不运行，确认目录
-        return true
-    end
-
-    local pane_target = window .. ".1"
-
-    local status = tmux({
-        "send-keys",
-        "-t",
-        pane_target,
-        "C-u",
-        cmd,
-        "Enter",
-    })
-
-    -- back to nvim pane
-    tmux({ "select-pane", "-t", nvim_paneid })
-
-    return status ~= nil
-end
-
-------------------------------------------------------------------
---- get tmux cmd/target
-------------------------------------------------------------------
-
-local Tmux = {}
-
-local function choose_target(callback)
-    vim.ui.select({ "pane", "window" }, {
-        prompt = "Run in: ",
-    }, function(target)
-        if target then
-            callback(target)
-        end
-    end)
-end
-
-local function execute(cmd, target)
-    if run_tmux(cmd, target) then
-        remember(cmd, target)
-    end
-end
-
-function Tmux.add()
-    vim.ui.input({ prompt = "Runner add: " }, function(cmd)
-        if not cmd or cmd == "" then
-            return
-        end
-
-        choose_target(function(target)
-            execute(cmd, target)
-        end)
-    end)
-end
-
-function Tmux.select()
-    if not CACHE.all or #CACHE.all == 0 then
-        vim.notify("No commands found", vim.log.levels.INFO)
+local function cache_current_terminal()
+    local channel = vim.bo.channel
+    if not channel or channel <= 0 then
+        vim.notify("Current buffer has no terminal channel", vim.log.levels.WARN)
         return
     end
 
-    vim.ui.select(CACHE.all, {
-        prompt = "Runner: ",
-    }, function(cmd)
-        if not cmd then
-            return
-        end
-
-        choose_target(function(target)
-            execute(cmd, target)
-        end)
-    end)
+    terminal_channel = channel
+    vim.notify("channel: " .. tostring(channel), vim.log.levels.INFO)
 end
 
-function Tmux.run()
-    local last = CACHE.last
-
-    if not last then
-        return Tmux.add()
+local function run_cached_terminal()
+    if not terminal_channel then
+        return false
     end
 
-    execute(last.cmd, last.target)
-end
-
-function Tmux.clear()
-    CACHE = {}
-    vim.notify("Cleared all commands", vim.log.levels.INFO)
-end
-
---==========================
--- Commands & keymaps
---==========================
-
-vim.api.nvim_create_user_command("Tmux", function(opts)
-    local action = opts.args
-
-    if action == "" then
-        Tmux.run()
-    elseif action == "add" then
-        Tmux.add()
-    elseif action == "select" then
-        Tmux.select()
-    elseif action == "clear" then
-        Tmux.clear()
-    else
-        vim.notify("Usage: Runner [add|select|clear]", vim.log.levels.ERROR)
+    local keys = vim.api.nvim_replace_termcodes("<C-u><C-p><CR>", true, false, true)
+    local ok, err = pcall(vim.api.nvim_chan_send, terminal_channel, keys)
+    if ok then
+        return true
     end
-end, {
-    nargs = "?",
-    ---@diagnostic disable-next-line
-    complete = function(arglead, cmdline, cursorpos)
-        local actions = { "add", "select", "clear" }
-        return vim.tbl_filter(function(action)
-            return action:find("^" .. vim.pesc(arglead)) ~= nil
-        end, actions)
-    end,
-})
 
-------------------------------------------------------------------
---- runner
-------------------------------------------------------------------
-
-local selected
-local ok, overseer = pcall(require, "overseer")
-if not ok then
-    return
+    terminal_channel = nil
+    vim.notify("Cached terminal is unavailable; cache cleared: " .. tostring(err), vim.log.levels.WARN)
+    return false
 end
+
+local function clear_cache()
+    terminal_channel = nil
+    vim.notify("Runner cache cleared", vim.log.levels.INFO)
+end
+
+------------------------------------------------------------------
+--- runners
+------------------------------------------------------------------
 
 local function overseer_run()
-    local task_list = require("overseer.task_list")
+    local ok, overseer = pcall(require, "overseer")
+    if not ok then
+        vim.notify("Overseer is unavailable", vim.log.levels.WARN)
+        return
+    end
 
+    local task_list = require("overseer.task_list")
     local tasks = overseer.list_tasks({
         status = {
             overseer.STATUS.SUCCESS,
@@ -259,71 +57,58 @@ local function overseer_run()
         sort = task_list.sort_finished_recently,
     })
 
-    if vim.tbl_isempty(tasks) then
-        vim.cmd.OverseerRun()
-    else
+    if #tasks > 0 then
         overseer.run_action(tasks[1], "restart")
+    else
+        vim.cmd.OverseerRun()
     end
 end
 
-local runners = {
-    tmux = Tmux.run,
-    overseer = overseer_run,
-}
+local function open_in_browser()
+    local file = vim.api.nvim_buf_get_name(0)
+    if file ~= "" then
+        vim.cmd("silent !open -a firefox " .. vim.fn.shellescape(file))
+    end
+end
 
-local function runner()
+local function run()
+    if vim.bo.buftype == "terminal" then
+        cache_current_terminal()
+        return
+    end
+
+    if run_cached_terminal() then
+        return
+    end
+
     local ft = vim.bo.filetype
-
     if ft == "lua" then
         vim.cmd.source("%")
-        return
+    elseif ft == "markdown" or ft == "html" then
+        open_in_browser()
+    else
+        overseer_run()
     end
-
-    if ft == "markdown" or ft == "html" then
-        local file = vim.api.nvim_buf_get_name(0)
-        if file ~= "" then
-            vim.cmd("silent !open -a firefox " .. vim.fn.shellescape(file))
-        end
-        return
-    end
-
-    if selected then
-        selected()
-        return
-    end
-
-    vim.ui.select({ "overseer", "tmux" }, {
-        prompt = "Run: ",
-    }, function(choice)
-        local run = runners[choice]
-
-        if not run then
-            return
-        end
-
-        selected = run
-        run()
-    end)
 end
 
 ------------------------------------------------------------------
---- keymap
+--- keymaps
 ------------------------------------------------------------------
+
 local keymap = vim.keymap.set
 
-keymap("n", "<leader>-", runner)
-keymap("n", "<leader>_", function()
-    selected = nil
-    vim.notify("Runner cleared")
-end)
-keymap("n", "<leader>s", function()
-    require("overseer.commands")._toggle({ bang = true, direction = "bottom" })
-end, { desc = "toggle overseer" })
+keymap("n", "<leader>-", run)
+keymap("n", "<leader>_", clear_cache)
 keymap("n", "<C-,>", function()
-    require("overseer.commands")._toggle({ bang = true, direction = "bottom" })
-end, { desc = "toggle overseer" })
+    local ok, overseer = pcall(require, "overseer")
+    if not ok then
+        vim.notify("Overseer is unavailable", vim.log.levels.WARN)
+        return
+    end
 
-keymap("n", "<leader>ra", Tmux.add, { desc = "runner tmux add" })
-keymap("n", "<leader>rs", Tmux.select, { desc = "runner tmux select" })
-keymap("n", "<leader>rk", Tmux.run, { desc = "runner tmux run" })
-keymap("n", "<leader>rj", vim.cmd.OverseerRun, { desc = "runner overseer run" })
+    local tasks = overseer.list_tasks()
+
+    if #tasks > 0 then
+        require("overseer.commands")._toggle({ bang = true, direction = "bottom" })
+    end
+end)

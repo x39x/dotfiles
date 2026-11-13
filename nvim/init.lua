@@ -48,6 +48,7 @@ o.sidescrolloff = 5
 o.exrc = true -- exrc config
 o.quickfixtextfunc = "v:lua.matsu_qftf" --  quickfix textfunc
 o.virtualedit = "block"
+o.inccommand = "split"
 --
 o.showtabline = 2 -- 0: no
 o.laststatus = 3 --  global statusline
@@ -93,7 +94,8 @@ o.wildoptions = o.wildoptions .. ",fuzzy"
 keymap("i", "jk", "<esc>")
 keymap("", "<Space>", "<Nop>")
 -- discard text
-keymap("x", "d", '"_d')
+keymap("x", "d", [["_d]])
+keymap("x", "p", [["_dp]])
 -- L H
 keymap("", "L", "g_")
 keymap("", "H", "^")
