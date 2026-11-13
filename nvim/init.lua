@@ -49,6 +49,7 @@ o.exrc = true -- exrc config
 o.quickfixtextfunc = "v:lua.matsu_qftf" --  quickfix textfunc
 o.virtualedit = "block"
 o.inccommand = "split"
+o.shortmess = o.shortmess .. "c"
 --
 o.showtabline = 2 -- 0: no
 o.laststatus = 3 --  global statusline
