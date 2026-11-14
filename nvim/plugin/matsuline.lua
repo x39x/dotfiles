@@ -342,24 +342,27 @@ local shell_names = {
 }
 
 local function get_term_name(bufnr)
+    ---@type int
     local channel = vim.bo[bufnr].channel
-    if not channel or channel <= 0 then
-        return "terminal"
-    end
+    local pid = channel and channel > 0 and fn.jobpid(channel)
 
-    local pid = fn.jobpid(channel)
     if not pid or pid <= 0 then
         return "terminal"
     end
 
-    local ok, children = pcall(api.nvim_get_proc_children, pid)
-    local child_pid = ok and children and children[1]
-    if not child_pid then
-        return "terminal"
+    local function get_name(p)
+        local ok, proc = pcall(api.nvim_get_proc, p)
+        return ok and proc and proc.name
     end
 
-    local proc_ok, process_info = pcall(api.nvim_get_proc, child_pid)
-    local name = proc_ok and process_info and process_info.name
+    local name = get_name(pid)
+
+    if not name or shell_names[name] then
+        local ok, children = pcall(api.nvim_get_proc_children, pid)
+        local child_pid = ok and children and children[1]
+        name = child_pid and get_name(child_pid)
+    end
+
     if not name or shell_names[name] then
         return "terminal"
     end
@@ -407,6 +410,7 @@ local function get_tab_name(tab)
         name = get_buffer_name(bufnr)
     end
 
+    ---@diagnostic disable-next-line
     state.tab_names[tab.tabid] = name
     return name
 end
@@ -607,7 +611,7 @@ vim.go.tabline = "%{%g:matsu_tabline()%}"
 
 vim.keymap.set("n", "<leader>j", jump)
 
-au({ "TermRequest", "TermResponse" }, {
+au({ "TermRequest", "TermResponse", "TextChanged" }, {
     group = aug,
     callback = function()
         vim.cmd.redrawtabline()
