@@ -72,8 +72,8 @@ vim.diagnostic.config({
 })
 
 local servers = {
-    -- "luals",
-    "emmyluals",
+    "luals",
+    -- "emmyluals",
 
     "gopls",
     "rust_analyzer",

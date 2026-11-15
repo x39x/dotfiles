@@ -231,6 +231,11 @@ local function special_name()
     return hi .. "[No Type]"
 end
 
+local position = table.concat({
+    set_hl("MatsuLineBold"),
+    "%c:%l:%L%",
+})
+
 ---------------------------------------------------------------------------
 -- layouts
 ---------------------------------------------------------------------------
@@ -250,10 +255,8 @@ function layout.special()
         "   ",
         special_name(),
         "%<%=",
+        position,
         workdir(),
-        "   ",
-        set_hl("MatsuLineBold"),
-        "%6(%c:%L%)",
         "   ",
     })
 end
@@ -264,11 +267,9 @@ function layout.default()
         filename_block(),
         diagnostics(),
         "%<%=",
+        position,
         git(),
         workdir(),
-        "   ",
-        set_hl("MatsuLineBold"),
-        "%6(%c:%L%)",
         "   ",
     })
 end

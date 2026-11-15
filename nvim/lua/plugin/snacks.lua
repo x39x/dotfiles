@@ -71,6 +71,7 @@ local zoxide = {
         end,
     },
 }
+
 local p = {
     sources = {
         files = { layout = { preset = "vscode" } },
@@ -136,14 +137,13 @@ local p = {
             file = " ",
         },
         ui = {
-            live = "",
+            live = "",
         },
     },
 }
 
 require("snacks").setup({
     picker = p,
-    -- statuscolumn = {},
     indent = {
         indent = { hl = "Conceal" },
         animate = { enabled = false },
@@ -156,7 +156,6 @@ require("snacks").setup({
         },
     },
     scratch = {
-
         win = {
             wo = {
                 winhighlight = "Normal:Normal,NormalNC:NormalNC,FloatBorder:SnacksPickerBorder",
@@ -268,6 +267,11 @@ local function hi()
     vim.api.nvim_set_hl(0, "SnacksPickerInputCursorLine", { link = "CursorLine" })
     vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { link = "CursorLine" })
     vim.api.nvim_set_hl(0, "SnacksPickerPreviewCursorLine", { link = "CursorLine" })
+
+    if vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = "SnacksPickerBorder" })) then
+        vim.api.nvim_set_hl(0, "SnacksPickerBorder", { fg = "#6F777E", bg = "none" })
+        vim.api.nvim_set_hl(0, "SnacksPickerMatch", { fg = "#D3302F", bg = "none" })
+    end
 end
 
 local ag = vim.api.nvim_create_augroup("matsu.snacks", { clear = true })
