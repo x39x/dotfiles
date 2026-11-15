@@ -201,6 +201,10 @@ local function special_name()
         return hi .. ft
     end
 
+    if ft:match("snacks") then
+        return hi .. "Snacks"
+    end
+
     local bt = vim.bo[0].buftype
 
     -- quickfix
@@ -444,7 +448,7 @@ local function render_tab(tab, current_tabid)
     --      彻底不可见，但几乎没有这种情况，可以接受
     local winid = api.nvim_tabpage_get_win(tab.tabid)
     local bufnr = api.nvim_win_get_buf(winid)
-    if vim.bo[bufnr].filetype == "alpha" then
+    if vim.bo[bufnr].filetype == "snacks_dashboard" then
         state.tab_names[tab.tabid] = ""
         str = ""
         width = 0

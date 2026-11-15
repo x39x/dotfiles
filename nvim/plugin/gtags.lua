@@ -51,38 +51,40 @@ local function open_location(item)
     vim.api.nvim_win_set_cursor(0, { item.lnum, 0 })
 end
 
--- Send results to fzf-lua.
-local function fzf_results(results, title)
+-- Show results in Snacks Picker.
+local function picker_results(results, title)
     local entries = {}
 
     for _, item in ipairs(results) do
         entries[#entries + 1] = {
+            file = item.filename,
             filename = item.filename,
-            lnum = item.lnum,
-            text = item.text,
-            display = string.format("%s:%d: %s", item.filename, item.lnum, item.text),
+            pos = { item.lnum, 0 },
+            line = item.text,
+            text = string.format("%s:%d: %s", item.filename, item.lnum, item.text),
         }
     end
 
     if #entries == 1 then
         open_location(entries[1])
+        return
     end
 
-    require("fzf-lua").fzf_exec(entries, {
+    Snacks.picker.pick({
+        title = title,
         prompt = title .. "> ",
-        previewer = "builtin",
-        actions = {
-            ["default"] = function(selected)
-                if not selected or not selected[1] then
-                    return
-                end
+        items = entries,
+        format = "file",
+        preview = "file",
+        confirm = function(picker, item)
+            picker:close()
 
-                local entry = selected[1]
-                if type(entry) == "table" and entry.filename then
-                    open_location(entry)
-                end
-            end,
-        },
+            if item then
+                vim.schedule(function()
+                    open_location(item)
+                end)
+            end
+        end,
     })
 end
 
@@ -97,7 +99,7 @@ function M.goto_definition()
         if #results == 1 then
             open_location(results[1])
         else
-            fzf_results(results, "Definitions")
+            picker_results(results, "Definitions")
         end
     end)
 end
@@ -110,6 +112,6 @@ function M.goto_references()
     end
 
     search({ "-axr" }, word, function(results)
-        fzf_results(results, "References")
+        picker_results(results, "References")
     end)
 end

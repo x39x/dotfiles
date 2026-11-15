@@ -7,6 +7,7 @@ local colors = {
     -- base
     bg0 = "#FFFFFF",
     bg1 = "#F7F8FA",
+    bg2 = "#f0f4fc",
     fg0 = "#080808",
     fg1 = "#636363",
     fg2 = "#AEB3C2",
@@ -121,7 +122,7 @@ hl("FoldColumn", { bg = colors.bg0 })
 hl("Folded", { bg = colors.bg1 })
 hl("ColorColumn", { link = "Folded" })
 hl("CursorColumn", { link = "Folded" })
-hl("CursorLine", { bg = colors.bg1 })
+hl("CursorLine", { bg = colors.bg2 })
 hl("CursorLineFold", { link = "CursorLine" })
 hl("CursorLineSign", { link = "CursorLine" })
 hl("CursorLineNr", { link = "CursorLine" })
@@ -347,22 +348,11 @@ hl("@keyword.directive", { link = "Boolean" }) -- define ifdef in c
 hl("FlashLabel", { fg = colors.red3, bold = true })
 hl("FlashCurrent", { link = "Function" })
 hl("FlashMatch", { link = "Function" })
---- cmp
-hl("BlinkCmpKind", { fg = colors.pur0 })
---- fzf
-hl("FzfLuaBorder", { bg = colors.bg, fg = colors.fg3 })
-hl("FzfLuaTitle", { fg = colors.fg1 })
-hl("FzfSelectedFg", { fg = colors.gre4 })
-hl("FzfSelectedBg", { bg = colors.blu2 })
--- hl("FzfMatched", { fg = colors.blu1 })
---- nvimtree
-hl("NvimTreeIndentMarker", { link = "Whitespace" })
-hl("NvimTreeGitFolderDirtyHL", { fg = colors.red0 })
-hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
-hl("NvimTreeGitFileNewHL", { fg = colors.gre4 })
---- alpha
-hl("Alpha", { fg = colors.miku })
---- heirline
+--- snacks
+hl("SnacksPickerMatch", { fg = colors.red3 })
+hl("SnacksPickerBorder", { fg = colors.fg4 })
+hl("SnacksDashboardHeader", { fg = colors.miku })
+--- matsuline
 hl("MatsuLineA", { fg = colors.blu0 })
 hl("MatsuLineB", { fg = colors.pur0 })
 hl("MatsuLineC", { fg = colors.gre4 })
@@ -371,8 +361,6 @@ hl("MatsuLineD", { fg = colors.red3 })
 hl("DapBreakpointHighlight", { fg = colors.red0 })
 hl("DapStoppedHighlight", { fg = colors.gre4 })
 hl("NvimDapViewWatchUpdated", { fg = colors.red3 })
---- yazi
-hl("YaziFloatBorder", { fg = colors.fg3, bg = colors.bg0 })
 
 vim.g.terminal_color_background = colors.bg0
 vim.g.terminal_color_foreground = colors.fg0

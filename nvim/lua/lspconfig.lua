@@ -130,9 +130,9 @@ autocmd("LspAttach", {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, { buf = bufnr, desc = "Toggle verbose diagnostics and inlay_hints." })
 
-        if FzfLua then
-            keymap("n", "gd", FzfLua.lsp_definitions, { buf = bufnr })
-            keymap("n", "grr", FzfLua.lsp_references, { buf = bufnr })
+        if Snacks then
+            keymap("n", "gd", Snacks.picker.lsp_definitions, { buf = bufnr })
+            keymap("n", "grr", Snacks.picker.lsp_references, { buf = bufnr })
         else
             -- lsp has default grr
             keymap("n", "gd", vim.lsp.buf.definition, { buf = bufnr })

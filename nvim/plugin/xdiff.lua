@@ -40,11 +40,12 @@ local get_revision_content = function(git_root, rev, relative_path)
 end
 
 local xdiff = function(opts)
+    opts = opts or {}
     if not vim.b[0].gitsigns_head or vim.b[0].gitsigns_head == "" then
         return
     end
 
-    local rev = opts.args ~= "" and vim.trim(opts.args) or "HEAD"
+    local rev = opts.args and opts.args ~= "" and vim.trim(opts.args) or "HEAD"
 
     local file_path = vim.api.nvim_buf_get_name(0)
     local git_root = get_git_root(file_path)

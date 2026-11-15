@@ -1,26 +1,23 @@
 vim.pack.add({
     "https://github.com/nvim-tree/nvim-web-devicons",
     "https://github.com/kylechui/nvim-surround",
-    "https://github.com/ibhagwan/fzf-lua",
+    "https://github.com/folke/snacks.nvim",
     -- treesitter
     "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-    -- file explor
-    "https://github.com/nvim-lua/plenary.nvim",
-    "https://github.com/mikavilpas/yazi.nvim",
     -- ui
-    "https://github.com/lukas-reineke/indent-blankline.nvim",
     "https://github.com/lewis6991/satellite.nvim",
     "https://github.com/folke/todo-comments.nvim",
     -- lsp
     "https://github.com/williamboman/mason.nvim",
     "https://github.com/rafamadriz/friendly-snippets",
-    -- tools
+    -- git
+    "https://github.com/neogitorg/neogit",
+    "https://github.com/lewis6991/gitsigns.nvim",
+    --
     "https://github.com/stevearc/conform.nvim",
     "https://github.com/mfussenegger/nvim-lint",
     "https://github.com/stevearc/overseer.nvim",
-    "https://github.com/neogitorg/neogit",
-    "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/folke/flash.nvim",
     "https://github.com/nvim-mini/mini.align",
 }, { confirm = false })
@@ -28,15 +25,10 @@ vim.pack.add({
 local keymap = vim.keymap.set
 
 require("plugin.treesitter")
-require("plugin.fzf")
-require("plugin.git")
+require("plugin.snacks")
 require("plugin.lazy")
---- format / lint / task
 require("plugin.flt")
-
-------------------------------------------------------------------
---- tools
-------------------------------------------------------------------
+require("plugin.git")
 
 --- align
 require("mini.align").setup({
@@ -53,30 +45,6 @@ require("mason").setup({
         border = "double",
     },
 })
-
---- yazi
-require("yazi").setup({
-    open_for_directories = true,
-    yazi_floating_window_border = "double",
-    highlight_hovered_buffers_in_same_directory = false,
-    keymaps = {
-        open_file_in_horizontal_split = "<c-s>",
-        grep_in_directory = "<c-x>",
-        replace_in_directory = false,
-        change_working_directory = "<c-g>",
-    },
-    integrations = {
-        grep_in_directory = "fzf-lua",
-        grep_in_selected_files = "fzf-lua",
-    },
-})
-keymap("n", "<leader>m", require("yazi").yazi)
-keymap("n", "<leader>n", function()
-    local cwd = vim.uv.cwd()
-    if cwd ~= nil then
-        require("yazi").yazi({}, cwd)
-    end
-end)
 
 --- flash
 local flash = require("flash")
@@ -116,20 +84,6 @@ keymap({ "o", "x" }, "f", function()
     vim.fn.setreg("/", "")
 end)
 
-------------------------------------------------------------------
---- ui
-------------------------------------------------------------------
-
---- indent line
-require("ibl").setup({
-    indent = {
-        char = "│",
-        tab_char = "│",
-        highlight = "Conceal",
-    },
-    scope = { enabled = false },
-})
-
 --- todo
 require("todo-comments").setup({
     keywords = {
@@ -147,6 +101,7 @@ require("satellite").setup({
     winblend = 100,
     excluded_filetypes = {
         "quickfix",
+        "snacks_picker_list",
     },
     handlers = {
         gitsigns = {

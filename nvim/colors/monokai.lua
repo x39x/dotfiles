@@ -319,27 +319,17 @@ hl("@variable.parameter.vimdoc", { fg = colors.gre0 })
 --- custom
 hl("@keyword.directive", { link = "Number" })
 
--- NOTE: plug
+-- NOTE: plugin
 
 --- flash
 hl("FlashLabel", { fg = colors.gre4, bold = true })
 hl("FlashCurrent", { link = "Function" })
 hl("FlashMatch", { link = "Function" })
---- cmp
-hl("BlinkCmpKind", { fg = colors.pur0 })
---- fzf
-hl("FzfLuaBorder", { bg = colors.bg0, fg = colors.gra2 })
-hl("FzfLuaTitle", { fg = colors.fg1 })
-hl("FzfSelectedFg", { fg = colors.gre1 })
-hl("FzfSelectedBg", { bg = colors.bg0 })
---- nvimtree
-hl("NvimTreeIndentMarker", { link = "Whitespace" })
-hl("NvimTreeGitFolderDirtyHL", { fg = colors.red0 })
-hl("NvimTreeGitFileDirtyHL", { link = "NvimTreeGitFolderDirtyHL" })
-hl("NvimTreeGitFileNewHL", { fg = colors.gre1 })
---- alpha
-hl("Alpha", { fg = colors.red0 })
---- line
+--- snacks
+hl("SnacksPickerMatch", { fg = colors.gre1 })
+hl("SnacksPickerBorder", { fg = colors.gra2 })
+hl("SnacksDashboardHeader", { fg = colors.miku })
+--- matsuline
 hl("MatsuLineA", { fg = colors.blu0 })
 hl("MatsuLineB", { fg = colors.pur0 })
 hl("MatsuLineC", { fg = colors.gre1 })
@@ -348,8 +338,6 @@ hl("MatsuLineD", { fg = colors.red0 })
 hl("DapBreakpointHighlight", { fg = colors.red0 })
 hl("DapStoppedHighlight", { fg = colors.gre1 })
 hl("NvimDapViewWatchUpdated", { fg = colors.red0 })
---- yazi
-hl("YaziFloatBorder", { fg = colors.fg2, bg = colors.bg0 })
 
 -- NOTE: term
 vim.g.terminal_color_background = colors.bg0

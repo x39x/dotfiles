@@ -16,7 +16,7 @@ local on_init = function(client)
             },
         },
         diagnostics = {
-            globals = { "MiniBufremove", "FzfLua" },
+            globals = { "Snacks" },
         },
         -- Make the server aware of Neovim runtime files
         workspace = {
