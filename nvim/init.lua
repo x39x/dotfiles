@@ -208,10 +208,13 @@ keymap("", "so", function()
 
     if has_quickfix then
         vim.cmd("cclose")
-    else
+    elseif #(vim.fn.getqflist() or {}) > 0 then
         vim.cmd("copen")
+    else
+        vim.notify("no qflist")
     end
 end)
+
 keymap("n", "sO", function()
     if vim.v.count and vim.v.count > 0 then
         vim.fn.setloclist(0, {})
@@ -229,8 +232,10 @@ keymap("n", "sO", function()
 
     if has_loclist then
         vim.cmd("lclose")
-    else
+    elseif #(vim.fn.getloclist(0) or {}) > 0 then
         vim.cmd("lopen")
+    else
+        vim.notify("no loclist")
     end
 end)
 

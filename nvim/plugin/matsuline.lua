@@ -615,9 +615,26 @@ vim.go.tabline = "%{%g:matsu_tabline()%}"
 
 vim.keymap.set("n", "<leader>j", jump)
 
-au({ "TermRequest", "TermResponse", "TextChanged" }, {
+local term_redraw_timer = vim.uv.new_timer()
+local term_redraw_generation = 0
+
+au({ "TermRequest", "TermResponse" }, {
     group = aug,
     callback = function()
-        vim.cmd.redrawtabline()
+        term_redraw_generation = term_redraw_generation + 1
+        local generation = term_redraw_generation
+
+        if not term_redraw_timer then
+            return
+        end
+
+        term_redraw_timer:stop()
+        term_redraw_timer:start(139, 0, function()
+            vim.schedule(function()
+                if generation == term_redraw_generation then
+                    vim.cmd.redrawtabline()
+                end
+            end)
+        end)
     end,
 })

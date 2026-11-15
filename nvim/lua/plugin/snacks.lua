@@ -31,7 +31,6 @@ local explorer = {
     win = {
         list = {
             keys = {
-                ["/"] = false,
                 ["<cr>"] = "confirm",
                 ["o"] = "confirm",
                 ["l"] = "confirm",
@@ -75,6 +74,7 @@ local zoxide = {
 local p = {
     sources = {
         files = { layout = { preset = "vscode" } },
+        smart = { layout = { hidden = { "preview" } } },
         recent = { layout = { preset = "vscode" } },
         buffers = { layout = { preset = "vscode" } },
         colorschemes = { layout = { preset = "vscode" } },
@@ -92,6 +92,7 @@ local p = {
         -- input window
         input = {
             keys = {
+                ["/"] = false,
                 ["<c-a>"] = { "<home>", mode = { "i" }, expr = true },
                 ["<c-e>"] = { "<end>", mode = { "i" }, expr = true },
                 ["<c-b>"] = { "<left>", mode = { "i" }, expr = true },
@@ -111,6 +112,7 @@ local p = {
         -- result list window
         list = {
             keys = {
+                ["/"] = false,
                 ["<c-;>"] = "preview_scroll_up",
                 ["<c-'>"] = "preview_scroll_down",
 
@@ -122,8 +124,19 @@ local p = {
         },
         preview = {
             keys = {
+                ["/"] = false,
                 ["<c-,>"] = "cycle_win",
             },
+        },
+    },
+    icons = {
+        files = {
+            dir = " ",
+            dir_open = " ", --
+            file = " ",
+        },
+        ui = {
+            live = "",
         },
     },
 }
@@ -137,6 +150,7 @@ require("snacks").setup({
         scope = { enabled = false },
     },
     win = {
+        backdrop = false,
         wo = {
             winhighlight = "Normal:Normal,NormalNC:NormalNC,FloatBorder:SnacksPickerBorder",
         },
@@ -223,6 +237,7 @@ end
 -- stylua: ignore start
 keymap("n", "sr", function() Snacks.picker() end)
 keymap("n", "sf", function() Snacks.picker.files() end)
+keymap("n", "ss", function() Snacks.picker.smart() end)
 keymap("n", "sh", function() Snacks.picker.recent() end)
 keymap("n", "sd", function() Snacks.picker.buffers() end)
 keymap("n", "sx", function() Snacks.picker.colorschemes() end)
