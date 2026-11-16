@@ -115,3 +115,5 @@ function M.goto_references()
         picker_results(results, "References")
     end)
 end
+
+return M

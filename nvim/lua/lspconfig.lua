@@ -38,12 +38,12 @@
 --  mason harper: grammar checker
 -- ===========================================================
 
--- set lsp float window border
--- - "solid": Adds padding by a single whitespace cell. see h winborder
+-- set lsp float window border(signature help , etc.)
 local lsp_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
-    opts.border = opts.border or "single"
+    opts.border = opts.border or "solid"
     return lsp_floating_preview(contents, syntax, opts, ...)
 end
 
@@ -65,7 +65,7 @@ vim.diagnostic.config({
         prefix = "",
         -- source = "if_many",
         source = true,
-        border = "single",
+        border = "solid",
     },
     update_in_insert = false,
     severity_sort = true,
@@ -73,7 +73,6 @@ vim.diagnostic.config({
 
 local servers = {
     "luals",
-    -- "emmyluals",
 
     "gopls",
     "rust_analyzer",
@@ -102,29 +101,16 @@ autocmd("LspAttach", {
             return
         end
 
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-
-        if client and vim.tbl_contains({ "typos" }, client.config.name) then
-            return
-        end
-
         local bufnr = ev.buf
 
         -- see :h lsp-defaults
         keymap("n", "gD", vim.lsp.buf.declaration, { buf = bufnr })
 
-        keymap("n", "gl", function()
-            vim.lsp.buf.hover({ border = "double" })
-        end, { buf = bufnr })
-
-        keymap("n", "ga", function()
-            vim.diagnostic.open_float({ border = "double" })
-        end, { buf = bufnr })
-
+        keymap("n", "gl", vim.lsp.buf.hover, { buf = bufnr })
+        keymap("n", "ga", vim.diagnostic.open_float, { buf = bufnr })
         keymap("n", "gA", vim.diagnostic.setloclist, { buf = bufnr })
 
         keymap("n", "<leader>da", vim.lsp.buf.workspace_diagnostics, { buf = bufnr })
-
         keymap("n", "<leader>dt", function()
             vim.diagnostic.config({ virtual_lines = not vim.diagnostic.config().virtual_lines })
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())

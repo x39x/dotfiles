@@ -87,7 +87,7 @@ neogit.setup({
 
         popup = {
             ["m"] = false,
-            ["o"] = "MergePopup",
+            ["e"] = "MergePopup",
         },
     },
 })

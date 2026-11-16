@@ -149,7 +149,7 @@ end, { expr = true })
 keymap({ "n", "i", "x" }, "<M-s>", "<esc><cmd>w<cr>")
 
 --- hi current word
-keymap("n", "<leader>,", ":let @/ = expand('<cword>') | set hlsearch<cr>")
+keymap("n", "<leader>,", ":let @/ = expand('<cword>') | set hlsearch<cr>", { silent = true })
 
 --- search
 keymap("n", "/", "ms/")
@@ -299,7 +299,7 @@ end, { nargs = "?", bang = true })
 require("plugin")
 require("lspconfig")
 
-ok, _ = pcall(vim.cmd.so, "~/.local/state/matsu/colo.vim")
+local ok, _ = pcall(vim.cmd.so, "~/.local/state/matsu/colo.vim")
 
 if not ok then
     vim.cmd.colo("retrobox")

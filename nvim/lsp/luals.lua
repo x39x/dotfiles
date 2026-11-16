@@ -9,7 +9,7 @@ local on_init = function(client)
     client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
         runtime = {
             version = "LuaJIT",
-            -- Tell the language server how to find Lua modules same way as Neovim
+            -- Tell the language server how to find Lua modules same way as Neovim (see `:h lua-module-load`)
             path = {
                 "lua/?.lua",
                 "lua/?/init.lua",
@@ -36,18 +36,16 @@ return {
         ".luarc.jsonc",
         ".luacheckrc",
         ".stylua.toml",
-        "stylua.toml",
-        "selene.toml",
-        "selene.yml",
         ".git",
     },
 
     settings = {
+
         Lua = {
             codeLens = { enable = true },
             hint = { enable = true, semicolon = "Disable" },
             diagnostics = {
-                disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
+                -- disable = { "missing-fields", "undefined-field", "duplicate-set-field" },
             },
             format = {
                 enable = false,

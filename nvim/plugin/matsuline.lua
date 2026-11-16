@@ -139,7 +139,7 @@ local function git()
         "   ",
         set_hl("MatsuLineBold"),
         set_hl("MatsuLineB", true),
-        " ",
+        "  ",
         status.head,
         set_hl("StatusLine"),
     }
@@ -347,7 +347,7 @@ local shell_names = {
 }
 
 local function get_term_name(bufnr)
-    ---@type int
+    ---@type integer
     local channel = vim.bo[bufnr].channel
     local pid = channel and channel > 0 and fn.jobpid(channel)
 

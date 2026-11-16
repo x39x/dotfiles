@@ -30,6 +30,7 @@ local function process_snippet(snippet_raw)
     local prefix = type(snippet_raw.prefix) == "string" and { snippet_raw.prefix } or snippet_raw.prefix
     ---@cast prefix string[]
 
+    ---@diagnostic disable-next-line
     local body = type(snippet_raw.body) == "table" and table.concat(snippet_raw.body, "\n") or snippet_raw.body
 
     local description = snippet_raw.description or "No description"

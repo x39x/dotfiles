@@ -11,8 +11,8 @@ local auto_triggers = {}
 local AUTO = {}
 
 ---@param ft string
----@param buf int
----@param pos {row: int, col: int}
+---@param buf integer
+---@param pos {row: integer, col: integer}
 ---@return string|nil
 function AUTO.should_expand(ft, buf, pos)
     local line = vim.api.nvim_buf_get_lines(buf, pos.row - 1, pos.row, true)[1]
@@ -66,7 +66,7 @@ function AUTO.expand(prefix, ft)
     end
 end
 
----@param buf int
+---@param buf integer
 ---@param ft string
 function AUTO.set(ft, buf)
     for _, k in ipairs(auto_triggers[ft]) do
