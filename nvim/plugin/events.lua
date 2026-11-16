@@ -1,12 +1,12 @@
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
+local au = vim.api.nvim_create_autocmd
+local ag = vim.api.nvim_create_augroup
 local keymap = vim.keymap.set
 local o = vim.o
 
 ---  formatoption
-autocmd("FileType", {
+au("FileType", {
     pattern = "*",
-    group = augroup("matsu.formatoptions", { clear = true }),
+    group = ag("matsu.formatoptions", { clear = true }),
     callback = function()
         -- tc: text/comment,qwn2j:format,mM] cjk
         -- ro: <enter>/oO auto comment leader
@@ -16,8 +16,8 @@ autocmd("FileType", {
 })
 
 --- highlight yank/put
-autocmd("TextYankPost", {
-    group = augroup("matsu.highlight.yank", { clear = true }),
+au("TextYankPost", {
+    group = ag("matsu.highlight.yank", { clear = true }),
     callback = function()
         if not vim.v.event.visual then
             -- vim.hl.on_yank({ higroup = "Visual", timeout = 139 })
@@ -28,8 +28,8 @@ autocmd("TextYankPost", {
 })
 
 -- 0.13
-autocmd("TextPutPost", {
-    group = augroup("matsu.highlight.remove", { clear = true }),
+au("TextPutPost", {
+    group = ag("matsu.highlight.remove", { clear = true }),
     callback = function()
         vim.hl.hl_op({ higroup = "Visual", timeout = 139 })
     end,
@@ -43,8 +43,8 @@ elseif vim.fn.has("macunix") == 1 and vim.fn.executable("iswitch") == 1 then
     switch_im = { "iswitch", "-i", "com.apple.keylayout.ABC" }
 end
 if switch_im then
-    autocmd("InsertLeave", {
-        group = augroup("matsu.imswitch", { clear = true }),
+    au("InsertLeave", {
+        group = ag("matsu.imswitch", { clear = true }),
         callback = function()
             vim.system(switch_im)
         end,
@@ -52,7 +52,7 @@ if switch_im then
 end
 
 --- md
-autocmd("FileType", {
+au("FileType", {
     pattern = { "markdown" },
     callback = function(args)
         local winid = vim.api.nvim_get_current_win()
@@ -64,31 +64,40 @@ autocmd("FileType", {
         keymap("", "H", "g^", { silent = true, buf = args.buf })
         keymap("", "L", "g$", { silent = true, buf = args.buf })
     end,
-    group = augroup("matsu.markdown", { clear = true }),
+    group = ag("matsu.markdown", { clear = true }),
 })
 
 --- indent/tab
-autocmd("FileType", {
+au("FileType", {
     pattern = { "c", "cpp", "go" },
     callback = function(args)
         vim.bo[args.buf].shiftwidth = 8
     end,
-    group = augroup("matsu.indet", { clear = true }),
+    group = ag("matsu.indet", { clear = true }),
 })
 
 --- quickfix
-autocmd("FileType", {
-    group = augroup("matsu.qfbufline", { clear = true }),
+au("FileType", {
+    group = ag("matsu.qfbufline", { clear = true }),
     pattern = "qf",
     callback = function(args)
         vim.bo[args.buf].buflisted = false
-        vim.bo[args.buf].expandtab = false
-        vim.bo[args.buf].tabstop = 4
 
         vim.wo.listchars = "tab:   ,extends:,precedes:,trail:·,nbsp:󰌎"
         vim.wo.statusline = "%{%g:matsu_statusline()%}"
 
         keymap("n", "J", "j<Cmd>cn<CR><C-w><C-P>", { buf = args.buf })
         keymap("n", "K", "k<Cmd>cp<CR><C-w><C-P>", { buf = args.buf })
+    end,
+})
+
+-- hi
+au("ColorScheme", {
+    group = ag("matsu.retrobox", { clear = true }),
+    callback = function(args)
+        if args.match and args.match == "retrobox" then
+            vim.api.nvim_set_hl(0, "FloatBorder", { link = "NormalFloat" })
+        end
+        vim.api.nvim_set_hl(0, "PmenuThumb", { link = "PmenuBorder" })
     end,
 })

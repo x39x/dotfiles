@@ -284,7 +284,7 @@ local function hi()
     vim.api.nvim_set_hl(0, "SnacksPickerPreviewCursorLine", { link = "CursorLine" })
 
     if vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = "SnacksPickerBorder" })) then
-        vim.api.nvim_set_hl(0, "SnacksPickerBorder", { fg = "#6F777E", bg = "none" })
+        vim.api.nvim_set_hl(0, "SnacksPickerBorder", { link = "Whitespace" })
         vim.api.nvim_set_hl(0, "SnacksPickerMatch", { fg = "#D3302F", bg = "none" })
     end
 end
