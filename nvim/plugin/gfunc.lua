@@ -15,7 +15,7 @@ local function display_width(s)
     return vim.api.nvim_strwidth(s)
 end
 
--- 按终端显示宽度截断，避免中文文件名被切坏或算错宽度。
+-- 按显示宽度截断(中文宽度2)
 local function truncate(s, width)
     if display_width(s) <= width then
         return s
@@ -59,16 +59,12 @@ _G.matsu_qftf = function(info)
     local names = {}
     local name_widths = {}
     local line_width, col_width = 1, 1
-    local max_index = 0
 
     for i, item in ipairs(items) do
-        max_index = i
-
         local name = item.filename
         if type(name) ~= "string" or name == "" then
-            name = vim.fn.bufname(item.bufnr or 0)
+            name = vim.api.nvim_buf_is_valid(item.bufnr) and vim.fn.bufname(item.bufnr) or ""
         end
-        name = name or ""
 
         if name ~= "" then
             -- 相对路径优先；不在当前目录或家目录下的路径保持原样
@@ -117,7 +113,7 @@ _G.matsu_qftf = function(info)
         local separator = (line_text ~= "" and col_text ~= "") and ":" or " "
         local position = pad_left(line_text, line_width) .. separator .. pad_left(col_text, col_width)
 
-        local text = item.text or ""
+        local text = item.text and " " .. item.text or " "
         result[#result + 1] = name .. " | " .. position .. " | " .. text
     end
 

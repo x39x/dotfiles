@@ -79,6 +79,16 @@ neogit.setup({
             ["O"] = "StageUnstaged",
             ["T"] = "OpenTree",
         },
+
+        rebase_editor = {
+            ["s"] = false,
+            ["o"] = "Squash",
+        },
+
+        popup = {
+            ["m"] = false,
+            ["o"] = "MergePopup",
+        },
     },
 })
 
