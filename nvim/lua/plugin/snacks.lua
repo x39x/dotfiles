@@ -171,20 +171,32 @@ require("snacks").setup({
         },
     },
 })
-local function open_dir()
+
+local function get_explorer_wins(e)
+    local wins = e and e.layout and e.layout.opts.wins or {}
+    return wins.input and wins.input.win or -1, wins.list and wins.list.win or -1
+end
+
+local function focus_explorer(e)
+    local _, lw = get_explorer_wins(e)
     local cw = vim.api.nvim_get_current_win()
 
+    if lw ~= -1 and lw ~= cw and vim.api.nvim_win_is_valid(lw) then
+        vim.api.nvim_set_current_win(lw)
+        return true
+    end
+
+    return false
+end
+
+local function open_dir()
     local e = Snacks.picker.get({ source = "explorer" })[1]
-    local iw = e and e.layout and e.layout.opts.wins.input.win or -1
-    local lw = e and e.layout and e.layout.opts.wins.list.win or -1
+    local cw = vim.api.nvim_get_current_win()
+    local iw, lw = get_explorer_wins(e)
 
     if iw == cw or lw == cw then
         Snacks.picker.explorer()
-        return
-    elseif vim.api.nvim_win_is_valid(lw) then
-        vim.api.nvim_set_current_win(lw)
-        return
-    else
+    elseif not focus_explorer(e) then
         Snacks.picker.explorer({
             follow_file = false,
             auto_close = false,
@@ -212,21 +224,24 @@ local function focus_file()
         Actions.update(e, { target = file, refresh = true })
     end
 
-    if e then
-        reveal()
-
-        local iw = e and e.layout and e.layout.opts.wins.input.win or -1
-        local lw = e and e.layout and e.layout.opts.wins.list.win or -1
-        local cw = vim.api.nvim_get_current_win()
-
-        if iw ~= cw and lw ~= cw and vim.api.nvim_win_is_valid(lw) then
-            vim.api.nvim_set_current_win(lw)
-            return
-        end
-    else
-        e = Snacks.explorer.open({ on_show = reveal, auto_close = true, hidden = true })
+    if not e then
+        e = Snacks.explorer.open({
+            on_show = reveal,
+            auto_close = true,
+            hidden = true,
+        })
+        return
     end
-    return e
+
+    reveal()
+
+    local iw, lw = get_explorer_wins(e)
+    local cw = vim.api.nvim_get_current_win()
+
+    if iw == cw or lw == cw or not focus_explorer(e) then
+        -- close
+        Snacks.picker.explorer()
+    end
 end
 
 ---========================================================================
