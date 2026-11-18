@@ -1,8 +1,8 @@
 config-file             = keybind
-font-family             = IosevkaTerm Nerd Font Mono
+font-family             = IosevkaTerm NFM
 font-family             = Kaiti SC
-font-size               = 15
-adjust-cell-height      = 9
+font-size               = 14
+adjust-cell-height      = 12
 adjust-cell-width       = 1
 font-thicken            = true
 

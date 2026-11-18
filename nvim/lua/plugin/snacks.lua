@@ -205,41 +205,75 @@ local function open_dir()
     end
 end
 
-local function focus_file()
-    local Tree = require("snacks.explorer.tree")
-    local file = vim.fs.normalize(vim.api.nvim_buf_get_name(0))
-    local e = Snacks.picker.get({ source = "explorer" })[1]
+local function common_dir(a, b)
+    local a_parts = vim.split(a, "/", { trimempty = true })
+    local b_parts = vim.split(b, "/", { trimempty = true })
+    local common = {}
 
-    local function reveal()
-        local cwd = e:cwd()
-        if not Tree:in_cwd(cwd, file) then
-            for parent in vim.fs.parents(file) do
-                if Tree:in_cwd(parent, cwd) then
-                    e:set_cwd(parent)
-                    break
-                end
-            end
+    for i = 1, math.min(#a_parts, #b_parts) do
+        if a_parts[i] ~= b_parts[i] then
+            break
         end
-        Tree:open(file)
-        Actions.update(e, { target = file, refresh = true })
+
+        common[#common + 1] = a_parts[i]
     end
 
+    return "/" .. table.concat(common, "/")
+end
+
+local function get_target_cwd(cwd, file, file_dir)
+    --在当前工作目录中时
+    if vim.fs.relpath(cwd, file_dir) then
+        return cwd
+    end
+
+    local common = common_dir(cwd, file)
+    if common ~= "/" then
+        return common
+    end
+
+    -- Explorer root == "/" , can't focus
+    local first_dir = file:match("^/([^/]+)")
+    return first_dir and ("/" .. first_dir) or file_dir
+end
+
+local function focus_file()
+    local file_name = vim.api.nvim_buf_get_name(0)
+    if file_name == "" then
+        return
+    end
+
+    local Tree = require("snacks.explorer.tree")
+
+    local file = vim.fs.normalize(file_name)
+    local target_cwd = get_target_cwd(vim.uv.cwd() or "", file, vim.fs.dirname(file))
+
+    local e = Snacks.picker.get({ source = "explorer" })[1]
+
     if not e then
-        e = Snacks.explorer.open({
-            on_show = reveal,
+        Snacks.explorer.open({
+            cwd = target_cwd,
+            follow_file = true,
             auto_close = true,
             hidden = true,
         })
         return
     end
 
-    reveal()
+    if not Tree:in_cwd(e:cwd(), file) then
+        e:set_cwd(target_cwd)
+    end
 
-    local iw, lw = get_explorer_wins(e)
-    local cw = vim.api.nvim_get_current_win()
+    Tree:open(file)
+    Actions.update(e, {
+        target = file,
+        refresh = true,
+    })
 
-    if iw == cw or lw == cw or not focus_explorer(e) then
-        -- close
+    local explorer_win, list_win = get_explorer_wins(e)
+    local current_win = vim.api.nvim_get_current_win()
+
+    if explorer_win == current_win or list_win == current_win or not focus_explorer(e) then
         Snacks.picker.explorer()
     end
 end

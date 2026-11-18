@@ -208,7 +208,7 @@ hl("DiagnosticUnnecessary", { sp = colors.fg1, underline = true })
 
 -- NOTE: Syntax
 
---- 1white
+--- 1fg
 hl("Function", { fg = colors.fg0 })
 hl("Identifier", { link = "Function" })
 hl("Statement", { link = "Function" })
@@ -254,7 +254,7 @@ hl("Error", { sp = colors.red0, undercurl = true })
 
 -- NOTE: Treesitter
 
---- 1white
+--- 1fg
 hl("@function", { link = "Function" })
 hl("@function.builtin", { link = "Function" })
 hl("@variable", { link = "Function" })

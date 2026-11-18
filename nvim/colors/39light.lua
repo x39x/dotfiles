@@ -229,7 +229,7 @@ hl("DiagnosticUnnecessary", { sp = colors.fg1, underline = true })
 
 -- NOTE: Syntax  https://neovim.io/doc/user/syntax/#group-name
 
---- 1white
+--- 1fg
 hl("Function", { fg = colors.fg0 })
 hl("Identifier", { link = "Function" })
 hl("Statement", { link = "Function" })
@@ -276,7 +276,7 @@ hl("Error", { sp = colors.red1, undercurl = true })
 
 -- NOTE: Treesitter  https://github.com/nvim-treesitter/nvim-treesitter/blob/main/CONTRIBUTING.md
 
---- 1white
+--- 1fg
 hl("@function", { link = "Function" })
 hl("@function.builtin", { link = "Function" })
 hl("@variable", { link = "Function" })
@@ -295,11 +295,11 @@ hl("@constructor", { link = "Type" })
 hl("@tag.attribute", { link = "Type" })
 --- 4brown
 hl("@boolean", { link = "Boolean" })
-hl("@constant.builtin", { link = "Boolean" })
 hl("@attribute", { link = "Boolean" })
 --- 5red
 hl("@label", { link = "Constant" })
 hl("@constant", { link = "Constant" })
+hl("@constant.builtin", { link = "Constant" })
 --- 6blue
 hl("@number", { link = "Number" })
 --- comment

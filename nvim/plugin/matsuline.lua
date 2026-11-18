@@ -109,8 +109,7 @@ local function filename_block()
         return set_hl("MatsuLineBold") .. set_hl("MatsuLineA", true) .. "[No Name]"
     end
 
-    name = shorten_if_long(fn.fnamemodify(name, ":.:~"), 0.33)
-    name = escape_statusline(name)
+    name = escape_statusline(shorten_if_long(fn.fnamemodify(name, ":~:."), 0.33))
 
     return table.concat({
         set_hl("MatsuLineBold"),
