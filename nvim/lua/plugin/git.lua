@@ -62,8 +62,6 @@ require("gitsigns").setup({
         map("n", "<leader>gr", gitsigns.reset_hunk)
         map("n", "<leader>gS", gitsigns.stage_buffer)
         map("n", "<leader>gR", gitsigns.reset_buffer)
-        -----------------------------------=====================================
-        -----------------------------------=====================================
     end,
 })
 

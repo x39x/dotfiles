@@ -5,6 +5,7 @@ local Actions = require("snacks.explorer.actions")
 local explorer = {
     diagnostics = false,
     auto_close = false,
+    hidden = true,
     layout = {
         preview = false,
         layout = {
@@ -200,7 +201,7 @@ local function open_dir()
         Snacks.picker.explorer({
             follow_file = false,
             auto_close = false,
-            hidden = true,
+            -- ignored = true,
         })
     end
 end
@@ -239,7 +240,7 @@ end
 
 local function focus_file()
     local file_name = vim.api.nvim_buf_get_name(0)
-    if file_name == "" then
+    if file_name == "" and vim.bo.filetype ~= "snacks_picker_list" or vim.bo.buftype ~= "" then
         return
     end
 
@@ -255,7 +256,7 @@ local function focus_file()
             cwd = target_cwd,
             follow_file = true,
             auto_close = true,
-            hidden = true,
+            ignored = true,
         })
         return
     end
@@ -270,10 +271,10 @@ local function focus_file()
         refresh = true,
     })
 
-    local explorer_win, list_win = get_explorer_wins(e)
-    local current_win = vim.api.nvim_get_current_win()
+    local iw, lw = get_explorer_wins(e)
+    local cw = vim.api.nvim_get_current_win()
 
-    if explorer_win == current_win or list_win == current_win or not focus_explorer(e) then
+    if iw == cw or lw == cw or not focus_explorer(e) then
         Snacks.picker.explorer()
     end
 end
@@ -281,6 +282,7 @@ end
 ---========================================================================
 -- keymap
 ---========================================================================
+
 
 -- stylua: ignore start
 keymap("n", "sr", function() Snacks.picker() end)

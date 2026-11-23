@@ -292,6 +292,22 @@ command("S", function(args)
     edit(scratch_file)
 end, { nargs = "?", bang = true })
 
+command("Chat", function()
+    vim.cmd("tab split | te")
+
+    local channel = vim.bo.channel
+    if not channel or channel <= 0 then
+        vim.notify("Current buffer has no terminal channel", vim.log.levels.WARN)
+        return
+    end
+
+    local keys = vim.api.nvim_replace_termcodes("<c-u>cd ~/dev/chat && codex<cr>", true, false, true)
+    local ok, err = pcall(vim.api.nvim_chan_send, channel, keys)
+    if not ok then
+        vim.notify(vim.inspect(err), vim.log.levels.WARN)
+    end
+end)
+
 ------------------------------------------------------------------------------
 -- plugin/lsp/colorscheme
 ------------------------------------------------------------------------------
